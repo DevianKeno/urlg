@@ -120,11 +120,48 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     uvTransform: {x: 0, y: 0}
-  animatedSpriteImportData: []
+  animatedSpriteImportData:
+  - name: player
+    originalName: 
+    pivot: {x: 0.7642276, y: -4.1764703}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 4
+      width: 123
+      height: 34
+    spriteID: d27760af654ce9b4ba2c9d4b5259fa55
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 4}
   spriteSheetImportData: []
-  asepriteLayers: []
+  asepriteLayers:
+  - layerIndex: 0
+    guid: 1671627743
+    name: player
+    layerFlags: 0
+    layerType: 0
+    blendMode: 0
+    cells:
+    - name: player
+      frameIndex: 0
+      cellRect:
+        x: 6
+        y: 142
+        width: 123
+        height: 34
+      spriteId: d27760af654ce9b4ba2c9d4b5259fa55
+    linkedCells: []
+    parentIndex: -1
   platformSettings: []
   generatePhysicsShape: 0
   secondarySpriteTextures: []
   spritePackingTag: 
-  canvasSize: {x: 0, y: 0}
+  canvasSize: {x: 200, y: 184}
