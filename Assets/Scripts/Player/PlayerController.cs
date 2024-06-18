@@ -17,6 +17,7 @@ namespace RL.Player
         public Weapon Primary;
         public Weapon Secondary;
         public Weapon Tertiary;
+        bool _isInvincible;
         Vector2 _frameMovement;
         Vector2 _currentVelocity;
         float _fireRateDelta;
@@ -102,14 +103,21 @@ namespace RL.Player
 
         public void TakeDamage(float damage)
         {
+            if (_isInvincible) return;
+            _isInvincible = true;
+
             LeanTween.cancel(gameObject);
             LeanTween.value(gameObject, 0.5f, 0, 1f)
                 .setOnUpdate((float i) =>
                 {
                     vignette.color = new(0.5f, 0f, 0f, i);
                 })
-                .setEase(LeanTweenType.easeOutSine);
-            Stats.Stats.HitsTaken++;
+                .setEase(LeanTweenType.easeOutSine)
+                .setOnComplete(() =>
+                {
+                    _isInvincible = false;
+                });
+            Game.Telemetry.PlayerStats["hitsTaken"].Increment();
         }
 
         void FixedUpdate()

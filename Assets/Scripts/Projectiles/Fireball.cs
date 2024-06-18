@@ -1,5 +1,6 @@
 using UnityEngine;
 using RL.Enemies;
+using RL.Systems;
 
 namespace RL.Projectiles
 {
@@ -9,6 +10,7 @@ namespace RL.Projectiles
         {
             base.Start();
             Owner.Stats.Stats.UseCountFire++;
+            Game.Telemetry.PlayerStats["useCountFire"].Increment();
         }
 
         void LateUpdate()
@@ -20,6 +22,7 @@ namespace RL.Projectiles
         {
             hit.TakeDamage(Data.Damage);
             Owner.Stats.Stats.HitCountFire++;
+            Game.Telemetry.PlayerStats["hitCountFire"].Increment();
             Destroy(gameObject);
         }
         

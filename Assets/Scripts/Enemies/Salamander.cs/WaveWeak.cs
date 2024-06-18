@@ -158,6 +158,7 @@ namespace RL.Enemies
             float startTime = Time.time;
             float journeyLength = Vector2.Distance(transform.position, overshootPosition);
 
+            Game.Telemetry.GameStats["enemyAttackCount"].Increment();
             shield.SetActive(true);
             sm.ToState(SalamanderStates.Jump);
             while (Time.time - startTime < chargeDuration)
