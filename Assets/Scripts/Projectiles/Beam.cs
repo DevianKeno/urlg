@@ -3,12 +3,12 @@ using RL.Enemies;
 
 namespace RL.Projectiles
 {
-    public class Laser : Projectile
+    public class Beam : Projectile
     {
         protected override void Start()
         {
             base.Start();
-            Owner.Stats.Stats.UseCountBeam++;
+            Game.Telemetry.PlayerStats["useCountBeam"].Increment();
         }
 
         protected override void OnHitWall(GameObject obj)
@@ -19,7 +19,7 @@ namespace RL.Projectiles
         protected override void OnHitEnemy(IDamageable hit)
         {
             hit.TakeDamage(Data.Damage);
-            Owner.Stats.Stats.HitCountLaser++;
+            Game.Telemetry.PlayerStats["hitCountBeam"].Increment();
             Destroy(gameObject);
         }
 

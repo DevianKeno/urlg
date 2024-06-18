@@ -11,7 +11,7 @@ namespace RL.Projectiles
         protected override void Start()
         {
             base.Start();
-            Owner.Stats.Stats.UseCountWave++;
+            Game.Telemetry.PlayerStats["useCountWave"].Increment();
         }
 
         public void Dissipate()
@@ -44,7 +44,7 @@ namespace RL.Projectiles
                     if (!_hasHit)
                     {
                         _hasHit = true;
-                        Owner.Stats.Stats.HitCountWave++;
+                        Game.Telemetry.PlayerStats["hitCountWave"].Increment();
                     }
                 }
             }
