@@ -1,0 +1,80 @@
+using System;
+using UnityEngine;
+using RL.Player;
+using RL.Enemies;
+
+namespace RL.Projectiles
+{
+    public abstract class Projectile : MonoBehaviour
+    {
+        public ProjectileData ProjectileData;
+        public ProjectileData Data => ProjectileData;
+        public PlayerController Owner;
+        [SerializeField] protected Rigidbody2D rb;
+        [SerializeField] protected SpriteRenderer spriteRenderer;
+
+        protected virtual void Awake()
+        {
+            rb = GetComponent<Rigidbody2D>();
+        }
+        
+        protected virtual void Start()
+        {
+            Destroy(gameObject, Data.DespawnAfter);
+        }
+
+        public virtual void SetDirection(Vector2 direction)
+        {
+            rb.velocity = direction * Data.Speed;
+        }
+
+        protected virtual void OnHitWall(GameObject obj)
+        {
+        }
+
+        protected virtual void OnHitEnemy(IDamageable hit)
+        {
+        }
+
+        protected virtual void OnHitShield(GameObject obj)
+        {
+        }
+
+        protected virtual void OnTriggerEnter2D(Collider2D other)
+        {
+            if (other.CompareTag("Shield"))
+            {
+                OnHitShield(other.gameObject);
+            }
+        }
+
+        protected virtual void OnCollisionEnter2D(Collision2D collision)
+        {
+            if (collision.gameObject == null) return;
+            
+            foreach (ContactPoint2D contact in collision.contacts)
+            {
+                var go = contact.collider.gameObject;
+
+                if (go.CompareTag("Wall"))
+                {
+                    OnHitWall(go);
+                    break;
+
+                } else if (go.CompareTag("Enemy"))
+                {
+                    if (go.TryGetComponent(out IDamageable hit))
+                    {
+                        OnHitEnemy(hit);
+                        break;
+                    }
+
+                } else if (go.CompareTag("Shield"))
+                {
+                    OnHitShield(go);
+                    break;
+                }
+            }
+        }
+    }
+}

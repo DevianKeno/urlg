@@ -1,0 +1,70 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - Wall
+  - Damageable
+  - Hitbox
+  - Enemy
+  - Shield
+  - Wave
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - Player
+  - PlayerProjectile
+  - Solid
+  - Enemy
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: Tiles
+    uniqueID: 2441881451
+    locked: 0
+  - name: Projectiles
+    uniqueID: 3492936285
+    locked: 0
+  - name: Enemies
+    uniqueID: 383122337
+    locked: 0
+  - name: Player
+    uniqueID: 3457194229
+    locked: 0
+  - name: Particles
+    uniqueID: 97747843
+    locked: 0
+  - name: No Light
+    uniqueID: 2556557261
+    locked: 0
+  - name: Crosshair
+    uniqueID: 4240499129
+    locked: 0

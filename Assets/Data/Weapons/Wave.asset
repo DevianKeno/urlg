@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 086de7d5e42ec6f4990bff4b4cd5f247, type: 3}
+  m_Name: Wave
+  m_EditorClassIdentifier: 
+  Name: Wave
+  Sprite: {fileID: 0}
+  Damage: 0
+  FireRate: 0.33
+  ProjectileData: {fileID: 11400000, guid: 632ff44275eea964ab9eddac9c1dfa29, type: 2}
