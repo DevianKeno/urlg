@@ -12,6 +12,7 @@ namespace RL.Levels
         public bool SnapToGrid = true;
         public Vector2 Pivot;
         public Vector2Int Coordinates;
+        Levels.TileData previousTileData;
         
         [SerializeField] SpriteRenderer spriteRenderer;
         [SerializeField] SortingGroup sortingGroup;
@@ -28,6 +29,14 @@ namespace RL.Levels
         void Start()
         {
             Initialize();
+        }
+
+        void OnValidate()
+        {
+            if (tileData != previousTileData)
+            {
+                Initialize();
+            }
         }
 
         public void SetData(Levels.TileData data)
@@ -51,7 +60,8 @@ namespace RL.Levels
             {
                 sortingGroup.sortingLayerID = SortingLayer.NameToID("No Light");
             }
-            shadowCaster2D.enabled = tileData.IsSolid;            
+            shadowCaster2D.enabled = tileData.IsSolid;
+            previousTileData = tileData;
         }
 
         public void Refresh()
