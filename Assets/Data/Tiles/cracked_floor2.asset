@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e92b6cc2a1a5f6041a7b1b8a77f81130, type: 3}
-  m_Name: stone_wall
+  m_Name: cracked_floor2
   m_EditorClassIdentifier: 
-  Id: stone_wall
-  Name: Stone Wall
-  Sprite: {fileID: -350625699, guid: 500beaaee32985c4480a7d37ce1a820e, type: 3}
-  IsSolid: 1
+  Id: cracked_floor2
+  Name: Cracked Floor2
+  Sprite: {fileID: -997513445, guid: 500beaaee32985c4480a7d37ce1a820e, type: 3}
+  IsSolid: 0
   IsIlluminable: 1
