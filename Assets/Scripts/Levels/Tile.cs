@@ -60,7 +60,10 @@ namespace RL.Levels
             {
                 sortingGroup.sortingLayerID = SortingLayer.NameToID("No Light");
             }
-            shadowCaster2D.enabled = tileData.IsSolid;
+            if (shadowCaster2D != null)
+            {
+                shadowCaster2D.enabled = tileData.IsSolid;
+            }
             previousTileData = tileData;
         }
 

@@ -12,5 +12,6 @@ namespace RL.Levels
         public Sprite Sprite;
         public bool IsSolid;
         public bool IsIlluminable;
+        public bool IsShadowable;
     }
 }
