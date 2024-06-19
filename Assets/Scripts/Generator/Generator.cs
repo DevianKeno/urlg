@@ -66,6 +66,8 @@ namespace RL.Generator
 
         public void RegenerateEnemies()
         {
+            Game.Telemetry.RoomStats.Reset();
+
             foreach (Transform c in enemiesContainer.transform)
             {
                 if (c.TryGetComponent<Enemy>(out var enemy))
@@ -79,6 +81,7 @@ namespace RL.Generator
             for (int i = 0; i < salamanCount; i++ )
             {
                 Instantiate(salamanPrefab, enemiesContainer.transform);
+                Game.Telemetry.RoomStats["enemyCountWave"].Increment();
             }
         }
 

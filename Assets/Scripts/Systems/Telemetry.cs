@@ -74,6 +74,14 @@ namespace RL.Systems
                 return false;
             }
         }
+
+        internal void Reset()
+        {
+            foreach (var stat in _statList)
+            {
+                stat.Value.Value = 0;
+            }
+        }
     }
 
     public class Telemetry : MonoBehaviour
