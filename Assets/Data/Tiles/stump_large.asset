@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e92b6cc2a1a5f6041a7b1b8a77f81130, type: 3}
-  m_Name: torch
+  m_Name: stump_large
   m_EditorClassIdentifier: 
-  Id: torch
-  Name: Torch
-  Sprite: {fileID: 77062444, guid: a2fc3d779bdbb17428ef184a338b1f38, type: 3}
-  IsSolid: 0
-  IsIlluminable: 0
+  Id: stump_large
+  Name: Stump Large
+  Sprite: {fileID: 695635667, guid: a2fc3d779bdbb17428ef184a338b1f38, type: 3}
+  IsSolid: 1
+  IsIlluminable: 1
