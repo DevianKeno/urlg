@@ -140,6 +140,7 @@ namespace RL.Systems
                 stat.Value.OnValueChanged += OnValueChangedCallback;
                 statTexts[stat.Key] = tmp;
             }
+            LayoutRebuilder.ForceRebuildLayoutImmediate(gameStatsContainer.transform as RectTransform);
         }
 
         void InitializeRoomStats()
@@ -163,6 +164,7 @@ namespace RL.Systems
                 stat.Value.OnValueChanged += OnValueChangedCallback;
                 statTexts[stat.Key] = tmp;
             }
+            LayoutRebuilder.ForceRebuildLayoutImmediate(roomStatsContainer.transform as RectTransform);
         }
 
         void OnValueChangedCallback(object sender, EventArgs e)

@@ -1,9 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
-using RL.Levels;
-using Unity.Burst.Intrinsics;
 using UnityEngine;
 using UnityEngine.Rendering;
+using RL.Enemies;
 
 public enum WeaponType { Fireball, Beam, Wave }
 
@@ -28,6 +27,8 @@ namespace RL.Levels
         public bool HasEastDoor = true;
         public bool HasWestDoor = true;
 
+        [SerializeField] GameObject enemiesContainer;
+        
         [Header("Objects")]
         [SerializeField] RoomDoor northDoor;
         [SerializeField] RoomDoor southDoor;
@@ -111,6 +112,28 @@ namespace RL.Levels
             southDoor.SetDoors(HasSouthDoor);
             eastDoor.SetDoors(HasEastDoor);
             westDoor.SetDoors(HasWestDoor);
+        }
+
+        public void CountFeatures()
+        {
+            foreach (Transform c in enemiesContainer.transform)
+            {
+                if (c.TryGetComponent(out Enemy enemy))
+                {
+                    if (enemy is FireWeak)
+                    {
+                        // Game.Telemetry.RoomStats["enemyCountFire"].Increment();
+                    }
+                    else if (enemy is BeamWeak)
+                    {
+                        // Game.Telemetry.RoomStats["enemyCountBeam"].Increment();
+                    }
+                    else if (enemy is WaveWeak)
+                    {
+                        Game.Telemetry.RoomStats["enemyCountWave"].Increment();
+                    }
+                }
+            }
         }
 
         #region Editor

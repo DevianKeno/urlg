@@ -197,6 +197,8 @@ namespace RL.Player
             if (collision.gameObject.CompareTag("Wall"))
             {
                 rb.velocity = Vector2.zero;
+                
+                // if 
             }
         }
     }

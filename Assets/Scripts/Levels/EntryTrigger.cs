@@ -12,6 +12,7 @@ namespace RL.Levels
             if (other.gameObject.CompareTag("Player"))
             {
                 room?.ShutDoors();
+                room?.CountFeatures();
             }
         }
     }
