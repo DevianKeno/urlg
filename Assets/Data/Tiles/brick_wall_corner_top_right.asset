@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: brick_wall_corner_top_right
   Name: Brick Wall Corner Top Right
-  Sprite: {fileID: 1223650122, guid: 500beaaee32985c4480a7d37ce1a820e, type: 3}
+  Sprite: {fileID: 360077601, guid: 500beaaee32985c4480a7d37ce1a820e, type: 3}
   IsSolid: 1
   IsIlluminable: 1
