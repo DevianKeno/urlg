@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using RL.Weapons;
 using RL.Projectiles;
 using RL.Systems;
+using UnityEngine.Rendering;
 
 namespace RL.Player
 {
@@ -28,6 +29,9 @@ namespace RL.Player
         [SerializeField] PlayerAnimator animator;
         [SerializeField] PlayerStatsManager stats;
         public PlayerStatsManager Stats => stats;
+        SpriteRenderer spriteRenderer;
+        int tileBackLayer;
+        int tileFrontLayer;
 
         Rigidbody2D rb;
         PlayerInput input;
@@ -47,6 +51,10 @@ namespace RL.Player
         {
             rb = GetComponent<Rigidbody2D>();
             input = GetComponent<PlayerInput>();
+            spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+            
+            tileBackLayer = SortingLayer.NameToID("Tiles Back");
+            tileFrontLayer = SortingLayer.NameToID("Tiles Front");
         }
 
         void Start()
@@ -93,11 +101,33 @@ namespace RL.Player
 
         void OnTriggerEnter2D(Collider2D collider)
         {
-            var go = collider.gameObject;
+            var other = collider.gameObject;
             
-            if (go.CompareTag("Enemy"))
+            if (other.CompareTag("Enemy"))
             {
                 TakeDamage(1);
+                return;
+            }
+        }
+
+        void OnTriggerStay2D(Collider2D collider)
+        {
+            var other = collider.gameObject;
+            if (other.CompareTag("Wall"))
+            {
+                rb.velocity = Vector2.zero;
+                if (other.TryGetComponent<SortingGroup>(out var sortingGroup))
+                {
+                    if (other.transform.position.y > transform.position.y)
+                    {
+                        sortingGroup.sortingLayerID = tileBackLayer;
+                    }
+                    else
+                    {
+                        sortingGroup.sortingLayerID = tileFrontLayer;
+                    }
+                }
+                return;
             }
         }
 
@@ -190,16 +220,6 @@ namespace RL.Player
                 proj.Owner = this;
                 proj.SetDirection(direction);
             }            
-        }
-
-        void OnCollisionEnter2D(Collision2D collision)
-        {
-            if (collision.gameObject.CompareTag("Wall"))
-            {
-                rb.velocity = Vector2.zero;
-                
-                // if 
-            }
         }
     }
 }

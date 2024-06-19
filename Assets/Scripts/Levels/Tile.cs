@@ -55,7 +55,7 @@ namespace RL.Levels
             coll.enabled = tileData.IsSolid;
             if (tileData.IsIlluminable)
             {
-                sortingGroup.sortingLayerID = SortingLayer.NameToID("Tiles");
+                sortingGroup.sortingLayerID = SortingLayer.NameToID("Tiles Back");
             } else
             {
                 sortingGroup.sortingLayerID = SortingLayer.NameToID("No Light");

@@ -47,7 +47,7 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: Tiles
+  - name: Tiles Back
     uniqueID: 2441881451
     locked: 0
   - name: Projectiles
@@ -61,6 +61,9 @@ TagManager:
     locked: 0
   - name: Particles
     uniqueID: 97747843
+    locked: 0
+  - name: Tiles Front
+    uniqueID: 2888158577
     locked: 0
   - name: No Light
     uniqueID: 2556557261

@@ -9,6 +9,8 @@ namespace RL.Levels
         
         void OnTriggerEnter2D(Collider2D other)
         {
+            if (other is BoxCollider2D) return;
+            
             if (other.gameObject.CompareTag("Player"))
             {
                 room?.ShutDoors();

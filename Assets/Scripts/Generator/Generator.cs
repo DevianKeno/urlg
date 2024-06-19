@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using RL.Enemies;
 using RL.Levels;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -23,8 +24,12 @@ namespace RL.Generator
         public string TileId;
         public Vector2Int Cell;
 
+        [SerializeField] GameObject enemiesContainer;
+        
         [SerializeField] GameObject tilePrefab;
         [SerializeField] GameObject roomPrefab;
+
+        [SerializeField] GameObject salamanPrefab;
 
         void Start()
         {
@@ -54,6 +59,27 @@ namespace RL.Generator
                 t.Initialize();
             }            
             return t;
+        }
+
+        public int minSalaman = 1;
+        public int maxSalaman = 6;
+
+        public void RegenerateEnemies()
+        {
+            foreach (Transform c in enemiesContainer.transform)
+            {
+                if (c.TryGetComponent<Enemy>(out var enemy))
+                {
+                    Destroy(enemy.gameObject);
+                }
+            }
+
+            var salamanCount = Random.Range(minSalaman, maxSalaman);
+
+            for (int i = 0; i < salamanCount; i++ )
+            {
+                Instantiate(salamanPrefab, enemiesContainer.transform);
+            }
         }
 
         public void CreateRoom(GeneratorParams p)

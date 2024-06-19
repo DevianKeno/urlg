@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: -5623071438766937944}
   m_Layer: 0
   m_Name: TORCH
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -100,7 +100,7 @@ SortingGroup:
   m_GameObject: {fileID: 1380225744002857047}
   m_Enabled: 1
   m_SortingLayerID: -1738410035
-  m_SortingLayer: 6
+  m_SortingLayer: 7
   m_SortingOrder: 2
   m_SortAtRoot: 0
 --- !u!61 &5396579000879825869
@@ -268,7 +268,7 @@ MonoBehaviour:
   m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
-  m_ApplyToSortingLayers: 000000006b278c915dfa31d0a1fbd516f59810ce8383d305
+  m_ApplyToSortingLayers: 000000005dfa31d0a1fbd516f59810ce8383d305cdf76198b9e1c0fc6b278c9171cd25ac
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
