@@ -15,6 +15,7 @@ namespace RL.Levels
             {
                 room?.ShutDoors();
                 room?.CountFeatures();
+                gameObject.SetActive(false);
             }
         }
     }

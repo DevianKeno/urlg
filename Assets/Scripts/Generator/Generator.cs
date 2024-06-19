@@ -68,11 +68,14 @@ namespace RL.Generator
         {
             Game.Telemetry.RoomStats.Reset();
 
-            foreach (Transform c in enemiesContainer.transform)
+            if (enemiesContainer.transform.childCount > 0)
             {
-                if (c.TryGetComponent<Enemy>(out var enemy))
+                foreach (Transform c in enemiesContainer.transform)
                 {
-                    Destroy(enemy.gameObject);
+                    if (c.TryGetComponent<Enemy>(out var enemy))
+                    {
+                        Destroy(enemy.gameObject);
+                    }
                 }
             }
 
