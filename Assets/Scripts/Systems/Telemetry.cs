@@ -144,7 +144,25 @@ namespace RL.Systems
 
         void InitializeRoomStats()
         {
-            //
+            string[] roomStats = {
+                "enemyCountFire",
+                "enemyCountBeam",
+                "enemyCountWave",
+                "obstacleCountFire",
+                "obstacleCountBeam",
+                "obstacleCountWave",
+            };
+            _roomStats = new(roomStats);
+            
+            foreach (var stat in _roomStats.Stats)
+            {
+                var go = new GameObject("Room Stat");
+                go.transform.SetParent(roomStatsContainer.transform);
+                var tmp = go.AddComponent<TextMeshProUGUI>();
+                tmp.text = $"{stat.Key}: {stat.Value.Value}";
+                stat.Value.OnValueChanged += OnValueChangedCallback;
+                statTexts[stat.Key] = tmp;
+            }
         }
 
         void OnValueChangedCallback(object sender, EventArgs e)
