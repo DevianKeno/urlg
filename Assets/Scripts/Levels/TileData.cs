@@ -10,8 +10,11 @@ namespace RL.Levels
         public string Id;
         public string Name;
         public Sprite Sprite;
+
+        [Header("Properties")]
         public bool IsSolid;
         public bool IsIlluminable;
-        public bool IsShadowable;
+        public bool CastShadow;
+        public bool CanShootThrough;
     }
 }

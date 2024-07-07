@@ -1,39 +1,41 @@
 using System;
+using System.Collections;
 using System.IO;
+
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+
 using RL.Weapons;
 using RL.Projectiles;
 using RL.Systems;
-using UnityEngine.Rendering;
 
 namespace RL.Player
 {
     public class PlayerController : MonoBehaviour
     {
+        public float Health = 100f;
         public float MoveSpeed = 7f;
         public float Acceleration = 0.3f;
         public Weapon Equipped;
         public Weapon Primary;
         public Weapon Secondary;
         public Weapon Tertiary;
+
         bool _isInvincible;
         Vector2 _frameMovement;
         Vector2 _currentVelocity;
         float _fireRateDelta;
-        [SerializeField] Image vignette;
 
+        [Header("Components")]
         [SerializeField] PlayerStateMachine stateMachine;
         public PlayerStateMachine sm => stateMachine;
         [SerializeField] PlayerAnimator animator;
         [SerializeField] PlayerStatsManager stats;
         public PlayerStatsManager Stats => stats;
-        SpriteRenderer spriteRenderer;
-        int tileBackLayer;
-        int tileFrontLayer;
+        [SerializeField] Rigidbody2D rb;
+        [SerializeField] SpriteRenderer spriteRenderer;
 
-        Rigidbody2D rb;
         PlayerInput input;
         InputAction move;
         InputAction shoot;
@@ -49,12 +51,12 @@ namespace RL.Player
 
         void Awake()
         {
-            rb = GetComponent<Rigidbody2D>();
+            // rb = GetComponent<Rigidbody2D>();
             input = GetComponent<PlayerInput>();
-            spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+            // spriteRenderer = GetComponentInChildren<SpriteRenderer>();
             
-            tileBackLayer = SortingLayer.NameToID("Tiles Back");
-            tileFrontLayer = SortingLayer.NameToID("Tiles Front");
+            // tileBackLayer = SortingLayer.NameToID("Tiles Back");
+            // tileFrontLayer = SortingLayer.NameToID("Tiles Front");
         }
 
         void Start()
@@ -89,6 +91,18 @@ namespace RL.Player
             sm.ToState(PlayerStates.Idle);
         }
 
+        void FlipSprite()
+        {
+            if (rb.velocity.x > 0)
+            {
+                spriteRenderer.flipX = false;
+            }
+            else if (rb.velocity.x < 0)
+            {
+                spriteRenderer.flipX = true;
+            }
+        }
+
         void Update()
         {
             _fireRateDelta += Time.deltaTime;
@@ -110,44 +124,42 @@ namespace RL.Player
             }
         }
 
-        void OnTriggerStay2D(Collider2D collider)
-        {
-            var other = collider.gameObject;
-            if (other.CompareTag("Wall"))
-            {
-                rb.velocity = Vector2.zero;
-                if (other.TryGetComponent<SortingGroup>(out var sortingGroup))
-                {
-                    if (other.transform.position.y > transform.position.y)
-                    {
-                        sortingGroup.sortingLayerID = tileBackLayer;
-                    }
-                    else
-                    {
-                        sortingGroup.sortingLayerID = tileFrontLayer;
-                    }
-                }
-                return;
-            }
-        }
-
         public void TakeDamage(float damage)
         {
             if (_isInvincible) return;
             _isInvincible = true;
 
-            LeanTween.cancel(gameObject);
-            LeanTween.value(gameObject, 0.5f, 0, 1f)
-                .setOnUpdate((float i) =>
-                {
-                    vignette.color = new(0.5f, 0f, 0f, i);
-                })
-                .setEase(LeanTweenType.easeOutSine)
-                .setOnComplete(() =>
-                {
-                    _isInvincible = false;
-                });
+            Health -= damage;
             Game.Telemetry.PlayerStats["hitsTaken"].Increment();
+            Game.UI.VignetteDamageFlash();
+            
+            if (CheckIfDead())
+            {
+                return;
+            }
+
+            StartCoroutine(nameof(InvincibilityFrameCoroutine));
+        }
+
+        bool CheckIfDead()
+        {
+            if (Health <= 0)
+            {
+                Die();
+                return true;
+            }
+            return false;
+        }
+
+        void Die()
+        {
+            
+        }
+
+        IEnumerator InvincibilityFrameCoroutine()
+        {
+            yield return new WaitForSeconds(0.5f);
+            _isInvincible = false;
         }
 
         void FixedUpdate()
@@ -155,6 +167,7 @@ namespace RL.Player
             Vector2 targetVelocity = _frameMovement * MoveSpeed;
             _currentVelocity = Vector2.Lerp(_currentVelocity, targetVelocity, Acceleration * Time.fixedDeltaTime);
             rb.velocity = _currentVelocity;
+            FlipSprite();
         }
 
         void CheatsCallback(InputAction.CallbackContext context)
@@ -205,21 +218,25 @@ namespace RL.Player
         public void Shoot()
         {
             if (_fireRateDelta < Equipped.FireRate) return;
-            sm.ToState(PlayerStates.Shoot); /// This should be locked
+            sm.ToState(PlayerStates.Shoot); // This should be locked
             
             _fireRateDelta = 0f;
-            Vector3 mPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            mPos.z = 0f;
+            Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            mousePos.z = 0f;
 
-            var direction = (mPos - transform.position).normalized;
-            var angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-            var rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-            var go = Instantiate(Equipped.ProjectileData.Object, transform.position, rotation);
-            if (go.TryGetComponent(out Projectile proj))
+            Vector3 spawnOffset = (mousePos - transform.position).normalized * 0.5f; // Adjust the forward distance here
+            Vector3 spawnPosition = transform.position + spawnOffset;
+
+            Vector3 direction = (mousePos - spawnPosition).normalized;
+            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+            Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+
+            GameObject projectileGO = Instantiate(Equipped.ProjectileData.Object, spawnPosition, rotation);
+            if (projectileGO.TryGetComponent(out Projectile projectile))
             {
-                proj.Owner = this;
-                proj.SetDirection(direction);
-            }            
+                projectile.Owner = this;
+                projectile.SetDirection(direction);
+            }
         }
     }
 }

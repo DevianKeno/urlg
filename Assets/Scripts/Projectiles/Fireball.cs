@@ -1,6 +1,7 @@
 using UnityEngine;
 using RL.Enemies;
 using RL.Systems;
+using RL.Levels;
 
 namespace RL.Projectiles
 {
@@ -11,11 +12,24 @@ namespace RL.Projectiles
             base.Start();
             Owner.Stats.Stats.UseCountFire++;
             Game.Telemetry.PlayerStats["useCountFire"].Increment();
+            Game.Audio.PlaySound("fire_shoot");
         }
 
         void LateUpdate()
         {
             spriteRenderer.transform.rotation = Quaternion.identity;
+        }
+
+        protected override void OnHitTile(GameObject obj)
+        {
+            if (obj.TryGetComponent<Tile>(out var tile))
+            {
+                if (tile is BurnableCrate crate)
+                {
+                    crate.StartBurning();
+                    Destroy(gameObject);
+                }
+            }
         }
 
         protected override void OnHitEnemy(IDamageable hit)

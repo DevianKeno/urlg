@@ -1,5 +1,6 @@
 using UnityEngine;
 using RL.Enemies;
+using RL.Levels;
 
 namespace RL.Projectiles
 {
@@ -11,9 +12,22 @@ namespace RL.Projectiles
             Game.Telemetry.PlayerStats["useCountBeam"].Increment();
         }
 
-        protected override void OnHitWall(GameObject obj)
+        protected override void OnHitTile(GameObject obj)
         {
-            Destroy(gameObject);
+            if (obj.TryGetComponent<Tile>(out var tile))
+            {
+                if (tile is BurnableCrate crate)
+                {
+                    crate.TakeDamage(25);
+                    Destroy(gameObject);
+                }
+                if (tile is Glass glass)
+                {
+                    /// Reflect this beam
+                    return;
+                }
+                Destroy(gameObject);
+            }
         }
 
         protected override void OnHitEnemy(IDamageable hit)

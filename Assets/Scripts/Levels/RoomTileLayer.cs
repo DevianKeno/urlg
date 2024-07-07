@@ -6,6 +6,6 @@ namespace RL.Levels
 {
     public class RoomTileLayer : MonoBehaviour
     {
-        public string Name;
+        public string LayerName;
     }
 }

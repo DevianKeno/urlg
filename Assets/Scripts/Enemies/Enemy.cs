@@ -109,6 +109,8 @@ namespace RL.Enemies
 
         public virtual void Die()
         {
+            var puffParticle = Game.Particles.Create("puff");
+            puffParticle.transform.position = transform.position;
             Destroy(gameObject);
         }
 

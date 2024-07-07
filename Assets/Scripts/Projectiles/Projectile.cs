@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using RL.Player;
 using RL.Enemies;
+using RL.Levels;
 
 namespace RL.Projectiles
 {
@@ -28,7 +29,7 @@ namespace RL.Projectiles
             rb.velocity = direction * Data.Speed;
         }
 
-        protected virtual void OnHitWall(GameObject obj)
+        protected virtual void OnHitTile(GameObject obj)
         {
         }
 
@@ -56,9 +57,9 @@ namespace RL.Projectiles
             {
                 var go = contact.collider.gameObject;
 
-                if (go.CompareTag("Wall"))
+                if (go.CompareTag("Tile"))
                 {
-                    OnHitWall(go);
+                    OnHitTile(go);
                     break;
 
                 } else if (go.CompareTag("Enemy"))

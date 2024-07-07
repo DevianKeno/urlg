@@ -1,4 +1,4 @@
-using RL.Levels;
+using System;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
@@ -7,22 +7,21 @@ namespace RL.Levels
 {
     public class Tile : MonoBehaviour
     {
-        [SerializeField] Levels.TileData tileData;
-        public Levels.TileData Data => tileData;
-        public bool SnapToGrid = true;
-        public Vector2 Pivot;
+        [SerializeField] TileData tileData;
+        public TileData Data => tileData;
         public Vector2Int Coordinates;
-        Levels.TileData previousTileData;
+
+        TileData _previousTileData;
         
-        [SerializeField] SpriteRenderer spriteRenderer;
-        [SerializeField] SortingGroup sortingGroup;
-        [SerializeField] ShadowCaster2D shadowCaster2D;
-        [SerializeField] BoxCollider2D coll;
+        [SerializeField] protected SpriteRenderer spriteRenderer;
+        [SerializeField] protected BoxCollider2D coll;
+        [SerializeField] protected ShadowCaster2D shadowCaster2D;
+        
+        public int foregroundLayerID;
 
         void Awake()
         {
             spriteRenderer = GetComponent<SpriteRenderer>();
-            sortingGroup = GetComponent<SortingGroup>();
             shadowCaster2D = GetComponent<ShadowCaster2D>();
         }
 
@@ -31,50 +30,74 @@ namespace RL.Levels
             Initialize();
         }
 
+        void InitializeComponents()
+        {
+            if (TryGetComponent<SpriteRenderer>(out var a))
+            {
+                spriteRenderer = a;
+            }
+            
+            if (TryGetComponent<ShadowCaster2D>(out var c))
+            {
+                shadowCaster2D = c;
+            }
+        }
+
         void OnValidate()
         {
-            if (tileData != previousTileData)
+            if (Application.isPlaying) return;
+            
+            if (tileData != _previousTileData)
             {
+                InitializeComponents();
                 Initialize();
             }
         }
 
-        public void SetData(Levels.TileData data)
+        public void SetData(TileData data)
         {
             tileData = data;
         }
 
         public void Initialize()
-        {            
-            spriteRenderer = GetComponent<SpriteRenderer>();
-            sortingGroup = GetComponent<SortingGroup>();
-            shadowCaster2D = GetComponent<ShadowCaster2D>();
+        {
+            gameObject.name = $"Tile ({Coordinates.x}, {Coordinates.y}) ({tileData.Name})";
+            
+            if (spriteRenderer != null)
+            {
+                spriteRenderer.sprite = tileData.Sprite;
+                
+                if (tileData.IsIlluminable)
+                {
+                    spriteRenderer.sharedMaterial = Resources.Load<Material>("Materials/sprite_lit");
+                } else
+                {
+                    spriteRenderer.sharedMaterial = Resources.Load<Material>("Materials/sprite_unlit");
+                }
+            };
 
-            PositionToCoordinate();
-            spriteRenderer.sprite = tileData.Sprite;
-            coll.enabled = tileData.IsSolid;
-            if (tileData.IsIlluminable)
-            {
-                sortingGroup.sortingLayerID = SortingLayer.NameToID("Tiles Back");
-            } else
-            {
-                sortingGroup.sortingLayerID = SortingLayer.NameToID("No Light");
-            }
             if (shadowCaster2D != null)
             {
-                shadowCaster2D.enabled = tileData.IsSolid;
+                shadowCaster2D.enabled = tileData.CastShadow;
             }
-            previousTileData = tileData;
-        }
 
-        public void Refresh()
-        {
-            Initialize();
+            if (coll != null)
+            {
+                coll.enabled = true;
+                coll.isTrigger = !tileData.IsSolid;
+            }
+
+            _previousTileData = tileData;
+            PositionToCoordinate();
         }
 
         public void PositionToCoordinate()
         {
-            var pos = transform.position;
+            var pos = new Vector3(
+                Mathf.Round(transform.position.x),
+                Mathf.Round(transform.position.y),
+                Mathf.Round(transform.position.z)
+            );
             Vector2Int coords = new(
                 (int) pos.x,
                 (int) pos.y
@@ -82,14 +105,24 @@ namespace RL.Levels
             Coordinates = coords;
         }
 
-        public void CoordinateToPosition(Vector2Int value)
+        public void CoordinateToPosition(Vector2Int coords)
         {
-            Coordinates = value;
             transform.position = new()
             {
-                x = value.x - Pivot.x,
-                y = value.y - Pivot.y
+                x = coords.x,
+                y = coords.y
             };
+            Coordinates = coords;
+        }
+
+        public void SetTileDataFromId(string id)
+        {
+            var newData = Game.Tiles.GetTileDataFromId(id);
+            if (newData != null)
+            {
+                tileData = newData;
+                Initialize();
+            }
         }
     }
 }

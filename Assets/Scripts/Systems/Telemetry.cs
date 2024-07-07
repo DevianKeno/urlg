@@ -181,9 +181,9 @@ namespace RL.Systems
             statTexts[stat.Name].text = $"{stat.Name}: {stat.Value}";
         }
 
-        public void CreateStats()
+        public Dictionary<string, Stat> RetrievePlayerModel()
         {
-            
+            return _playerStats.Stats;
         }
     }
 }

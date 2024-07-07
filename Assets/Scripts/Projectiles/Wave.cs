@@ -1,5 +1,6 @@
 using UnityEngine;
 using RL.Enemies;
+using RL.Levels;
 
 namespace RL.Projectiles
 {
@@ -12,6 +13,19 @@ namespace RL.Projectiles
         {
             base.Start();
             Game.Telemetry.PlayerStats["useCountWave"].Increment();
+            Game.Audio.PlaySound("wave_shoot");
+        }
+
+        protected override void OnHitTile(GameObject obj)
+        {
+            if (obj.TryGetComponent<Tile>(out var tile))
+            {
+                if (tile is Glass glass)
+                {
+                    Destroy(gameObject);
+                    return;
+                }
+            }
         }
 
         public void Dissipate()

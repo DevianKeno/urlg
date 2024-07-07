@@ -9,7 +9,9 @@ TagManager:
   - Hitbox
   - Enemy
   - Shield
+  - Tile
   - Wave
+  - Room
   layers:
   - Default
   - TransparentFX
@@ -17,11 +19,11 @@ TagManager:
   - 
   - Water
   - UI
-  - Player
+  - Foreground
   - PlayerProjectile
   - Solid
   - Enemy
-  - 
+  - Room
   - 
   - 
   - 
@@ -47,26 +49,26 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: Tiles Back
+  - name: No Light
+    uniqueID: 2556557261
+    locked: 0
+  - name: Floor
     uniqueID: 2441881451
     locked: 0
-  - name: Projectiles
-    uniqueID: 3492936285
-    locked: 0
-  - name: Enemies
-    uniqueID: 383122337
+  - name: Foreground
+    uniqueID: 2888158577
     locked: 0
   - name: Player
     uniqueID: 3457194229
     locked: 0
+  - name: Enemies
+    uniqueID: 383122337
+    locked: 0
+  - name: Projectiles
+    uniqueID: 3492936285
+    locked: 0
   - name: Particles
     uniqueID: 97747843
-    locked: 0
-  - name: Tiles Front
-    uniqueID: 2888158577
-    locked: 0
-  - name: No Light
-    uniqueID: 2556557261
     locked: 0
   - name: Crosshair
     uniqueID: 4240499129
