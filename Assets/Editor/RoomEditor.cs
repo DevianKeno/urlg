@@ -1,7 +1,7 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace RL.Levels
+namespace URLG.Levels
 {
     [CustomEditor(typeof(Room))]
     public class RoomEditor : Editor
@@ -9,8 +9,9 @@ namespace RL.Levels
         public override void OnInspectorGUI()
         {
             serializedObject.Update();
-            var room = target as Room;
             base.OnInspectorGUI();
+            
+            var room = target as Room;
             
             GUILayout.Space(10f);
             if (GUILayout.Button("Initialize"))
@@ -36,13 +37,18 @@ namespace RL.Levels
             GUILayout.BeginHorizontal();
                 if (GUILayout.Button("Enemies"))
                 {
-                    //
+                    room.GenerateEnemiesRandomEditor();
                 }
                 if (GUILayout.Button("Obstacles"))
                 {
-                    room.GenerateObstaclesRandom();
+                    room.GenerateObstaclesRandomEditor();
                 }
             GUILayout.EndHorizontal();
+
+            if (GUILayout.Button("Generate Features"))
+            {
+                room.GenerateFeatures();
+            }
 
             serializedObject.ApplyModifiedProperties();
         }

@@ -1,8 +1,8 @@
 using UnityEngine;
-using RL.Levels;
+using URLG.Levels;
 using System.Collections.Generic;
 
-namespace RL.Systems
+namespace URLG.Systems
 {
     public class TilesManager : MonoBehaviour
     {
@@ -38,7 +38,7 @@ namespace RL.Systems
             {
                 if (go.TryGetComponent<Tile>(out var tile))
                 {
-                    _obstaclesDict[tile.Data.Id] = go;
+                    _obstaclesDict[tile.TileData.Id] = go;
                     obstacleList.Add(go);
                 }
             }

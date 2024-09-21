@@ -1,15 +1,35 @@
-using System;
 using UnityEngine;
-using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 
-namespace RL.Levels
+namespace URLG.Levels
 {
     public class Tile : MonoBehaviour
     {
         [SerializeField] TileData tileData;
-        public TileData Data => tileData;
-        public Vector2Int Coordinates;
+        public TileData TileData
+        {
+            get
+            {
+                return tileData;
+            }
+            set
+            {
+                tileData = value;
+            }
+        }
+        Vector2Int coordinates;
+        public Vector2Int Coordinates
+        {
+            get
+            {
+                return coordinates;
+            }
+            set
+            {
+                coordinates = value;
+            }
+        }
+        public int foregroundLayerID;
 
         TileData _previousTileData;
         
@@ -17,7 +37,8 @@ namespace RL.Levels
         [SerializeField] protected BoxCollider2D coll;
         [SerializeField] protected ShadowCaster2D shadowCaster2D;
         
-        public int foregroundLayerID;
+
+        #region Initializing methods
 
         void Awake()
         {
@@ -41,22 +62,6 @@ namespace RL.Levels
             {
                 shadowCaster2D = c;
             }
-        }
-
-        void OnValidate()
-        {
-            if (Application.isPlaying) return;
-            
-            if (tileData != _previousTileData)
-            {
-                InitializeComponents();
-                Initialize();
-            }
-        }
-
-        public void SetData(TileData data)
-        {
-            tileData = data;
         }
 
         public void Initialize()
@@ -91,6 +96,23 @@ namespace RL.Levels
             PositionToCoordinate();
         }
 
+        #endregion
+
+
+        void OnValidate()
+        {
+            if (Application.isPlaying) return;
+            
+            if (tileData != _previousTileData)
+            {
+                InitializeComponents();
+                Initialize();
+            }
+        }
+
+
+        #region Public methods
+
         public void PositionToCoordinate()
         {
             var pos = new Vector3(
@@ -124,5 +146,7 @@ namespace RL.Levels
                 Initialize();
             }
         }
+
+        #endregion
     }
 }

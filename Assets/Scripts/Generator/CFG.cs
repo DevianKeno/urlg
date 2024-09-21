@@ -1,15 +1,18 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
-namespace RL.Generator
+namespace URLG.Generator
 {
     public class CFG : MonoBehaviour
     {
+        
         public struct Token
         {
             public string Key;
+            public RoomType RoomType;
         }
 
         public static string start = "start";
@@ -57,9 +60,18 @@ namespace RL.Generator
         }
 
         List<string> c = new();
-        public void Generate()
+        
+        public static string GenerateMissionString()
         {
-            c.Add("DUNGEON");
+            string mission = "";
+            // c.Add("DUNGEON");
+            return mission;
+        }
+
+        public static List<Token> Tokenize(string mission)
+        {
+            var tokens = new List<Token>();
+            return tokens;
         }
     }
 }

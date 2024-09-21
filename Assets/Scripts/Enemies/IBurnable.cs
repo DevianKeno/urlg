@@ -1,4 +1,4 @@
-namespace RL.Enemies
+namespace URLG.Enemies
 {
     public interface IBurnable
     {

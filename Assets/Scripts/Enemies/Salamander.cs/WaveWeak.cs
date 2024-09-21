@@ -1,12 +1,12 @@
 using System;
 using System.Collections;
 using UnityEngine;
-using RL.Systems;
-using RL.Player;
-using RL.Enemies;
+using URLG.Systems;
+using URLG.Player;
+using URLG.Enemies;
 using Random = UnityEngine.Random;
 
-namespace RL.Enemies
+namespace URLG.Enemies
 {
     /// Salaman
     public class WaveWeak : Enemy, IDamageable

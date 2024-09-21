@@ -1,17 +1,20 @@
 using System;
 using UnityEngine;
-using RL.Player;
-using RL.Enemies;
-using RL.Levels;
+using URLG.Player;
+using URLG.Enemies;
+using URLG.Levels;
 
-namespace RL.Projectiles
+namespace URLG.Projectiles
 {
     public abstract class Projectile : MonoBehaviour
     {
-        public ProjectileData ProjectileData;
-        public ProjectileData Data => ProjectileData;
-        public PlayerController Owner;
+        [SerializeField] protected ProjectileData projectileData;
+        public ProjectileData Data => projectileData;
+        [SerializeField] protected PlayerController owner;
+        public PlayerController Owner => owner;
+
         [SerializeField] protected Rigidbody2D rb;
+        public Rigidbody2D Rigidbody2D => rb;
         [SerializeField] protected SpriteRenderer spriteRenderer;
 
         protected virtual void Awake()
@@ -22,6 +25,11 @@ namespace RL.Projectiles
         protected virtual void Start()
         {
             Destroy(gameObject, Data.DespawnAfter);
+        }
+
+        public void SetOwner(PlayerController playerController)
+        {
+            owner = playerController;
         }
 
         public virtual void SetDirection(Vector2 direction)

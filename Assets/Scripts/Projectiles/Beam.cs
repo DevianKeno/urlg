@@ -1,15 +1,17 @@
 using UnityEngine;
-using RL.Enemies;
-using RL.Levels;
+using URLG.Enemies;
+using URLG.Levels;
 
-namespace RL.Projectiles
+namespace URLG.Projectiles
 {
     public class Beam : Projectile
     {
         protected override void Start()
         {
             base.Start();
+
             Game.Telemetry.PlayerStats["useCountBeam"].Increment();
+            Game.Audio.PlaySound("beam_shoot");
         }
 
         protected override void OnHitTile(GameObject obj)

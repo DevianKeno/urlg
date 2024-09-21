@@ -158,11 +158,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tileData: {fileID: 11400000, guid: ec2fc445f7f0dce4992cb6e19f603f70, type: 2}
-  Coordinates: {x: 0, y: 0}
+  foregroundLayerID: 0
   spriteRenderer: {fileID: 4182680177806272318}
   coll: {fileID: 1481118708676027430}
   shadowCaster2D: {fileID: 1391603727891487679}
-  foregroundLayerID: 0
 --- !u!114 &1391603727891487679
 MonoBehaviour:
   m_ObjectHideFlags: 0

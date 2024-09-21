@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Wave
   m_EditorClassIdentifier: 
   Name: Wave
-  Sprite: {fileID: 0}
+  Sprite: {fileID: 1667766840, guid: d0e34aa9ce3d81f408166876b9d2dfea, type: 3}
   Speed: 64
   Damage: 4
   DespawnAfter: 1

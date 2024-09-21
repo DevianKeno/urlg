@@ -2,7 +2,7 @@ using System;
 using TMPro;
 using UnityEngine;
 
-namespace RL.Levels
+namespace URLG.Levels
 {
     public class BurnableCrate : Tile
     {

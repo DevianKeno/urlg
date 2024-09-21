@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 2778017329121839432}
   - component: {fileID: 2232779807248089875}
   m_Layer: 0
-  m_Name: Tile (9, -5) (crate_single_bottom)
+  m_Name: Tile (0, 0) (crate_single_bottom)
   m_TagString: Tile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -159,11 +159,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tileData: {fileID: 11400000, guid: 5ddbd7e87a426ba4f84d7b9d9b9eaffe, type: 2}
-  Coordinates: {x: 9, y: -5}
+  foregroundLayerID: 0
   spriteRenderer: {fileID: 4035217384714145660}
   coll: {fileID: 5396579000879825869}
   shadowCaster2D: {fileID: 2232779807248089875}
-  foregroundLayerID: 0
   Health: 100
   BurnTime: 6
   spriteRendererChild: {fileID: 5868209887538516533}
@@ -212,7 +211,7 @@ GameObject:
   - component: {fileID: 4672806268636599822}
   - component: {fileID: 7905582891064794267}
   m_Layer: 0
-  m_Name: Tile (9, -4) (crate_single_top)
+  m_Name: Tile (0, 0) (crate_single_top)
   m_TagString: Tile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -355,11 +354,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tileData: {fileID: 11400000, guid: e2f2ce59885ef274aa6367cbe3e750d6, type: 2}
-  Coordinates: {x: 9, y: -4}
+  foregroundLayerID: 0
   spriteRenderer: {fileID: 5868209887538516533}
   coll: {fileID: 120403079232209228}
   shadowCaster2D: {fileID: 7905582891064794267}
-  foregroundLayerID: 0
 --- !u!114 &7905582891064794267
 MonoBehaviour:
   m_ObjectHideFlags: 0

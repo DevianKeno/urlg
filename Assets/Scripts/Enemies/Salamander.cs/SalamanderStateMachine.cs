@@ -1,6 +1,6 @@
-using RL.Systems;
+using URLG.Systems;
 
-namespace RL.Enemies
+namespace URLG.Enemies
 {
     public enum SalamanderStates
     {

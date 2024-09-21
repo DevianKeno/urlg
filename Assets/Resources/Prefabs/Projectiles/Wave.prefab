@@ -181,7 +181,7 @@ SortingGroup:
   m_GameObject: {fileID: 2947179042123142427}
   m_Enabled: 1
   m_SortingLayerID: -802031011
-  m_SortingLayer: 7
+  m_SortingLayer: 6
   m_SortingOrder: 0
   m_SortAtRoot: 0
 --- !u!50 &2264598391690711136
@@ -268,8 +268,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c55c061996d496c4cab5c36ff10d62d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ProjectileData: {fileID: 11400000, guid: 632ff44275eea964ab9eddac9c1dfa29, type: 2}
-  Owner: {fileID: 0}
+  projectileData: {fileID: 11400000, guid: 632ff44275eea964ab9eddac9c1dfa29, type: 2}
+  owner: {fileID: 0}
   rb: {fileID: 0}
   spriteRenderer: {fileID: 0}
   DissipateTime: 0.25

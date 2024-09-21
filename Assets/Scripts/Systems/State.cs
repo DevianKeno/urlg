@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace RL.Systems
+namespace URLG.Systems
 {
     /// <summary>
     /// Base state representation.

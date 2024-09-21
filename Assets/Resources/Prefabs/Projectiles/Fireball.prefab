@@ -305,8 +305,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 554e0b572b3850b4da38a9f89f527b07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ProjectileData: {fileID: 11400000, guid: 947291abd97c3da4b8197f1bb04065d6, type: 2}
-  Owner: {fileID: 0}
+  projectileData: {fileID: 11400000, guid: 947291abd97c3da4b8197f1bb04065d6, type: 2}
+  owner: {fileID: 0}
   rb: {fileID: -6031769548602492108}
   spriteRenderer: {fileID: 1617278670175395152}
 --- !u!1 &9140829053785194162

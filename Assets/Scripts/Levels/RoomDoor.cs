@@ -1,88 +1,103 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
+using static URLG.Generator.Generator.Map;
 
-namespace RL.Levels
+namespace URLG.Levels
 {
     public enum DoorwayFacing { 
         North, South, East, West
     }
 
-    public enum RoomWayType {
+    public enum DoorwayType {
         Wall, Door
     }
 
     public class RoomDoor : MonoBehaviour
     {
         public bool IsOpen;
-        public RoomWayType WayType;
-        public DoorwayFacing DoorwayFacing;
+
+        DoorwayType doorwayType;
+        public DoorwayType DoorwayType
+        {
+            get
+            {
+                return doorwayType;
+            }
+            set
+            {
+                doorwayType = value;
+                ReinitializeDoorway();
+            }
+        }
+        public Cardinal Direction;
+
         public GameObject WallTiles;
         public GameObject DoorTiles;
+        public GameObject BarsTiles;
 
         void OnValidate()
         {
-            if (Application.isPlaying) return;
+            if (gameObject.activeInHierarchy)
+            {
+                ReinitializeDoorway();
+                SetDoorsOpen(IsOpen);
+            }
+        }
 
-            ReinitializeDoorways();
+        public void ReinitializeDoorway()
+        {
+            if (DoorwayType == DoorwayType.Wall)
+            {
+                DoorTiles?.SetActive(false);
+
+                WallTiles?.SetActive(true);
+                
+            }
+            else if (DoorwayType == DoorwayType.Door)
+            {
+                WallTiles?.SetActive(false);
+
+                DoorTiles?.SetActive(true);
+            }
+            
             SetDoorsOpen(IsOpen);
         }
 
-        void ReinitializeDoorways()
+        public void Open()
         {
-            if (WayType == RoomWayType.Wall)
-            {
-                if (WallTiles != null)
-                {
-                    WallTiles.SetActive(true);
-                }
-                if (DoorTiles != null)
-                {
-                    DoorTiles.SetActive(true);
-                }
-            }
-            else if (WayType == RoomWayType.Door)
-            {
-                if (WallTiles != null)
-                {
-                    WallTiles.SetActive(false);
-                }
-                if (DoorTiles != null)
-                {
-                    DoorTiles.SetActive(true);
-                }
-            }
-        }
-
-        public void SetWayTypeAsDoor(bool value)
-        {
-            if (value)
-            {
-                WayType = RoomWayType.Door;
-            }
-            else
-            {
-                WayType = RoomWayType.Wall;
-            }
-            ReinitializeDoorways();
-        }
-
-        public void SetDoorsOpen(bool open)
-        {
-            if (WayType == RoomWayType.Wall)
+            if (DoorwayType == DoorwayType.Wall)
             {
                 return;
             }
 
-            foreach (Transform child in DoorTiles.transform)
+            BarsTiles?.SetActive(false);
+        }
+
+        public void Close()
+        {
+            if (DoorwayType == DoorwayType.Wall)
             {
-                child.gameObject.SetActive(!open);
+                return;
             }
+
+            BarsTiles?.SetActive(true);
+        }
+
+        public void SetDoorsOpen(bool isOpen)
+        {
+            if (DoorwayType == DoorwayType.Wall)
+            {
+                return;
+            }
+
+            BarsTiles?.SetActive(!isOpen);
         }
 
         public void ShutClosed()
         {
-            if (WayType == RoomWayType.Wall)
+            if (DoorwayType == DoorwayType.Wall)
             {
                 return;
             }
@@ -91,6 +106,7 @@ namespace RL.Levels
             {
                 child.gameObject.SetActive(true);
             }
+
             Game.Audio.PlaySound("door_close");
         }
     }

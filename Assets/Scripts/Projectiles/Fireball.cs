@@ -1,16 +1,16 @@
 using UnityEngine;
-using RL.Enemies;
-using RL.Systems;
-using RL.Levels;
+using URLG.Enemies;
+using URLG.Systems;
+using URLG.Levels;
 
-namespace RL.Projectiles
+namespace URLG.Projectiles
 {
     public class Fireball : Projectile
     {
         protected override void Start()
         {
             base.Start();
-            Owner.Stats.Stats.UseCountFire++;
+            
             Game.Telemetry.PlayerStats["useCountFire"].Increment();
             Game.Audio.PlaySound("fire_shoot");
         }
@@ -35,7 +35,7 @@ namespace RL.Projectiles
         protected override void OnHitEnemy(IDamageable hit)
         {
             hit.TakeDamage(Data.Damage);
-            Owner.Stats.Stats.HitCountFire++;
+            
             Game.Telemetry.PlayerStats["hitCountFire"].Increment();
             Destroy(gameObject);
         }

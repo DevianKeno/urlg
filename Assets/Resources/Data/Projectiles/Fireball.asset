@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Fireball
   m_EditorClassIdentifier: 
   Name: Fireball
-  Sprite: {fileID: 0}
+  Sprite: {fileID: 384110288, guid: d0e34aa9ce3d81f408166876b9d2dfea, type: 3}
   Speed: 3
   Damage: 10
   DespawnAfter: 5

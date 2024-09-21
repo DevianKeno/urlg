@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace RL.Levels
+namespace URLG.Levels
 {
     [Serializable]
     [CreateAssetMenu(fileName = "Tile", menuName = "RL/Tile")]

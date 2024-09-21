@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace RL
+namespace URLG
 {
     public class UIManager : MonoBehaviour
     {

@@ -6,41 +6,45 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
-using RL.Weapons;
-using RL.Projectiles;
-using RL.Systems;
+using URLG.Weapons;
+using URLG.Projectiles;
+using URLG.Systems;
+using System.Collections.Generic;
 
-namespace RL.Player
+namespace URLG.Player
 {
     public class PlayerController : MonoBehaviour
     {
+        public const float InvincibilityFrameSeconds = 0.5f;
+
         public float Health = 100f;
         public float MoveSpeed = 7f;
         public float Acceleration = 0.3f;
+
         public Weapon Equipped;
         public Weapon Primary;
         public Weapon Secondary;
         public Weapon Tertiary;
 
+        bool _isHoldingFire;
         bool _isInvincible;
+        float _fireRateDelta;
         Vector2 _frameMovement;
         Vector2 _currentVelocity;
-        float _fireRateDelta;
 
         [Header("Components")]
         [SerializeField] PlayerStateMachine stateMachine;
-        public PlayerStateMachine sm => stateMachine;
+        public PlayerStateMachine StateMachine => stateMachine;
         [SerializeField] PlayerAnimator animator;
-        [SerializeField] PlayerStatsManager stats;
-        public PlayerStatsManager Stats => stats;
+        // [SerializeField] PlayerStatsManager stats;
+        // public PlayerStatsManager Stats => stats;
+
         [SerializeField] Rigidbody2D rb;
+        public Rigidbody2D Rigidbody2D => rb;
         [SerializeField] SpriteRenderer spriteRenderer;
 
         PlayerInput input;
-        InputAction move;
-        InputAction shoot;
-        InputAction swap;
-        InputAction cheats;
+        Dictionary<string, InputAction> inputs = new();
 
         [Space(10)]
         public bool EnableCheats;
@@ -49,46 +53,102 @@ namespace RL.Player
         [SerializeField] Weapon Wave;
 
 
+        #region Initializing methods
+
         void Awake()
         {
-            // rb = GetComponent<Rigidbody2D>();
             input = GetComponent<PlayerInput>();
-            // spriteRenderer = GetComponentInChildren<SpriteRenderer>();
-            
-            // tileBackLayer = SortingLayer.NameToID("Tiles Back");
-            // tileFrontLayer = SortingLayer.NameToID("Tiles Front");
         }
 
         void Start()
         {
+            InitializeInputs();
+
+            StateMachine.OnStateChanged += animator.StateChangedCallback;
+            StateMachine.ToState(PlayerStates.Idle);
+        }
+
+        void InitializeInputs()
+        {
             var map = input.actions.FindActionMap("Player");
-            move = map.FindAction("Move");
-            shoot = map.FindAction("Shoot");
-            swap = map.FindAction("Swap Weapons");
-            cheats = map.FindAction("Cheats");
-
-            move.performed += (c) =>
+            string[] getInputs = new[]
             {
-                _frameMovement = c.ReadValue<Vector2>();
-                sm.ToState(PlayerStates.Move);
+                "Move", "Shoot", "Swap Weapons", "Cheats",
             };
-            move.canceled += (c) =>
-            {
-                _frameMovement = Vector2.zero;
-                sm.ToState(PlayerStates.Idle);
-            };
-            shoot.performed += ShootCallback;
-            swap.performed += SwapCallback;
 
-            shoot.Enable();
-            move.Enable();
+            foreach (var str in getInputs)
+            {
+                var inputAction = map.FindAction(str);
+                if (inputAction != null)
+                {
+                    inputs[str] = inputAction;
+                }
+            }
+
+            inputs["Move"].performed += OnInputMove;
+            inputs["Move"].canceled += OnInputMove;
+
+            inputs["Shoot"].started += OnInputShoot;
+            inputs["Shoot"].canceled += OnInputShoot;
+
+            inputs["Swap Weapons"].performed += OnInputSwap;
+            inputs["Cheats"].started += OnInputCheats;
+
+            inputs["Shoot"].Enable();
+            inputs["Swap Weapons"].Enable();
+
             if (EnableCheats)
             {
-                cheats.performed += CheatsCallback;
-                cheats.Enable();
+                inputs["Cheats"].Enable();
             }
-            sm.OnStateChanged += animator.StateChangedCallback;
-            sm.ToState(PlayerStates.Idle);
+            else
+            {
+                inputs["Cheats"].Disable();
+            }
+        }
+
+        #endregion
+
+
+        void Update()
+        {
+            _fireRateDelta += Time.deltaTime;
+
+            if (_isHoldingFire)
+            {
+                Shoot();
+            }
+            
+            if (Input.GetKey(KeyCode.LeftControl))
+            {
+                if (Input.GetKey(KeyCode.O))
+                {
+                    Game.Files.OpenSaveFolder();
+                }
+            }
+            if (Input.GetKey(KeyCode.P))
+            {
+                Game.Files.OpenSaveFolder();
+            }
+        }
+
+        void FixedUpdate()
+        {
+            Vector2 targetVelocity = _frameMovement * MoveSpeed;
+            _currentVelocity = Vector2.Lerp(_currentVelocity, targetVelocity, Acceleration * Time.fixedDeltaTime);
+            rb.velocity = _currentVelocity;
+            FlipSprite();
+        }
+
+        void OnTriggerEnter2D(Collider2D collider)
+        {
+            var other = collider.gameObject;
+            
+            if (other.CompareTag("Enemy"))
+            {
+                TakeDamage(1);
+                return;
+            }
         }
 
         void FlipSprite()
@@ -100,27 +160,6 @@ namespace RL.Player
             else if (rb.velocity.x < 0)
             {
                 spriteRenderer.flipX = true;
-            }
-        }
-
-        void Update()
-        {
-            _fireRateDelta += Time.deltaTime;
-            if (shoot.IsPressed())
-            {
-                Shoot();
-            }
-        }
-
-
-        void OnTriggerEnter2D(Collider2D collider)
-        {
-            var other = collider.gameObject;
-            
-            if (other.CompareTag("Enemy"))
-            {
-                TakeDamage(1);
-                return;
             }
         }
 
@@ -158,73 +197,106 @@ namespace RL.Player
 
         IEnumerator InvincibilityFrameCoroutine()
         {
-            yield return new WaitForSeconds(0.5f);
+            _isInvincible = true;
+            yield return new WaitForSeconds(InvincibilityFrameSeconds);
             _isInvincible = false;
         }
 
-        void FixedUpdate()
+
+        #region Player input callbacks
+        
+        void OnInputMove(InputAction.CallbackContext context)
         {
-            Vector2 targetVelocity = _frameMovement * MoveSpeed;
-            _currentVelocity = Vector2.Lerp(_currentVelocity, targetVelocity, Acceleration * Time.fixedDeltaTime);
-            rb.velocity = _currentVelocity;
-            FlipSprite();
+            if (context.performed)
+            {
+                _frameMovement = context.ReadValue<Vector2>();
+                StateMachine.ToState(PlayerStates.Move);
+            }
+            else if (context.canceled)
+            {
+                _frameMovement = Vector2.zero;
+                StateMachine.ToState(PlayerStates.Idle);
+            }
         }
 
-        void CheatsCallback(InputAction.CallbackContext context)
+        void OnInputShoot(InputAction.CallbackContext context)
+        {
+            if (context.started)
+            {
+                _isHoldingFire = true;
+            }
+            else if (context.canceled)
+            {
+                _isHoldingFire = false;
+            }
+        }
+
+        void OnInputSwap(InputAction.CallbackContext context)
+        {
+            if (context.performed)
+            {
+                if (Equipped == Primary)
+                {
+                    Equipped = Secondary;
+                }
+                else
+                {
+                    Equipped = Primary;
+                }
+            }
+        }
+
+        void OnInputCheats(InputAction.CallbackContext context)
         {            
             if (!int.TryParse(context.control.displayName, out int index)) return;
+
             Equipped = index switch
             {
                 1 => Fireball,
                 2 => Laser,
                 3 => Wave,
-                _ => throw new NotImplementedException(),
+                _ => throw new ArgumentOutOfRangeException(),
             };
         }
 
-        void SwapCallback(InputAction.CallbackContext c)
-        {
-            if (c.ReadValue<float>() != 0)
-            {
-                Equipped = Equipped == Primary ? Secondary : Primary;
-            }
-        }
+        #endregion
 
-        void ShootCallback(InputAction.CallbackContext c)
-        {
-            if (Equipped == null) return;
-            Shoot();
-        }
 
-        public void SaveStats()
-        {
-            try
-            {
-                string directory = Path.Combine(Application.persistentDataPath, "statistics");
-                if (!Directory.Exists(directory))
-                {
-                    Directory.CreateDirectory(directory);
-                }
+        #region Public methods
 
-                var path = Path.Combine(Application.persistentDataPath, "statistics", $"test.json");
-                string json = JsonUtility.ToJson(stats.Stats);
-                File.WriteAllText(path, json);
-                Debug.Log($"PlayerStats saved to {path}");
-            } catch
-            {
-            }
-        }
+        // public void SaveStats()
+        // {
+        //     try
+        //     {
+        //         string directory = Path.Combine(Application.persistentDataPath, "saves");
+        //         if (!Directory.Exists(directory))
+        //         {
+        //             Directory.CreateDirectory(directory);
+        //         }
 
-        public void Shoot()
+        //         var path = Path.Combine(Application.persistentDataPath, "saves", $"playerdata.json");
+        //         string json = JsonUtility.ToJson(stats.Stats);
+        //         File.WriteAllText(path, json);
+        //         Debug.Log($"PlayerStats saved to {path}");
+        //     } catch
+        //     {
+        //     }
+        // }
+
+        #endregion
+
+
+        void Shoot()
         {
             if (_fireRateDelta < Equipped.FireRate) return;
-            sm.ToState(PlayerStates.Shoot); // This should be locked
+
+            StateMachine.ToState(PlayerStates.Shoot); /// This should be locked
             
             _fireRateDelta = 0f;
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             mousePos.z = 0f;
 
-            Vector3 spawnOffset = (mousePos - transform.position).normalized * 0.5f; // Adjust the forward distance here
+            Vector3 spawnOffset = (mousePos - transform.position).normalized * 0.5f; /// Adjust the forward distance here
             Vector3 spawnPosition = transform.position + spawnOffset;
 
             Vector3 direction = (mousePos - spawnPosition).normalized;
@@ -234,7 +306,7 @@ namespace RL.Player
             GameObject projectileGO = Instantiate(Equipped.ProjectileData.Object, spawnPosition, rotation);
             if (projectileGO.TryGetComponent(out Projectile projectile))
             {
-                projectile.Owner = this;
+                projectile.SetOwner(this);
                 projectile.SetDirection(direction);
             }
         }

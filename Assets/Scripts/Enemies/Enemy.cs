@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace RL.Enemies
+namespace URLG.Enemies
 {    
     public class Enemy : MonoBehaviour, IDamageable
     {

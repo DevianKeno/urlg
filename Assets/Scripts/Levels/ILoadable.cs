@@ -1,7 +1,10 @@
 using UnityEngine;
 
-namespace RL
+namespace URLG
 {
+    /// <summary>
+    /// Represents objects that can be loaded/unloaded.
+    /// </summary>
     public interface ILoadable
     {
         public GameObject Content { get; set; }

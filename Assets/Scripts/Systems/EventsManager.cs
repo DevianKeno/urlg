@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace RL
+namespace URLG
 {
     public class EventsManager : MonoBehaviour
     {

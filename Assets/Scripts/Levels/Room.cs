@@ -1,23 +1,73 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+
 using UnityEngine;
-using UnityEngine.Rendering;
-using RL.Enemies;
-using RL.Systems;
 
-public enum WeaponType { Fireball, Beam, Wave }
+using URLG.Enemies;
+using URLG.Telemetry;
 
-namespace RL.Levels
+using static URLG.Generator.Generator.Map;
+
+public enum WeaponType {
+    Fireball, Beam, Wave
+}
+
+namespace URLG.Levels
 {
+    public interface IStatistic
+    {
+        public int Value { get; set; }
+        public void Increment();
+        public void Decrement();
+    }
+
+    public enum WeaponType {
+        Fireball, Beam, Wave
+    }
+
+
+    public class TypeofWeapon
+    {
+        protected WeaponType value;
+        public WeaponType Value => value;
+
+        public TypeofWeapon(WeaponType value)
+        {
+            this.value = value;
+        }
+    }
+
+    public struct EnemyCount<T> : IStatistic where T : TypeofWeapon
+    {
+        int value;
+        public int Value
+        {
+            get => value;
+            set => this.value = value;
+        }
+
+        public void Increment()
+        {
+            value++;
+        }
+
+        public void Decrement()
+        {
+            value--;
+        }
+    }
+
     public struct RoomData
     {
-        public int EnemyCountFire;
-        public int EnemyCountBeam;
-        public int EnemyCountWave;
-        public int ObstacleCountFire;
-        public int ObstacleCountBeam;
-        public int ObstacleCountWave;
+        public Dictionary<Cardinal, RoomData> Neighbors { get; set; }
+
+        public int EnemyCountFire { get; set; }
+        public int EnemyCountBeam { get; set; }
+        public int EnemyCountWave { get; set; }
+        public int ObstacleCountFire { get; set; }
+        public int ObstacleCountBeam { get; set; }
+        public int ObstacleCountWave { get; set; }
     }
 
     public class Room : MonoBehaviour, ILoadable
@@ -57,7 +107,9 @@ namespace RL.Levels
         [SerializeField] RoomDoor eastDoor;
         [SerializeField] RoomDoor westDoor;
 
+
         #region Properties
+
         public int EnemyCount
         {
             get => 0;
@@ -67,7 +119,11 @@ namespace RL.Levels
             get => 0;
         }
         public int TargetCount => EnemyCount + ObstacleCount;
+
         #endregion
+
+
+        #region Initializing methods
 
         public void Initialize()
         {
@@ -103,6 +159,19 @@ namespace RL.Levels
             _roomStats = new(roomStats);
         }
 
+
+        public void InitializeTiles()
+        {
+            foreach (Tile t in tiles)
+            {
+                t.Initialize();
+            }
+            northDoor.SetDoorsOpen(HasNorthDoor);
+            southDoor.SetDoorsOpen(HasSouthDoor);
+            eastDoor.SetDoorsOpen(HasEastDoor);
+            westDoor.SetDoorsOpen(HasWestDoor);
+        }
+
         void ProcessTileLayer(GameObject layer, int layerIndex, ref int minX, ref int maxX, ref int minY, ref int maxY)
         {
             layer.name = $"Layer {layerIndex} ({layer.GetComponent<RoomTileLayer>().LayerName})";
@@ -124,10 +193,10 @@ namespace RL.Levels
             tiles.Add(tile);
 
             Vector3 position = tile.transform.position;
-            minX = Mathf.Min(minX, (int)position.x);
-            maxX = Mathf.Max(maxX, (int)position.x);
-            minY = Mathf.Min(minY, (int)position.y);
-            maxY = Mathf.Max(maxY, (int)position.y);
+            minX = Mathf.Min(minX, (int) position.x);
+            maxX = Mathf.Max(maxX, (int) position.x);
+            minY = Mathf.Min(minY, (int) position.y);
+            maxY = Mathf.Max(maxY, (int) position.y);
         }
 
         void CalculateBounds(int minX, int maxX, int minY, int maxY)
@@ -136,23 +205,56 @@ namespace RL.Levels
             maxBounds = new(maxX, maxY);
             
             Debug.Log($"Bounds - Min: {minBounds}, Max: {maxBounds}");
-    
         }
 
         void InitializeDoors()
         {
-            northDoor.SetWayTypeAsDoor(HasNorthDoor);
-            southDoor.SetWayTypeAsDoor(HasSouthDoor);
-            eastDoor.SetWayTypeAsDoor(HasEastDoor);
-            westDoor.SetWayTypeAsDoor(HasWestDoor);
+            var door = DoorwayType.Door;
+            var wall = DoorwayType.Wall;
+
+            northDoor.DoorwayType = HasNorthDoor ? door : wall;
+            southDoor.DoorwayType = HasSouthDoor ? door : wall;
+            eastDoor.DoorwayType = HasEastDoor ? door : wall;
+            westDoor.DoorwayType = HasWestDoor ? door : wall;
         }
 
-        internal IEnumerator OnPlayerEntry()
+        #endregion
+
+        
+        void OnValidate()
         {
-            ShutDoors();
-            GenerateContent();
-            // CountFeatures();
-            yield return null;
+            if (gameObject.activeInHierarchy)
+            {
+                InitializeDoors();
+            }
+        }
+
+
+        #region Public methods
+
+        static Room CreateRoomStart()
+        {
+            throw new NotImplementedException();
+        }
+
+        static Room CreateRoomEnd()
+        {
+            throw new NotImplementedException();
+        }
+
+        static Room CreateRoomStandard()
+        {
+            throw new NotImplementedException();
+        }
+
+        static Room CreateRoomKey()
+        {
+            throw new NotImplementedException();
+        }
+
+        static Room CreateRoomLock()
+        {
+            throw new NotImplementedException();
         }
 
         public void ShutDoors()
@@ -160,95 +262,20 @@ namespace RL.Levels
             StartCoroutine(nameof(ShutDoorsCoroutine));
         }
 
-        IEnumerator ShutDoorsCoroutine()
+        public void GenerateFeatures()
         {
-            yield return new WaitForSeconds(0.2f);
-            
-            if (HasNorthDoor)
-            {
-                northDoor?.SetDoorsOpen(false);
-            }
-            if (HasSouthDoor)
-            {
-                southDoor?.SetDoorsOpen(false);
-            }
-            if (HasEastDoor)
-            {
-                eastDoor?.SetDoorsOpen(false);
-            }
-            if (HasWestDoor)
-            {
-                westDoor?.SetDoorsOpen(false);
-            }
-        }
-
-        public void InitializeTiles()
-        {
-            foreach (Tile t in tiles)
-            {
-                t.Initialize();
-            }
-            northDoor.SetDoorsOpen(HasNorthDoor);
-            southDoor.SetDoorsOpen(HasSouthDoor);
-            eastDoor.SetDoorsOpen(HasEastDoor);
-            westDoor.SetDoorsOpen(HasWestDoor);
+            GenerateContent();
         }
 
         public void GenerateContent()
         {
+#if UNITY_EDITOR 
+            GenerateObstaclesRandomEditor();
+            GenerateEnemiesRandomEditor();
+#else
             GenerateObstaclesRandom();
             GenerateEnemiesRandom();
-        }
-
-        public void GenerateObstaclesRandom()
-        {
-            /// 0, 7 are limiters, arbitrary values
-            var fireObstacleCount = UnityEngine.Random.Range(0, 7);
-            var beamObstacleCount = UnityEngine.Random.Range(0, 7);
-            var waveObstacleCount = UnityEngine.Random.Range(0, 7);
-            
-            var rand = GetRandomCoordinates(fireObstacleCount);
-            foreach (var coord in rand)
-            {
-                var obstacle = Game.Tiles.PlaceObstacle("glass_single_bottom", coord);
-                obstacle.transform.SetParent(obstaclesLayer.transform);
-            }
-            
-            rand = GetRandomCoordinates(beamObstacleCount);
-            foreach (var coord in rand)
-            {
-                var obstacle = Game.Tiles.PlaceObstacle("crate_single_bottom", coord);
-                obstacle.transform.SetParent(obstaclesLayer.transform);
-            }
-            
-            rand = GetRandomCoordinates(waveObstacleCount);
-            foreach (var coord in rand)
-            {
-                
-            }
-            /// Re-initialize
-            Initialize();
-        }
-        
-
-        void GenerateEnemiesRandom()
-        {
-            var fireEnemyCount = UnityEngine.Random.Range(0, 10);
-            var beamEnemyCount = UnityEngine.Random.Range(0, 10);
-            var waveEnemyCount = UnityEngine.Random.Range(0, 10);
-        }
-
-        List<Vector2Int> GetRandomCoordinates(int count)
-        {
-            List<Vector2Int> positions = new();
-
-            for (int i = 0; i < count; i++)
-            {
-                int x = UnityEngine.Random.Range((int) minBounds.x, (int) maxBounds.x);
-                int y = UnityEngine.Random.Range((int) minBounds.y, (int) maxBounds.y);
-                positions.Add(new Vector2Int(x, y));
-            }
-            return positions;
+#endif
         }
 
         public void CountFeatures()
@@ -302,8 +329,95 @@ namespace RL.Levels
             Content.SetActive(false);
         }
 
-        #region Editor
+        #endregion
+
+
+        IEnumerator ShutDoorsCoroutine()
+        {
+            yield return new WaitForSeconds(0.2f);
+            
+            if (HasNorthDoor)
+            {
+                northDoor?.SetDoorsOpen(false);
+            }
+            if (HasSouthDoor)
+            {
+                southDoor?.SetDoorsOpen(false);
+            }
+            if (HasEastDoor)
+            {
+                eastDoor?.SetDoorsOpen(false);
+            }
+            if (HasWestDoor)
+            {
+                westDoor?.SetDoorsOpen(false);
+            }
+        }
+
+        List<Vector2Int> GetRandomCoordinates(int count)
+        {
+            List<Vector2Int> positions = new();
+
+            for (int i = 0; i < count; i++)
+            {
+                int x = UnityEngine.Random.Range((int) minBounds.x, (int) maxBounds.x);
+                int y = UnityEngine.Random.Range((int) minBounds.y, (int) maxBounds.y);
+                positions.Add(new Vector2Int(x, y));
+            }
+            return positions;
+        }
         
+
+        internal IEnumerator OnPlayerEntry()
+        {
+            ShutDoors();
+            GenerateContent();
+            // CountFeatures();
+            yield return null;
+        }
+
+        void GenerateObstaclesRandom()
+        {
+            /// 0, 7 are limiters, arbitrary values
+            var fireObstacleCount = UnityEngine.Random.Range(0, 7);
+            var beamObstacleCount = UnityEngine.Random.Range(0, 7);
+            var waveObstacleCount = UnityEngine.Random.Range(0, 7);
+            
+            var rand = GetRandomCoordinates(fireObstacleCount);
+            foreach (var coord in rand)
+            {
+                var obstacle = Game.Tiles.PlaceObstacle("glass_single_bottom", coord);
+                obstacle.transform.SetParent(obstaclesLayer.transform);
+            }
+            
+            rand = GetRandomCoordinates(beamObstacleCount);
+            foreach (var coord in rand)
+            {
+                var obstacle = Game.Tiles.PlaceObstacle("crate_single_bottom", coord);
+                obstacle.transform.SetParent(obstaclesLayer.transform);
+            }
+            
+            rand = GetRandomCoordinates(waveObstacleCount);
+            foreach (var coord in rand)
+            {
+                
+            }
+            /// Re-initialize
+            Initialize();
+        }
+
+        
+
+        void GenerateEnemiesRandom()
+        {
+            var fireEnemyCount = UnityEngine.Random.Range(0, 10);
+            var beamEnemyCount = UnityEngine.Random.Range(0, 10);
+            var waveEnemyCount = UnityEngine.Random.Range(0, 10);
+        }
+
+
+        #region Editor
+#if UNITY_EDITOR
         public void SetDoorsEditor(bool open)
         {
             northDoor?.SetDoorsOpen(open);
@@ -312,6 +426,36 @@ namespace RL.Levels
             westDoor?.SetDoorsOpen(open);
         }
 
+        public void GenerateObstaclesRandomEditor()
+        {
+            var fireObstacleCount = UnityEngine.Random.Range(0, 7);
+            var beamObstacleCount = UnityEngine.Random.Range(0, 7);
+            var waveObstacleCount = UnityEngine.Random.Range(0, 7);
+
+            // PrefabUtility.InstantiatePrefab()
+        }
+
+        public void GenerateEnemiesRandomEditor()
+        {
+            var fireObstacleCount = UnityEngine.Random.Range(0, 7);
+            var beamObstacleCount = UnityEngine.Random.Range(0, 7);
+            var waveObstacleCount = UnityEngine.Random.Range(0, 7);
+
+            // PrefabUtility.InstantiatePrefab()
+        }
+
+        public RoomDoor GetDoor(Cardinal direction)
+        {
+            return direction switch
+            {
+                Cardinal.North => northDoor,
+                Cardinal.South => southDoor,
+                Cardinal.East => eastDoor,
+                Cardinal.West => westDoor,
+                _ => throw new ArgumentOutOfRangeException()
+            };
+        }
+#endif
         #endregion
     }
 }

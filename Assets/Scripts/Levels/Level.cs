@@ -1,17 +1,47 @@
+using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
-using RL.Generator;
+using URLG.CellularAutomata;
+using static URLG.Generator.Generator.Map;
 
-namespace RL.Levels
+namespace URLG.Levels
 {
     public class Level : MonoBehaviour
     {
-        List<Room> rooms = new();
-        List<Vector2Int> cells = new();
+        public int RoomCount = 1;
+        public List<Room> Rooms = new();
 
-        public void CreateLevel()
+        void Start()
         {
-            var ctx = "Level = start > Content > end;";
+            GenerateLevel();
+        }
+
+        public void GenerateLevel()
+        {
+            var settings = new NoiseGridSettings()
+            {
+                Width = 48,
+                Height = 32,
+                Density = 0,
+            };
+
+            var generatedRooms = Game.CA.GenerateRooms(RoomCount);
+
+            foreach (var gr in generatedRooms)
+            {
+                var newRoom = Game.Generator.InstantiateRoom(gr.x, gr.y);
+                
+                foreach (var n in gr.Neighbors)
+                {
+                    var direction = n.Key;
+                    var door = newRoom.GetDoor(direction);
+                    door.DoorwayType = DoorwayType.Door;
+                    door.Open();
+                }
+                
+                Rooms.Add(newRoom);
+            }
         }
     }
 }

@@ -1,9 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
-using RL.Projectiles;
+using URLG.Projectiles;
 using UnityEngine;
 
-namespace RL
+namespace URLG
 {    
     public class AntiWaveArea : MonoBehaviour
     {

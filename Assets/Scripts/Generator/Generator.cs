@@ -1,15 +1,18 @@
 using System;
 using System.Collections.Generic;
-using RL.Enemies;
-using RL.Levels;
+using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using UnityEngine;
+
+using URLG.Enemies;
+
+using URLG.Levels;
 using Random = UnityEngine.Random;
 
-namespace RL.Generator
+namespace URLG.Generator
 {
     public class Generator : MonoBehaviour
     {
-        [Header("Create")]
+        [Header("Creation Parameters")]
         public string TileId;
         public Vector2Int Cell;
 
@@ -31,11 +34,34 @@ namespace RL.Generator
 
         [SerializeField] GameObject enemiesContainer;
         
+
+        #region Prefabs
         [SerializeField] GameObject tilePrefab;
         [SerializeField] GameObject roomPrefab;
-
         [SerializeField] GameObject salamanPrefab;
+
+        #endregion
+
+
+        #region Public methods
         
+        public Room InstantiateRoom(int x, int y)
+        {
+            var prefab = Resources.Load<GameObject>("Prefabs/Rooms/ROOM_BASE");
+            var go = Instantiate(prefab, transform);
+            var room = go.GetComponent<Room>();
+            
+            go.transform.SetPositionAndRotation(
+                new Vector3(
+                    x * 22,
+                    (y * 16) - (y),
+                    0f),
+                Quaternion.identity
+            );
+            
+            return room;
+        }
+
         public void RegenerateEnemies()
         {
             Game.Telemetry.RoomStats.Reset();
@@ -76,12 +102,8 @@ namespace RL.Generator
             };
         }
 
-        public void GenerateRoom()
-        {
-            var roomData = CreateRandomizedContent();
+        #endregion
 
-
-        }
 
         void CreateWall(Vector2Int coordinates)
         {
@@ -91,6 +113,21 @@ namespace RL.Generator
             //     tile.SetCoordinates(coordinates);
             //     room.Tiles.Add(tile);
             // }
+        }
+
+        public class Map
+        {
+            public enum Cardinal {
+                North, South, East, West
+            }
+
+            Dictionary<Cardinal, GameObject> data = new();
+
+
+            public void Generate()
+            {
+                
+            }
         }
     }
 }

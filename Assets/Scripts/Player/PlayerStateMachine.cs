@@ -1,6 +1,6 @@
-using RL.Systems;
+using URLG.Systems;
 
-namespace RL.Player
+namespace URLG.Player
 {
     public class PlayerStateMachine : StateMachine<PlayerStates>
     {

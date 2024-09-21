@@ -203,10 +203,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsOpen: 0
-  WayType: 0
-  DoorwayFacing: 0
+  Direction: 0
   WallTiles: {fileID: 0}
   DoorTiles: {fileID: 0}
+  BarsTiles: {fileID: 0}
 --- !u!1 &2499795946859002831
 GameObject:
   m_ObjectHideFlags: 0
@@ -589,10 +589,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsOpen: 0
-  WayType: 0
-  DoorwayFacing: 0
+  Direction: 0
   WallTiles: {fileID: 0}
   DoorTiles: {fileID: 0}
+  BarsTiles: {fileID: 0}
 --- !u!1 &6845071295310421403
 GameObject:
   m_ObjectHideFlags: 0
@@ -645,7 +645,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9381dd489b02834bad14efc1f97a155, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Content: {fileID: 0}
+  content: {fileID: 0}
   minBounds: {x: 0, y: 0}
   maxBounds: {x: 0, y: 0}
   tilesContainer: {fileID: 0}
@@ -725,10 +725,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsOpen: 0
-  WayType: 0
-  DoorwayFacing: 0
+  Direction: 0
   WallTiles: {fileID: 0}
   DoorTiles: {fileID: 0}
+  BarsTiles: {fileID: 0}
 --- !u!1 &9220572186718144076
 GameObject:
   m_ObjectHideFlags: 0
@@ -792,10 +792,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsOpen: 0
-  WayType: 0
-  DoorwayFacing: 0
+  Direction: 0
   WallTiles: {fileID: 0}
   DoorTiles: {fileID: 0}
+  BarsTiles: {fileID: 0}
 --- !u!1001 &667527392965700
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -818,7 +818,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (10, -4) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -920,7 +920,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (6, -4) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1022,7 +1022,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (10, 0) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1124,7 +1124,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (4, -10) (Stone Wall)
+      value: Tile (0, 0) (Stone Wall)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1243,7 +1243,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (6, 0) (Stone Wall)
+      value: Tile (0, 0) (Stone Wall)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1354,7 +1354,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (16, -8) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1456,7 +1456,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (0, -8) (Stone Wall Top)
+      value: Tile (0, 0) (Stone Wall Top)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1563,7 +1563,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (14, -4) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1665,7 +1665,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (10, -6) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1767,7 +1767,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (18, -6) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1873,7 +1873,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (18, 0) (Stone Wall)
+      value: Tile (0, 0) (Stone Wall)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1984,7 +1984,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (8, 0) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2082,7 +2082,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (20, -4) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2184,7 +2184,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (6, -4) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2286,7 +2286,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (8, -6) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2388,7 +2388,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (2, -6) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2490,7 +2490,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (14, -6) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2596,7 +2596,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (2, -10) (Stone Wall)
+      value: Tile (0, 0) (Stone Wall)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2715,7 +2715,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (8, -10) (Bars Horizontal)
+      value: Tile (0, 0) (Bars Horizontal)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2830,7 +2830,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (0, -10) (Stone Wall Top)
+      value: Tile (0, 0) (Stone Wall Top)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2937,7 +2937,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (4, -8) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3039,7 +3039,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (8, -8) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3141,7 +3141,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (14, -10) (Stone Wall Top)
+      value: Tile (0, 0) (Stone Wall Top)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3252,7 +3252,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (18, -8) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3358,7 +3358,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (0, -10) (Stone Wall)
+      value: Tile (0, 0) (Stone Wall)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3469,7 +3469,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (10, -2) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3571,7 +3571,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (10, -10) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3677,7 +3677,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (20, -2) (Stone Wall)
+      value: Tile (0, 0) (Stone Wall)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3792,7 +3792,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (10, -4) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3894,7 +3894,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (4, 0) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3992,7 +3992,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (2, -8) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4094,7 +4094,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (6, -6) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4196,7 +4196,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (6, 0) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4294,7 +4294,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (14, -6) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4396,7 +4396,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (8, -4) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4498,7 +4498,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (12, -2) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4600,7 +4600,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (2, -8) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4702,7 +4702,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (2, -4) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4804,7 +4804,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (10, -4) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4906,7 +4906,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (16, -6) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5008,7 +5008,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (2, -8) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5110,7 +5110,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (12, -6) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5212,7 +5212,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (14, -2) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5314,7 +5314,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (20, -2) (Stone Wall Top)
+      value: Tile (0, 0) (Stone Wall Top)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5425,7 +5425,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (20, -8) (Stone Wall Top)
+      value: Tile (0, 0) (Stone Wall Top)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5536,7 +5536,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (12, -4) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5638,7 +5638,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (14, -4) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5740,7 +5740,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (16, 0) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5838,7 +5838,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (2, -6) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5940,7 +5940,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (14, -8) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -6042,7 +6042,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (16, -6) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -6144,7 +6144,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (2, -4) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -6246,7 +6246,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (8, 2) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -6348,7 +6348,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (0, -4) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -6446,7 +6446,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (6, -2) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -6552,7 +6552,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (20, -8) (Stone Wall)
+      value: Tile (0, 0) (Stone Wall)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -6671,7 +6671,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (8, 0) (Bars Horizontal)
+      value: Tile (0, 0) (Bars Horizontal)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -6786,7 +6786,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (18, 0) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -6888,7 +6888,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (16, 0) (Stone Wall)
+      value: Tile (0, 0) (Stone Wall)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -6999,7 +6999,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (0, -6) (Stone Wall Top)
+      value: Tile (0, 0) (Stone Wall Top)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -7110,7 +7110,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (6, -10) (Stone Wall)
+      value: Tile (0, 0) (Stone Wall)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -7225,7 +7225,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (16, -4) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -7327,7 +7327,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (18, -4) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -7429,7 +7429,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (12, 0) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -7531,7 +7531,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (2, 0) (Stone Wall)
+      value: Tile (0, 0) (Stone Wall)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -7642,7 +7642,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (14, -10) (Stone Wall Top)
+      value: Tile (0, 0) (Stone Wall Top)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -7753,7 +7753,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (12, -6) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -7855,7 +7855,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (12, -8) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -7957,7 +7957,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (2, -4) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -8059,7 +8059,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (16, -8) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -8161,7 +8161,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (4, -6) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -8263,7 +8263,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (4, -8) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -8365,7 +8365,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (14, -6) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -8467,7 +8467,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (4, -10) (Stone Wall Top)
+      value: Tile (0, 0) (Stone Wall Top)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -8578,7 +8578,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (6, -10) (Stone Wall Top)
+      value: Tile (0, 0) (Stone Wall Top)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -8693,7 +8693,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (0, -6) (Bars Vertical)
+      value: Tile (0, 0) (Bars Vertical)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -8808,7 +8808,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (2, -2) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -8914,7 +8914,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (4, 0) (Stone Wall)
+      value: Tile (0, 0) (Stone Wall)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -9025,7 +9025,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (16, -10) (Stone Wall Top)
+      value: Tile (0, 0) (Stone Wall Top)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -9136,7 +9136,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (6, -6) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -9238,7 +9238,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (18, -10) (Stone Wall Top)
+      value: Tile (0, 0) (Stone Wall Top)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -9353,7 +9353,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (0, -4) (Bars Vertical)
+      value: Tile (0, 0) (Bars Vertical)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -9468,7 +9468,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (14, 2) (Stone Wall Top)
+      value: Tile (0, 0) (Stone Wall Top)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -9583,7 +9583,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (4, 0) (Stone Wall)
+      value: Tile (0, 0) (Stone Wall)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -9698,7 +9698,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (16, 0) (Stone Wall)
+      value: Tile (0, 0) (Stone Wall)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -9809,7 +9809,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (6, -8) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -9911,7 +9911,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (8, -2) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -10013,7 +10013,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (12, 0) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -10115,7 +10115,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (0, -8) (Stone Wall)
+      value: Tile (0, 0) (Stone Wall)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -10230,7 +10230,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (14, -10) (Stone Wall)
+      value: Tile (0, 0) (Stone Wall)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -10345,7 +10345,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (18, -6) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -10447,7 +10447,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (4, 2) (Stone Wall Top)
+      value: Tile (0, 0) (Stone Wall Top)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -10558,7 +10558,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (8, -8) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -10660,7 +10660,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (4, 0) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -10758,7 +10758,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (6, -4) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -10864,7 +10864,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (20, -10) (Stone Wall)
+      value: Tile (0, 0) (Stone Wall)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -10979,7 +10979,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (14, -4) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -11081,7 +11081,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (2, 2) (Stone Wall Top)
+      value: Tile (0, 0) (Stone Wall Top)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -11196,7 +11196,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (20, -6) (Bars Vertical)
+      value: Tile (0, 0) (Bars Vertical)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -11311,7 +11311,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (12, -8) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -11413,7 +11413,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (16, 2) (Stone Wall Top)
+      value: Tile (0, 0) (Stone Wall Top)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -11524,7 +11524,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (6, -8) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -11626,7 +11626,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (10, 0) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -11724,7 +11724,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (16, -4) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -11826,7 +11826,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (18, -2) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -11928,7 +11928,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (4, -6) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -12030,7 +12030,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (8, -10) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -12132,7 +12132,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (4, -2) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -12234,7 +12234,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (10, -8) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -12336,7 +12336,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (4, -4) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -12442,7 +12442,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (2, -10) (Stone Wall)
+      value: Tile (0, 0) (Stone Wall)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -12561,7 +12561,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (0, -10) (Stone Wall)
+      value: Tile (0, 0) (Stone Wall)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -12676,7 +12676,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (18, -10) (Stone Wall)
+      value: Tile (0, 0) (Stone Wall)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -12795,7 +12795,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (12, 0) (Stone Wall)
+      value: Tile (0, 0) (Stone Wall)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -12906,7 +12906,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (12, -10) (Stone Wall Top)
+      value: Tile (0, 0) (Stone Wall Top)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -13017,7 +13017,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (8, 0) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -13119,7 +13119,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (20, 0) (Stone Wall)
+      value: Tile (0, 0) (Stone Wall)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -13234,7 +13234,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (0, -4) (Bars Vertical)
+      value: Tile (0, 0) (Bars Vertical)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -13349,7 +13349,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (10, 2) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -13451,7 +13451,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (12, -2) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -13553,7 +13553,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (12, 0) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -13651,7 +13651,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (6, 0) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -13749,7 +13749,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (8, -6) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -13839,7 +13839,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1380225744002857047, guid: bfecc3ae54d6ea544ae59baa4ab90507, type: 3}
       propertyPath: m_Name
-      value: Tile (4, -10) (Torch)
+      value: Tile (0, 0) (Torch)
       objectReference: {fileID: 0}
     - target: {fileID: 2232779807248089875, guid: bfecc3ae54d6ea544ae59baa4ab90507, type: 3}
       propertyPath: m_Enabled
@@ -13953,7 +13953,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (8, -10) (Stone Wall Top)
+      value: Tile (0, 0) (Stone Wall Top)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -14064,7 +14064,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (16, -10) (Stone Wall Top)
+      value: Tile (0, 0) (Stone Wall Top)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -14175,7 +14175,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (12, -2) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -14277,7 +14277,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (14, -8) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -14383,7 +14383,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (8, -10) (Stone Wall)
+      value: Tile (0, 0) (Stone Wall)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -14498,7 +14498,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (20, -6) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -14600,7 +14600,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (20, 0) (Stone Wall Top)
+      value: Tile (0, 0) (Stone Wall Top)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -14707,7 +14707,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (10, -10) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -14813,7 +14813,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (20, -2) (Stone Wall)
+      value: Tile (0, 0) (Stone Wall)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -14932,7 +14932,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (0, -2) (Bars Vertical)
+      value: Tile (0, 0) (Bars Vertical)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -15047,7 +15047,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (12, -10) (Stone Wall Top)
+      value: Tile (0, 0) (Stone Wall Top)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -15158,7 +15158,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (14, -8) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -15264,7 +15264,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (10, 0) (Bars Horizontal)
+      value: Tile (0, 0) (Bars Horizontal)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -15379,7 +15379,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (2, -10) (Stone Wall Top)
+      value: Tile (0, 0) (Stone Wall Top)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -15490,7 +15490,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (12, -4) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -15592,7 +15592,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (18, -6) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -15694,7 +15694,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (6, -4) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -15796,7 +15796,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (10, -10) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -15898,7 +15898,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (10, 2) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -16000,7 +16000,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (2, -6) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -16102,7 +16102,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (14, 0) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -16200,7 +16200,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (20, 2) (Stone Wall Top)
+      value: Tile (0, 0) (Stone Wall Top)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -16311,7 +16311,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (14, -4) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -16413,7 +16413,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (8, -8) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -16519,7 +16519,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (10, -10) (Bars Horizontal)
+      value: Tile (0, 0) (Bars Horizontal)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -16634,7 +16634,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (8, 0) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -16732,7 +16732,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (16, -6) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -16838,7 +16838,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (20, 0) (Stone Wall)
+      value: Tile (0, 0) (Stone Wall)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -16949,7 +16949,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (8, -4) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -17055,7 +17055,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (12, -10) (Bars Horizontal)
+      value: Tile (0, 0) (Bars Horizontal)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -17170,7 +17170,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (8, -4) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -17272,7 +17272,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (16, -8) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -17374,7 +17374,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (14, -8) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -17476,7 +17476,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (18, -4) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -17578,7 +17578,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (10, -6) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -17680,7 +17680,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (18, -2) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -17782,7 +17782,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (2, -4) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -17888,7 +17888,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (10, 0) (Bars Horizontal)
+      value: Tile (0, 0) (Bars Horizontal)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -18003,7 +18003,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (18, -2) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -18105,7 +18105,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (4, -8) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -18207,7 +18207,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (18, 2) (Stone Wall Top)
+      value: Tile (0, 0) (Stone Wall Top)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -18318,7 +18318,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (18, -8) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -18420,7 +18420,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (2, -2) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -18522,7 +18522,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (12, -4) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -18735,7 +18735,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (4, -8) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -18841,7 +18841,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (18, -10) (Stone Wall)
+      value: Tile (0, 0) (Stone Wall)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -19059,7 +19059,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (6, -6) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -19161,7 +19161,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (20, -4) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -19263,7 +19263,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (10, -8) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -19365,7 +19365,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (0, -8) (Stone Wall Top)
+      value: Tile (0, 0) (Stone Wall Top)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -19472,7 +19472,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (16, -8) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -19574,7 +19574,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (6, 2) (Stone Wall Top)
+      value: Tile (0, 0) (Stone Wall Top)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -19685,7 +19685,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (16, -2) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -19787,7 +19787,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (8, -6) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -19889,7 +19889,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (12, -4) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -19991,7 +19991,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (12, -10) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -20093,7 +20093,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (12, -6) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -20298,7 +20298,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (6, -2) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -20404,7 +20404,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (0, -2) (Stone Wall)
+      value: Tile (0, 0) (Stone Wall)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -20515,7 +20515,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (20, -8) (Stone Wall Top)
+      value: Tile (0, 0) (Stone Wall Top)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -20626,7 +20626,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (18, -2) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -20728,7 +20728,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (2, -10) (Stone Wall Top)
+      value: Tile (0, 0) (Stone Wall Top)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -20839,7 +20839,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (8, -2) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -20941,7 +20941,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (10, -2) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -21043,7 +21043,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (12, -8) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -21145,7 +21145,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (10, 0) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -21243,7 +21243,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (0, -6) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -21341,7 +21341,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (4, -2) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -21443,7 +21443,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (4, -4) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -21549,7 +21549,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (18, 0) (Stone Wall)
+      value: Tile (0, 0) (Stone Wall)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -21660,7 +21660,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (4, -10) (Stone Wall Top)
+      value: Tile (0, 0) (Stone Wall Top)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -21771,7 +21771,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (10, -2) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -21873,7 +21873,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (8, -10) (Stone Wall Top)
+      value: Tile (0, 0) (Stone Wall Top)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -21984,7 +21984,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (14, -6) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -22086,7 +22086,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (10, -2) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -22188,7 +22188,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (4, -4) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -22290,7 +22290,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (10, -6) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -22380,7 +22380,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1380225744002857047, guid: bfecc3ae54d6ea544ae59baa4ab90507, type: 3}
       propertyPath: m_Name
-      value: Tile (16, -10) (Torch)
+      value: Tile (0, 0) (Torch)
       objectReference: {fileID: 0}
     - target: {fileID: 2232779807248089875, guid: bfecc3ae54d6ea544ae59baa4ab90507, type: 3}
       propertyPath: m_Enabled
@@ -22494,7 +22494,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (12, 2) (Stone Wall Top)
+      value: Tile (0, 0) (Stone Wall Top)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -22605,7 +22605,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (2, -2) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -22707,7 +22707,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (10, -4) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -22813,7 +22813,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (0, -8) (Stone Wall)
+      value: Tile (0, 0) (Stone Wall)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -22924,7 +22924,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (4, -4) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -23026,7 +23026,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (6, -6) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -23128,7 +23128,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (18, -4) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -23234,7 +23234,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (20, -2) (Bars Vertical)
+      value: Tile (0, 0) (Bars Vertical)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -23353,7 +23353,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (16, -10) (Stone Wall)
+      value: Tile (0, 0) (Stone Wall)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -23468,7 +23468,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (8, -10) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -23570,7 +23570,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (10, 0) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -23668,7 +23668,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (12, -10) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -23770,7 +23770,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (16, -2) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -23876,7 +23876,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (12, 0) (Bars Horizontal)
+      value: Tile (0, 0) (Bars Horizontal)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -23995,7 +23995,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (10, -10) (Bars Horizontal)
+      value: Tile (0, 0) (Bars Horizontal)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -24114,7 +24114,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (14, -10) (Stone Wall)
+      value: Tile (0, 0) (Stone Wall)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -24229,7 +24229,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (8, -2) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -24335,7 +24335,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (0, -2) (Stone Wall)
+      value: Tile (0, 0) (Stone Wall)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -24446,7 +24446,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (0, -2) (Stone Wall Top)
+      value: Tile (0, 0) (Stone Wall Top)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -24664,7 +24664,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (10, -6) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -24770,7 +24770,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (6, 0) (Stone Wall)
+      value: Tile (0, 0) (Stone Wall)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -24881,7 +24881,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (18, -10) (Stone Wall Top)
+      value: Tile (0, 0) (Stone Wall Top)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -24992,7 +24992,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (14, 2) (Stone Wall Top)
+      value: Tile (0, 0) (Stone Wall Top)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -25107,7 +25107,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (20, -8) (Stone Wall)
+      value: Tile (0, 0) (Stone Wall)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -25222,7 +25222,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (10, -10) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -25324,7 +25324,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (12, -2) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -25430,7 +25430,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (12, -10) (Stone Wall)
+      value: Tile (0, 0) (Stone Wall)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -25545,7 +25545,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (18, -4) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -25647,7 +25647,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (2, -6) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -25749,7 +25749,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (10, -8) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -25851,7 +25851,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (20, -6) (Stone Wall Top)
+      value: Tile (0, 0) (Stone Wall Top)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -25962,7 +25962,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (16, 0) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -26060,7 +26060,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (16, -2) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -26162,7 +26162,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (16, -4) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -26268,7 +26268,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (20, -10) (Stone Wall)
+      value: Tile (0, 0) (Stone Wall)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -26383,7 +26383,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (4, -6) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -26485,7 +26485,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (12, -8) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -26591,7 +26591,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (8, 0) (Stone Wall)
+      value: Tile (0, 0) (Stone Wall)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -26702,7 +26702,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (4, 2) (Stone Wall Top)
+      value: Tile (0, 0) (Stone Wall Top)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -26813,7 +26813,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (16, -2) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -26915,7 +26915,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (14, -2) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -27017,7 +27017,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (4, -6) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -27119,7 +27119,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (2, -8) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -27221,7 +27221,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (20, 0) (Stone Wall Top)
+      value: Tile (0, 0) (Stone Wall Top)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -27328,7 +27328,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (16, -6) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -27434,7 +27434,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (16, -10) (Stone Wall)
+      value: Tile (0, 0) (Stone Wall)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -27549,7 +27549,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (10, -8) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -27639,7 +27639,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1380225744002857047, guid: bfecc3ae54d6ea544ae59baa4ab90507, type: 3}
       propertyPath: m_Name
-      value: Tile (4, 0) (Torch)
+      value: Tile (0, 0) (Torch)
       objectReference: {fileID: 0}
     - target: {fileID: 2232779807248089875, guid: bfecc3ae54d6ea544ae59baa4ab90507, type: 3}
       propertyPath: m_Enabled
@@ -27757,7 +27757,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (16, -4) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -27859,7 +27859,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (4, -2) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -27961,7 +27961,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (12, -6) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -28067,7 +28067,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (20, -4) (Bars Vertical)
+      value: Tile (0, 0) (Bars Vertical)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -28182,7 +28182,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (6, -10) (Stone Wall Top)
+      value: Tile (0, 0) (Stone Wall Top)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -28293,7 +28293,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (14, -2) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -28395,7 +28395,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (18, 2) (Stone Wall Top)
+      value: Tile (0, 0) (Stone Wall Top)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -28506,7 +28506,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (8, -6) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -28608,7 +28608,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (6, -2) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -28714,7 +28714,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (0, -6) (Bars Vertical)
+      value: Tile (0, 0) (Bars Vertical)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -28829,7 +28829,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (8, -2) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -28935,7 +28935,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (20, -4) (Bars Vertical)
+      value: Tile (0, 0) (Bars Vertical)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -29050,7 +29050,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (4, -2) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -29156,7 +29156,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (2, 0) (Stone Wall)
+      value: Tile (0, 0) (Stone Wall)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -29267,7 +29267,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (2, 2) (Stone Wall Top)
+      value: Tile (0, 0) (Stone Wall Top)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -29378,7 +29378,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (2, 0) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -29480,7 +29480,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (14, 0) (Stone Wall)
+      value: Tile (0, 0) (Stone Wall)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -29579,7 +29579,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1380225744002857047, guid: bfecc3ae54d6ea544ae59baa4ab90507, type: 3}
       propertyPath: m_Name
-      value: Tile (16, 0) (Torch)
+      value: Tile (0, 0) (Torch)
       objectReference: {fileID: 0}
     - target: {fileID: 2232779807248089875, guid: bfecc3ae54d6ea544ae59baa4ab90507, type: 3}
       propertyPath: m_Enabled
@@ -29681,7 +29681,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (14, 0) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -29779,7 +29779,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (6, -8) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -29881,7 +29881,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (14, -2) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -29983,7 +29983,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (2, -2) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -30085,7 +30085,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (16, 2) (Stone Wall Top)
+      value: Tile (0, 0) (Stone Wall Top)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -30196,7 +30196,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (18, -8) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -30302,7 +30302,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (6, -10) (Stone Wall)
+      value: Tile (0, 0) (Stone Wall)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -30417,7 +30417,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (18, -8) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -30519,7 +30519,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (20, -10) (Stone Wall Top)
+      value: Tile (0, 0) (Stone Wall Top)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -30630,7 +30630,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (6, -8) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -30736,7 +30736,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (14, 0) (Stone Wall)
+      value: Tile (0, 0) (Stone Wall)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -30847,7 +30847,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (8, -4) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -30949,7 +30949,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (0, -4) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -31047,7 +31047,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (12, 2) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -31149,7 +31149,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (0, 2) (Stone Wall Top)
+      value: Tile (0, 0) (Stone Wall Top)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -31256,7 +31256,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (6, 2) (Stone Wall Top)
+      value: Tile (0, 0) (Stone Wall Top)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -31367,7 +31367,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (18, 0) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -31465,7 +31465,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (2, 0) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -31567,7 +31567,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (4, -10) (Stone Wall)
+      value: Tile (0, 0) (Stone Wall)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -31682,7 +31682,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (6, -2) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -31784,7 +31784,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (18, -6) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -31886,7 +31886,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (8, 2) (Stone Wall Top)
+      value: Tile (0, 0) (Stone Wall Top)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -31997,7 +31997,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_Name
-      value: Tile (8, -8) (Stone Floor)
+      value: Tile (0, 0) (Stone Floor)
       objectReference: {fileID: 0}
     - target: {fileID: 1897777745146527062, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
       propertyPath: m_LocalPosition.x

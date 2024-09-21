@@ -1,8 +1,8 @@
 using UnityEngine;
-using RL.Enemies;
-using RL.Levels;
+using URLG.Enemies;
+using URLG.Levels;
 
-namespace RL.Projectiles
+namespace URLG.Projectiles
 {
     public class Wave : Projectile
     {
@@ -12,6 +12,7 @@ namespace RL.Projectiles
         protected override void Start()
         {
             base.Start();
+            
             Game.Telemetry.PlayerStats["useCountWave"].Increment();
             Game.Audio.PlaySound("wave_shoot");
         }

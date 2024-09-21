@@ -1,4 +1,4 @@
-namespace RL.Player
+namespace URLG.Player
 {
     public enum PlayerStates
     {
