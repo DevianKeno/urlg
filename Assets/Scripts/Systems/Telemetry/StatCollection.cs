@@ -1,8 +1,10 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace URLG.Telemetry
 {
+    [Serializable]
     public class StatCollection
     {
         Dictionary<string, Stat> _statList = new();
@@ -20,29 +22,27 @@ namespace URLG.Telemetry
         {
             get
             {
-                if (_statList.ContainsKey(name))
-                {
-                    return _statList[name];
-                }
-                else
-                {
-                    throw new KeyNotFoundException();
-                }
+                _statList.TryGetValue(name, out var stat);
+                return stat;
             }
+        }
+        
+        public Stat GetStat(string name)
+        {
+            if (_statList.TryGetValue(name, out var stat))
+            {
+                return stat;
+            }
+            return null;
         }
 
         public bool TryGetStat(string name, out Stat stat)
         {
-            if (_statList.ContainsKey(name))
+            if (_statList.TryGetValue(name, out stat))
             {
-                stat = _statList[name];
                 return true;
             }
-            else
-            {
-                stat = default;
-                return false;
-            }
+            return false;
         }
 
         public List<StatSaveData> SaveToJson()

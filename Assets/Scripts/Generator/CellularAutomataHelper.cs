@@ -9,6 +9,8 @@ using UnityEngine.Experimental.Rendering.Universal;
 using Cinemachine;
 
 using static URLG.Generator.Generator.Map;
+using RL;
+using URLG.GNB;
 
 namespace URLG.CellularAutomata
 {
@@ -27,13 +29,6 @@ namespace URLG.CellularAutomata
         const int WallTile = 1;
         const int RoomTile = 2;
         const int MaxValue = 100;
-
-        static Color WallTileColor = Color.black;
-        static Color FloorTileColor = Color.white;
-        static Color StartRoomColor = Color.green;
-        static Color NormalRoomColor = Color.cyan;
-        static Color NormalRoomColor2 = new(0.0504183f, 0.8779624f, 0.9716981f);
-        static Color EndRoomColor = Color.red;
 
         [Header("Noise Grid Settings")]
         public int Height = 20;
@@ -55,29 +50,53 @@ namespace URLG.CellularAutomata
         int _currGridIter = 0; /// current grid iteration
 
         [SerializeField] GameObject tilePrefab;
+        public Color WallTileColor = Color.black;
+        public Color FloorTileColor = Color.white;
 
         [Header("Mock Level Settings")]
         /// <summary>
-        /// Excluding the Start and End rooms.
+        /// Count excludes the "Start" and "End" rooms.
         /// </summary>
         public int RoomCount = 1;
+        /// <summary>
+        /// Whether to included the "Start" room in the generation.
+        /// </summary>
         public bool IncludeStartRoom = true; /// unhandled
+        /// <summary>
+        /// Whether to included the "End" room in the generation.
+        /// </summary>
         public bool IncludeEndRoom = true;
         public bool CustomStartRoomCoordinates;
         public Vector2Int StartRoomCoordinates;
+        /// <summary>
+        /// Scaling for the Pixel Perfect Camera viewport size.
+        /// </summary>
         public float Scaling = 1.0f;
 
         MockRoom _startRoom;
         List<MockRoom> _rooms = new();
         public List<MockRoom> Rooms => _rooms;
-        Stack<MockRoom> _previousRooms = new(); /// "previous rooms when searching"
+        Stack<MockRoom> _previousRooms = new(); /// store "previous rooms" when searching
+        /// <summary>
+        /// Stores the coordinates of all room that already exists.
+        /// </summary>        
         HashSet<Vector2Int> _existingRoomsHashset = new();
 
         [SerializeField] GameObject mockRoomPrefab;
         [SerializeField] Transform mockRoomContainer;
         [SerializeField] CinemachineVirtualCamera virtualCamera;
 
+        public RecolorType RecolorType = RecolorType.BOTH;
+        public Color StartRoomColor = Color.green;
+        public Color NormalRoomColor = Color.cyan;
+        public Color NormalRoomColor2 = new(0.0504183f, 0.8779624f, 0.9716981f);
+        public Color EndRoomColor = Color.red;
 
+        [Header("UIs")]
+        [SerializeField] RDTelemetryUI telemetryUI;
+        [SerializeField] GameObject selector;
+
+        
         #region Static methods
 
         /// <summary>
@@ -100,6 +119,16 @@ namespace URLG.CellularAutomata
 
         #endregion
 
+        void OnValidate()
+        {
+            if (gameObject.activeInHierarchy)
+            {
+                foreach (MockRoom room in _rooms)
+                {
+                    room.Recolor(RecolorType);
+                }
+            }
+        }
 
 // #if UNITY_EDITOR
         #region Public methods
@@ -133,7 +162,7 @@ namespace URLG.CellularAutomata
                 _currGridIter++;
                 GenerateCellGrid(nextGrid);
                 
-                Debug.Log($"Incremented noise grid");
+                Debug.Log($"Incremented noise grid, current value: {_currGridIter}");
             }
         }
 
@@ -148,13 +177,13 @@ namespace URLG.CellularAutomata
                 var previousGrid = gridHistory[_currGridIter];
                 GenerateCellGrid(previousGrid);
 
-                Debug.Log($"Decremented noise grid");
+                Debug.Log($"Decremented noise grid, current value: {_currGridIter}");
             }
         }
 
         public void GenerateRD()
         {
-            GenerateRooms(RoomCount); /// replace with value from input field
+            GenerateRooms(telemetryUI.GetEntry("Room Count").Value); /// replace with value from input field
         }
 
         public List<MockRoom> GenerateRooms(int roomCount)
@@ -189,9 +218,7 @@ namespace URLG.CellularAutomata
             {
                 do
                 {
-                    coords = new Vector2Int(
-                        UnityEngine.Random.Range(0, Width),
-                        UnityEngine.Random.Range(0, Height));
+                    coords = new Vector2Int(UnityEngine.Random.Range(0, Width), UnityEngine.Random.Range(0, Height));
                 }
                 while (currentGrid[coords.x, coords.y] == WallTile);
             }
@@ -202,6 +229,9 @@ namespace URLG.CellularAutomata
             _existingRoomsHashset.Add(coords);
             _rooms.Add(newRoom);
             _startRoom = newRoom;
+            _startRoom.IsSpecial = true;
+            FeaturizeEmpty(_startRoom);
+            SubscribeRoomEvents(newRoom);
             
             Vector2Int minBounds = new(_startRoom.x, _startRoom.y);
             Vector2Int maxBounds = new(_startRoom.x, _startRoom.y);
@@ -211,12 +241,12 @@ namespace URLG.CellularAutomata
             var roomsLeft = roomCount; /// Number of rooms left to generate
             _previousRooms.Push(_startRoom);
 
-            void CreateNewRoom(Color color)
+            MockRoom CreateNewRoom(Color color)
             {
                 MockRoom currentRoom = _previousRooms.Peek(); /// Look at the current room on top of the stack
 
                 /// Try to create a room at a neighboring tile
-                if (CreateRoomAtNeighbor(currentRoom, color, out _))
+                if (CreateRoomAtNeighbor(currentRoom, color, out var createdRoom))
                 {
                     roomsLeft--; /// Successfully created a room, decrement the count
                 }
@@ -226,19 +256,22 @@ namespace URLG.CellularAutomata
                     _previousRooms.Pop();
                 }
 
-                AddCalculations(currentRoom);
+                AddCalculations(createdRoom);
+                return createdRoom;
             }
 
+            /// <summary>
             /// Necessary calculations
+            /// </summary>
             void AddCalculations(MockRoom room)
             {
                 if (room == null) return;
                 
                 totalPosition += room.transform.position;
-                minBounds.x = Math.Min(minBounds.x, room.x);
-                minBounds.y = Math.Min(minBounds.y, room.y);
-                maxBounds.x = Math.Max(maxBounds.x, room.x);
-                maxBounds.y = Math.Max(maxBounds.y, room.y);
+                minBounds.x = System.Math.Min(minBounds.x, room.x);
+                minBounds.y = System.Math.Min(minBounds.y, room.y);
+                maxBounds.x = System.Math.Max(maxBounds.x, room.x);
+                maxBounds.y = System.Math.Max(maxBounds.y, room.y);
             }
 
             /// Generate rooms until all rooms are placed
@@ -246,8 +279,12 @@ namespace URLG.CellularAutomata
             {
                 if (_previousRooms.Any())
                 {
-                    var checkeredColor = roomsLeft % 2 == 0 ? NormalRoomColor : NormalRoomColor2;
-                    CreateNewRoom(checkeredColor);
+                    /// applies a checkered-colored pattern to the generated rooms for aesthetic purposes
+                    // var checkeredColor = roomsLeft % 2 == 0 ? NormalRoomColor : NormalRoomColor2;
+                    var newInterRoom = CreateNewRoom(Color.white);
+                    FeaturizeRandom(newInterRoom);
+                    newInterRoom.Recolor(RecolorType);
+                    SubscribeRoomEvents(newInterRoom);
                 }
                 else
                 {
@@ -260,8 +297,11 @@ namespace URLG.CellularAutomata
             {
                 if (_previousRooms.Any()) ///HMMMMMMMMMMMMMMM
                 {
-                    CreateRoomAtNeighbor(_previousRooms.Peek(), EndRoomColor, out var result);
-                    AddCalculations(result);
+                    CreateRoomAtNeighbor(_previousRooms.Peek(), EndRoomColor, out var endRoom);
+                    endRoom.IsSpecial = true;
+                    FeaturizeEmpty(endRoom);
+                    SubscribeRoomEvents(endRoom);
+                    AddCalculations(endRoom);
                 }
             }
 
@@ -278,8 +318,8 @@ namespace URLG.CellularAutomata
             if (scene.name == "R&D") /// if on research mode
             {
                 Vector2Int size = new(
-                    Math.Abs(maxBounds.x - minBounds.x) + 1,
-                    Math.Abs(maxBounds.y - minBounds.y) + 1
+                    System.Math.Abs(maxBounds.x - minBounds.x) + 1,
+                    System.Math.Abs(maxBounds.y - minBounds.y) + 1
                 );
                 var squ = size.x * size.y;
                 print($"Mock Level size: ({size.x} x {size.y}), {squ} squ.");
@@ -324,6 +364,46 @@ namespace URLG.CellularAutomata
         #region Private methods
 
         /// <summary>
+        /// Adds generated features to target room.
+        /// </summary>
+        void Featurize(MockRoom room, FeatureParametersSettings settings)
+        {
+            var generatedFeatureParameters = GaussianNaiveBayes.GenerateFeatureOptionsRandom(settings);
+            room.GenerateFeatures(generatedFeatureParameters);
+        }
+        
+
+        /// <summary>
+        /// Adds generated features to target room.
+        /// </summary>
+        void FeaturizeRandom(MockRoom room)
+        {
+            if (room == null) return;
+            
+            var settings = new FeatureParametersSettings()
+            {
+                MaxEnemyCount = 20,
+                MaxObstacleCount = 6,
+            };
+            var generatedFeatureParameters = GaussianNaiveBayes.GenerateFeatureOptionsRandom(settings);
+            room.GenerateFeatures(generatedFeatureParameters);
+        }
+
+        /// <summary>
+        /// Adds generated features to target room.
+        /// </summary>
+        void FeaturizeEmpty(MockRoom room)
+        {
+            var settings = new FeatureParametersSettings()
+            {
+                MaxEnemyCount = 0,
+                MaxObstacleCount = 0,
+            };
+            var generatedFeatureParameters = GaussianNaiveBayes.GenerateFeatureOptionsRandom(settings);
+            room.GenerateFeatures(generatedFeatureParameters);
+        }
+
+        /// <summary>
         ///
         /// </summary>
         /// <returns>Whether a room is generated successfully.</returns>
@@ -338,7 +418,6 @@ namespace URLG.CellularAutomata
 
             var pickedNeighbor = PickRandomNeighbor(neighbors);
 
-
             /// Place new room at picked neighbor position
             MockRoom newRoom;
             newRoom = CreateRoom(pickedNeighbor.x, pickedNeighbor.y, roomColor);
@@ -349,7 +428,7 @@ namespace URLG.CellularAutomata
             {
                 var previousRoom = _previousRooms.Peek();
                 
-                newRoom.Connect(previousRoom);
+                newRoom.ConnectDoorways(previousRoom);
                 newRoom.ToggleDoorway(newRoom.DirectionTo(previousRoom), isOpen: true);
             }
 
@@ -495,6 +574,26 @@ namespace URLG.CellularAutomata
                 currentGrid[coord.x, coord.y] = FloorTile;
             }
             _existingRoomsHashset.Clear();
+        }
+
+        void SubscribeRoomEvents(MockRoom room)
+        {
+            if (SceneManager.GetActiveScene().name != "R&D") return;
+
+            room.OnClick += telemetryUI.OnRoomClick;
+            room.OnClick += SelectorToRoom;
+        }
+
+        void SelectorToRoom(MockRoom room)
+        {
+            if (selector == null)
+            {
+                selector = Instantiate(Resources.Load<GameObject>("Prefabs/UI/Selector"), transform);
+            }
+            LeanTween.cancel(selector);
+            LeanTween.scale(selector, Vector3.zero, 0f);
+            LeanTween.scale(selector, new(1.05f, 1.05f, 1f), 0.05f).setEaseOutSine();
+            selector.transform.position = new(room.x, room.y, -1);
         }
 
         /// generate shapes using ca rules and NeighborWallThreshold

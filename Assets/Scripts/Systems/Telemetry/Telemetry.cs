@@ -9,6 +9,27 @@ namespace URLG.Telemetry
 {
     public class Telemetry : MonoBehaviour
     {
+        public static string[] PlayerStatsValues = {
+            "UseCountFire",
+            "UseCountBeam",
+            "UseCountWave",
+            "HitCountFire",
+            "HitCountBeam",
+            "HitCountWave",
+            "HitsTaken",
+        };
+        public static string[] RoomStatsValues = {
+            "EnemyCountFire",
+            "EnemyCountBeam",
+            "EnemyCountWave",
+            "ObstacleCountFire",
+            "ObstacleCountBeam",
+            "ObstacleCountWave",
+        };
+        public static string[] GameStatsValues = {
+            "EnemyAttackCount"
+        };
+
         StatCollection _playerStats;
         public StatCollection PlayerStats => _playerStats;
         StatCollection _gameStats;
@@ -32,24 +53,17 @@ namespace URLG.Telemetry
         internal void Initialize()
         {
             Debug.Log("Initializing telemetry...");
+
             InitializePlayerStats();
             InitializeGameStats();
             InitializeRoomStats();
+
+            Debug.Log("Done initialize telemetry");
         }
 
         void InitializePlayerStats()
         {
-            string[] playerStats = {
-                "useCountFire",
-                "useCountBeam",
-                "useCountWave",
-                "hitCountFire",
-                "hitCountBeam",
-                "hitCountWave",
-                "hitsTaken",
-            };
-            _playerStats = new(playerStats);
-
+            _playerStats = new(PlayerStatsValues);
             foreach (var stat in _playerStats.Stats)
             {
                 var go = new GameObject("Player Stat");
@@ -66,11 +80,7 @@ namespace URLG.Telemetry
 
         void InitializeGameStats()
         {
-            string[] gameStats = {
-                "enemyAttackCount",
-            };
-            _gameStats = new(gameStats);
-
+            _gameStats = new(GameStatsValues);
             foreach (var stat in _gameStats.Stats)
             {
                 var go = new GameObject("Game Stat");
@@ -87,16 +97,7 @@ namespace URLG.Telemetry
 
         void InitializeRoomStats()
         {
-            string[] roomStats = {
-                "enemyCountFire",
-                "enemyCountBeam",
-                "enemyCountWave",
-                "obstacleCountFire",
-                "obstacleCountBeam",
-                "obstacleCountWave",
-            };
-            _roomStats = new(roomStats);
-            
+            _roomStats = new(RoomStatsValues);
             foreach (var stat in _roomStats.Stats)
             {
                 var go = new GameObject("Room Stat");

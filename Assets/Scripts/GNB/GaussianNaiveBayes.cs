@@ -1,9 +1,33 @@
 using System;
 using System.IO;
 using System.Linq;
+using static System.Math;
+
+using URLG.CellularAutomata;
+using UnityEngine;
 
 namespace URLG.GNB
 {
+    public static class Math
+    {
+        public static double Mean(double[] values)
+        {
+            return values.Average();
+        }
+
+        public static double Variance(double[] values)
+        {
+            double mean = Mean(values);
+            double sumSqrd = values.Sum(num => Pow(num - mean, 2));
+            return sumSqrd / (values.Length - 1);
+        }
+
+        public static double StandardDeviation(double[] values)
+        {
+            return Sqrt(Variance(values));
+        }
+    }
+
     public struct CalculatePosteriorParameters
     {
         public float Evidence { get; set; }
@@ -14,40 +38,6 @@ namespace URLG.GNB
 
     }
 
-    public static class Helper
-    {
-        public static double Mean(double[] values)
-        {
-            return values.Average();
-        }
-
-        public static double Variance(double[] values)
-        {
-            double mean = Mean(values);
-            double sumOfSquares = values.Sum(num => Math.Pow(num - mean, 2));
-            return sumOfSquares / (values.Length - 1);
-        }
-
-        public static double StandardDeviation(double[] values)
-        {
-            return Math.Sqrt(Variance(values));
-        }
-    }
-
-    public enum WeaponType {
-        Fireball, Beam, Wave
-    }
-
-    public struct HitCount<T> where T : Enum
-    {
-
-    }
-
-    public struct Efficiency<T>
-    {
-        
-    }
-
     public class Evaluator
     {
         /// <summary>
@@ -56,14 +46,8 @@ namespace URLG.GNB
         /// <returns></returns>
         public static double CosineSimilarity(double[] a, double[] b)
         {
-            if (a == null || b == null)
-            {
-                throw new ArgumentException("Input arrays cannot be null.");
-            }
-            if (a.Length != b.Length)
-            {
-                throw new ArgumentException("Input arrays must have the same length.");
-            }
+            if (a == null || b == null) throw new ArgumentException("Input arrays cannot be null.");
+            if (a.Length != b.Length) throw new ArgumentException("Input arrays must have the same length.");
 
             double dotProduct = 0;
             double magnitudeA = 0;
@@ -72,16 +56,13 @@ namespace URLG.GNB
             for (int i = 0; i < a.Length; i++)
             {
                 dotProduct += a[i] * b[i];
-                magnitudeA += Math.Pow(a[i], 2);
-                magnitudeB += Math.Pow(b[i], 2);
+                magnitudeA += Pow(a[i], 2);
+                magnitudeB += Pow(b[i], 2);
             }
 
-            if (magnitudeA == 0 || magnitudeB == 0)
-            {
-                throw new ArgumentException("Input vectors must not be zero-vectors.");
-            }
+            if (magnitudeA == 0 || magnitudeB == 0) throw new ArgumentException("Input vectors must not be zero-vectors.");
 
-            return dotProduct / (Math.Sqrt(magnitudeA) * Math.Sqrt(magnitudeB));
+            return dotProduct / (Sqrt(magnitudeA) * Sqrt(magnitudeB));
         }
 
         // public static double WeaponEfficiency<T>() where T : Enum
@@ -92,6 +73,33 @@ namespace URLG.GNB
     
     public class GaussianNaiveBayes
     {
+        public static (int, int, int) RandomIntTotaled(int total)
+        {
+            int cut1 = UnityEngine.Random.Range(0, total + 1);
+            int cut2 = UnityEngine.Random.Range(0, total + 1);
+            int first = Mathf.Min(cut1, cut2);
+            int second = Mathf.Max(cut1, cut2);
+
+            return (first, second - first, total - second);
+        }
+
+        public static FeatureParameters GenerateFeatureOptionsRandom(FeatureParametersSettings settings)
+        {
+            var features = new FeatureParameters();
+
+            (int, int, int) enemyCount = RandomIntTotaled(settings.MaxEnemyCount);            
+            features.EnemyCountFire = enemyCount.Item1;
+            features.EnemyCountBeam = enemyCount.Item2;
+            features.EnemyCountWave = enemyCount.Item3;
+
+            (int, int, int) obsCount = RandomIntTotaled(settings.MaxObstacleCount);   
+            features.ObstacleCountFire = obsCount.Item1;
+            features.ObstacleCountBeam = obsCount.Item2;
+            features.ObstacleCountWave = obsCount.Item3;
+
+            return features;
+        }
+
         void CalculateDependencies()
         {
             
