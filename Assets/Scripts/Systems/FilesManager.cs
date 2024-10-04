@@ -3,10 +3,10 @@ using System.IO;
 using UnityEngine;
 using Newtonsoft.Json;
 
-using URLG.Telemetry;
+using RL.Telemetry;
 using UnityEditor;
 
-namespace URLG.Systems
+namespace RL.Systems
 {
     public class FilesManager : MonoBehaviour
     {
@@ -35,13 +35,11 @@ namespace URLG.Systems
                 Directory.CreateDirectory(savepath);
             }
             
-            #if UNITY_STANDALONE_WIN /// Windows
-                /// Open the folder using Process.Start()
-                System.Diagnostics.Process.Start("explorer.exe", savepath.Replace('/', '\\')); // Replace slashes to be compatible with Windows path
-            #elif UNITY_STANDALONE_OSX /// macOS
-                /// Open the folder using Process.Start()
+#if UNITY_STANDALONE_WIN /// Windows
+                System.Diagnostics.Process.Start("explorer.exe", savepath.Replace('/', '\\'));
+#elif UNITY_STANDALONE_OSX /// macOS
                 System.Diagnostics.Process.Start("open", folderPath);
-            #endif
+#endif
         }
     }
 }

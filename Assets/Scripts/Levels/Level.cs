@@ -2,10 +2,10 @@ using System;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
-using URLG.CellularAutomata;
-using static URLG.Generator.Generator.Map;
+using RL.CellularAutomata;
+using static RL.Generator.Generator.Map;
 
-namespace URLG.Levels
+namespace RL.Levels
 {
     public class Level : MonoBehaviour
     {

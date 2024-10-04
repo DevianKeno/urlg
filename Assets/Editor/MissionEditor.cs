@@ -1,9 +1,9 @@
 using UnityEditor;
 using UnityEngine;
 
-using URLG.Generator;
+using RL.Generator;
 
-namespace URLG.Levels
+namespace RL.Levels
 {
     [CustomEditor(typeof(MissionGenerator))]
     public class MissionGeneratorEditor : Editor

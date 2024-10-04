@@ -1,11 +1,11 @@
 using System;
 
-namespace URLG.Telemetry
+namespace RL.Telemetry
 {
     [Serializable]
     public struct StatSaveData
     {
-        public string Name;
+        public int Key;
         public int Value;
     }
 }

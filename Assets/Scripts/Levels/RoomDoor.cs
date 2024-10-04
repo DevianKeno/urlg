@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
-using static URLG.Generator.Generator.Map;
+using static RL.Generator.Generator.Map;
 
-namespace URLG.Levels
+namespace RL.Levels
 {
     public enum DoorwayFacing { 
         North, South, East, West

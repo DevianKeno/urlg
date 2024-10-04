@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace URLG
+namespace RL
 {
     /// <summary>
     /// Represents objects that can be loaded/unloaded.

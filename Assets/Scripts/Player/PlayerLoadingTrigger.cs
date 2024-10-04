@@ -1,7 +1,7 @@
-using URLG.Levels;
+using RL.Levels;
 using UnityEngine;
 
-namespace URLG.Player
+namespace RL.Player
 {
     public class PlayerLoadingTrigger : MonoBehaviour
     {

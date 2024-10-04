@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace URLG.Generator
+namespace RL.Generator
 {
     public enum RoomType {
         Start, End, Room, Key, Lock

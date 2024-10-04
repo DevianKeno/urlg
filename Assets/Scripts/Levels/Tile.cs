@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
-namespace URLG.Levels
+namespace RL.Levels
 {
     public class Tile : MonoBehaviour
     {

@@ -1,9 +1,10 @@
 using UnityEngine;
-using URLG.Enemies;
-using URLG.Systems;
-using URLG.Levels;
+using RL.Enemies;
+using RL.Systems;
+using RL.Levels;
+using RL.Telemetry;
 
-namespace URLG.Projectiles
+namespace RL.Projectiles
 {
     public class Fireball : Projectile
     {
@@ -11,7 +12,7 @@ namespace URLG.Projectiles
         {
             base.Start();
             
-            Game.Telemetry.PlayerStats["useCountFire"].Increment();
+            Game.Telemetry.PlayerStats[StatKey.UseCountFire].Increment();
             Game.Audio.PlaySound("fire_shoot");
         }
 
@@ -36,7 +37,7 @@ namespace URLG.Projectiles
         {
             hit.TakeDamage(Data.Damage);
             
-            Game.Telemetry.PlayerStats["hitCountFire"].Increment();
+            Game.Telemetry.PlayerStats[StatKey.HitCountFire].Increment();
             Destroy(gameObject);
         }
         

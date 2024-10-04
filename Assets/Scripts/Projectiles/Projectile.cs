@@ -1,10 +1,10 @@
 using System;
 using UnityEngine;
-using URLG.Player;
-using URLG.Enemies;
-using URLG.Levels;
+using RL.Player;
+using RL.Enemies;
+using RL.Levels;
 
-namespace URLG.Projectiles
+namespace RL.Projectiles
 {
     public abstract class Projectile : MonoBehaviour
     {

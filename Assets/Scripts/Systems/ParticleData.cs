@@ -2,7 +2,7 @@ using System;
 
 using UnityEngine;
 
-namespace URLG
+namespace RL
 {
     [Serializable]
     [CreateAssetMenu(fileName = "Particle", menuName = "Particle")]

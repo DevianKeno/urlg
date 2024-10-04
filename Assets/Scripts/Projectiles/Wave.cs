@@ -1,8 +1,9 @@
 using UnityEngine;
-using URLG.Enemies;
-using URLG.Levels;
+using RL.Enemies;
+using RL.Levels;
+using RL.Telemetry;
 
-namespace URLG.Projectiles
+namespace RL.Projectiles
 {
     public class Wave : Projectile
     {
@@ -13,7 +14,7 @@ namespace URLG.Projectiles
         {
             base.Start();
             
-            Game.Telemetry.PlayerStats["useCountWave"].Increment();
+            Game.Telemetry.PlayerStats[StatKey.UseCountWave].Increment();
             Game.Audio.PlaySound("wave_shoot");
         }
 
@@ -59,7 +60,7 @@ namespace URLG.Projectiles
                     if (!_hasHit)
                     {
                         _hasHit = true;
-                        Game.Telemetry.PlayerStats["hitCountWave"].Increment();
+                        Game.Telemetry.PlayerStats[StatKey.HitCountWave].Increment();
                     }
                 }
             }

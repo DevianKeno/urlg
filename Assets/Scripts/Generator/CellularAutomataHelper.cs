@@ -8,11 +8,12 @@ using UnityEngine.SceneManagement;
 using UnityEngine.Experimental.Rendering.Universal;
 using Cinemachine;
 
-using static URLG.Generator.Generator.Map;
-using RL;
-using URLG.GNB;
+using RL.Classifiers;
+using RL.Telemetry;
+using RL.UI;
+using static RL.Generator.Generator.Map;
 
-namespace URLG.CellularAutomata
+namespace RL.CellularAutomata
 {
     public struct NoiseGridSettings
     {
@@ -93,7 +94,7 @@ namespace URLG.CellularAutomata
         public Color EndRoomColor = Color.red;
 
         [Header("UIs")]
-        [SerializeField] RDTelemetryUI telemetryUI;
+        [SerializeField] RDTelemetryUI playerTelemetryUI;
         [SerializeField] GameObject selector;
 
         
@@ -183,7 +184,7 @@ namespace URLG.CellularAutomata
 
         public void GenerateRD()
         {
-            GenerateRooms(telemetryUI.GetEntry("Room Count").Value); /// replace with value from input field
+            GenerateRooms(playerTelemetryUI.GetEntry(StatKey.RoomCount).Value);
         }
 
         public List<MockRoom> GenerateRooms(int roomCount)
@@ -224,7 +225,7 @@ namespace URLG.CellularAutomata
             }
 
             /// Create the starting room
-            MockRoom newRoom = CreateRoom(coords.x, coords.y, StartRoomColor);
+            MockRoom newRoom = InstantiateRoom(coords.x, coords.y, StartRoomColor);
             currentGrid[coords.x, coords.y] = RoomTile;
             _existingRoomsHashset.Add(coords);
             _rooms.Add(newRoom);
@@ -368,11 +369,11 @@ namespace URLG.CellularAutomata
         /// </summary>
         void Featurize(MockRoom room, FeatureParametersSettings settings)
         {
-            var generatedFeatureParameters = GaussianNaiveBayes.GenerateFeatureOptionsRandom(settings);
+            int seed = UnityEngine.Random.Range(int.MinValue, int.MaxValue);
+            var generatedFeatureParameters = GaussianNaiveBayes.GenerateFeatureOptionsRandom(settings, seed);
             room.GenerateFeatures(generatedFeatureParameters);
         }
         
-
         /// <summary>
         /// Adds generated features to target room.
         /// </summary>
@@ -385,7 +386,8 @@ namespace URLG.CellularAutomata
                 MaxEnemyCount = 20,
                 MaxObstacleCount = 6,
             };
-            var generatedFeatureParameters = GaussianNaiveBayes.GenerateFeatureOptionsRandom(settings);
+            int seed = UnityEngine.Random.Range(int.MinValue, int.MaxValue);
+            var generatedFeatureParameters = GaussianNaiveBayes.GenerateFeatureOptionsRandom(settings, seed);
             room.GenerateFeatures(generatedFeatureParameters);
         }
 
@@ -399,7 +401,8 @@ namespace URLG.CellularAutomata
                 MaxEnemyCount = 0,
                 MaxObstacleCount = 0,
             };
-            var generatedFeatureParameters = GaussianNaiveBayes.GenerateFeatureOptionsRandom(settings);
+            int seed = UnityEngine.Random.Range(int.MinValue, int.MaxValue);
+            var generatedFeatureParameters = GaussianNaiveBayes.GenerateFeatureOptionsRandom(settings, seed);
             room.GenerateFeatures(generatedFeatureParameters);
         }
 
@@ -420,7 +423,7 @@ namespace URLG.CellularAutomata
 
             /// Place new room at picked neighbor position
             MockRoom newRoom;
-            newRoom = CreateRoom(pickedNeighbor.x, pickedNeighbor.y, roomColor);
+            newRoom = InstantiateRoom(pickedNeighbor.x, pickedNeighbor.y, roomColor);
 
             /// Map passage ways between neighbors
             /// Currently just a straight path to the exit
@@ -475,7 +478,7 @@ namespace URLG.CellularAutomata
             return neighbors;
         }
 
-        MockRoom CreateRoom(int x, int y, Color color)
+        MockRoom InstantiateRoom(int x, int y, Color color)
         {
             var room = (GameObject) PrefabUtility.InstantiatePrefab(mockRoomPrefab, mockRoomContainer);
             var spriteRenderer = room.GetComponent<SpriteRenderer>();
@@ -580,7 +583,7 @@ namespace URLG.CellularAutomata
         {
             if (SceneManager.GetActiveScene().name != "R&D") return;
 
-            room.OnClick += telemetryUI.OnRoomClick;
+            room.OnClick += playerTelemetryUI.OnRoomClick;
             room.OnClick += SelectorToRoom;
         }
 
@@ -588,7 +591,7 @@ namespace URLG.CellularAutomata
         {
             if (selector == null)
             {
-                selector = Instantiate(Resources.Load<GameObject>("Prefabs/UI/Selector"), transform);
+                selector = Instantiate(Resources.Load<GameObject>("Prefabs/RD/Selector"), transform);
             }
             LeanTween.cancel(selector);
             LeanTween.scale(selector, Vector3.zero, 0f);

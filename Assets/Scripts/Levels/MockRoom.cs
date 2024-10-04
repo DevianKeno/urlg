@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using URLG.Telemetry;
-using static URLG.Generator.Generator.Map;
+using RL.Telemetry;
+using static RL.Generator.Generator.Map;
+using UnityEditor;
 
-namespace URLG.CellularAutomata
+namespace RL.CellularAutomata
 {
     public enum RecolorType { ENEMY, OBSTACLE, BOTH }
 
@@ -26,8 +27,8 @@ namespace URLG.CellularAutomata
 
         Dictionary<Cardinal, MockRoom> neighbors = new();
         public Dictionary<Cardinal, MockRoom> Neighbors => neighbors;
-        StatCollection stats;
-        public StatCollection Stats => stats;
+        RoomStatCollection stats;
+        public RoomStatCollection Stats => stats;
         Color enemyAlignmentColor;
         public Color EnemyAlignmentColor => enemyAlignmentColor;
         Color obsAlignmentColor;
@@ -100,13 +101,13 @@ namespace URLG.CellularAutomata
 
         public void RecalculateStats()
         {
-            stats = new(Telemetry.Telemetry.RoomStatsValues);
-            stats.GetStat("EnemyCountFire").Value = features.EnemyCountFire;
-            stats.GetStat("EnemyCountBeam").Value = features.EnemyCountBeam;
-            stats.GetStat("EnemyCountWave").Value = features.EnemyCountWave;
-            stats.GetStat("ObstacleCountFire").Value = features.ObstacleCountFire;
-            stats.GetStat("ObstacleCountBeam").Value = features.ObstacleCountBeam;
-            stats.GetStat("ObstacleCountWave").Value = features.ObstacleCountWave;
+            stats = new(Telemetry.Telemetry.RoomStatsKeys);
+            stats.GetStat(StatKey.EnemyCountFire).Value = features.EnemyCountFire;
+            stats.GetStat(StatKey.EnemyCountBeam).Value = features.EnemyCountBeam;
+            stats.GetStat(StatKey.EnemyCountWave).Value = features.EnemyCountWave;
+            stats.GetStat(StatKey.ObstacleCountFire).Value = features.ObstacleCountFire;
+            stats.GetStat(StatKey.ObstacleCountBeam).Value = features.ObstacleCountBeam;
+            stats.GetStat(StatKey.ObstacleCountWave).Value = features.ObstacleCountWave;
         }
 
         public void SetColorEnemyAligned()
@@ -126,16 +127,16 @@ namespace URLG.CellularAutomata
 
         public void CalculateAlignmentColor()
         {
-            var ef = Stats.GetStat("EnemyCountFire").Value;
-            var eb = Stats.GetStat("EnemyCountBeam").Value;
-            var ew = Stats.GetStat("EnemyCountWave").Value;
+            var ef = Stats.GetStat(StatKey.EnemyCountFire).Value;
+            var eb = Stats.GetStat(StatKey.EnemyCountBeam).Value;
+            var ew = Stats.GetStat(StatKey.EnemyCountWave).Value;
             if (ef > eb) enemyAlignmentColor = FireAlignmentColor;
             else if (eb > ew) enemyAlignmentColor = BeamAlignmentColor;
             else if (ew > ef) enemyAlignmentColor = WaveAlignmentColor;
 
-            var of = Stats.GetStat("ObstacleCountFire").Value;
-            var ob = Stats.GetStat("ObstacleCountBeam").Value;
-            var ow = Stats.GetStat("ObstacleCountWave").Value;
+            var of = Stats.GetStat(StatKey.ObstacleCountFire).Value;
+            var ob = Stats.GetStat(StatKey.ObstacleCountBeam).Value;
+            var ow = Stats.GetStat(StatKey.ObstacleCountWave).Value;
             if (of > ob) obsAlignmentColor = FireAlignmentColor;
             else if (ob > ow) obsAlignmentColor = BeamAlignmentColor;
             else if (ow > of) obsAlignmentColor = WaveAlignmentColor;
@@ -146,15 +147,15 @@ namespace URLG.CellularAutomata
             Stat stat;
             /// calculate enemies
             int totalEnemies = 0; 
-            if (stats.TryGetStat("EnemyCountFire", out stat) && stat.Value != 0)
+            if (stats.TryGetStat(StatKey.EnemyCountFire, out stat) && stat.Value != 0)
             {
                 totalEnemies += stat.Value;
             }
-            if (stats.TryGetStat("EnemyCountBeam", out stat) && stat.Value != 0)
+            if (stats.TryGetStat(StatKey.EnemyCountBeam, out stat) && stat.Value != 0)
             {
                 totalEnemies += stat.Value;
             }
-            if (stats.TryGetStat("EnemyCountWave", out stat) && stat.Value != 0)
+            if (stats.TryGetStat(StatKey.EnemyCountWave, out stat) && stat.Value != 0)
             {
                 totalEnemies += stat.Value;
             }
@@ -166,15 +167,15 @@ namespace URLG.CellularAutomata
 
             /// calculate obstacles
             int totalObstacles = 0; 
-            if (stats.TryGetStat("ObstacleCountFire", out stat) && stat.Value != 0)
+            if (stats.TryGetStat(StatKey.ObstacleCountFire, out stat) && stat.Value != 0)
             {
                 totalObstacles += stat.Value;
             }
-            if (stats.TryGetStat("ObstacleCountBeam", out stat) && stat.Value != 0)
+            if (stats.TryGetStat(StatKey.ObstacleCountBeam, out stat) && stat.Value != 0)
             {
                 totalObstacles += stat.Value;
             }
-            if (stats.TryGetStat("ObstacleCountWave", out stat) && stat.Value != 0)
+            if (stats.TryGetStat(StatKey.ObstacleCountWave, out stat) && stat.Value != 0)
             {
                 totalObstacles += stat.Value;
             }

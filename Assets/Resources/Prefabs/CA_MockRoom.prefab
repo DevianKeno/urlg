@@ -263,7 +263,7 @@ GameObject:
   - component: {fileID: 5064869491837472163}
   - component: {fileID: 7515660849678115137}
   - component: {fileID: 858102279428690491}
-  - component: {fileID: 2327028009102013685}
+  - component: {fileID: 3411652127397113669}
   m_Layer: 0
   m_Name: CA_MockRoom
   m_TagString: Untagged
@@ -387,7 +387,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &2327028009102013685
+--- !u!114 &3411652127397113669
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -396,11 +396,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 4026839169192576902}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0d85c3a8960aeb04b919f6e23309fd83, type: 3}
+  m_Script: {fileID: 11500000, guid: 2a812ea0831e90941870724ae678700e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   <Coordinates>k__BackingField: {x: 0, y: 0}
-  IsTyped: 0
   North: 0
   South: 0
   East: 0
@@ -410,9 +409,9 @@ MonoBehaviour:
   doorEast: {fileID: 3558958472798449611}
   doorWest: {fileID: 7818465439064309402}
   spriteRenderer: {fileID: 7515660849678115137}
-  FireAlignmentColor: {r: 1, g: 0.34439367, b: 0, a: 1}
-  BeamAlignmentColor: {r: 0, g: 1, b: 0.64402413, a: 1}
-  WaveAlignmentColor: {r: 0.9095656, g: 0.21960661, b: 0.990566, a: 1}
+  FireAlignmentColor: {r: 1, g: 0.3796169, b: 0, a: 1}
+  BeamAlignmentColor: {r: 0.2216981, g: 1, b: 0.3919585, a: 1}
+  WaveAlignmentColor: {r: 0.96574044, g: 0.3537736, b: 1, a: 1}
 --- !u!1 &7818465439064309402
 GameObject:
   m_ObjectHideFlags: 0

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace URLG.Enemies
+namespace RL.Enemies
 {    
     public class Enemy : MonoBehaviour, IDamageable
     {
@@ -93,7 +93,7 @@ namespace URLG.Enemies
 
         protected virtual void ChooseNewStrafeDirection()
         {
-            float randomAngle = Random.Range(-strafeAngle, strafeAngle);
+            float randomAngle = UnityEngine.Random.Range(-strafeAngle, strafeAngle);
             strafeDirection = Mathf.Deg2Rad * randomAngle; // Convert angle to radians for trigonometric functions
         }
 

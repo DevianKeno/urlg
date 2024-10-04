@@ -1,7 +1,7 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace URLG.Levels
+namespace RL.Levels
 {
     [CustomEditor(typeof(Room))]
     public class RoomEditor : Editor

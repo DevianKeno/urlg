@@ -4,7 +4,7 @@ using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
-namespace URLG.Generator
+namespace RL.Generator
 {
     public class CFG : MonoBehaviour
     {

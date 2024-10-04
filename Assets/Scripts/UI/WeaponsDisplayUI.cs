@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-using URLG;
+using RL;
 
 namespace RL.UI
 {

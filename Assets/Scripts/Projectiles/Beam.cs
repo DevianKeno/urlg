@@ -1,8 +1,9 @@
 using UnityEngine;
-using URLG.Enemies;
-using URLG.Levels;
+using RL.Enemies;
+using RL.Levels;
+using RL.Telemetry;
 
-namespace URLG.Projectiles
+namespace RL.Projectiles
 {
     public class Beam : Projectile
     {
@@ -10,7 +11,7 @@ namespace URLG.Projectiles
         {
             base.Start();
 
-            Game.Telemetry.PlayerStats["useCountBeam"].Increment();
+            Game.Telemetry.PlayerStats[StatKey.UseCountBeam].Increment();
             Game.Audio.PlaySound("beam_shoot");
         }
 
@@ -35,7 +36,7 @@ namespace URLG.Projectiles
         protected override void OnHitEnemy(IDamageable hit)
         {
             hit.TakeDamage(Data.Damage);
-            Game.Telemetry.PlayerStats["hitCountBeam"].Increment();
+            Game.Telemetry.PlayerStats[StatKey.HitCountBeam].Increment();
             Destroy(gameObject);
         }
 

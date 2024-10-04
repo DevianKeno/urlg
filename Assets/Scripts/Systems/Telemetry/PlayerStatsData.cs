@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace URLG.Telemetry
+namespace RL.Telemetry
 {
     [Serializable]
     public struct URLGSaveData

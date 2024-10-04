@@ -1,12 +1,13 @@
 using System;
 using System.Collections;
 using UnityEngine;
-using URLG.Systems;
-using URLG.Player;
-using URLG.Enemies;
+using RL.Systems;
+using RL.Player;
+using RL.Enemies;
 using Random = UnityEngine.Random;
+using RL.Telemetry;
 
-namespace URLG.Enemies
+namespace RL.Enemies
 {
     /// Salaman
     public class WaveWeak : Enemy, IDamageable
@@ -46,7 +47,7 @@ namespace URLG.Enemies
         protected override void Start()
         {
             base.Start();
-            chargeInterval = Random.Range(minChargeInterval, maxChargeInterval);
+            chargeInterval = UnityEngine.Random.Range(minChargeInterval, maxChargeInterval);
             chargeDelta = 0f;
             shield.SetActive(false);
             sm.OnStateChanged += animator.StateChangedCallback;
@@ -158,7 +159,7 @@ namespace URLG.Enemies
             float startTime = Time.time;
             float journeyLength = Vector2.Distance(transform.position, overshootPosition);
 
-            Game.Telemetry.GameStats["enemyAttackCount"].Increment();
+            Game.Telemetry.GameStats[StatKey.EnemyAttackCount].Increment();
             shield.SetActive(true);
             sm.ToState(SalamanderStates.Jump);
             while (Time.time - startTime < chargeDuration)
@@ -171,7 +172,7 @@ namespace URLG.Enemies
             shield.SetActive(false);
             _isCharging = false;
             yield return new WaitForSeconds(chargeCooldown);
-            chargeInterval = Random.Range(minChargeInterval, maxChargeInterval);
+            chargeInterval = UnityEngine.Random.Range(minChargeInterval, maxChargeInterval);
             chargeDelta = 0f;
             _canCharge = true;
         }
@@ -213,7 +214,7 @@ namespace URLG.Enemies
         void Lunge(int direction = 0)
         {
             _isLunging = true;
-            direction = direction != 0 ? direction : Random.Range(0, 2) * 2 - 1;
+            direction = direction != 0 ? direction : UnityEngine.Random.Range(0, 2) * 2 - 1;
 
             Vector2 lungeDirection = transform.right * direction;
                 

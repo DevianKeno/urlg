@@ -1,4 +1,4 @@
-namespace URLG.Levels
+namespace RL.Levels
 {
     public class Glass : Tile
     {

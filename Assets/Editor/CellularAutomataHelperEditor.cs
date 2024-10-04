@@ -1,8 +1,8 @@
 using UnityEditor;
 using UnityEngine;
-using URLG.CellularAutomata;
+using RL.CellularAutomata;
 
-namespace URLG.UnityEditor
+namespace RL.UnityEditor
 {
     [CustomEditor(typeof(CellularAutomataHelper))]
     public class CellularAutomataHelperEditor : Editor

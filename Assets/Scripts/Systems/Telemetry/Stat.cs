@@ -1,6 +1,6 @@
 using System;
 
-namespace URLG.Telemetry
+namespace RL.Telemetry
 {
     /// <summary>
     /// Represents an individual statistic.
@@ -8,7 +8,7 @@ namespace URLG.Telemetry
     [Serializable]
     public class Stat
     {
-        public string Name;
+        public StatKey key;
         int value;
 
         public event EventHandler OnValueChanged;
@@ -25,9 +25,9 @@ namespace URLG.Telemetry
             }
         }
 
-        public Stat(string name, int value)
+        public Stat(StatKey key, int value)
         {
-            this.Name = name;
+            this.key = key;
             this.value = value;
             this.OnValueChanged = null;
         }
@@ -48,7 +48,7 @@ namespace URLG.Telemetry
         {
             return new()
             {
-                Name = this.Name,
+                Key = (int) this.key,
                 Value = this.Value
             };
         }

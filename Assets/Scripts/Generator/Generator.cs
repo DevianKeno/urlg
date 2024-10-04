@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using UnityEngine;
 
-using URLG.Enemies;
+using RL.Enemies;
 
-using URLG.Levels;
+using RL.Levels;
 using Random = UnityEngine.Random;
+using RL.Telemetry;
 
-namespace URLG.Generator
+namespace RL.Generator
 {
     public class Generator : MonoBehaviour
     {
@@ -77,12 +78,12 @@ namespace URLG.Generator
                 }
             }
 
-            var salamanCount = Random.Range(minSalaman, maxSalaman);
+            var salamanCount = UnityEngine.Random.Range(minSalaman, maxSalaman);
 
             for (int i = 0; i < salamanCount; i++ )
             {
                 Instantiate(salamanPrefab, enemiesContainer.transform);
-                Game.Telemetry.RoomStats["enemyCountWave"].Increment();
+                Game.Telemetry.RoomStats[StatKey.EnemyCountWave].Increment();
             }
         }
         
@@ -91,14 +92,14 @@ namespace URLG.Generator
             return new RoomData
             {
                 /// Enemy count
-                EnemyCountFire = Random.Range(minDeer, maxDeer),
-                EnemyCountBeam = Random.Range(minBeamObs, maxBeamObs),
-                EnemyCountWave = Random.Range(minSalaman, maxSalaman),
+                EnemyCountFire = UnityEngine.Random.Range(minDeer, maxDeer),
+                EnemyCountBeam = UnityEngine.Random.Range(minBeamObs, maxBeamObs),
+                EnemyCountWave = UnityEngine.Random.Range(minSalaman, maxSalaman),
 
                 /// Obstacle count
-                ObstacleCountFire = Random.Range(minCrate, maxCrate),
-                ObstacleCountBeam = Random.Range(minBeamObs, maxBeamObs),
-                ObstacleCountWave = Random.Range(minWaveObs, maxWaveObs),
+                ObstacleCountFire = UnityEngine.Random.Range(minCrate, maxCrate),
+                ObstacleCountBeam = UnityEngine.Random.Range(minBeamObs, maxBeamObs),
+                ObstacleCountWave = UnityEngine.Random.Range(minWaveObs, maxWaveObs),
             };
         }
 

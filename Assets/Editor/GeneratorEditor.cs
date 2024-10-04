@@ -1,7 +1,7 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace URLG.Generator
+namespace RL.Generator
 {
     [CustomEditor(typeof(Generator))]
     public class GeneratorEditor : Editor

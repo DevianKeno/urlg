@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace URLG
+namespace RL
 {
     public class Particle : MonoBehaviour
     {

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace URLG.Enemies
+namespace RL.Enemies
 {
     public class FireWeak : Enemy, IDamageable
     {

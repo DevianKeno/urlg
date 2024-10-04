@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace URLG.Player
+namespace RL.Player
 {
     public class PlayerStatsManager : MonoBehaviour
     {

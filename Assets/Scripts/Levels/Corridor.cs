@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace URLG.Levels
+namespace RL.Levels
 {
     public class Corridor : MonoBehaviour, ILoadable
     {

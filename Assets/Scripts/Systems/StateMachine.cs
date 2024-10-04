@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace URLG.Systems
+namespace RL.Systems
 {
     /// <summary>
     /// Base class for State Machines.

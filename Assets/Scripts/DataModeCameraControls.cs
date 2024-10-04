@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 using Cinemachine;
 using System;
 
-namespace URLG
+namespace RL
 {
     public class DataModeCameraControls : MonoBehaviour
     {

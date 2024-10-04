@@ -1,8 +1,8 @@
 using UnityEngine;
-using URLG.Levels;
+using RL.Levels;
 using System.Collections.Generic;
 
-namespace URLG.Systems
+namespace RL.Systems
 {
     public class TilesManager : MonoBehaviour
     {

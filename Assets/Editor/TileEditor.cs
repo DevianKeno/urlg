@@ -1,7 +1,7 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace URLG.Levels
+namespace RL.Levels
 {
     [CanEditMultipleObjects]
     [CustomEditor(typeof(Tile))]

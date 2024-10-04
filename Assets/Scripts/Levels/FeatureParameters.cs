@@ -1,7 +1,8 @@
-namespace URLG.CellularAutomata
+namespace RL.CellularAutomata
 {
     public struct FeatureParameters
     {
+        public int Seed { get; set; }
         public int EnemyCountFire { get; set; }
         public int EnemyCountBeam { get; set; }
         public int EnemyCountWave { get; set; }

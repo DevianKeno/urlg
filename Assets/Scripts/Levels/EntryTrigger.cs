@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace URLG.Levels
+namespace RL.Levels
 {
     public class EntryTrigger : MonoBehaviour
     {

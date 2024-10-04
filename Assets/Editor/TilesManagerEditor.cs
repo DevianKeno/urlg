@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEditor;
 
-namespace URLG.Systems
+namespace RL.Systems
 {
     [CustomEditor(typeof(TilesManager))]
     public class TilesManagerEditor : Editor

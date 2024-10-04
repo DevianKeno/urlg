@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace URLG.Levels
+namespace RL.Levels
 {
     public class RoomTileLayer : MonoBehaviour
     {

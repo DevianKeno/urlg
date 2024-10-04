@@ -1,7 +1,7 @@
 using UnityEngine;
-using URLG.Projectiles;
+using RL.Projectiles;
 
-namespace URLG.Weapons
+namespace RL.Weapons
 {
     [CreateAssetMenu(fileName = "Weapon", menuName = "Roguelike/Weapon")]
     public class Weapon : ScriptableObject

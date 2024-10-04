@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace URLG.Systems
+namespace RL.Systems
 {
     [RequireComponent(typeof(Animator))]
     public abstract class StateAnimator<T> : MonoBehaviour where T : Enum

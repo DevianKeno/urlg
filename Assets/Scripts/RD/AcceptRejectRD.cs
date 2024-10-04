@@ -1,0 +1,266 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+
+using UnityEditor;
+using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
+
+using RL.Graphs;
+using RL.CellularAutomata;
+using RL.Classifiers;
+using RL.Telemetry;
+using RL.UI;
+
+namespace RL.RD
+{
+    public class AcceptRejectRD : MonoBehaviour
+    {
+        public const int MaxBulkGenerationTimes = 1000;
+        public const string AcceptedMessage = @"The generated room matches the player's preferences,
+therefore is <b>accepted</b>.";
+        public const string RejectedMessage = @"The generated room falls out of the player's preferences,
+therefore is <b>rejected</b>.";
+
+        public MockRoom Room = null;
+        [Range(0f, 1f)]
+        public float AcceptanceThreshold = 0f;
+        public Status BulkGenTarget = Status.Accepted;
+        public float BulkGenDelay = 0f;
+        public bool NormalizeValues => normalizeToggle != null ? normalizeToggle.isOn : false;
+        /// <summary>
+        /// The current state of Player Stats.
+        /// </summary>
+        PlayerStatCollection playerStats;
+        /// <summary>
+        /// The current state of Room Stats.
+        /// </summary>
+        RoomStatCollection roomStats;
+        ARResult _previousResult;
+
+        [SerializeField] RDTelemetryUI playerTelemetryUI;
+        [SerializeField] RDTelemetryUI roomTelemetryUI;
+
+        [Header("Graphs")]
+        [SerializeField] ARGraph fireGraph;
+        [SerializeField] ARGraph beamGraph;
+        [SerializeField] ARGraph waveGraph;
+        [SerializeField] ARGraph skillGraph;
+
+        [Header("Buttons")]
+        [SerializeField] Button setValuesBtn;
+        [SerializeField] Button bulkGenBtn;
+        [SerializeField] Button generateRoomBtn;
+        [SerializeField] Toggle normalizeToggle;
+        [SerializeField] Button likedBtn;
+        [SerializeField] Button dislikedBtn;
+        
+        [Header("Texts")]
+        [SerializeField] TextMeshProUGUI featureDataContentTmp;
+        [SerializeField] TextMeshProUGUI iterationsTmp;
+        [SerializeField] TextMeshProUGUI acceptedTmp;
+        [SerializeField] TextMeshProUGUI rejectedTmp;
+        [SerializeField] TextMeshProUGUI messageTmp;
+
+        [Space]
+        
+        [SerializeField] GameObject mockRoomPrefab;
+
+        void Awake()
+        {
+            setValuesBtn.onClick.AddListener(SetPlayerValues);
+            generateRoomBtn.onClick.AddListener(GenerateRoom);
+            bulkGenBtn.onClick.AddListener(BulkGenerateUntilStatus);
+        }
+
+        void Start()
+        {
+            ClearAllPoints();
+            ResetARStatus();
+        }
+
+        void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                ClassifyAR();
+            }
+        }
+
+
+        #region Public methods
+
+        public void ClassifyAR()
+        {
+            if (playerStats == null || roomStats == null)
+            {
+                Debug.LogError($"Neither player nor room stats can be null for classification");
+                return;
+            }
+
+            var result = ARClassifier.Classify(playerStats, roomStats, AcceptanceThreshold, normalizeToggle.isOn);
+            if (result.Status == Status.Accepted)
+            {
+                SetARAccepted();
+            }
+            else if (result.Status == Status.Rejected)
+            {
+                SetARRejected();
+            }
+            _previousResult = result;
+        }
+
+        public void BulkGenerateUntilStatus()
+        {
+            bulkGenBtn.interactable = false;
+            iterationsTmp.gameObject.SetActive(true);
+            StartCoroutine(BulkGenerateUntilStatusCoroutine());
+        }
+
+        IEnumerator BulkGenerateUntilStatusCoroutine()
+        {
+            var result = new ARResult();
+            string message = $"Iterations: ";
+            SetARRejected();
+            for (int i = 0; i < MaxBulkGenerationTimes; i++)
+            {
+                roomTelemetryUI.RandomizeRoomFeatures();
+                SetRoomValues();
+                _previousResult = ARClassifier.Classify(playerStats, roomStats, AcceptanceThreshold, normalizeToggle.isOn);                
+                iterationsTmp.text = message + i;
+                if (_previousResult.Status == BulkGenTarget) break;
+                yield return new WaitForSeconds(BulkGenDelay);
+            }
+            SetARAccepted();
+            bulkGenBtn.interactable = true;
+            yield return null;
+        }
+
+        public void SetPlayerValues()
+        {
+            playerStats = playerTelemetryUI.ConstructPlayerTelemetryStats();
+
+            var firePref = Evaluate.Player.WeaponPreference(StatKey.HitCountFire, StatKey.UseCountFire, playerStats);
+            var beamPref = Evaluate.Player.WeaponPreference(StatKey.HitCountBeam, StatKey.UseCountBeam, playerStats);
+            var wavePref = Evaluate.Player.WeaponPreference(StatKey.HitCountWave, StatKey.UseCountWave, playerStats);
+
+            if (NormalizeValues)
+            {
+                Math.NormalizeMaxed(ref firePref, ref beamPref, ref wavePref);
+            }
+
+            fireGraph.SetBoundsY(0f, (float) firePref);
+            beamGraph.SetBoundsY(0f, (float) beamPref);
+            waveGraph.SetBoundsY(0f, (float) wavePref);
+        }
+
+        public void SetRoomValues()
+        {
+            roomStats = roomTelemetryUI.ConstructRoomTelemetryStats();
+
+            var firePref = Evaluate.Room.WeaponPreference(StatKey.EnemyCountFire, StatKey.ObstacleCountFire, roomStats);
+            var beamPref = Evaluate.Room.WeaponPreference(StatKey.EnemyCountBeam, StatKey.ObstacleCountBeam, roomStats);
+            var wavePref = Evaluate.Room.WeaponPreference(StatKey.EnemyCountWave, StatKey.ObstacleCountWave, roomStats);
+            
+            if (NormalizeValues)
+            {
+                Math.NormalizeMaxed(ref firePref, ref beamPref, ref wavePref);
+            }
+
+            ClearAllPoints();
+            fireGraph.PlotPoint((float) firePref);
+            beamGraph.PlotPoint((float) beamPref);
+            waveGraph.PlotPoint((float) wavePref);
+        }
+
+        public void PlotPoints()
+        {
+            if (Room == null) return;
+
+            var stats = Room.Stats;
+            var firePref = Evaluate.Room.WeaponPreference(StatKey.EnemyCountFire, StatKey.ObstacleCountFire, stats);
+            var beamPref = Evaluate.Room.WeaponPreference(StatKey.EnemyCountBeam, StatKey.ObstacleCountBeam, stats);
+            var wavePref = Evaluate.Room.WeaponPreference(StatKey.EnemyCountWave, StatKey.ObstacleCountWave, stats);
+
+            ClearAllPoints();
+            fireGraph.PlotPoint((float) firePref);
+            beamGraph.PlotPoint((float) beamPref);
+            waveGraph.PlotPoint((float) wavePref);
+        }
+
+        #endregion
+    
+        string hexGray = "4B4B4B";
+        string hexGreen = "40D945";
+        string hexRed = "F62B2B";
+
+        void SetARAccepted()
+        {
+            acceptedTmp.text = $"<color=#{hexGreen}>Accepted";
+            rejectedTmp.text = $"<color=#{hexGray}>Rejected";
+            messageTmp.text = AcceptedMessage;
+        }
+
+        void SetARRejected()
+        {
+            acceptedTmp.text = $"<color=#{hexGray}>Accepted";
+            rejectedTmp.text = $"<color=#{hexRed}>Rejected";
+            messageTmp.text = RejectedMessage;
+        }
+
+        void ResetARStatus()
+        {
+            acceptedTmp.text = $"<color=#{hexGray}>Accepted";
+            rejectedTmp.text = $"<color=#{hexGray}>Rejected";
+            messageTmp.text = "";
+        }
+
+
+        #region Helpers
+
+        void GenerateRoom() /// random
+        {
+            if (Room != null) Destroy(Room);
+            Room = CreateRoom();
+            FeaturizeRandom(Room);
+            PlotPoints();
+        }
+
+        void ClearAllPoints()
+        {
+            fireGraph.RemovePoints();
+            beamGraph.RemovePoints();
+            waveGraph.RemovePoints();
+        }
+
+        MockRoom CreateRoom()
+        {
+            GameObject go;
+#if UNITY_EDITOR
+            go = (GameObject) PrefabUtility.InstantiatePrefab(mockRoomPrefab);
+#else
+            go = (GameObject) Instantiate(mockRoomPrefab);
+#endif
+            var spriteRenderer = go.GetComponent<SpriteRenderer>();
+            var mockRoom = go.GetComponent<MockRoom>();
+            return mockRoom;
+        }
+
+        void FeaturizeRandom(MockRoom room)
+        {
+            if (room == null) return;
+            
+            var settings = new FeatureParametersSettings()
+            {
+                MaxEnemyCount = 20,
+                MaxObstacleCount = 6,
+            };
+            int seed = UnityEngine.Random.Range(int.MinValue, int.MaxValue);
+            var generatedFeatureParameters = GaussianNaiveBayes.GenerateFeatureOptionsRandom(settings, seed);
+            room.GenerateFeatures(generatedFeatureParameters);
+        }
+
+        #endregion
+    }
+}

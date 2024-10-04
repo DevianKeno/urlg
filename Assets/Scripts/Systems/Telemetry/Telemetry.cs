@@ -5,41 +5,41 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-namespace URLG.Telemetry
+namespace RL.Telemetry
 {
     public class Telemetry : MonoBehaviour
     {
-        public static string[] PlayerStatsValues = {
-            "UseCountFire",
-            "UseCountBeam",
-            "UseCountWave",
-            "HitCountFire",
-            "HitCountBeam",
-            "HitCountWave",
-            "HitsTaken",
+        public static StatKey[] PlayerStatsKeys = {
+            StatKey.UseCountFire,
+            StatKey.UseCountBeam,
+            StatKey.UseCountWave,
+            StatKey.HitCountFire,
+            StatKey.HitCountBeam,
+            StatKey.HitCountWave,
+            StatKey.HitsTaken,
         };
-        public static string[] RoomStatsValues = {
-            "EnemyCountFire",
-            "EnemyCountBeam",
-            "EnemyCountWave",
-            "ObstacleCountFire",
-            "ObstacleCountBeam",
-            "ObstacleCountWave",
+        public static StatKey[] RoomStatsKeys = {
+            StatKey.EnemyCountFire,
+            StatKey.EnemyCountBeam,
+            StatKey.EnemyCountWave,
+            StatKey.ObstacleCountFire,
+            StatKey.ObstacleCountBeam,
+            StatKey.ObstacleCountWave,
         };
-        public static string[] GameStatsValues = {
-            "EnemyAttackCount"
+        public static StatKey[] GameStatsKeys = {
+            StatKey.EnemyAttackCount
         };
 
-        StatCollection _playerStats;
-        public StatCollection PlayerStats => _playerStats;
+        PlayerStatCollection _playerStats;
+        public PlayerStatCollection PlayerStats => _playerStats;
         StatCollection _gameStats;
         public StatCollection GameStats => _gameStats;
-        StatCollection _roomStats;
-        public StatCollection RoomStats => _roomStats;
+        RoomStatCollection _roomStats;
+        public RoomStatCollection RoomStats => _roomStats;
 
         public bool Display = true;
 
-        Dictionary<string, TextMeshProUGUI> statTexts = new();
+        Dictionary<StatKey, TextMeshProUGUI> statTexts = new();
 
         [Header("Elements")]
         [SerializeField] GameObject telemetryContainer;
@@ -63,51 +63,51 @@ namespace URLG.Telemetry
 
         void InitializePlayerStats()
         {
-            _playerStats = new(PlayerStatsValues);
+            _playerStats = new(PlayerStatsKeys);
             foreach (var stat in _playerStats.Stats)
             {
-                var go = new GameObject("Player Stat");
+                var go = new GameObject("Player Stats");
                 go.transform.SetParent(playerStatsContainer.transform);
                 var tmp = go.AddComponent<TextMeshProUGUI>();
-                tmp.text = $"{stat.Name}: {stat.Value}";
+                tmp.text = $"{stat.key}: {stat.Value}";
 
                 stat.OnValueChanged += OnValueChangedCallback;
 
-                statTexts[stat.Name] = tmp;
+                statTexts[stat.key] = tmp;
             }
             LayoutRebuilder.ForceRebuildLayoutImmediate(playerStatsContainer.transform as RectTransform);
         }
 
         void InitializeGameStats()
         {
-            _gameStats = new(GameStatsValues);
+            _gameStats = new(GameStatsKeys);
             foreach (var stat in _gameStats.Stats)
             {
-                var go = new GameObject("Game Stat");
+                var go = new GameObject("Game Stats");
                 go.transform.SetParent(gameStatsContainer.transform);
                 var tmp = go.AddComponent<TextMeshProUGUI>();
-                tmp.text = $"{stat.Name}: {stat.Value}";
+                tmp.text = $"{stat.key}: {stat.Value}";
 
                 stat.OnValueChanged += OnValueChangedCallback;
 
-                statTexts[stat.Name] = tmp;
+                statTexts[stat.key] = tmp;
             }
             LayoutRebuilder.ForceRebuildLayoutImmediate(gameStatsContainer.transform as RectTransform);
         }
 
         void InitializeRoomStats()
         {
-            _roomStats = new(RoomStatsValues);
+            _roomStats = new(RoomStatsKeys);
             foreach (var stat in _roomStats.Stats)
             {
                 var go = new GameObject("Room Stat");
                 go.transform.SetParent(roomStatsContainer.transform);
                 var tmp = go.AddComponent<TextMeshProUGUI>();
-                tmp.text = $"{stat.Name}: {stat.Value}";
+                tmp.text = $"{stat.key}: {stat.Value}";
 
                 stat.OnValueChanged += OnValueChangedCallback;
 
-                statTexts[stat.Name] = tmp;
+                statTexts[stat.key] = tmp;
             }
             LayoutRebuilder.ForceRebuildLayoutImmediate(roomStatsContainer.transform as RectTransform);
         }
@@ -129,7 +129,7 @@ namespace URLG.Telemetry
         void OnValueChangedCallback(object sender, EventArgs e)
         {
             var stat = (Stat) sender;
-            statTexts[stat.Name].text = $"{stat.Name}: {stat.Value}";
+            statTexts[stat.key].text = $"{stat.key}: {stat.Value}";
         }
 
         #endregion

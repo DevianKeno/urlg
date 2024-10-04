@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 using UnityEngine;
 
-namespace URLG
+namespace RL
 {
     public class ParticleManager : MonoBehaviour
     {

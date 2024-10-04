@@ -2,7 +2,7 @@ using System.IO;
 using UnityEditor;
 using UnityEngine;
 
-namespace URLG.Levels
+namespace RL.Levels
 {
     [CustomEditor(typeof(Telemetry.Telemetry))]
     public class TelemetryEditor : Editor

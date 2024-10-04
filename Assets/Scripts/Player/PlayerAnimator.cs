@@ -1,7 +1,7 @@
 using UnityEngine;
-using URLG.Systems;
+using RL.Systems;
 
-namespace URLG.Player
+namespace RL.Player
 {
     public class PlayerAnimator : StateAnimator<PlayerStates>
     {

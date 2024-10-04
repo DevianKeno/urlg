@@ -1,16 +1,17 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine.U2D.IK;
 
-namespace URLG.Telemetry
+namespace RL.Telemetry
 {
     [Serializable]
     public class StatCollection
     {
-        Dictionary<string, Stat> _statList = new();
+        protected Dictionary<StatKey, Stat> _statList = new();
         public List<Stat> Stats => _statList.Values.ToList();
 
-        public StatCollection(string[] stats)
+        public StatCollection(StatKey[] stats)
         {
             foreach (var stat in stats)
             {
@@ -18,31 +19,36 @@ namespace URLG.Telemetry
             }
         }
 
-        public Stat this[string name]
+        public Stat this[StatKey key]
         {
             get
             {
-                _statList.TryGetValue(name, out var stat);
+                TryGetStat(key, out var stat);
                 return stat;
             }
         }
         
-        public Stat GetStat(string name)
+        public Stat GetStat(StatKey key)
         {
-            if (_statList.TryGetValue(name, out var stat))
+            if (_statList.TryGetValue(key, out var stat))
             {
                 return stat;
             }
-            return null;
+            return new Stat(key, 0);
         }
 
-        public bool TryGetStat(string name, out Stat stat)
+        public bool TryGetStat(StatKey key, out Stat stat)
         {
-            if (_statList.TryGetValue(name, out stat))
+            if (_statList.TryGetValue(key, out var gotStat))
             {
+                stat = gotStat;
                 return true;
             }
-            return false;
+            else
+            {
+                stat = null;
+                return false;
+            }
         }
 
         public List<StatSaveData> SaveToJson()
@@ -61,7 +67,7 @@ namespace URLG.Telemetry
         {
             foreach (var s in _statList.Values)
             {
-                var stat = _statList[s.Name];
+                var stat = _statList[s.key];
                 stat.Value = 0;
             }
         }

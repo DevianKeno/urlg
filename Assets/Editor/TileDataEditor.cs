@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEditor;
 
-namespace URLG.Levels
+namespace RL.Levels
 {
     [CanEditMultipleObjects]
     [CustomEditor(typeof(TileData))]

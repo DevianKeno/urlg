@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace URLG.Player
+namespace RL.Player
 {
     [Serializable]
     public struct PlayerStats

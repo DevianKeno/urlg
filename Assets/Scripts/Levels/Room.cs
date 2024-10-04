@@ -4,16 +4,16 @@ using System.Collections.Generic;
 
 using UnityEngine;
 
-using URLG.Enemies;
-using URLG.Telemetry;
+using RL.Enemies;
+using RL.Telemetry;
 
-using static URLG.Generator.Generator.Map;
+using static RL.Generator.Generator.Map;
 
 public enum WeaponType {
     Fireball, Beam, Wave
 }
 
-namespace URLG.Levels
+namespace RL.Levels
 {
     public interface IStatistic
     {
@@ -83,8 +83,8 @@ namespace URLG.Levels
         public Vector2 minBounds;
         public Vector2 maxBounds;
         
-        StatCollection _roomStats;
-        public StatCollection RoomStats => _roomStats;
+        RoomStatCollection _roomStats;
+        public RoomStatCollection RoomStats => _roomStats;
         
         [SerializeField] GameObject tilesContainer;
         [SerializeField] GameObject enemiesContainer;
@@ -148,15 +148,7 @@ namespace URLG.Levels
 
         void InitializeStats()
         {
-            string[] roomStats = {
-                "enemyCountFire",
-                "enemyCountBeam",
-                "enemyCountWave",
-                "obstacleCountFire",
-                "obstacleCountBeam",
-                "obstacleCountWave",
-            };
-            _roomStats = new(roomStats);
+            _roomStats = new(Telemetry.Telemetry.RoomStatsKeys);
         }
 
 
@@ -286,15 +278,15 @@ namespace URLG.Levels
                 {
                     if (enemy is FireWeak)
                     {
-                        _roomStats["enemyCountFire"].Increment();
+                        _roomStats[StatKey.EnemyCountFire].Increment();
                     }
                     else if (enemy is BeamWeak)
                     {
-                        _roomStats["enemyCountBeam"].Increment();
+                        _roomStats[StatKey.EnemyCountBeam].Increment();
                     }
                     else if (enemy is WaveWeak)
                     {
-                        _roomStats["enemyCountWave"].Increment();
+                        _roomStats[StatKey.EnemyCountWave].Increment();
                     }
                 }
             }
@@ -305,15 +297,15 @@ namespace URLG.Levels
                 {
                     if (tile is Glass)
                     {
-                        _roomStats["obstacleCountFire"].Increment();
+                        _roomStats[StatKey.ObstacleCountFire].Increment();
                     }
                     else if (tile is BurnableCrate)
                     {
-                        _roomStats["obstacleCountBeam"].Increment();
+                        _roomStats[StatKey.ObstacleCountBeam].Increment();
                     }
                     else if (tile is WaveWeak)
                     {
-                        _roomStats["obstacleCountWave"].Increment();
+                        _roomStats[StatKey.ObstacleCountWave].Increment();
                     }
                 }
             }

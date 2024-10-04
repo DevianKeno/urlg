@@ -1,10 +1,10 @@
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using URLG.CellularAutomata;
-using URLG.Systems;
+using RL.CellularAutomata;
+using RL.Systems;
 
-namespace URLG
+namespace RL
 {
     public class Game : MonoBehaviour
     {

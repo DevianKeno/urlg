@@ -6,12 +6,13 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
-using URLG.Weapons;
-using URLG.Projectiles;
-using URLG.Systems;
+using RL.Weapons;
+using RL.Projectiles;
+using RL.Systems;
 using System.Collections.Generic;
+using RL.Telemetry;
 
-namespace URLG.Player
+namespace RL.Player
 {
     public class PlayerController : MonoBehaviour
     {
@@ -169,7 +170,7 @@ namespace URLG.Player
             _isInvincible = true;
 
             Health -= damage;
-            Game.Telemetry.PlayerStats["hitsTaken"].Increment();
+            Game.Telemetry.PlayerStats[StatKey.HitsTaken].Increment();
             Game.UI.VignetteDamageFlash();
             
             if (CheckIfDead())

@@ -1,4 +1,4 @@
-namespace URLG.CellularAutomata
+namespace RL.CellularAutomata
 {
     public struct FeatureParametersSettings
     {
