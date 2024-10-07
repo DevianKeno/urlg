@@ -15,9 +15,11 @@ namespace URLG.Player
 {
     public class PlayerController : MonoBehaviour
     {
-        public const float InvincibilityFrameSeconds = 0.5f;
 
-        public float Health = 100f;
+        public const float InvincibilityTime = 5f;
+        public HealthBar healthBar;
+        public float MaximumHealth = 100f;
+        public float Health;
         public float MoveSpeed = 7f;
         public float Acceleration = 0.3f;
 
@@ -66,6 +68,7 @@ namespace URLG.Player
 
             StateMachine.OnStateChanged += animator.StateChangedCallback;
             StateMachine.ToState(PlayerStates.Idle);
+            healthBar.InitializeMaxHealth(MaximumHealth);
         }
 
         void InitializeInputs()
@@ -130,6 +133,12 @@ namespace URLG.Player
             {
                 Game.Files.OpenSaveFolder();
             }
+
+            if(Input.GetKeyDown(KeyCode.E))
+            {
+                //Test damage
+                TakeDamage(20);
+            }
         }
 
         void FixedUpdate()
@@ -165,10 +174,10 @@ namespace URLG.Player
 
         public void TakeDamage(float damage)
         {
-            if (_isInvincible) return;
-            _isInvincible = true;
+            if (_isInvincible == true) return;
 
             Health -= damage;
+            healthBar.UpdateHealthPoints(Health);
             Game.Telemetry.PlayerStats["hitsTaken"].Increment();
             Game.UI.VignetteDamageFlash();
             
@@ -192,13 +201,15 @@ namespace URLG.Player
 
         void Die()
         {
-            
+            StateMachine.ToState(PlayerStates.Death);
+            var puffParticle = Game.Particles.Create("puff");
+            puffParticle.transform.position = transform.position;
         }
 
         IEnumerator InvincibilityFrameCoroutine()
         {
             _isInvincible = true;
-            yield return new WaitForSeconds(InvincibilityFrameSeconds);
+            yield return new WaitForSeconds(InvincibilityTime);
             _isInvincible = false;
         }
 
@@ -287,7 +298,7 @@ namespace URLG.Player
 
 
         void Shoot()
-        {
+        {          
             if (_fireRateDelta < Equipped.FireRate) return;
 
             StateMachine.ToState(PlayerStates.Shoot); /// This should be locked
