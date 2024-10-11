@@ -120,6 +120,7 @@ namespace RL.CellularAutomata
 
         #endregion
 
+
         void OnValidate()
         {
             if (gameObject.activeInHierarchy)
@@ -184,13 +185,16 @@ namespace RL.CellularAutomata
 
         public void GenerateRD()
         {
-            GenerateRooms(playerTelemetryUI.GetEntry(StatKey.RoomCount).Value);
+            GenerateRoomShaped(playerTelemetryUI.GetEntry(StatKey.RoomCount).Value);
         }
 
         /// <summary>
+        /// Generates a random shaped level with specified room count.
         /// Room count does not include start and end rooms.
         /// </summary>
-        public List<MockRoom> GenerateRooms(int roomCount, bool featurize = true)
+        /// <param name="featurize">Whether to generate room features.</param>
+        /// <returns></returns>
+        public List<MockRoom> GenerateRoomShaped(int roomCount, bool featurize = true, bool instantiateObjects = false)
         {
             ClearRooms();
             if (!HasNoiseGrid)
@@ -199,13 +203,16 @@ namespace RL.CellularAutomata
             }
             RefreshGridAll();
 
-            if (mockRoomContainer != null)
+            if (instantiateObjects)
             {
-                DestroyAllRooms();
+                if (mockRoomContainer != null)
+                {
+                    DestroyAllRooms();
+                }
+                mockRoomContainer = new GameObject("Rooms").transform;
+                mockRoomContainer.SetParent(transform);
             }
-            mockRoomContainer = new GameObject("Rooms").transform;
-            mockRoomContainer.SetParent(transform);
-
+            
             _rooms = new List<MockRoom>();
             Vector2Int coords;
 

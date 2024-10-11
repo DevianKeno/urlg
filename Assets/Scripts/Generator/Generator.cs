@@ -5,6 +5,10 @@ using UnityEngine;
 
 using RL.Entities;
 using RL.Levels;
+using RL.CellularAutomata;
+using RL.Classifiers;
+using RL.Telemetry;
+using RL.UI;
 
 namespace RL.Generator
 {
@@ -42,6 +46,64 @@ namespace RL.Generator
             );
             
             return room;
+        }
+        
+        public RoomStatCollection GenerateRoomStats(FeaturizeOptions options)
+        {
+            if (options.Algorithm == PCGAlgorithm.AcceptReject)
+            {
+                return GenerateFeaturesAR(options);
+            }
+            else if (options.Algorithm == PCGAlgorithm.GaussianNaiveBayes)
+            {
+                return GenerateFeaturesGNB(options);
+            }
+
+            return new(Telemetry.Telemetry.RoomStatsKeys);
+        }
+
+        const int MaxAttempts = 256;
+        RoomStatCollection GenerateFeaturesAR(FeaturizeOptions options)
+        {   
+            RoomStatCollection roomStats;
+            ARResult previousResult;
+
+            int attempts = 0;
+            do
+            {
+                roomStats = RDTelemetryUI.ConstructRoomRandom(
+                    options.MaxEnemyCount,
+                    options.MaxObstacleCount);
+
+                previousResult = ARClassifier.Classify(options.PlayerStats, roomStats, 0.2f, normalized: true);
+
+                if (previousResult.Status == options.TargetStatus) break;
+                attempts++;
+            }
+            while (attempts < MaxAttempts);
+
+            return roomStats;
+        }
+
+        RoomStatCollection GenerateFeaturesGNB(FeaturizeOptions options)
+        {
+            RoomStatCollection roomStats;
+            GNBResult previousResult;
+
+            int attempts = 0;
+            do
+            {
+                roomStats = RDTelemetryUI.ConstructRoomRandom(
+                    options.MaxEnemyCount,
+                    options.MaxObstacleCount);
+
+                previousResult = GaussianNaiveBayes.Instance.ClassifyRoom(options.PlayerStats, roomStats);  
+                if (previousResult.Status == options.TargetStatus) break;
+                attempts++;
+            }
+            while (attempts < MaxAttempts);
+
+            return roomStats;
         }
 
         public void RegenerateEnemies()

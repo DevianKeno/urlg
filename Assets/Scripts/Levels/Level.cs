@@ -7,6 +7,7 @@ using static RL.Generator.Generator.Map;
 using RL.UI;
 using RL.Classifiers;
 using RL.Player;
+using RL.Generator;
 
 namespace RL.Levels
 {
@@ -41,9 +42,15 @@ namespace RL.Levels
 
         public int LevelNumber = 1;
         public int RoomCount = 2;
+        [Range(0, 100)] public int RejectedRoomsThreshold = 25;
+
+        public int MaxEnemyCount => MaxPerLevel[LevelNumber].MaxEnemyCount;
+        public int MaxObstacleCount => MaxPerLevel[LevelNumber].MaxObstacleCount;
 
         public Room StartRoom = null;
         public Room EndRoom = null;
+
+        public event Action OnDoneGenerate;
 
         [SerializeField] List<Room> Rooms = new();
 
@@ -56,7 +63,7 @@ namespace RL.Levels
 
         public void GenerateLevel(int roomCount)
         {
-            var generatedRooms = Game.CA.GenerateRooms(roomCount);
+            var generatedRooms = Game.CA.GenerateRoomShaped(roomCount);
             
             Room previousRoom = null;
             for (int i = 0; i < generatedRooms.Count; i++)
@@ -84,9 +91,9 @@ namespace RL.Levels
 
                 Rooms.Add(newRoom);
 
+                /// Have a reference to the previous room if available
                 if (i > 0 && Rooms.Count > 1)
                     newRoom.PreviousRoom = Rooms[i - 1];
-                
                 if (previousRoom != null)
                 {
                     previousRoom.NextRoom = newRoom;
@@ -95,41 +102,30 @@ namespace RL.Levels
                 
                 newRoom.Initialize();
 
+                /// Special rooms (start, end) don't have features
                 if (newRoom.IsStartRoom || newRoom.IsEndRoom) continue;
                 
-                /// Featurize
-                IResult result = null;
-                var roomStats = RDTelemetryUI.ConstructRoomRandom(
-                    MaxPerLevel[Game.Main.currentLevel].MaxEnemyCount,
-                    MaxPerLevel[Game.Main.currentLevel].MaxObstacleCount);
+                Status targetStatus;
+                if (UnityEngine.Random.Range(0, 100) > RejectedRoomsThreshold)
+                    targetStatus = Status.Accepted;
+                else
+                    targetStatus = Status.Rejected;
+
+                var roomStats = Game.Generator.GenerateRoomStats(
+                    new FeaturizeOptions(){
+                        Algorithm = Game.Main.AlgorithmUsed,
+                        Room = newRoom,
+                        PlayerStats = Game.Telemetry.PlayerStats,
+                        MaxEnemyCount = MaxEnemyCount,
+                        MaxObstacleCount = MaxObstacleCount,
+                        TargetStatus = targetStatus,
+                    }
+                );
                 
                 newRoom.Featurize(roomStats);
-
-                // for (int i = 0; i < MaxSearches; i++)
-                // {
-                //     if (Game.Main.AlgorithmUsed == PCGAlgorithm.AcceptReject)
-                //     {
-                //         result = ARClassifier.Classify(Game.Telemetry.PlayerStats, roomStats, 0.2f, normalized: true);
-                //     }
-                //     else if (Game.Main.AlgorithmUsed == PCGAlgorithm.GaussianNaiveBayes)
-                //     {
-                //         result = GaussianNaiveBayes.Instance.ClassifyRoom(Game.Telemetry.PlayerStats, roomStats);
-                //     }
-
-                //     if (result.Status == Status.Accepted)
-                //     {
-                //         newRoom.Featurize(roomStats);
-                //         break;
-                //     }
-                //     else if (result.Status == Status.Rejected)
-                //     {
-                //         newRoom.Featurize(roomStats);
-                //         break;
-                //     }
-                // }
-                // // newRoom.GenerateFeaturesRandom();
             }
             
+            OnDoneGenerate?.Invoke();
             StartLevel();
         }
 
@@ -137,6 +133,13 @@ namespace RL.Levels
         {
             Game.Main.Player.transform.position = StartRoom.Center.position;
             Game.Main.CurrentRoom = StartRoom;
+            
+            Game.Main.UnloadScene("LOADING");
+        }
+
+        void FinishLevel()
+        {
+            Game.Main.currentLevel++;
         }
     }
 }

@@ -40,7 +40,7 @@ namespace RL.UnityEditor
             EditorGUILayout.LabelField("Level", EditorStyles.boldLabel);
             if (GUILayout.Button("Generate Mock Level"))
             {
-                caHelper.GenerateRooms(caHelper.RoomCount);
+                caHelper.GenerateRoomShaped(caHelper.RoomCount);
             }
             
             EditorGUILayout.Space(10f);

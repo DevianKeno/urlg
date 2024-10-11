@@ -10,12 +10,17 @@ using RL.Telemetry;
 using static RL.Generator.Generator.Map;
 using RL.CellularAutomata;
 using RL.UI;
-using Unity.Collections;
+using RL.Classifiers;
 
 namespace RL.Levels
 {
     public class Room : MonoBehaviour, ILoadable
     {
+        [field: SerializeField] public Vector2Int Coordinates { get; set; }
+        public int x => Coordinates.x;
+        public int y => Coordinates.y;
+        
+        public Status ClassificationStatus = Status.None;
         FeatureParameters features;
         public FeatureParameters Features => features;
         RoomStatCollection roomStats;
@@ -246,7 +251,7 @@ namespace RL.Levels
         {
             IsActive = false;
             IsCleared = true;
-            Game.UI.ShowArrowPointer();
+            // Game.UI.ShowArrowPointer();
             OpenDoors();
             yield return new WaitForSeconds(0.5f);
 
@@ -365,7 +370,7 @@ namespace RL.Levels
 
             Game.Main.CurrentRoom = this;
             Game.Telemetry.NewRoomStatInstance();
-            Game.UI.HideArrowPointer();
+            // Game.UI.HideArrowPointer();
             IsActive = true;
             ShutDoors();
             yield return null;

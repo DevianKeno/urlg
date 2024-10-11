@@ -645,18 +645,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9381dd489b02834bad14efc1f97a155, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  content: {fileID: 0}
+  IsActive: 0
+  IsCleared: 0
   IsStartRoom: 0
   IsEndRoom: 0
+  HasNextRoom: 0
+  PreviousRoom: {fileID: 0}
+  nextRoom: {fileID: 0}
   minBounds: {x: 0, y: 0}
   maxBounds: {x: 0, y: 0}
+  size: {x: 0, y: 0}
+  remainingEnemies: 0
+  remainingObstacles: 0
+  tileLayers: []
+  tiles: []
+  content: {fileID: 0}
   Center: {fileID: 0}
   tilesContainer: {fileID: 0}
   enemiesContainer: {fileID: 0}
   obstaclesLayer: {fileID: 0}
   triggers: {fileID: 0}
-  tileLayers: []
-  tiles: []
   HasNorthDoor: 1
   northDoor: {fileID: 6099074450988462438}
   HasSouthDoor: 1

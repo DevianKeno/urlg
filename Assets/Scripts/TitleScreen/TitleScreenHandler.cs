@@ -1,27 +1,33 @@
 using System;
+
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using RL.Levels;
 
 namespace RL.TitleScreen
 {
     public class TitleScreenHandler : MonoBehaviour
     {
+        [Header("Buttons")]
         [SerializeField] Button pcpcgBtn;
         [SerializeField] Button pcpcgGnbBtn;
         [SerializeField] Button rdBtn;
         [SerializeField] Button dataBtn;
         [SerializeField] Button savesBtn;
         [SerializeField] Button settingsBtn;
+        [SerializeField] Button exitBtn;
 
-        void Start()
+        void Awake()
         {
             pcpcgBtn.onClick.AddListener(PlayPCPCG);
             pcpcgGnbBtn.onClick.AddListener(PlayPCPCG_GNB);
             rdBtn.onClick.AddListener(ResearchDevelopment);
+
             dataBtn.onClick.AddListener(OpenData);
             savesBtn.onClick.AddListener(OpenSaves);
             settingsBtn.onClick.AddListener(OpenSettings);
+            exitBtn.onClick.AddListener(OpenExitDialog);
         }
 
         void PlayPCPCG()
@@ -30,12 +36,24 @@ namespace RL.TitleScreen
             Game.Main.LoadScene(
                 new(){
                     SceneToLoad = "LEVEL",
+                    PlayTransition = true, },
+                onLoadSceneCompleted: () =>
+                {
+                    Game.Main.LoadScene(
+                        new(){
+                            SceneToLoad = "LOADING",
+                            Mode = LoadSceneMode.Additive },
+                            onLoadSceneCompleted: () =>
+                            {
+                                Game.Main.ActivateScene(
+                                    "LEVEL",
+                                    onActivateSceneCompleted: () =>
+                                    {
+                                        LevelSceneHandler.Instance.Initialize();
+                                    });
+                            });
                 });
-            Game.Main.LoadScene(
-                new(){
-                    SceneToLoad = "LOADING",
-                    Mode = LoadSceneMode.Additive
-                });
+            
         }
 
         void PlayPCPCG_GNB()
@@ -45,11 +63,11 @@ namespace RL.TitleScreen
                 new(){
                     SceneToLoad = "LEVEL",
                 });
-            Game.Main.LoadScene(
-                new(){
-                    SceneToLoad = "LOADING",
-                    Mode = LoadSceneMode.Additive
-                });
+            // Game.Main.LoadScene(
+            //     new(){
+            //         SceneToLoad = "LOADING",
+            //         Mode = LoadSceneMode.Additive
+            //     });
         }
 
         void ResearchDevelopment()
@@ -73,6 +91,11 @@ namespace RL.TitleScreen
         void OpenSettings()
         {
             Game.Main.OpenSettingsMenu();
+        }
+
+        void OpenExitDialog()
+        {
+            
         }
     }
 }

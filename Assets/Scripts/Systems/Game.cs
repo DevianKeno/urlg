@@ -9,6 +9,7 @@ using RL.CellularAutomata;
 using RL.Systems;
 using RL.Levels;
 using RL.Player;
+using System.Collections.Generic;
 
 namespace RL
 {
@@ -51,6 +52,8 @@ namespace RL
         public int currentLevel = 1;
         public Room CurrentRoom;
         public PlayerController Player = null;
+
+        List<GameObject> currentSceneObjects = new();
         
         [SerializeField] PCGAlgorithm algorithmUsed = PCGAlgorithm.AcceptReject; 
         public PCGAlgorithm AlgorithmUsed => algorithmUsed;
@@ -64,17 +67,10 @@ namespace RL
 
         void Awake()
         {
-            DontDestroyOnLoad(this);
-
-            if (Main != null && Main != this)
-            {
-                Destroy(this);
-            }
-            else
-            {
-                Main = this;
-            }
-
+            DontDestroyOnLoad(gameObject);
+            if (Main != null && Main != this) Destroy(gameObject);
+            else Main = this;
+            
             audioManager = GetComponentInChildren<AudioManager>();
             files = GetComponentInChildren<FilesManager>();
             telemetry = GetComponentInChildren<Telemetry.Telemetry>();
@@ -106,6 +102,8 @@ namespace RL
         
         #region Scene management 
 
+        Dictionary<string, AsyncOperation> sceneOperations = new();
+
         public class LoadSceneOptions
         {
             public string SceneToLoad { get; set; }
@@ -122,20 +120,35 @@ namespace RL
             {
                 StartCoroutine(LoadSceneCoroutine(options, onLoadSceneCompleted));
             }
-            catch (NullReferenceException e)
+            catch (Exception e)
             {
-                Debug.LogError($"Scene does not exist" + e);
+                Debug.LogException(e);
             }
         }
 
-        public void UnloadScene(string name, Action onLoadSceneCompleted = null)
+        event Action onUnloadSceneCompleted;
+        public void UnloadScene(string name, Action onUnloadSceneCompleted = null)
         {
             try
             {
-                SceneManager.UnloadSceneAsync(name);
-            } catch (Exception e)
+                StartCoroutine(UnloadSceneCoroutine(name, onUnloadSceneCompleted));
+            }
+            catch (Exception e)
             {
-                Debug.LogError(e);
+                Debug.LogException(e);
+            }
+        }
+
+        event Action onActivateSceneCompleted;
+        public void ActivateScene(string name, Action onActivateSceneCompleted = null)
+        {
+            try
+            {
+                StartCoroutine(ActivateSceneCoroutine(name, onActivateSceneCompleted));
+            }
+            catch (Exception e)
+            {
+                Debug.LogException(e);
             }
         }
 
@@ -144,18 +157,85 @@ namespace RL
             this.onLoadSceneCompleted += onLoadSceneCompleted;
 
             var asyncOp = SceneManager.LoadSceneAsync(options.SceneToLoad, options.Mode);
+
+            asyncOp.allowSceneActivation = false;
             while (asyncOp.progress < 0.9f)
             {
                 yield return null;
             }
-            asyncOp.allowSceneActivation = true;
+            
+            if (options.PlayTransition)
+            {
+                Game.UI.PlayTransitionHalf(() =>
+                {
+                    if (!options.ActivateOnLoad)
+                    {
+                        sceneOperations[options.SceneToLoad] = asyncOp;
+                    }
 
-            this.onLoadSceneCompleted?.Invoke();
-            this.onLoadSceneCompleted = null;
+                    asyncOp.allowSceneActivation = options.ActivateOnLoad;
+
+                    Game.UI.PlayTransitionEnd(() =>
+                    {
+                        this.onLoadSceneCompleted?.Invoke();
+                        this.onLoadSceneCompleted = null;
+                    });
+                });
+            }
+        }
+
+        IEnumerator UnloadSceneCoroutine(string name, Action onUnloadSceneCompleted)
+        {
+            this.onUnloadSceneCompleted += onUnloadSceneCompleted;
+
+            var asyncOp = SceneManager.UnloadSceneAsync(name);
+            while (asyncOp.progress < 0.9f)
+            {
+                yield return null;
+            }
+
+            this.onUnloadSceneCompleted?.Invoke();
+            this.onUnloadSceneCompleted = null;
+        }
+
+        IEnumerator ActivateSceneCoroutine(string name, Action onActivateSceneCompleted)
+        {
+            this.onActivateSceneCompleted += onActivateSceneCompleted;
+
+            if (sceneOperations.TryGetValue(name, out AsyncOperation asyncOp))
+            {
+                asyncOp.allowSceneActivation = true;
+                while (!asyncOp.isDone)
+                {
+                    yield return null;
+                }
+                sceneOperations.Remove(name);
+            }
+
+            this.onActivateSceneCompleted?.Invoke();
+            this.onActivateSceneCompleted = null;
         }
 
         #endregion
 
+        public void RegisterSceneObject(GameObject obj)
+        {
+            currentSceneObjects.Add(obj);
+        }
+
+        public void RegisterSceneObjects(List<GameObject> objs)
+        {
+            currentSceneObjects.AddRange(objs);
+        }
+                
+        public void UnloadSceneObjects()
+        {
+            foreach (GameObject go in currentSceneObjects)
+            {
+                Destroy(go);
+            }
+            currentSceneObjects = new();
+        }
 
         public void SetAlgorithmAR()
         {

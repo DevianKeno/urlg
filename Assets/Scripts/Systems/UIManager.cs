@@ -1,3 +1,4 @@
+using System;
 using RL.UI;
 using UnityEngine;
 using UnityEngine.UI;
@@ -6,22 +7,42 @@ namespace RL
 {
     public class UIManager : MonoBehaviour
     {
-        public ArrowPointer ArrowPointer;
-        public Image vignette;
+        // public ArrowPointer ArrowPointer;
+        public TransitionOptions TransitionOptions = new();
 
-        void Awake()
+        [SerializeField] Image vignette;
+        [SerializeField] Canvas transitionCanvas;
+
+        // void Awake()
+        // {
+        //     ArrowPointer = GetComponentInChildren<ArrowPointer>();
+        // }
+
+        // public void HideArrowPointer()
+        // {
+        //     ArrowPointer.gameObject.SetActive(false);
+        // }
+
+        // public void ShowArrowPointer()
+        // {
+        //     ArrowPointer.gameObject.SetActive(true);
+        // }
+        
+        TransitionEffect transitionEffect;
+
+        public void PlayTransitionHalf(Action callback = null)
         {
-            ArrowPointer = GetComponentInChildren<ArrowPointer>();
+            var go = Instantiate(Resources.Load<GameObject>("Prefabs/UI/Transition"));
+            transitionEffect = go.GetComponent<TransitionEffect>();
+
+            transitionEffect.transform.SetParent(transitionCanvas.transform);
+            transitionEffect.SetOptions(TransitionOptions);
+            transitionEffect.PlayToHalf(callback);
         }
 
-        public void HideArrowPointer()
+        public void PlayTransitionEnd(Action callback = null)
         {
-            ArrowPointer.gameObject.SetActive(false);
-        }
-
-        public void ShowArrowPointer()
-        {
-            ArrowPointer.gameObject.SetActive(true);
+            transitionEffect.PlayToEnd(callback);
         }
 
         public void VignetteDamageFlash()

@@ -8332,7 +8332,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &872172701
 Transform:
   m_ObjectHideFlags: 0
@@ -8527,8 +8527,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1692754853}
+  m_Children: []
   m_Father: {fileID: 872172701}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &907620158
@@ -8543,7 +8542,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbd7741b6d5f9734390d2b37cac06b1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ArrowPointer: {fileID: 0}
   vignette: {fileID: 56125602}
 --- !u!43 &932910226
 Mesh:
@@ -17986,7 +17984,7 @@ GameObject:
   - component: {fileID: 1692754851}
   - component: {fileID: 1692754850}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: '[SCENE CANVAS]'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -18076,7 +18074,7 @@ RectTransform:
   - {fileID: 159852414}
   - {fileID: 1028963998}
   - {fileID: 899650242}
-  m_Father: {fileID: 907620157}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -19596,7 +19594,7 @@ GameObject:
   - component: {fileID: 1821899613}
   - component: {fileID: 1821899615}
   m_Layer: 0
-  m_Name: LevelSceneHandler
+  m_Name: '[SCENE HANDLER]'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -19616,6 +19614,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LevelNumber: 1
   RoomCount: 2
+  RejectedRoomsThreshold: 25
   StartRoom: {fileID: 0}
   EndRoom: {fileID: 0}
   Rooms: []
@@ -19647,6 +19646,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Level: {fileID: 1821899613}
+  SceneObjects: []
 --- !u!43 &1830019452
 Mesh:
   m_ObjectHideFlags: 0
@@ -28397,5 +28397,6 @@ SceneRoots:
   - {fileID: 389152560}
   - {fileID: 7719896756357364221}
   - {fileID: 1821899614}
+  - {fileID: 1692754853}
   - {fileID: 872172701}
   - {fileID: 206014299134799939}

@@ -149,18 +149,6 @@ namespace RL.Player
             {
                 Shoot();
             }
-            
-            if (Input.GetKey(KeyCode.LeftControl))
-            {
-                if (Input.GetKey(KeyCode.O))
-                {
-                    Game.Files.OpenSavesFolder();
-                }
-            }
-            if (Input.GetKey(KeyCode.P))
-            {
-                Game.Files.OpenSavesFolder();
-            }
         }
 
         void FixedUpdate()
@@ -283,7 +271,7 @@ namespace RL.Player
             {
                 if (!int.TryParse(context.control.displayName, out int index)) return;
 
-                index = System.Math.Clamp(index, 0, 1);
+                index = System.Math.Clamp(index, 1, 2);
                 if (index == 1)
                 {
                     Equipped = Weapon1;

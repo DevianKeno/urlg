@@ -14,6 +14,7 @@ using RL.CellularAutomata;
 using RL.Levels;
 using RL.Classifiers;
 using RL.Graphs;
+using System.Threading.Tasks;
 
 namespace RL.RD
 {
@@ -30,7 +31,8 @@ namespace RL.RD
         public float AcceptanceThreshold = 0f;
         GNBData data = null;
         PlayerStatCollection playerStats;
-        
+        List<MockRoom> currentMockRooms = new();
+
         [SerializeField] RDTelemetryUI levelSettings;
         [SerializeField] RDTelemetryUI playerTelemetry;
         
@@ -107,6 +109,22 @@ namespace RL.RD
             waveGraph.SetBoundsY(0f, (float) wavePref);
         }
 
+        public void ShowLevelRooms()
+        {
+            foreach (MockRoom room in currentMockRooms)
+            {
+                room.gameObject.SetActive(true);
+            }
+        }
+
+        public void HideLevelRooms()
+        {
+            foreach (MockRoom room in currentMockRooms)
+            {
+                room.gameObject.SetActive(false);
+            }
+        }
+
         public void ShowPlayerGraphs()
         {
             playerGraphs.transform.localPosition = Vector3.zero;
@@ -119,22 +137,22 @@ namespace RL.RD
 
         #endregion
 
-
         void GenerateRooms()
         {
+            currentMockRooms = new();
             int roomCount = levelSettings.GetEntry(StatKey.RoomCount).Value;
             if (roomCount % 2 != 0) roomCount++;
-            var generatedRooms = Game.CA.GenerateRooms(roomCount, featurize: false);
+            var generatedRooms = Game.CA.GenerateRoomShaped(roomCount, featurize: false);
 
             foreach (MockRoom room in generatedRooms)
             {
+                currentMockRooms.Add(room);
                 room.OnClick += OnClickRoom;
 
                 if (room.IsStartRoom || room.IsEndRoom) continue;
 
-                Status targetStatus = Status.None;
-                int rand = UnityEngine.Random.Range(0, 100);
-                if (rand > RejectedRoomsThreshold)
+                Status targetStatus;
+                if (UnityEngine.Random.Range(0, 100) > RejectedRoomsThreshold)
                     targetStatus = Status.Accepted;
                 else
                     targetStatus = Status.Rejected;
@@ -158,8 +176,7 @@ namespace RL.RD
             }
         }
 
-        const int MaxAttempts = 255;
-        const int MaxBulkGenerationTimes = 1000;
+        const int MaxAttempts = 256;
         void FeaturizeAR(MockRoom room, Status targetStatus)
         {   
             var playerStats = playerTelemetry.ConstructPlayerTelemetryStats();
@@ -177,7 +194,7 @@ namespace RL.RD
 
                 if (previousResult.Status == targetStatus) break;
                 attempts++;
-            } while (attempts < MaxBulkGenerationTimes);
+            } while (attempts < MaxAttempts);
 
             room.Featurize(roomStats);
             room.ClassificationStatus = targetStatus;
@@ -199,7 +216,7 @@ namespace RL.RD
                 previousResult = GaussianNaiveBayes.Instance.ClassifyRoom(playerStats, roomStats);  
                 if (previousResult.Status == targetStatus) break;
                 attempts++;
-            } while (attempts < MaxBulkGenerationTimes);
+            } while (attempts < MaxAttempts);
 
             room.Featurize(roomStats);
             room.ClassificationStatus = targetStatus;
