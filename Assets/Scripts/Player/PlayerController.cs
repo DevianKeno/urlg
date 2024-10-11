@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 
 using UnityEngine;
@@ -9,7 +10,6 @@ using UnityEngine.UI;
 using RL.Weapons;
 using RL.Projectiles;
 using RL.Systems;
-using System.Collections.Generic;
 using RL.Telemetry;
 
 namespace RL.Player
@@ -22,10 +22,6 @@ namespace RL.Player
         public float MoveSpeed = 7f;
         public float Acceleration = 0.3f;
 
-        public Weapon Equipped;
-        public Weapon Primary;
-        public Weapon Secondary;
-        public Weapon Tertiary;
 
         bool _isHoldingFire;
         bool _isInvincible;
@@ -47,6 +43,11 @@ namespace RL.Player
         PlayerInput input;
         Dictionary<string, InputAction> inputs = new();
 
+        public Weapon Equipped;
+        public Weapon Weapon1;
+        public Weapon Weapon2;
+        Weapon unequippedWeapon;
+        
         [Space(10)]
         public bool EnableCheats;
         [SerializeField] Weapon Fireball;
@@ -64,6 +65,10 @@ namespace RL.Player
         void Start()
         {
             InitializeInputs();
+
+            Weapon1 = Fireball;
+            Weapon2 = Laser;
+            unequippedWeapon = Wave;
 
             StateMachine.OnStateChanged += animator.StateChangedCallback;
             StateMachine.ToState(PlayerStates.Idle);
@@ -110,6 +115,31 @@ namespace RL.Player
 
         #endregion
 
+        public void SetControlsEnabled(bool enable)
+        {
+            if (enable)
+            {
+                inputs["Move"].Enable();
+                inputs["Shoot"].Enable();
+                inputs["Swap Weapons"].Enable();
+            }
+            else
+            {
+                inputs["Move"].Disable();
+                inputs["Shoot"].Disable();
+                inputs["Swap Weapons"].Disable();
+            }
+        }
+
+        public void SetEquippedWeapon1(Weapon weapon)
+        {
+            this.Weapon1 = weapon;
+        }
+        
+        public void SetEquippedWeapon2(Weapon weapon)
+        {
+            this.Weapon2 = weapon;
+        }
 
         void Update()
         {
@@ -124,12 +154,12 @@ namespace RL.Player
             {
                 if (Input.GetKey(KeyCode.O))
                 {
-                    Game.Files.OpenSaveFolder();
+                    Game.Files.OpenSavesFolder();
                 }
             }
             if (Input.GetKey(KeyCode.P))
             {
-                Game.Files.OpenSaveFolder();
+                Game.Files.OpenSavesFolder();
             }
         }
 
@@ -161,6 +191,21 @@ namespace RL.Player
             else if (rb.velocity.x < 0)
             {
                 spriteRenderer.flipX = true;
+            }
+        }
+
+        public void SwapEquipped(int index)
+        {
+            index = System.Math.Clamp(index, 0, 1);
+
+            /// Swap equipped weapons with unequipped one
+            if (index == 0)
+            {
+                (unequippedWeapon, Weapon1) = (Weapon1, unequippedWeapon);
+            }
+            else if (index == 1)
+            {
+                (unequippedWeapon, Weapon2) = (Weapon2, unequippedWeapon);
             }
         }
 
@@ -236,13 +281,16 @@ namespace RL.Player
         {
             if (context.performed)
             {
-                if (Equipped == Primary)
+                if (!int.TryParse(context.control.displayName, out int index)) return;
+
+                index = System.Math.Clamp(index, 0, 1);
+                if (index == 1)
                 {
-                    Equipped = Secondary;
+                    Equipped = Weapon1;
                 }
-                else
+                else if (index == 2)
                 {
-                    Equipped = Primary;
+                    Equipped = Weapon2;
                 }
             }
         }

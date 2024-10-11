@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 namespace RL.Levels
 {
@@ -10,6 +11,7 @@ namespace RL.Levels
         public string Id;
         public string Name;
         public Sprite Sprite;
+        public AssetReference AssetReference;
 
         [Header("Properties")]
         public bool IsSolid;

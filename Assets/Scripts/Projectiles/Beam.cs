@@ -1,5 +1,5 @@
 using UnityEngine;
-using RL.Enemies;
+using RL.Entities;
 using RL.Levels;
 using RL.Telemetry;
 

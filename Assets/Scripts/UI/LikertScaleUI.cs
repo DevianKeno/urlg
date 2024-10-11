@@ -3,13 +3,17 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using RL.CellularAutomata;
+using RL.Levels;
 
 namespace RL.UI
 {
-    public class LikertScaleUI : MonoBehaviour
+    public class LikertScaleUI : Window
     {
-        MockRoom targetRoom;
-        public MockRoom TargetRoom => targetRoom;
+        Room targetRoom;
+        public Room TargetRoom => targetRoom;
+
+        public event Action OnLiked;
+        public event Action OnDisliked;
 
         GameObject selector;
 
@@ -31,16 +35,6 @@ namespace RL.UI
             noBtnMouseEvents.OnMouseEnter += Select;
         }
 
-        void OnEnable()
-        {
-            
-        }
-
-        void OnDisable()
-        {
-            
-        }
-
         void Select(object sender, PointerEventData e)
         {
             var btn = ((MouseEvents) sender).Button;
@@ -57,19 +51,25 @@ namespace RL.UI
 
         #region Public methods
 
-        public void SetTargetRoom(MockRoom room)
+        public void SetTargetRoom(Room room)
         {
             this.targetRoom = room;
         }
 
         public void TagTargetLiked()
         {
-            if (!ValidateRoom()) return;
+            if (!TargetRoomIsNull()) return;
+
+            OnLiked?.Invoke();
+            Hide(destroy: true);
         }
 
         public void TagTargetDisliked()
         {
-            if (!ValidateRoom()) return;
+            if (!TargetRoomIsNull()) return;
+
+            OnDisliked?.Invoke();
+            Hide(destroy: true);
         }
 
         public void ShowPointers()
@@ -85,14 +85,14 @@ namespace RL.UI
         #endregion
 
         
-        bool ValidateRoom()
+        bool TargetRoomIsNull()
         {
             if (targetRoom == null)
             {
                 Debug.LogError("Current target room is null");
-                return false;
+                return true;
             }
-            return true;
+            return false;
         }
     }
 }

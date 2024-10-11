@@ -13,6 +13,7 @@ namespace RL.Levels
             
             if (other.gameObject.CompareTag("Player"))
             {
+                if (room.IsActive && !room.IsCleared) return;
                 StartCoroutine(room.OnPlayerEntry());
                 enabled = false;
             }

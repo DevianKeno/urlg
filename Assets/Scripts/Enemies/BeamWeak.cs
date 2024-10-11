@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace RL.Enemies
+namespace RL.Entities
 {
     public class BeamWeak : Enemy, IDamageable
     {

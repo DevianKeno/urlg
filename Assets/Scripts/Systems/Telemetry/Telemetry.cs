@@ -5,6 +5,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
+using RL.Classifiers;
+
 namespace RL.Telemetry
 {
     public class Telemetry : MonoBehaviour
@@ -25,37 +27,42 @@ namespace RL.Telemetry
             StatKey.ObstacleCountFire,
             StatKey.ObstacleCountBeam,
             StatKey.ObstacleCountWave,
+            StatKey.EnemyAttackCount,
         };
-        public static StatKey[] GameStatsKeys = {
-            StatKey.EnemyAttackCount
-        };
+        
+        public bool Display = true;
 
         PlayerStatCollection _playerStats;
         public PlayerStatCollection PlayerStats => _playerStats;
         StatCollection _gameStats;
         public StatCollection GameStats => _gameStats;
-        RoomStatCollection _roomStats;
-        public RoomStatCollection RoomStats => _roomStats;
+        RoomStatCollection _currentRoomStats;
+        public RoomStatCollection RoomStats => _currentRoomStats;
 
-        public bool Display = true;
-
-        Dictionary<StatKey, TextMeshProUGUI> statTexts = new();
+        List<DataEntry> dataEntries = new();
 
         [Header("Elements")]
+        Dictionary<StatKey, TextMeshProUGUI> statTexts = new();
         [SerializeField] GameObject telemetryContainer;
         [SerializeField] GameObject playerStatsContainer;
-        [SerializeField] GameObject gameStatsContainer;
         [SerializeField] GameObject roomStatsContainer;
 
 
         #region Initializing methods
+
+        void Start()
+        {
+            if (Display)
+            {
+                telemetryContainer.gameObject.SetActive(false);
+            }
+        }
 
         internal void Initialize()
         {
             Debug.Log("Initializing telemetry...");
 
             InitializePlayerStats();
-            InitializeGameStats();
             InitializeRoomStats();
 
             Debug.Log("Done initialize telemetry");
@@ -78,27 +85,10 @@ namespace RL.Telemetry
             LayoutRebuilder.ForceRebuildLayoutImmediate(playerStatsContainer.transform as RectTransform);
         }
 
-        void InitializeGameStats()
-        {
-            _gameStats = new(GameStatsKeys);
-            foreach (var stat in _gameStats.Stats)
-            {
-                var go = new GameObject("Game Stats");
-                go.transform.SetParent(gameStatsContainer.transform);
-                var tmp = go.AddComponent<TextMeshProUGUI>();
-                tmp.text = $"{stat.key}: {stat.Value}";
-
-                stat.OnValueChanged += OnValueChangedCallback;
-
-                statTexts[stat.key] = tmp;
-            }
-            LayoutRebuilder.ForceRebuildLayoutImmediate(gameStatsContainer.transform as RectTransform);
-        }
-
         void InitializeRoomStats()
         {
-            _roomStats = new(RoomStatsKeys);
-            foreach (var stat in _roomStats.Stats)
+            _currentRoomStats = new(RoomStatsKeys);
+            foreach (var stat in _currentRoomStats.Stats)
             {
                 var go = new GameObject("Room Stat");
                 go.transform.SetParent(roomStatsContainer.transform);
@@ -137,8 +127,21 @@ namespace RL.Telemetry
         
         #region Public methods
 
-        public void SaveToJson()
+        public void NewRoomStatInstance()
         {
+            this._currentRoomStats = new(RoomStatsKeys);
+        }
+
+        public void SaveCurrentRoomStats()
+        {
+            var playerStats = PlayerStats;
+            var roomStats = Game.Main.CurrentRoom.Stats;
+        }
+
+        public void SaveEntriesToJson()
+        {
+            if (dataEntries.Count == 0) return;
+            
             var sd = new URLGSaveData()
             {
                 CreatedDate = DateTime.Now,

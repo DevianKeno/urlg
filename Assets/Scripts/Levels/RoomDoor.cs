@@ -1,15 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
 using static RL.Generator.Generator.Map;
 
 namespace RL.Levels
 {
-    public enum DoorwayFacing { 
-        North, South, East, West
-    }
-
     public enum DoorwayType {
         Wall, Door
     }
@@ -61,8 +54,6 @@ namespace RL.Levels
 
                 DoorTiles?.SetActive(true);
             }
-            
-            SetDoorsOpen(IsOpen);
         }
 
         public void Open()
@@ -73,6 +64,7 @@ namespace RL.Levels
             }
 
             BarsTiles?.SetActive(false);
+            this.IsOpen = true;
         }
 
         public void Close()
@@ -83,6 +75,7 @@ namespace RL.Levels
             }
 
             BarsTiles?.SetActive(true);
+            this.IsOpen = false;
         }
 
         public void SetDoorsOpen(bool isOpen)
@@ -93,6 +86,7 @@ namespace RL.Levels
             }
 
             BarsTiles?.SetActive(!isOpen);
+            this.IsOpen = isOpen;
         }
 
         public void ShutClosed()
@@ -106,6 +100,7 @@ namespace RL.Levels
             {
                 child.gameObject.SetActive(true);
             }
+            this.IsOpen = false;
 
             Game.Audio.PlaySound("door_close");
         }

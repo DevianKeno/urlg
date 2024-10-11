@@ -12,16 +12,18 @@ namespace RL.Classifiers
     }
     
     public enum Status {
-        Accepted, Rejected
+        None, Accepted, Rejected,
     }
 
     public enum ConfusionMatrixStatus { 
         TruePositive, TrueNegative, FalsePositive, FalseNegative,
     }
 
-    public struct ARResult
+    public struct ARResult : IResult
     {
         public Status Status { get; set; }
+        public readonly bool IsAccepted => Status == Status.Accepted;
+        public readonly bool IsRejected => Status == Status.Rejected;
     }
 
     /// <summary>

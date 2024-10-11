@@ -19,36 +19,36 @@ namespace RL.Levels
                 room.Initialize();
             }
 
-            GUILayout.Space(10f);
-            GUILayout.Label("Door Controls");
-            GUILayout.BeginHorizontal();
-                if (GUILayout.Button("Open Doors"))
-                {
-                    room.SetDoorsEditor(true);
-                }
-                if (GUILayout.Button("Close Doors"))
-                {
-                    room.SetDoorsEditor(false);
-                }
-            GUILayout.EndHorizontal();
+            // GUILayout.Space(10f);
+            // GUILayout.Label("Door Controls");
+            // GUILayout.BeginHorizontal();
+            //     if (GUILayout.Button("Open Doors"))
+            //     {
+            //         room.SetDoorsEditor(true);
+            //     }
+            //     if (GUILayout.Button("Close Doors"))
+            //     {
+            //         room.SetDoorsEditor(false);
+            //     }
+            // GUILayout.EndHorizontal();
             
-            GUILayout.Space(10f);
-            GUILayout.Label("Generate Randomized");
-            GUILayout.BeginHorizontal();
-                if (GUILayout.Button("Enemies"))
-                {
-                    room.GenerateEnemiesRandomEditor();
-                }
-                if (GUILayout.Button("Obstacles"))
-                {
-                    room.GenerateObstaclesRandomEditor();
-                }
-            GUILayout.EndHorizontal();
+            // GUILayout.Space(10f);
+            // GUILayout.Label("Generate Randomized");
+            // GUILayout.BeginHorizontal();
+            //     if (GUILayout.Button("Enemies"))
+            //     {
+            //         room.GenerateEnemiesRandomEditor();
+            //     }
+            //     if (GUILayout.Button("Obstacles"))
+            //     {
+            //         room.GenerateObstaclesRandomEditor();
+            //     }
+            // GUILayout.EndHorizontal();
 
-            if (GUILayout.Button("Generate Features"))
-            {
-                room.GenerateFeatures();
-            }
+            // if (GUILayout.Button("Generate Features"))
+            // {
+            //     room.GenerateFeaturesRandom();
+            // }
 
             serializedObject.ApplyModifiedProperties();
         }

@@ -1,14 +1,14 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace RL.Enemies
+namespace RL.Entities
 {    
-    public class Enemy : MonoBehaviour, IDamageable
+    public class Enemy : Entity, IDamageable
     {
         public float Health = 100f;
         public float MoveSpeed = 2f;
-        public WeaponType WeakType;
         public Color DamageFlash = Color.red;
 
         [Header("Search Parameters")]
@@ -22,6 +22,10 @@ namespace RL.Enemies
         public float strafeAngle = 30f; // Maximum cone angle for strafing
         public float strafeSpeed = 1f; // Speed at which the enemy strafes
         float strafeDirection;
+
+        #region 
+        public event Action<Enemy> OnDeath;
+        #endregion
 
         protected Color prevColor;
         protected GameObject target;
@@ -109,6 +113,7 @@ namespace RL.Enemies
 
         public virtual void Die()
         {
+            OnDeath?.Invoke(this);
             var puffParticle = Game.Particles.Create("puff");
             puffParticle.transform.position = transform.position;
             Destroy(gameObject);

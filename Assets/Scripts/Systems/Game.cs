@@ -1,11 +1,19 @@
 using System;
+using System.Collections;
+
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
+
 using RL.CellularAutomata;
 using RL.Systems;
+using RL.Levels;
+using RL.Player;
 
 namespace RL
 {
+    public enum PCGAlgorithm { AcceptReject, GaussianNaiveBayes }
+    
     public class Game : MonoBehaviour
     {
         public static Game Main { get; private set; }
@@ -33,13 +41,20 @@ namespace RL
         public static FilesManager Files => files;
         static TilesManager tilesManager;
         public static TilesManager Tiles => tilesManager;
+        static EntityManager entityManager;
+        public static EntityManager Entity => entityManager;
         static ParticleManager particlesManager;
         public static ParticleManager Particles => particlesManager;
 
         public event Action OnLateInit;
 
         public int currentLevel = 1;
+        public Room CurrentRoom;
+        public PlayerController Player = null;
         
+        [SerializeField] PCGAlgorithm algorithmUsed = PCGAlgorithm.AcceptReject; 
+        public PCGAlgorithm AlgorithmUsed => algorithmUsed;
+
         [SerializeField] PlayerInput playerInput;
         public PlayerInput PlayerInput => playerInput;
 
@@ -63,7 +78,9 @@ namespace RL
             audioManager = GetComponentInChildren<AudioManager>();
             files = GetComponentInChildren<FilesManager>();
             telemetry = GetComponentInChildren<Telemetry.Telemetry>();
+            UIManager = GetComponentInChildren<UIManager>();
             tilesManager = GetComponentInChildren<TilesManager>();
+            entityManager = GetComponentInChildren<EntityManager>();
             playerInput = GetComponent<PlayerInput>();
             ca = GetComponentInChildren<CellularAutomataHelper>();
             generator = GetComponentInChildren<Generator.Generator>();
@@ -75,9 +92,79 @@ namespace RL
             audioManager.Initialize();
             telemetry.Initialize();
             tilesManager.Initialize();
+            entityManager.Initialize();
             particlesManager.Initialize();
 
             OnLateInit?.Invoke();
+        }
+
+        public void OpenSettingsMenu()
+        {
+            
+        }
+
+        
+        #region Scene management 
+
+        public class LoadSceneOptions
+        {
+            public string SceneToLoad { get; set; }
+            public LoadSceneMode Mode { get; set; }
+            public bool ActivateOnLoad { get; set; } = true;
+            public float DelaySeconds { get; set; }
+            public bool PlayTransition { get; set; }
+        }
+
+        event Action onLoadSceneCompleted;
+        public void LoadScene(LoadSceneOptions options, Action onLoadSceneCompleted = null)
+        {
+            try
+            {
+                StartCoroutine(LoadSceneCoroutine(options, onLoadSceneCompleted));
+            }
+            catch (NullReferenceException e)
+            {
+                Debug.LogError($"Scene does not exist" + e);
+            }
+        }
+
+        public void UnloadScene(string name, Action onLoadSceneCompleted = null)
+        {
+            try
+            {
+                SceneManager.UnloadSceneAsync(name);
+            } catch (Exception e)
+            {
+                Debug.LogError(e);
+            }
+        }
+
+        IEnumerator LoadSceneCoroutine(LoadSceneOptions options, Action onLoadSceneCompleted)
+        {
+            this.onLoadSceneCompleted += onLoadSceneCompleted;
+
+            var asyncOp = SceneManager.LoadSceneAsync(options.SceneToLoad, options.Mode);
+            while (asyncOp.progress < 0.9f)
+            {
+                yield return null;
+            }
+            asyncOp.allowSceneActivation = true;
+
+            this.onLoadSceneCompleted?.Invoke();
+            this.onLoadSceneCompleted = null;
+        }
+
+        #endregion
+
+
+        public void SetAlgorithmAR()
+        {
+            algorithmUsed = PCGAlgorithm.AcceptReject;
+        }
+
+        public void SetAlgorithmGNB()
+        {
+            algorithmUsed = PCGAlgorithm.GaussianNaiveBayes;
         }
     }
 }

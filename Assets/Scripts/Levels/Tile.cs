@@ -29,6 +29,18 @@ namespace RL.Levels
                 coordinates = value;
             }
         }
+        Vector2Int localCoordinates;
+        public Vector2Int LocalCoordinates
+        {
+            get
+            {
+                return localCoordinates;
+            }
+            set
+            {
+                localCoordinates = value;
+            }
+        }
         public int foregroundLayerID;
 
         TileData _previousTileData;
@@ -125,6 +137,7 @@ namespace RL.Levels
                 (int) pos.y
             );
             Coordinates = coords;
+            localCoordinates = new Vector2Int((int) transform.localPosition.x, (int) transform.localPosition.y);
         }
 
         public void CoordinateToPosition(Vector2Int coords)
@@ -135,6 +148,16 @@ namespace RL.Levels
                 y = coords.y
             };
             Coordinates = coords;
+        }
+
+        public void CoordinateToLocalPosition(Vector2Int coords)
+        {
+            transform.localPosition = new()
+            {
+                x = coords.x,
+                y = coords.y
+            };
+            localCoordinates = coords;
         }
 
         public void SetTileDataFromId(string id)

@@ -1,11 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
+
+using RL.Classifiers;
 using RL.Telemetry;
 using static RL.Generator.Generator.Map;
-using UnityEditor;
 
 namespace RL.CellularAutomata
 {
@@ -20,15 +23,15 @@ namespace RL.CellularAutomata
         public int x => Coordinates.x;
         public int y => Coordinates.y;
         /// Just to note if a start/end room
-        public bool IsSpecial { get; set; } = false;
+        public bool IsSpecial => IsStartRoom || IsEndRoom;
+        public Status ClassificationStatus = Status.None;
         // public RoomType Type;
         FeatureParameters features;
         public FeatureParameters Features => features;
-
+        RoomStatCollection roomStats;
+        public RoomStatCollection Stats => roomStats;
         Dictionary<Cardinal, MockRoom> neighbors = new();
         public Dictionary<Cardinal, MockRoom> Neighbors => neighbors;
-        RoomStatCollection stats;
-        public RoomStatCollection Stats => stats;
         Color enemyAlignmentColor;
         public Color EnemyAlignmentColor => enemyAlignmentColor;
         Color obsAlignmentColor;
@@ -38,6 +41,9 @@ namespace RL.CellularAutomata
 
         public event Action<MockRoom> OnClick;
 
+        public bool IsStartRoom;
+        public bool IsEndRoom;
+        
         [Header("Doors")]
         public bool North;
         public bool South;
@@ -85,8 +91,9 @@ namespace RL.CellularAutomata
         
         public void Recolor(RecolorType type = RecolorType.BOTH)
         {
-            if (IsSpecial) return;
+            if (IsSpecial || Stats == null) return;
 
+            CalculateAlignmentColor();
             if (type == RecolorType.ENEMY)
             {
                 SetColorEnemyAligned();
@@ -99,15 +106,20 @@ namespace RL.CellularAutomata
             }
         }
 
+        public void Featurize(RoomStatCollection roomStats)
+        {
+            this.roomStats = roomStats;
+        }
+
         public void RecalculateStats()
         {
-            stats = new(Telemetry.Telemetry.RoomStatsKeys);
-            stats.GetStat(StatKey.EnemyCountFire).Value = features.EnemyCountFire;
-            stats.GetStat(StatKey.EnemyCountBeam).Value = features.EnemyCountBeam;
-            stats.GetStat(StatKey.EnemyCountWave).Value = features.EnemyCountWave;
-            stats.GetStat(StatKey.ObstacleCountFire).Value = features.ObstacleCountFire;
-            stats.GetStat(StatKey.ObstacleCountBeam).Value = features.ObstacleCountBeam;
-            stats.GetStat(StatKey.ObstacleCountWave).Value = features.ObstacleCountWave;
+            roomStats = new(Telemetry.Telemetry.RoomStatsKeys);
+            roomStats.GetStat(StatKey.EnemyCountFire).Value = features.EnemyCountFire;
+            roomStats.GetStat(StatKey.EnemyCountBeam).Value = features.EnemyCountBeam;
+            roomStats.GetStat(StatKey.EnemyCountWave).Value = features.EnemyCountWave;
+            roomStats.GetStat(StatKey.ObstacleCountFire).Value = features.ObstacleCountFire;
+            roomStats.GetStat(StatKey.ObstacleCountBeam).Value = features.ObstacleCountBeam;
+            roomStats.GetStat(StatKey.ObstacleCountWave).Value = features.ObstacleCountWave;
         }
 
         public void SetColorEnemyAligned()
@@ -147,15 +159,15 @@ namespace RL.CellularAutomata
             Stat stat;
             /// calculate enemies
             int totalEnemies = 0; 
-            if (stats.TryGetStat(StatKey.EnemyCountFire, out stat) && stat.Value != 0)
+            if (roomStats.TryGetStat(StatKey.EnemyCountFire, out stat) && stat.Value != 0)
             {
                 totalEnemies += stat.Value;
             }
-            if (stats.TryGetStat(StatKey.EnemyCountBeam, out stat) && stat.Value != 0)
+            if (roomStats.TryGetStat(StatKey.EnemyCountBeam, out stat) && stat.Value != 0)
             {
                 totalEnemies += stat.Value;
             }
-            if (stats.TryGetStat(StatKey.EnemyCountWave, out stat) && stat.Value != 0)
+            if (roomStats.TryGetStat(StatKey.EnemyCountWave, out stat) && stat.Value != 0)
             {
                 totalEnemies += stat.Value;
             }
@@ -167,15 +179,15 @@ namespace RL.CellularAutomata
 
             /// calculate obstacles
             int totalObstacles = 0; 
-            if (stats.TryGetStat(StatKey.ObstacleCountFire, out stat) && stat.Value != 0)
+            if (roomStats.TryGetStat(StatKey.ObstacleCountFire, out stat) && stat.Value != 0)
             {
                 totalObstacles += stat.Value;
             }
-            if (stats.TryGetStat(StatKey.ObstacleCountBeam, out stat) && stat.Value != 0)
+            if (roomStats.TryGetStat(StatKey.ObstacleCountBeam, out stat) && stat.Value != 0)
             {
                 totalObstacles += stat.Value;
             }
-            if (stats.TryGetStat(StatKey.ObstacleCountWave, out stat) && stat.Value != 0)
+            if (roomStats.TryGetStat(StatKey.ObstacleCountWave, out stat) && stat.Value != 0)
             {
                 totalObstacles += stat.Value;
             }

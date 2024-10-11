@@ -11,10 +11,7 @@ namespace RL.UI
         [SerializeField] ProjectileData projectileData;
         public ProjectileData ProjectileData
         {
-            get
-            {
-                return projectileData;
-            }
+            get { return projectileData; }
             set
             {
                 projectileData = value;

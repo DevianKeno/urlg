@@ -8,36 +8,133 @@ using UnityEngine;
 
 using RL.CellularAutomata;
 using RL.Telemetry;
+using RL.RD;
 
 namespace RL.Classifiers
 {
     public class GNBData
     {
-        public struct Entry
+        public List<ARDataEntry> AcceptedEntries = new();
+        public List<ARDataEntry> RejectedEntries = new();
+        public int TotalEntryCount => AcceptedEntries.Count + RejectedEntries.Count;
+    }
+
+    public struct GNBResult : IResult
+    {
+        public double PosteriorAccepted { get; set; }
+        public double PosteriorRejected { get; set; }
+        public Status Status { get; set; }
+        public readonly bool IsAccepted => Status == Status.Accepted;
+        public readonly bool IsRejected => Status == Status.Rejected;
+    }
+
+    public class GaussianNaiveBayes : MonoBehaviour
+    {
+        public static GaussianNaiveBayes Instance { get; private set;}
+
+        GNBData data;
+        public GNBData Data => data;
+        float acceptedProbability;
+        float rejectedProbability;
+        List<double> acceptedCosines = new();
+        List<double> rejectedCosines = new();
+        double acceptedMean;
+        double rejectedMean;
+        double acceptedVariance;
+        double rejectedVariance;
+
+        void Awake()
         {
-            public int RoomSeed { get; set; }
-            public int FireUseCount { get; set; }
-            public int BeamUseCount { get; set; }
-            public int WaveUseCount { get; set; }
-            public int FireHitCount { get; set; }
-            public int BeamHitCount { get; set; }
-            public int WaveHitCount { get; set; }
+            DontDestroyOnLoad(this);
+
+            if (Instance != null && Instance != this)
+            {
+                Destroy(this);
+            }
+            else
+            {
+                Instance = this;
+            }
         }
-    }
 
-    public class GNBResult
-    {
-
-    }
-
-    public class GaussianNaiveBayes
-    {
-        public List<int> samples = new();
-
-        public static GNBResult ClassifyRoom(MockRoom room, StatCollection playerStats)
+        public GNBResult ClassifyRoom(PlayerStatCollection playerStats, RoomStatCollection roomStats)
         {
+            var result = new GNBResult();
+            var x = CalculateCosine(playerStats, roomStats);
+            var acceptedProb = ProbabilityDistributionFunction(x, acceptedMean, acceptedVariance);
+            var rejectedProb = ProbabilityDistributionFunction(x, rejectedMean, rejectedVariance);
 
-            return new GNBResult();
+            var posteriorAccepted = CalculatePosterior(acceptedProb, acceptedProbability);
+            var posteriorRejected = CalculatePosterior(rejectedProb, rejectedProbability);
+
+            if (posteriorAccepted > posteriorRejected)
+                result.Status = Status.Accepted;
+            else if (posteriorRejected > posteriorAccepted)
+                result.Status = Status.Rejected;
+            
+            result.PosteriorAccepted = posteriorAccepted;
+            result.PosteriorRejected = posteriorRejected;
+            
+            return result;
+        }
+
+        double CalculatePosterior(double featureProbability, double prior)
+        {
+            return featureProbability * prior;
+        }
+
+        public void Train(GNBData data)
+        {
+            this.data = data; 
+            acceptedProbability = (float) Data.AcceptedEntries.Count / Data.TotalEntryCount;
+            rejectedProbability = (float) Data.RejectedEntries.Count / Data.TotalEntryCount;
+
+            foreach (var entry in data.AcceptedEntries)
+                acceptedCosines.Add(CalculateCosine(entry));
+            
+            foreach (var entry in data.RejectedEntries)
+                rejectedCosines.Add(CalculateCosine(entry));
+            
+            acceptedMean = Math.Mean(acceptedCosines.ToArray());
+            rejectedMean = Math.Mean(rejectedCosines.ToArray());
+            acceptedVariance = Math.Variance(acceptedCosines.ToArray());
+            rejectedVariance = Math.Variance(rejectedCosines.ToArray());
+
+            Debug.Log("Model trained");
+        }
+
+        double CalculateCosine(PlayerStatCollection playerStats, RoomStatCollection roomStats)
+        {
+            var playerPrefs = new double[]{
+                Evaluate.Player.WeaponPreference(StatKey.HitCountFire, StatKey.UseCountFire, playerStats),
+                Evaluate.Player.WeaponPreference(StatKey.HitCountBeam, StatKey.UseCountBeam, playerStats),
+                Evaluate.Player.WeaponPreference(StatKey.HitCountWave, StatKey.UseCountWave, playerStats),
+            };
+            var roomPrefs = new double[]{
+                Evaluate.Room.WeaponPreference(StatKey.EnemyCountFire, StatKey.ObstacleCountFire, roomStats),
+                Evaluate.Room.WeaponPreference(StatKey.EnemyCountBeam, StatKey.ObstacleCountBeam, roomStats),
+                Evaluate.Room.WeaponPreference(StatKey.EnemyCountWave, StatKey.ObstacleCountWave, roomStats),
+            };
+
+            return Math.CosineSimilarity(playerPrefs, roomPrefs);
+        }
+
+        double CalculateCosine(ARDataEntry entry)
+        {
+            var playerStats = PlayerStatCollection.FromAREntry(entry);
+            var roomStats = RoomStatCollection.FromAREntry(entry);
+            var playerPrefs = new double[]{
+                Evaluate.Player.WeaponPreference(StatKey.HitCountFire, StatKey.UseCountFire, playerStats),
+                Evaluate.Player.WeaponPreference(StatKey.HitCountBeam, StatKey.UseCountBeam, playerStats),
+                Evaluate.Player.WeaponPreference(StatKey.HitCountWave, StatKey.UseCountWave, playerStats),
+            };
+            var roomPrefs = new double[] {
+                Evaluate.Room.WeaponPreference(StatKey.EnemyCountFire, StatKey.ObstacleCountFire, roomStats),
+                Evaluate.Room.WeaponPreference(StatKey.EnemyCountBeam, StatKey.ObstacleCountBeam, roomStats),
+                Evaluate.Room.WeaponPreference(StatKey.EnemyCountWave, StatKey.ObstacleCountWave, roomStats),
+            };
+
+            return Math.CosineSimilarity(playerPrefs, roomPrefs);
         }
 
         public static FeatureParameters GenerateFeatureOptionsRandom(FeatureParametersSettings settings, int seed)
@@ -58,25 +155,26 @@ namespace RL.Classifiers
             return features;
         }
 
-        void CalculateDependencies()
+        public static double ProbabilityDistributionFunction(double x, double mean, double variance)
         {
+            if (variance == 0) variance = 1e-8; /// Small constant to prevent division by zero
+            return 1 / Sqrt(2 * PI * variance) * Exp(-Pow(x - mean, 2) / (2 * variance));
+        }
+
+        public static double CalculatePosterior(Dictionary<StatKey, double> means, Dictionary<StatKey, double> variances, ARDataEntry entry)
+        {
+            double posterior = 1.0;
             
+            foreach (var statKey in entry.Values.Keys)
+            {
+                double mean = means[statKey];
+                double variance = variances[statKey];
+                double value = entry.Values[statKey];
+
+                posterior *= ProbabilityDistributionFunction(value, mean, variance);
+            }
+
+            return posterior;
         }
-
-        static void DistributionEquation()
-        {
-            // float delta = 0f;
-            // return 1 / Math.Sqrt(2 * Math.PI * Math.Pow(delta, 2));
-        }
-
-        public void ReadCSVFromFile(string filepath)
-        {
-            string contents = File.ReadAllText(filepath);
-        }
-
-        // Posterior CalculatePosterior(CalculatePosteriorParameters parameters)
-        // {
-
-        // }
     }
 }

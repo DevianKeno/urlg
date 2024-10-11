@@ -12,6 +12,7 @@ using RL.CellularAutomata;
 using RL.Classifiers;
 using RL.Telemetry;
 using RL.UI;
+using RL.RD.UI;
 
 namespace RL.RD
 {
@@ -26,8 +27,6 @@ therefore is <b>rejected</b>.";
         public MockRoom Room = null;
         [Range(0f, 1f)]
         public float AcceptanceThreshold = 0f;
-        public Status BulkGenTarget = Status.Accepted;
-        public float BulkGenDelay = 0f;
         public bool NormalizeValues => normalizeToggle != null ? normalizeToggle.isOn : false;
         /// <summary>
         /// The current state of Player Stats.
@@ -41,6 +40,15 @@ therefore is <b>rejected</b>.";
 
         [SerializeField] RDTelemetryUI playerTelemetryUI;
         [SerializeField] RDTelemetryUI roomTelemetryUI;
+        [SerializeField] ConfusionMatrixHandler confusionMatrixHandler;
+
+        [Header("Bulk Gen Settings")]
+        int highestIteration = 0;
+        public Status BulkGenTarget = Status.Accepted;
+        public bool VisualizeBulkGen = true;
+        public float BulkGenDelay = 0f;
+        System.Diagnostics.Stopwatch bulkGenTimer;
+
 
         [Header("Graphs")]
         [SerializeField] ARGraph fireGraph;
@@ -58,7 +66,9 @@ therefore is <b>rejected</b>.";
         
         [Header("Texts")]
         [SerializeField] TextMeshProUGUI featureDataContentTmp;
+        [SerializeField] TextMeshProUGUI highestIterationsTmp;
         [SerializeField] TextMeshProUGUI iterationsTmp;
+        [SerializeField] TextMeshProUGUI timeTmp;
         [SerializeField] TextMeshProUGUI acceptedTmp;
         [SerializeField] TextMeshProUGUI rejectedTmp;
         [SerializeField] TextMeshProUGUI messageTmp;
@@ -72,12 +82,16 @@ therefore is <b>rejected</b>.";
             setValuesBtn.onClick.AddListener(SetPlayerValues);
             generateRoomBtn.onClick.AddListener(GenerateRoom);
             bulkGenBtn.onClick.AddListener(BulkGenerateUntilStatus);
+
+            likedBtn.onClick.AddListener(LikeFeatureSet);
+            dislikedBtn.onClick.AddListener(DislikeFeatureSet);
         }
 
         void Start()
         {
             ClearAllPoints();
             ResetARStatus();
+            bulkGenTimer = new();
         }
 
         void Update()
@@ -111,29 +125,64 @@ therefore is <b>rejected</b>.";
             _previousResult = result;
         }
 
+        bool _continueBulkGeneration;
+
         public void BulkGenerateUntilStatus()
         {
-            bulkGenBtn.interactable = false;
+            _continueBulkGeneration = true;
+            bulkGenBtn.onClick.RemoveAllListeners();
+            bulkGenBtn.onClick.AddListener(StopBulkGenerate);
+            var tmp = bulkGenBtn.GetComponentInChildren<TextMeshProUGUI>();
+            tmp.text = "STOP";
+            tmp.color = Color.red;
             iterationsTmp.gameObject.SetActive(true);
             StartCoroutine(BulkGenerateUntilStatusCoroutine());
         }
 
+        public void StopBulkGenerate()
+        {
+            _continueBulkGeneration = false;
+            SetButtonBulk();
+            StopAllCoroutines();
+        }
+
+        void SetButtonBulk()
+        {
+            bulkGenBtn.onClick.RemoveAllListeners();
+            bulkGenBtn.onClick.AddListener(BulkGenerateUntilStatus);
+            var tmp = bulkGenBtn.GetComponentInChildren<TextMeshProUGUI>();
+            tmp.text = "BULK";
+            tmp.color = Color.white;
+        }
+
         IEnumerator BulkGenerateUntilStatusCoroutine()
         {
-            var result = new ARResult();
             string message = $"Iterations: ";
+
+            bulkGenTimer.Reset();
+            timeTmp.text = $"Time: {bulkGenTimer.ElapsedMilliseconds} ms";
             SetARRejected();
+            bulkGenTimer.Start();
+
+
+            int iterations = 0;
             for (int i = 0; i < MaxBulkGenerationTimes; i++)
             {
                 roomTelemetryUI.RandomizeRoomFeatures();
                 SetRoomValues();
                 _previousResult = ARClassifier.Classify(playerStats, roomStats, AcceptanceThreshold, normalizeToggle.isOn);                
                 iterationsTmp.text = message + i;
-                if (_previousResult.Status == BulkGenTarget) break;
-                yield return new WaitForSeconds(BulkGenDelay);
+                iterations = i;
+                if (!_continueBulkGeneration ||_previousResult.Status == BulkGenTarget) break;
+                if (VisualizeBulkGen) yield return new WaitForSeconds(BulkGenDelay);
             }
+
+            bulkGenTimer.Stop();
+            timeTmp.text = $"Time: {bulkGenTimer.ElapsedMilliseconds} ms";
+            highestIteration = System.Math.Max(highestIteration, iterations);
+            highestIterationsTmp.text = $"Highest iterations: {highestIteration}"; 
             SetARAccepted();
-            bulkGenBtn.interactable = true;
+            SetButtonBulk();
             yield return null;
         }
 
@@ -195,27 +244,50 @@ therefore is <b>rejected</b>.";
         string hexGreen = "40D945";
         string hexRed = "F62B2B";
 
-        void SetARAccepted()
+        public void SetARAccepted()
         {
             acceptedTmp.text = $"<color=#{hexGreen}>Accepted";
             rejectedTmp.text = $"<color=#{hexGray}>Rejected";
             messageTmp.text = AcceptedMessage;
         }
 
-        void SetARRejected()
+        public void SetARRejected()
         {
             acceptedTmp.text = $"<color=#{hexGray}>Accepted";
             rejectedTmp.text = $"<color=#{hexRed}>Rejected";
             messageTmp.text = RejectedMessage;
         }
 
-        void ResetARStatus()
+        public void ResetARStatus()
         {
             acceptedTmp.text = $"<color=#{hexGray}>Accepted";
             rejectedTmp.text = $"<color=#{hexGray}>Rejected";
             messageTmp.text = "";
         }
 
+        public void LikeFeatureSet()
+        {
+            if (_previousResult.Status == Status.Accepted)
+            {
+                confusionMatrixHandler.SetValue(ConfusionMatrixValue.TruePositive);
+            }
+            else if (_previousResult.Status == Status.Rejected)
+            {
+                confusionMatrixHandler.SetValue(ConfusionMatrixValue.FalsePositive);
+            }
+        }
+
+        public void DislikeFeatureSet()
+        {
+            if (_previousResult.Status == Status.Accepted)
+            {
+                confusionMatrixHandler.SetValue(ConfusionMatrixValue.FalseNegative);
+            }
+            else if (_previousResult.Status == Status.Rejected)
+            {
+                confusionMatrixHandler.SetValue(ConfusionMatrixValue.TrueNegative);
+            }
+        }
 
         #region Helpers
 

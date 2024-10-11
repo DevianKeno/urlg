@@ -646,8 +646,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   content: {fileID: 0}
+  IsStartRoom: 0
+  IsEndRoom: 0
   minBounds: {x: 0, y: 0}
   maxBounds: {x: 0, y: 0}
+  Center: {fileID: 0}
   tilesContainer: {fileID: 0}
   enemiesContainer: {fileID: 0}
   obstaclesLayer: {fileID: 0}
@@ -655,12 +658,12 @@ MonoBehaviour:
   tileLayers: []
   tiles: []
   HasNorthDoor: 1
-  HasSouthDoor: 1
-  HasEastDoor: 1
-  HasWestDoor: 1
   northDoor: {fileID: 6099074450988462438}
+  HasSouthDoor: 1
   southDoor: {fileID: 6509357972780546057}
+  HasEastDoor: 1
   eastDoor: {fileID: 7331054192941311970}
+  HasWestDoor: 1
   westDoor: {fileID: 1356631092747545129}
 --- !u!1 &8466996991394142767
 GameObject:

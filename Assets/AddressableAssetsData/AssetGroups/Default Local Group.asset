@@ -1,0 +1,65 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Default Local Group
+  m_EditorClassIdentifier: 
+  m_GroupName: Default Local Group
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 01845addd0d44ad4eb5208145f086857
+  m_SerializeEntries:
+  - m_GUID: 88eb2e8b24c7c6241a385f9fe0c41a78
+    m_Address: Assets/AddressableAssets/Obstacles/CRATE.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e09ea28d897f728429da62c18789ce32
+    m_Address: Assets/AddressableAssets/Obstacles/CRATE_DOUBLE.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e79b036546779d943b3f4c0949f9ab6d
+    m_Address: Assets/AddressableAssets/Obstacles/GLASS.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 922c89eeb640488419e6e87814e0eb09
+    m_Address: Assets/AddressableAssets/Entities/Enemy.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b5971e88acf47a14b829c7d1042e714a
+    m_Address: Assets/AddressableAssets/Entities/FireWeak.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9e0b852acedf90048834e635e2566a8c
+    m_Address: Assets/AddressableAssets/Entities/LaserWeak.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 18008090458310d43b9c23f97aa90a07
+    m_Address: Assets/AddressableAssets/Entities/SALAMAN.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1a8f3b3a070570942a2c8602076e374d
+    m_Address: Assets/AddressableAssets/Entities/WaveWeak.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 34f34a0ee7e518d45a6067d2e2caab96, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 57b9786278ef6254e8355d8e99fd655f, type: 2}
+    - {fileID: 11400000, guid: 468996d90c8d7004fa158c53e2b4c1a8, type: 2}

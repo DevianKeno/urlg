@@ -3,11 +3,11 @@ using System.Collections;
 using UnityEngine;
 using RL.Systems;
 using RL.Player;
-using RL.Enemies;
+using RL.Entities;
 using Random = UnityEngine.Random;
 using RL.Telemetry;
 
-namespace RL.Enemies
+namespace RL.Entities
 {
     /// Salaman
     public class WaveWeak : Enemy, IDamageable
@@ -159,7 +159,7 @@ namespace RL.Enemies
             float startTime = Time.time;
             float journeyLength = Vector2.Distance(transform.position, overshootPosition);
 
-            Game.Telemetry.GameStats[StatKey.EnemyAttackCount].Increment();
+            Game.Telemetry.RoomStats[StatKey.EnemyAttackCount].Increment();
             shield.SetActive(true);
             sm.ToState(SalamanderStates.Jump);
             while (Time.time - startTime < chargeDuration)

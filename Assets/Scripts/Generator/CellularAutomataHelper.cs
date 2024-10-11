@@ -187,7 +187,10 @@ namespace RL.CellularAutomata
             GenerateRooms(playerTelemetryUI.GetEntry(StatKey.RoomCount).Value);
         }
 
-        public List<MockRoom> GenerateRooms(int roomCount)
+        /// <summary>
+        /// Room count does not include start and end rooms.
+        /// </summary>
+        public List<MockRoom> GenerateRooms(int roomCount, bool featurize = true)
         {
             ClearRooms();
             if (!HasNoiseGrid)
@@ -230,7 +233,7 @@ namespace RL.CellularAutomata
             _existingRoomsHashset.Add(coords);
             _rooms.Add(newRoom);
             _startRoom = newRoom;
-            _startRoom.IsSpecial = true;
+            _startRoom.IsStartRoom = true;
             FeaturizeEmpty(_startRoom);
             SubscribeRoomEvents(newRoom);
             
@@ -245,6 +248,7 @@ namespace RL.CellularAutomata
             MockRoom CreateNewRoom(Color color)
             {
                 MockRoom currentRoom = _previousRooms.Peek(); /// Look at the current room on top of the stack
+                if (currentRoom == null) return null;
 
                 /// Try to create a room at a neighboring tile
                 if (CreateRoomAtNeighbor(currentRoom, color, out var createdRoom))
@@ -283,7 +287,9 @@ namespace RL.CellularAutomata
                     /// applies a checkered-colored pattern to the generated rooms for aesthetic purposes
                     // var checkeredColor = roomsLeft % 2 == 0 ? NormalRoomColor : NormalRoomColor2;
                     var newInterRoom = CreateNewRoom(Color.white);
-                    FeaturizeRandom(newInterRoom);
+                    if (newInterRoom == null) continue;
+                    
+                    if (featurize) FeaturizeRandom(newInterRoom);
                     newInterRoom.Recolor(RecolorType);
                     SubscribeRoomEvents(newInterRoom);
                 }
@@ -299,7 +305,7 @@ namespace RL.CellularAutomata
                 if (_previousRooms.Any()) ///HMMMMMMMMMMMMMMM
                 {
                     CreateRoomAtNeighbor(_previousRooms.Peek(), EndRoomColor, out var endRoom);
-                    endRoom.IsSpecial = true;
+                    endRoom.IsEndRoom = true;
                     FeaturizeEmpty(endRoom);
                     SubscribeRoomEvents(endRoom);
                     AddCalculations(endRoom);
@@ -383,7 +389,7 @@ namespace RL.CellularAutomata
             
             var settings = new FeatureParametersSettings()
             {
-                MaxEnemyCount = 20,
+                MaxEnemyCount = 15,
                 MaxObstacleCount = 6,
             };
             int seed = UnityEngine.Random.Range(int.MinValue, int.MaxValue);

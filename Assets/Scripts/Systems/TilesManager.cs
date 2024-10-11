@@ -1,6 +1,11 @@
-using UnityEngine;
-using RL.Levels;
+using System;
 using System.Collections.Generic;
+
+using UnityEngine;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
+
+using RL.Levels;
 
 namespace RL.Systems
 {
@@ -8,8 +13,8 @@ namespace RL.Systems
     {
         public List<TileData> tileDataList = new();
         Dictionary<string, TileData> _tileDataDict = new();
-        public List<GameObject> obstacleList = new();
-        Dictionary<string, GameObject> _obstaclesDict = new();
+        public List<ObstacleData> obstacleList = new();
+        Dictionary<string, ObstacleData> _obstaclesDict = new();
 
         public void Initialize()
         {
@@ -19,28 +24,23 @@ namespace RL.Systems
 
         void InitializeTileData()
         {
-            var data = Resources.LoadAll<TileData>("Data/Tiles");
             tileDataList = new();
             
-            foreach (var tile in data)
+            foreach (var data in Resources.LoadAll<TileData>("Data/Tiles"))
             {
-                _tileDataDict[tile.Id] = tile;
-                tileDataList.Add(tile);
+                _tileDataDict[data.Id] = data;
+                tileDataList.Add(data);
             }
         }
 
         void InitializeObstacles()
         {
-            var gos = Resources.LoadAll<GameObject>("Prefabs/Obstacles");
             obstacleList = new();
             
-            foreach (var go in gos)
+            foreach (var data in Resources.LoadAll<ObstacleData>("Data/Obstacles"))
             {
-                if (go.TryGetComponent<Tile>(out var tile))
-                {
-                    _obstaclesDict[tile.TileData.Id] = go;
-                    obstacleList.Add(go);
-                }
+                _obstaclesDict[data.Id] = data;
+                obstacleList.Add(data);
             }
         }
 
@@ -58,17 +58,27 @@ namespace RL.Systems
 
         }
 
-        public Tile PlaceObstacle(string id, Vector2Int coords)
+        public void PlaceObstacle(string id, Vector2Int coords, Action<Tile> onPlace = null)
         {
             if (_obstaclesDict.ContainsKey(id))
             {
-                var go = Instantiate(_obstaclesDict[id]);
-                var tile = go.GetComponent<Tile>();
-                tile.CoordinateToPosition(coords);
-                tile.Initialize();
-                return tile;
+                var op = Addressables.LoadAssetAsync<GameObject>(_obstaclesDict[id].AssetReference);
+                op.Completed += (a) =>
+                {
+                    if (a.Status == AsyncOperationStatus.Succeeded)
+                    {
+                        var go = Instantiate(a.Result);
+                        if (go.TryGetComponent(out Tile tile))
+                        {
+                            tile.CoordinateToPosition(coords);
+                            tile.Initialize();
+                            onPlace?.Invoke(tile);
+                            return;
+                        }
+                        Destroy(go);
+                    }
+                };
             }
-            return null;
         }
     }
 }

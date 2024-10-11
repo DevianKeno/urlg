@@ -2115,7 +2115,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: generating level
+  m_text: generating level 0%
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 3fd6dfc9821576043bd7c932d8b43ed3, type: 2}
   m_sharedMaterial: {fileID: 6591089190482288527, guid: 3fd6dfc9821576043bd7c932d8b43ed3, type: 2}
@@ -2434,13 +2434,24 @@ MonoBehaviour:
   NeighborWallThreshold: 4
   Iterations: 3
   tilePrefab: {fileID: 0}
+  WallTileColor: {r: 0, g: 0, b: 0, a: 1}
+  FloorTileColor: {r: 1, g: 1, b: 1, a: 1}
   RoomCount: 5
-  Rooms: []
-  OverrideStartRoomCoordinates: 0
+  IncludeStartRoom: 1
+  IncludeEndRoom: 1
+  CustomStartRoomCoordinates: 0
   StartRoomCoordinates: {x: 0, y: 0}
-  StartRoom: {fileID: 0}
-  mockLevel: {fileID: 0}
+  Scaling: 1
   mockRoomPrefab: {fileID: 0}
+  mockRoomContainer: {fileID: 0}
+  virtualCamera: {fileID: 0}
+  RecolorType: 2
+  StartRoomColor: {r: 0, g: 1, b: 0, a: 1}
+  NormalRoomColor: {r: 0, g: 1, b: 1, a: 1}
+  NormalRoomColor2: {r: 0.0504183, g: 0.8779624, b: 0.9716981, a: 1}
+  EndRoomColor: {r: 1, g: 0, b: 0, a: 1}
+  playerTelemetryUI: {fileID: 0}
+  selector: {fileID: 0}
 --- !u!1 &756145771
 GameObject:
   m_ObjectHideFlags: 0
@@ -14815,6 +14826,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7b6ebcee3aa3a4439a419c87615a4c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentLevel: 1
+  playerInput: {fileID: 0}
   salamanPrefab: {fileID: 0}
   deerPrefab: {fileID: 0}
   beamWeakPrefab: {fileID: 0}

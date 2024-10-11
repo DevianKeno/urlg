@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using RL;
+using TMPro;
 
 namespace RL.UI
 {
@@ -11,9 +12,9 @@ namespace RL.UI
         InputAction swapInput;
         
         [SerializeField] Transform selector;
-        [SerializeField] WeaponIconUI fireballIcon;
-        [SerializeField] WeaponIconUI beamIcon;
-        [SerializeField] WeaponIconUI waveIcon;
+        [SerializeField] WeaponIconUI weapon1;
+        [SerializeField] WeaponIconUI weapon2;
+        [SerializeField] TextMeshProUGUI numberTmp;
 
         void Start()
         {
@@ -32,15 +33,11 @@ namespace RL.UI
 
             if (index == 1)
             {
-                target = fireballIcon.transform;
+                target = weapon1.transform;
             }
             else if (index == 2)
             {
-                target = beamIcon.transform;
-            }
-            else if (index == 3)
-            {
-                target = waveIcon.transform;
+                target = weapon2.transform;
             }
             else
             {

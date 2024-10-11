@@ -1,6 +1,6 @@
 using RL.Systems;
 
-namespace RL.Enemies
+namespace RL.Entities
 {
     public enum SalamanderStates
     {

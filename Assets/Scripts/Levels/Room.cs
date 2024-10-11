@@ -4,74 +4,59 @@ using System.Collections.Generic;
 
 using UnityEngine;
 
-using RL.Enemies;
+using RL.Entities;
 using RL.Telemetry;
 
 using static RL.Generator.Generator.Map;
-
-public enum WeaponType {
-    Fireball, Beam, Wave
-}
+using RL.CellularAutomata;
+using RL.UI;
+using Unity.Collections;
 
 namespace RL.Levels
 {
-    public interface IStatistic
-    {
-        public int Value { get; set; }
-        public void Increment();
-        public void Decrement();
-    }
-
-    public enum WeaponType {
-        Fireball, Beam, Wave
-    }
-
-
-    public class TypeofWeapon
-    {
-        protected WeaponType value;
-        public WeaponType Value => value;
-
-        public TypeofWeapon(WeaponType value)
-        {
-            this.value = value;
-        }
-    }
-
-    public struct EnemyCount<T> : IStatistic where T : TypeofWeapon
-    {
-        int value;
-        public int Value
-        {
-            get => value;
-            set => this.value = value;
-        }
-
-        public void Increment()
-        {
-            value++;
-        }
-
-        public void Decrement()
-        {
-            value--;
-        }
-    }
-
-    public struct RoomData
-    {
-        public Dictionary<Cardinal, RoomData> Neighbors { get; set; }
-
-        public int EnemyCountFire { get; set; }
-        public int EnemyCountBeam { get; set; }
-        public int EnemyCountWave { get; set; }
-        public int ObstacleCountFire { get; set; }
-        public int ObstacleCountBeam { get; set; }
-        public int ObstacleCountWave { get; set; }
-    }
-
     public class Room : MonoBehaviour, ILoadable
     {
+        FeatureParameters features;
+        public FeatureParameters Features => features;
+        RoomStatCollection roomStats;
+        public RoomStatCollection Stats => roomStats;
+
+        public bool IsActive;
+        public bool IsCleared;
+        public bool IsStartRoom;
+        public bool IsEndRoom;
+        public bool HasNextRoom;
+        public Room PreviousRoom;
+        [SerializeField] Room nextRoom;
+        public Room NextRoom
+        {
+            get { return nextRoom; }
+            set
+            {
+                HasNextRoom = value != null;
+                nextRoom = value;
+            }
+        }
+        
+        [SerializeField] Vector2 minBounds;
+        public Vector2 MinBounds => minBounds;
+        [SerializeField] Vector2 maxBounds;
+        public Vector2 MaxBounds => maxBounds;
+        [SerializeField] Vector2Int size;
+        public Vector2Int Size => size;
+        
+        List<Entity> enemies = new();
+        [SerializeField] int remainingEnemies;
+        [SerializeField] int remainingObstacles;
+        
+        [SerializeField] List<GameObject> tileLayers = new();
+        [SerializeField] List<Tile> tiles = new();
+        [SerializeField] Dictionary<Vector2Int, Tile> tileCoords = new();
+        /// <summary>
+        /// Tile coordinates already populated with an obstacle or enemy.
+        /// </summary>
+        List<Vector2Int> populatedTileCoordinates = new();
+
         [Header("Objects")]
         [SerializeField] protected GameObject content;
         public GameObject Content
@@ -79,48 +64,21 @@ namespace RL.Levels
             get { return content; }
             set { content = value; }
         }
-
-        public Vector2 minBounds;
-        public Vector2 maxBounds;
-        
-        RoomStatCollection _roomStats;
-        public RoomStatCollection RoomStats => _roomStats;
-        
+        public Transform Center;
         [SerializeField] GameObject tilesContainer;
         [SerializeField] GameObject enemiesContainer;
         [SerializeField] GameObject obstaclesLayer;
         [SerializeField] GameObject triggers;
 
-        [SerializeField] List<GameObject> tileLayers = new();
-        [SerializeField] List<Tile> tiles = new();
-
         [Header("Doorways")]
         public bool HasNorthDoor = true;
-        public bool HasSouthDoor = true;
-        public bool HasEastDoor = true;
-        public bool HasWestDoor = true;
-
-        
-        [Header("Objects")]
         [SerializeField] RoomDoor northDoor;
+        public bool HasSouthDoor = true;
         [SerializeField] RoomDoor southDoor;
+        public bool HasEastDoor = true;
         [SerializeField] RoomDoor eastDoor;
+        public bool HasWestDoor = true;
         [SerializeField] RoomDoor westDoor;
-
-
-        #region Properties
-
-        public int EnemyCount
-        {
-            get => 0;
-        }
-        public int ObstacleCount
-        {
-            get => 0;
-        }
-        public int TargetCount => EnemyCount + ObstacleCount;
-
-        #endregion
 
 
         #region Initializing methods
@@ -144,13 +102,13 @@ namespace RL.Levels
             InitializeStats();
             InitializeDoors();
             CalculateBounds(minX, maxX, minY, maxY);
+            CalculateSize();
         }
 
         void InitializeStats()
         {
-            _roomStats = new(Telemetry.Telemetry.RoomStatsKeys);
+            roomStats = new(Telemetry.Telemetry.RoomStatsKeys);
         }
-
 
         public void InitializeTiles()
         {
@@ -158,6 +116,7 @@ namespace RL.Levels
             {
                 t.Initialize();
             }
+
             northDoor.SetDoorsOpen(HasNorthDoor);
             southDoor.SetDoorsOpen(HasSouthDoor);
             eastDoor.SetDoorsOpen(HasEastDoor);
@@ -181,8 +140,9 @@ namespace RL.Levels
         void InitializeTile(Tile tile, int layerIndex, ref int minX, ref int maxX, ref int minY, ref int maxY)
         {
             tile.Initialize();
-            // tile.SortingGroup.sortingOrder = layerIndex;
+            
             tiles.Add(tile);
+            tileCoords[tile.Coordinates] = tile;
 
             Vector3 position = tile.transform.position;
             minX = Mathf.Min(minX, (int) position.x);
@@ -197,6 +157,11 @@ namespace RL.Levels
             maxBounds = new(maxX, maxY);
             
             Debug.Log($"Bounds - Min: {minBounds}, Max: {maxBounds}");
+        }
+
+        void CalculateSize()
+        {
+            size = new Vector2Int((int) (maxBounds.x - minBounds.x + 1), (int)  (maxBounds.y - minBounds.y + 1));
         }
 
         void InitializeDoors()
@@ -224,91 +189,44 @@ namespace RL.Levels
 
         #region Public methods
 
-        static Room CreateRoomStart()
+        public void Featurize(RoomStatCollection roomStats)
         {
-            throw new NotImplementedException();
+            this.roomStats = roomStats;
+            this.remainingEnemies = roomStats.TotalEnemyCount;
+            this.remainingObstacles = roomStats.TotalObstacleCount;
+            
+            // GenerateObstaclesCorners();
+            GenerateObstacles(
+                roomStats.GetStat(StatKey.ObstacleCountFire).Value,
+                roomStats.GetStat(StatKey.ObstacleCountBeam).Value,
+                roomStats.GetStat(StatKey.ObstacleCountWave).Value);
+
+            // GenerateEnemiesCorners();
+            GenerateEnemies(
+                roomStats.GetStat(StatKey.EnemyCountFire).Value,
+                roomStats.GetStat(StatKey.EnemyCountBeam).Value,
+                roomStats.GetStat(StatKey.EnemyCountWave).Value
+            );
+
+            Initialize(); /// Re-initialize
         }
 
-        static Room CreateRoomEnd()
+        public Tile GetTile()
         {
-            throw new NotImplementedException();
+            return null;
         }
 
-        static Room CreateRoomStandard()
+        public void OpenDoors()
         {
-            throw new NotImplementedException();
-        }
-
-        static Room CreateRoomKey()
-        {
-            throw new NotImplementedException();
-        }
-
-        static Room CreateRoomLock()
-        {
-            throw new NotImplementedException();
+            if (HasNorthDoor) northDoor?.Open();
+            if (HasSouthDoor) southDoor?.Open();
+            if (HasEastDoor) eastDoor?.Open();
+            if (HasWestDoor) westDoor?.Open();
         }
 
         public void ShutDoors()
         {
             StartCoroutine(nameof(ShutDoorsCoroutine));
-        }
-
-        public void GenerateFeatures()
-        {
-            GenerateContent();
-        }
-
-        public void GenerateContent()
-        {
-#if UNITY_EDITOR 
-            GenerateObstaclesRandomEditor();
-            GenerateEnemiesRandomEditor();
-#else
-            GenerateObstaclesRandom();
-            GenerateEnemiesRandom();
-#endif
-        }
-
-        public void CountFeatures()
-        {
-            foreach (Transform c in enemiesContainer.transform)
-            {
-                if (c.TryGetComponent(out Enemy enemy))
-                {
-                    if (enemy is FireWeak)
-                    {
-                        _roomStats[StatKey.EnemyCountFire].Increment();
-                    }
-                    else if (enemy is BeamWeak)
-                    {
-                        _roomStats[StatKey.EnemyCountBeam].Increment();
-                    }
-                    else if (enemy is WaveWeak)
-                    {
-                        _roomStats[StatKey.EnemyCountWave].Increment();
-                    }
-                }
-            }
-            
-            foreach (Transform c in obstaclesLayer.transform)
-            {
-                if (c.TryGetComponent(out Tile tile))
-                {
-                    if (tile is Glass)
-                    {
-                        _roomStats[StatKey.ObstacleCountFire].Increment();
-                    }
-                    else if (tile is BurnableCrate)
-                    {
-                        _roomStats[StatKey.ObstacleCountBeam].Increment();
-                    }
-                    else if (tile is WaveWeak)
-                    {
-                        _roomStats[StatKey.ObstacleCountWave].Increment();
-                    }
-                }
-            }
         }
 
         public void Load()
@@ -324,117 +242,258 @@ namespace RL.Levels
         #endregion
 
 
+        IEnumerator FinishRoom()
+        {
+            IsActive = false;
+            IsCleared = true;
+            Game.UI.ShowArrowPointer();
+            OpenDoors();
+            yield return new WaitForSeconds(0.5f);
+
+            Game.Main.Player.SetControlsEnabled(false);
+            Game.Telemetry.SaveCurrentRoomStats();
+
+            var go = Resources.Load<GameObject>("Prefabs/UI/Likert Scale UI");
+            var likertUi = Instantiate(go, Game.UI.transform).GetComponent<LikertScaleUI>();
+            likertUi.SetTargetRoom(this);
+            likertUi.OnClose += () =>
+            {
+                var go = Resources.Load<GameObject>("Prefabs/UI/SwapWeaponsWindow");
+                var sww = Instantiate(go, Game.UI.transform).GetComponent<SwapWeaponsWindow>();
+
+                sww.OnClose += () =>
+                {
+                    Game.Main.Player.SetControlsEnabled(true);
+                };
+            };
+        }
+
         IEnumerator ShutDoorsCoroutine()
         {
             yield return new WaitForSeconds(0.2f);
+
+            Game.Audio.Play("door_close");
             
-            if (HasNorthDoor)
-            {
-                northDoor?.SetDoorsOpen(false);
-            }
-            if (HasSouthDoor)
-            {
-                southDoor?.SetDoorsOpen(false);
-            }
-            if (HasEastDoor)
-            {
-                eastDoor?.SetDoorsOpen(false);
-            }
-            if (HasWestDoor)
-            {
-                westDoor?.SetDoorsOpen(false);
-            }
+            if (HasNorthDoor) northDoor?.Close();
+            if (HasSouthDoor) southDoor?.Close();
+            if (HasEastDoor) eastDoor?.Close();
+            if (HasWestDoor) westDoor?.Close();
         }
 
-        List<Vector2Int> GetRandomCoordinates(int count)
+        const int MaxIter = 255;
+        List<Vector2Int> GetRandomCoordinatesObstacle(int count)
         {
             List<Vector2Int> positions = new();
+            int attempts = 0;
+            int successCount = 0;
 
-            for (int i = 0; i < count; i++)
+            while (attempts < MaxIter && successCount < count)
             {
-                int x = UnityEngine.Random.Range((int) minBounds.x, (int) maxBounds.x);
-                int y = UnityEngine.Random.Range((int) minBounds.y, (int) maxBounds.y);
-                positions.Add(new Vector2Int(x, y));
+                Vector2Int coord = new(
+                    UnityEngine.Random.Range(3, size.x - 3), 
+                    UnityEngine.Random.Range(4, size.y - 4));
+
+                if (populatedTileCoordinates.Contains(coord))
+                {
+                    attempts++;
+                    continue;
+                }
+                else
+                {
+                    positions.Add(coord);
+                    populatedTileCoordinates.Add(coord);
+                    successCount++;
+                    attempts++;
+                }
             }
+
+            return positions;
+        }
+        List<Vector2Int> GetRandomCoordinatesEnemy(int count)
+        {
+            List<Vector2Int> positions = new();
+            int attempts = 0;
+            int successCount = 0;
+
+            while (attempts < MaxIter && successCount < count)
+            {
+                Vector2Int coord = new(
+                    UnityEngine.Random.Range(3, size.x - 5), 
+                    UnityEngine.Random.Range(4, size.y - 7));
+
+                if (populatedTileCoordinates.Contains(coord))
+                {
+                    attempts++;
+                    continue;
+                }
+                else
+                {
+                    positions.Add(coord);
+                    populatedTileCoordinates.Add(coord);
+                    successCount++;
+                    attempts++;
+                }
+            }
+
             return positions;
         }
         
+        void RegisterEnemy(Enemy enemy)
+        {
+            enemy.OnDeath += OnEnemyKilled;
+        }
 
+        void OnEnemyKilled(Enemy enemy)
+        {
+            if (enemy == null) return; 
+            
+            if (enemies.Contains(enemy))
+            {
+                enemies.Remove(enemy);
+            }
+            remainingEnemies--;
+
+            if (enemies.Count <= 0 || remainingEnemies <= 0)
+            {
+                StartCoroutine(FinishRoom());
+            }
+        }
+        
         internal IEnumerator OnPlayerEntry()
         {
+            if (IsStartRoom || IsEndRoom || IsCleared) yield break;
+
+            Game.Main.CurrentRoom = this;
+            Game.Telemetry.NewRoomStatInstance();
+            Game.UI.HideArrowPointer();
+            IsActive = true;
             ShutDoors();
-            GenerateContent();
-            // CountFeatures();
             yield return null;
         }
 
-        void GenerateObstaclesRandom()
+        void GenerateObstaclesCorners()
         {
-            /// 0, 7 are limiters, arbitrary values
-            var fireObstacleCount = UnityEngine.Random.Range(0, 7);
-            var beamObstacleCount = UnityEngine.Random.Range(0, 7);
-            var waveObstacleCount = UnityEngine.Random.Range(0, 7);
-            
-            var rand = GetRandomCoordinates(fireObstacleCount);
+            var rand = new Vector2Int[]
+            {
+                new (0, 0),
+                new (Size.x, 0),
+                new (0, Size.y - 4),
+                new (Size.x, Size.y - 4),
+            };
             foreach (var coord in rand)
             {
-                var obstacle = Game.Tiles.PlaceObstacle("glass_single_bottom", coord);
-                obstacle.transform.SetParent(obstaclesLayer.transform);
+                Game.Tiles.PlaceObstacle("glass", coord, onPlace: (tile) =>
+                {
+                    tile.transform.SetParent(obstaclesLayer.transform);
+                    tile.CoordinateToLocalPosition(coord);
+                });
             }
-            
-            rand = GetRandomCoordinates(beamObstacleCount);
-            foreach (var coord in rand)
-            {
-                var obstacle = Game.Tiles.PlaceObstacle("crate_single_bottom", coord);
-                obstacle.transform.SetParent(obstaclesLayer.transform);
-            }
-            
-            rand = GetRandomCoordinates(waveObstacleCount);
-            foreach (var coord in rand)
-            {
-                
-            }
-            /// Re-initialize
-            Initialize();
         }
 
-        
-
-        void GenerateEnemiesRandom()
+        void GenerateObstacles(int countFire, int countBeam, int countWave)
         {
-            var fireEnemyCount = UnityEngine.Random.Range(0, 10);
-            var beamEnemyCount = UnityEngine.Random.Range(0, 10);
-            var waveEnemyCount = UnityEngine.Random.Range(0, 10);
+            var rand = GetRandomCoordinatesEnemy(countFire);
+            foreach (var coord in rand)
+            {
+                string id;
+                if (UnityEngine.Random.Range(0, 100) <= 66)
+                    id = "crate";
+                else
+                    id = "crate_double";
+                
+                Game.Tiles.PlaceObstacle(id, coord, onPlace: (tile) =>
+                {
+                    tile.transform.SetParent(obstaclesLayer.transform);
+                    tile.CoordinateToLocalPosition(coord);
+                });
+            }
+            
+            rand = GetRandomCoordinatesEnemy(countBeam);
+            foreach (var coord in rand)
+            {
+
+            }
+            
+            rand = GetRandomCoordinatesEnemy(countWave);
+            foreach (var coord in rand)
+            {
+                Game.Tiles.PlaceObstacle("glass", coord, onPlace: (tile) =>
+                {
+                    tile.transform.SetParent(obstaclesLayer.transform);
+                    tile.CoordinateToLocalPosition(coord);
+                });
+            }
+        }
+        
+        void GenerateEnemiesCorners()
+        {
+            var rand = new Vector2Int[]
+            {
+                new (0, 0),
+                new (Size.x - 5, 0),
+                new (0, Size.y - 7),
+                new (Size.x - 5, Size.y - 7),
+            };
+            foreach (var coord in rand)
+            {
+                Game.Entity.Spawn("salaman", onSpawn: (entity) =>
+                {
+                    entity.transform.SetParent(enemiesContainer.transform);
+                    entity.LocalPosition = new Vector3(coord.x, coord.y);
+                });
+            }
+        }
+
+        void GenerateEnemies(int countFire, int countBeam, int countWave)
+        {
+            var rand = GetRandomCoordinatesEnemy(countFire);
+            foreach (var coord in rand)
+            {
+                Game.Entity.Spawn("salaman", onSpawn: (salaman) =>
+                {
+                    salaman.transform.SetParent(enemiesContainer.transform);
+                    salaman.LocalPosition = new Vector3(coord.x, coord.y);
+                    enemies.Add(salaman);
+                });
+                // Game.Entity.Spawn("deer", onSpawn: (entity) =>
+                // {
+                //     entity.transform.SetParent(enemiesContainer.transform);
+                //     entity.LocalPosition = new Vector3(coord.x, coord.y);
+                // });
+            }
+            
+            rand = GetRandomCoordinatesEnemy(countBeam);
+            foreach (var coord in rand)
+            {
+                Game.Entity.Spawn("salaman", onSpawn: (salaman) =>
+                {
+                    salaman.transform.SetParent(enemiesContainer.transform);
+                    salaman.LocalPosition = new Vector3(coord.x, coord.y);
+                    enemies.Add(salaman);
+                });
+                // Game.Entity.Spawn("armadillo", onSpawn: (entity) =>
+                // {
+                //     entity.transform.SetParent(enemiesContainer.transform);
+                //     entity.LocalPosition = new Vector3(coord.x, coord.y);
+                // });
+            }
+            
+            rand = GetRandomCoordinatesEnemy(countWave);
+            foreach (var coord in rand)
+            {
+                Game.Entity.Spawn("salaman", onSpawn: (salaman) =>
+                {
+                    salaman.transform.SetParent(enemiesContainer.transform);
+                    salaman.LocalPosition = new Vector3(coord.x, coord.y);
+                    enemies.Add(salaman);
+                });
+            }
+            
+            remainingEnemies = countFire + countBeam + countWave;
         }
 
 
         #region Editor
-#if UNITY_EDITOR
-        public void SetDoorsEditor(bool open)
-        {
-            northDoor?.SetDoorsOpen(open);
-            southDoor?.SetDoorsOpen(open);
-            eastDoor?.SetDoorsOpen(open);
-            westDoor?.SetDoorsOpen(open);
-        }
-
-        public void GenerateObstaclesRandomEditor()
-        {
-            var fireObstacleCount = UnityEngine.Random.Range(0, 7);
-            var beamObstacleCount = UnityEngine.Random.Range(0, 7);
-            var waveObstacleCount = UnityEngine.Random.Range(0, 7);
-
-            // PrefabUtility.InstantiatePrefab()
-        }
-
-        public void GenerateEnemiesRandomEditor()
-        {
-            var fireObstacleCount = UnityEngine.Random.Range(0, 7);
-            var beamObstacleCount = UnityEngine.Random.Range(0, 7);
-            var waveObstacleCount = UnityEngine.Random.Range(0, 7);
-
-            // PrefabUtility.InstantiatePrefab()
-        }
 
         public RoomDoor GetDoor(Cardinal direction)
         {
@@ -447,7 +506,46 @@ namespace RL.Levels
                 _ => throw new ArgumentOutOfRangeException()
             };
         }
-#endif
+
+        internal RoomDoor SetDoorwayAs(DoorwayType type, Cardinal direction, bool opened)
+        {
+            switch (direction)
+            {
+                case Cardinal.North:
+                {
+                    HasNorthDoor = true;
+                    northDoor.DoorwayType = type;
+                    if (opened) northDoor.Open();
+                    return northDoor;
+                }
+                case Cardinal.South:
+                {
+                    HasSouthDoor = true;
+                    southDoor.DoorwayType = type;
+                    if (opened) southDoor.Open();
+                    return southDoor;
+                }
+                case Cardinal.East:
+                {
+                    HasEastDoor = true;
+                    eastDoor.DoorwayType = type;
+                    if (opened) eastDoor.Open();
+                    return eastDoor;
+                }
+                case Cardinal.West:
+                {
+                    HasWestDoor = true;
+                    westDoor.DoorwayType = type;
+                    if (opened) westDoor.Open();
+                    return westDoor;
+                }
+                default:
+                {
+                    return null;
+                }
+            }
+        }
+
         #endregion
     }
 }

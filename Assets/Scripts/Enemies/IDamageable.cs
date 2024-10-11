@@ -1,4 +1,4 @@
-namespace RL.Enemies
+namespace RL.Entities
 {
     public interface IDamageable
     {

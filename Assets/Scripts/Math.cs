@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using static System.Math;
 
@@ -11,10 +12,30 @@ namespace RL
             return values.Average();
         }
 
+        public static double Mean(int[] values)
+        {
+            return values.Average();
+        }
+
         public static double Variance(double[] values)
         {
+            if (values.Length == 0) throw new InvalidOperationException("Cannot calculate variance of an empty array.");
+            if (values.Length == 1) return 0;
+
             double mean = Mean(values);
             double sumSqrd = values.Sum(num => Pow(num - mean, 2));
+
+            return sumSqrd / (values.Length - 1);
+        }
+
+        public static double Variance(int[] values)
+        {
+            if (values.Length == 0) throw new InvalidOperationException("Cannot calculate variance of an empty array.");
+            if (values.Length == 1) return 0;
+
+            double mean = Mean(values);
+            double sumSqrd = values.Sum(num => Pow(num - mean, 2));
+
             return sumSqrd / (values.Length - 1);
         }
 

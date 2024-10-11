@@ -1,7 +1,7 @@
 using UnityEngine;
 using RL.Systems;
 
-namespace RL.Enemies
+namespace RL.Entities
 {
     public class SalamanderAnimator : StateAnimator<SalamanderStates>
     {

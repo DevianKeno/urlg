@@ -17,7 +17,7 @@ namespace RL.Levels
             GUILayout.Space(10f);
             if (GUILayout.Button("Save Telemetry Data"))
             {
-                mg.SaveToJson();
+                mg.SaveEntriesToJson();
             }
             if (GUILayout.Button("Open Save Folder"))
             {
