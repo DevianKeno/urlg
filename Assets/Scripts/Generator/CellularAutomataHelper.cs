@@ -5,7 +5,6 @@ using System.Linq;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.Experimental.Rendering.Universal;
 using Cinemachine;
 
 using RL.Classifiers;
@@ -21,6 +20,28 @@ namespace RL.CellularAutomata
         public int Height { get; set; }
         public int Width { get; set; }
         public float Density { get; set; }
+    }
+
+    public struct GenerateRoomShapeCalculations
+    {
+        public Vector2Int MinBounds { get; set; }
+        public Vector2Int MaxBounds { get; set; }
+        public readonly Vector2Int Size
+        {
+            get
+            {
+                return new(
+                    System.Math.Abs(MaxBounds.x - MinBounds.x) + 1,
+                    System.Math.Abs(MaxBounds.y - MinBounds.y) + 1);
+            }
+        }
+        public Vector3 TotalPosition { get; set; }
+    }
+
+    public struct GenerateRoomShapeResult
+    {
+        public List<MockRoom> Rooms { get; set; }
+        public GenerateRoomShapeCalculations Calculations { get; set; }
     }
 
     public class CellularAutomataHelper : MonoBehaviour
@@ -69,10 +90,6 @@ namespace RL.CellularAutomata
         public bool IncludeEndRoom = true;
         public bool CustomStartRoomCoordinates;
         public Vector2Int StartRoomCoordinates;
-        /// <summary>
-        /// Scaling for the Pixel Perfect Camera viewport size.
-        /// </summary>
-        public float Scaling = 1.0f;
 
         MockRoom _startRoom;
         List<MockRoom> _rooms = new();
@@ -85,7 +102,6 @@ namespace RL.CellularAutomata
 
         [SerializeField] GameObject mockRoomPrefab;
         [SerializeField] Transform mockRoomContainer;
-        [SerializeField] CinemachineVirtualCamera virtualCamera;
 
         public RecolorType RecolorType = RecolorType.BOTH;
         public Color StartRoomColor = Color.green;
@@ -194,7 +210,7 @@ namespace RL.CellularAutomata
         /// </summary>
         /// <param name="featurize">Whether to generate room features.</param>
         /// <returns></returns>
-        public List<MockRoom> GenerateRoomShaped(int roomCount, bool featurize = true, bool instantiateObjects = false)
+        public GenerateRoomShapeResult GenerateRoomShaped(int roomCount, bool featurize = true, bool instantiateObjects = false)
         {
             ClearRooms();
             if (!HasNoiseGrid)
@@ -212,7 +228,11 @@ namespace RL.CellularAutomata
                 mockRoomContainer = new GameObject("Rooms").transform;
                 mockRoomContainer.SetParent(transform);
             }
-            
+
+            var result = new GenerateRoomShapeResult
+            {
+                Rooms = _rooms
+            };
             _rooms = new List<MockRoom>();
             Vector2Int coords;
 
@@ -221,7 +241,7 @@ namespace RL.CellularAutomata
                 if (currentGrid[StartRoomCoordinates.x, StartRoomCoordinates.y] == WallTile)
                 {
                     Debug.LogError("Starting room cannot be a wall tile");
-                    return _rooms;
+                    return result;
                 }
                 coords = StartRoomCoordinates;
             }
@@ -242,11 +262,12 @@ namespace RL.CellularAutomata
             _startRoom = newRoom;
             _startRoom.IsStartRoom = true;
             FeaturizeEmpty(_startRoom);
-            SubscribeRoomEvents(newRoom);
+            // SubscribeRoomEvents(newRoom);
             
             Vector2Int minBounds = new(_startRoom.x, _startRoom.y);
             Vector2Int maxBounds = new(_startRoom.x, _startRoom.y);
             Vector3 totalPosition = Vector3.zero;
+
             AddCalculations(newRoom);
 
             var roomsLeft = roomCount; /// Number of rooms left to generate
@@ -262,9 +283,8 @@ namespace RL.CellularAutomata
                 {
                     roomsLeft--; /// Successfully created a room, decrement the count
                 }
-                else
+                else /// If no room could be created, backtrack by popping the current room off the stack
                 {
-                    /// If no room could be created, backtrack by popping the current room off the stack
                     _previousRooms.Pop();
                 }
 
@@ -298,7 +318,7 @@ namespace RL.CellularAutomata
                     
                     if (featurize) FeaturizeRandom(newInterRoom);
                     newInterRoom.Recolor(RecolorType);
-                    SubscribeRoomEvents(newInterRoom);
+                    // SubscribeRoomEvents(newInterRoom);
                 }
                 else
                 {
@@ -307,48 +327,29 @@ namespace RL.CellularAutomata
                 }
             }
             
-            if (IncludeEndRoom)
+            if (IncludeEndRoom && _previousRooms.Any()) ///HMMMMMMMMMMMMMMM
             {
-                if (_previousRooms.Any()) ///HMMMMMMMMMMMMMMM
-                {
-                    CreateRoomAtNeighbor(_previousRooms.Peek(), EndRoomColor, out var endRoom);
-                    endRoom.IsEndRoom = true;
-                    FeaturizeEmpty(endRoom);
-                    SubscribeRoomEvents(endRoom);
-                    AddCalculations(endRoom);
-                }
+                CreateRoomAtNeighbor(_previousRooms.Peek(), EndRoomColor, out var endRoom);
+                endRoom.IsEndRoom = true;
+                FeaturizeEmpty(endRoom);
+                // SubscribeRoomEvents(endRoom);
+                AddCalculations(endRoom);
             }
 
             if (roomsLeft > 0)
-            {
                 Debug.LogError("Failed to generate all rooms");
-            }
             else
-            {
                 Debug.Log("Generated all rooms successfully");
-            }
-
-            var scene = SceneManager.GetActiveScene();
-            if (scene.name == "R&D") /// if on research mode
+            
+            result.Rooms = _rooms;
+            result.Calculations = new()
             {
-                Vector2Int size = new(
-                    System.Math.Abs(maxBounds.x - minBounds.x) + 1,
-                    System.Math.Abs(maxBounds.y - minBounds.y) + 1
-                );
-                var squ = size.x * size.y;
-                print($"Mock Level size: ({size.x} x {size.y}), {squ} squ.");
-                var ppc = Camera.main.GetComponent<PixelPerfectCamera>();
-                ppc.assetsPPU = (int) (DefaultPixelsPerUnit / squ * 100 * Scaling);
-                
-                /// position camera on cells centroid
-                Vector3 centroid = totalPosition / mockRoomContainer.childCount;
-                virtualCamera.transform.position = new(
-                    centroid.x,
-                    centroid.y,
-                    -10f);
-            }
+                MinBounds = minBounds,
+                MaxBounds = maxBounds,
+                TotalPosition = totalPosition,
+            };
 
-            return _rooms;
+            return result;
         }
 
         public void RefreshGridAll()

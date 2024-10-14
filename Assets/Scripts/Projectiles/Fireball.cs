@@ -21,7 +21,7 @@ namespace RL.Projectiles
             spriteRenderer.transform.rotation = Quaternion.identity;
         }
 
-        protected override void OnHitTile(GameObject obj)
+        protected override void OnHitTile(GameObject obj, Collision2D collision)
         {
             if (obj.TryGetComponent<Tile>(out var tile))
             {

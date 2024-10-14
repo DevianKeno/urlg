@@ -37,7 +37,7 @@ namespace RL.Projectiles
             rb.velocity = direction * Data.Speed;
         }
 
-        protected virtual void OnHitTile(GameObject obj)
+        protected virtual void OnHitTile(GameObject obj, Collision2D collision)
         {
         }
 
@@ -67,7 +67,7 @@ namespace RL.Projectiles
 
                 if (go.CompareTag("Tile"))
                 {
-                    OnHitTile(go);
+                    OnHitTile(go, collision);
                     break;
 
                 } else if (go.CompareTag("Enemy"))

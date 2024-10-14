@@ -11,6 +11,8 @@ namespace RL.Entities
         public float MoveSpeed = 2f;
         public Color DamageFlash = Color.red;
 
+        public bool IsAsleep { get; set; } = true; 
+
         [Header("Search Parameters")]
         public float searchRadius = 5f;
         public float rotationSpeed = 50f;
@@ -43,7 +45,9 @@ namespace RL.Entities
         }
 
         protected virtual void FixedUpdate()
-        {            
+        {
+            if (IsAsleep) return;
+
             Search();
             LookAtTarget();
             MaintainDistance();

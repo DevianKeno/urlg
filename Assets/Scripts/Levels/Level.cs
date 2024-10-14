@@ -62,12 +62,12 @@ namespace RL.Levels
 
         public IEnumerator GenerateLevelCoroutine(int roomCount)
         {
-            var generatedRooms = Game.CA.GenerateRoomShaped(roomCount);
+            var result = Game.CA.GenerateRoomShaped(roomCount, featurize: false);
             
             Room previousRoom = null;
-            for (int i = 0; i < generatedRooms.Count; i++)
+            for (int i = 0; i < result.Rooms.Count; i++)
             {
-                var gr = generatedRooms[i];
+                var gr = result.Rooms[i];
                 if (gr == null) continue;
 
                 var newRoom = Game.Generator.InstantiateRoom(gr.x, gr.y);

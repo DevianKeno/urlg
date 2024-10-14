@@ -18,7 +18,7 @@ namespace RL.Projectiles
             Game.Audio.PlaySound("wave_shoot");
         }
 
-        protected override void OnHitTile(GameObject obj)
+        protected override void OnHitTile(GameObject obj, Collision2D collision)
         {
             if (obj.TryGetComponent<Tile>(out var tile))
             {

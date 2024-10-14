@@ -97,7 +97,7 @@ GameObject:
   - component: {fileID: 4185695273896660363}
   - component: {fileID: 9188999943521384221}
   m_Layer: 7
-  m_Name: Laser
+  m_Name: Beam
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -199,7 +199,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0
   m_GravityScale: 0
-  m_Material: {fileID: 6200000, guid: 0aca8b4548f49144e953719c6b4fed24, type: 2}
+  m_Material: {fileID: 6200000, guid: 9cae015514ec79349b75a041f3072590, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2899874347734897569}
   - component: {fileID: -2673270468393409658}
   m_Layer: 0
-  m_Name: puff
+  m_Name: beam_puff
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -75,7 +75,7 @@ SpriteRenderer:
   m_SortingLayerID: 97747843
   m_SortingLayer: 7
   m_SortingOrder: 0
-  m_Sprite: {fileID: -1991302646, guid: a0893069e7f29874f885cbc58e74b1f7, type: 3}
+  m_Sprite: {fileID: 1467152392, guid: 1a75d7bedd1ef04449979614241d880b, type: 3}
   m_Color: {r: 0.9622642, g: 0.9622642, b: 0.9622642, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -96,7 +96,7 @@ Animator:
   m_GameObject: {fileID: 7310355987142519407}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 3d41b334ead88c74da8b5f28f571e080, type: 2}
+  m_Controller: {fileID: 9100000, guid: dec729085e16f914da6a4ae032b70132, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -119,4 +119,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4d03f280d4972a4d8d563feb460278a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Data: {fileID: 11400000, guid: f5155be560ed625439cc37adc7ae977d, type: 2}
+  Data: {fileID: 11400000, guid: 523f6df02a4b3a0449379ebf4d0a4036, type: 2}

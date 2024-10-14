@@ -19256,10 +19256,13 @@ MonoBehaviour:
   _hasDataset: 0
   RejectedRoomsThreshold: 25
   AcceptanceThreshold: 0.2
+  CameraScaling: 1
   levelSettings: {fileID: 197109123}
   playerTelemetry: {fileID: 606953607}
   playerGraphs: {fileID: 788512156}
   selector: {fileID: 0}
+  virtualCamera: {fileID: 427006049}
+  mockRoomContainer: {fileID: 0}
   fireGraph: {fileID: 1412729745}
   beamGraph: {fileID: 1622851356}
   waveGraph: {fileID: 1168451047}
@@ -33677,6 +33680,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbd7741b6d5f9734390d2b37cac06b1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canvas: {fileID: 0}
   TransitionOptions:
     Tween: 10
     AnimationSpeed: 1.5
@@ -63335,10 +63339,8 @@ MonoBehaviour:
   IncludeEndRoom: 1
   CustomStartRoomCoordinates: 0
   StartRoomCoordinates: {x: 0, y: 0}
-  Scaling: 0.25
   mockRoomPrefab: {fileID: 4026839169192576902, guid: eb5617016b4c0754794a06fa1a041ec6, type: 3}
   mockRoomContainer: {fileID: 0}
-  virtualCamera: {fileID: 427006049}
   RecolorType: 0
   StartRoomColor: {r: 0.20445704, g: 1, b: 0, a: 1}
   NormalRoomColor: {r: 0, g: 1, b: 1, a: 1}

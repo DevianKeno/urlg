@@ -50,7 +50,7 @@ namespace RL.Levels
         [SerializeField] Vector2Int size;
         public Vector2Int Size => size;
         
-        List<Entity> enemies = new();
+        List<Enemy> enemies = new();
         [SerializeField] int remainingEnemies;
         [SerializeField] int remainingObstacles;
         
@@ -390,6 +390,14 @@ namespace RL.Levels
             yield return null;
         }
 
+        void ActivateEnemies()
+        {
+            foreach (var e in enemies)
+            {
+                e.IsAsleep = false;
+            }
+        }
+
         void GenerateObstaclesCorners()
         {
             var rand = new Vector2Int[]
@@ -472,7 +480,7 @@ namespace RL.Levels
                 {
                     salaman.transform.SetParent(enemiesContainer.transform);
                     salaman.LocalPosition = new Vector3(coord.x, coord.y);
-                    enemies.Add(salaman);
+                    enemies.Add((Enemy) salaman);
                     SubscribeEnemyEvents(salaman as Enemy);
                 });
                 // Game.Entity.Spawn("deer", onSpawn: (entity) =>
@@ -489,7 +497,7 @@ namespace RL.Levels
                 {
                     salaman.transform.SetParent(enemiesContainer.transform);
                     salaman.LocalPosition = new Vector3(coord.x, coord.y);
-                    enemies.Add(salaman);
+                    enemies.Add((Enemy) salaman);
                     SubscribeEnemyEvents(salaman as Enemy);
                 });
                 // Game.Entity.Spawn("armadillo", onSpawn: (entity) =>
@@ -506,7 +514,7 @@ namespace RL.Levels
                 {
                     salaman.transform.SetParent(enemiesContainer.transform);
                     salaman.LocalPosition = new Vector3(coord.x, coord.y);
-                    enemies.Add(salaman);
+                    enemies.Add((Enemy) salaman);
                     SubscribeEnemyEvents(salaman as Enemy);
                 });
             }

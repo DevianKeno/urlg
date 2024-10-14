@@ -3308,10 +3308,8 @@ MonoBehaviour:
   IncludeEndRoom: 1
   CustomStartRoomCoordinates: 0
   StartRoomCoordinates: {x: 21, y: 19}
-  Scaling: 1
   mockRoomPrefab: {fileID: 4026839169192576902, guid: eb5617016b4c0754794a06fa1a041ec6, type: 3}
   mockRoomContainer: {fileID: 0}
-  virtualCamera: {fileID: 0}
   RecolorType: 2
   StartRoomColor: {r: 0, g: 1, b: 0, a: 1}
   NormalRoomColor: {r: 0, g: 1, b: 1, a: 1}

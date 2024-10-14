@@ -5,16 +5,16 @@ using System.Collections.Generic;
 
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Experimental.Rendering.Universal;
 using TMPro;
+using Cinemachine;
 using SFB;
 
 using RL.UI;
 using RL.Telemetry;
 using RL.CellularAutomata;
-using RL.Levels;
 using RL.Classifiers;
 using RL.Graphs;
-using System.Threading.Tasks;
 
 namespace RL.RD
 {
@@ -29,8 +29,14 @@ namespace RL.RD
         public bool NormalizeValues => normalizeToggle != null ? normalizeToggle.isOn : false;
         [Range(0, 100)] public float RejectedRoomsThreshold = 25f;
         public float AcceptanceThreshold = 0f;
+        /// <summary>
+        /// Scaling for the Pixel Perfect Camera viewport size.
+        /// </summary>
+        public float CameraScaling = 1.0f;
+        
         GNBData data = null;
         PlayerStatCollection playerStats;
+        GenerateRoomShapeResult currentResult;
         List<MockRoom> currentMockRooms = new();
 
         [SerializeField] RDTelemetryUI levelSettings;
@@ -39,6 +45,8 @@ namespace RL.RD
         [Header("Objects")]
         [SerializeField] GameObject playerGraphs;
         [SerializeField] GameObject selector;
+        [SerializeField] CinemachineVirtualCamera virtualCamera;
+        [SerializeField] Transform mockRoomContainer;
 
         [Header("Graphs")]
         [SerializeField] ARGraph fireGraph;
@@ -137,16 +145,35 @@ namespace RL.RD
 
         #endregion
 
+        public void DestroyAllRooms()
+        {
+            if (mockRoomContainer == null) return;
+
+            #if UNITY_EDITOR
+                DestroyImmediate(mockRoomContainer.gameObject);
+            #else
+                Destroy(mockRoomContainer.gameObject);
+            #endif
+        }
+
         void GenerateRooms()
         {
             currentMockRooms = new();
             int roomCount = levelSettings.GetEntry(StatKey.RoomCount).Value;
             if (roomCount % 2 != 0) roomCount++;
-            var generatedRooms = Game.CA.GenerateRoomShaped(roomCount, featurize: false);
+            currentResult = Game.CA.GenerateRoomShaped(roomCount, featurize: false);
 
-            foreach (MockRoom room in generatedRooms)
+            if (mockRoomContainer != null)
+            {
+                DestroyAllRooms();
+            }
+            mockRoomContainer = new GameObject("Rooms").transform;
+            mockRoomContainer.SetParent(transform);
+
+            foreach (MockRoom room in currentResult.Rooms)
             {
                 currentMockRooms.Add(room);
+                room.transform.SetParent(mockRoomContainer, worldPositionStays: true);
                 room.OnClick += OnClickRoom;
 
                 if (room.IsStartRoom || room.IsEndRoom) continue;
@@ -159,7 +186,29 @@ namespace RL.RD
 
                 Featurize(SelectedAlgorithm, room, targetStatus);
                 room.Recolor(RecolorType);
+                SubscribeRoomEvents(room);
             }
+            
+            CenterCameraToLevel();
+        }
+
+        void CenterCameraToLevel()
+        {
+            Vector2Int size = new(
+                System.Math.Abs(currentResult.Calculations.MaxBounds.x - currentResult.Calculations.MinBounds.x) + 1,
+                System.Math.Abs(currentResult.Calculations.MaxBounds.y - currentResult.Calculations.MinBounds.y) + 1
+            );
+            var squ = size.x * size.y;
+            print($"Mock Level size: ({size.x} x {size.y}), {squ} squ.");
+            var ppc = Camera.main.GetComponent<PixelPerfectCamera>();
+            ppc.assetsPPU = (int) (DefaultPixelsPerUnit / squ * 100 * CameraScaling);
+            
+            /// position camera on cells centroid
+            Vector3 centroid = currentResult.Calculations.TotalPosition / mockRoomContainer.childCount;
+            virtualCamera.transform.position = new(
+                centroid.x,
+                centroid.y,
+                -10f);
         }
 
         void Featurize(PCGAlgorithm algorithm, MockRoom room, Status targetStatus)
@@ -236,6 +285,12 @@ namespace RL.RD
             }
         }
         
+        void SubscribeRoomEvents(MockRoom room)
+        {
+            room.OnClick += playerTelemetry.OnRoomClick;
+            room.OnClick += SelectorToRoom;
+        }
+
         void OnClickRoom(MockRoom room)
         {
             SetFeatureDataText(room);

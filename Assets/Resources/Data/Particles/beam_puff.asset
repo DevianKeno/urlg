@@ -9,11 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 086de7d5e42ec6f4990bff4b4cd5f247, type: 3}
-  m_Name: Laser
+  m_Script: {fileID: 11500000, guid: a584387995e4e96449d5d92e888628e4, type: 3}
+  m_Name: beam_puff
   m_EditorClassIdentifier: 
-  Name: Laser
-  Sprite: {fileID: 0}
-  Damage: 0
-  FireRate: 0.2
-  ProjectileData: {fileID: 11400000, guid: dc81c63336455f0489082823b78efc2e, type: 2}
+  Id: beam_puff
+  Prefab: {fileID: 7310355987142519407, guid: 35584dd1da529a242909017c90e1e3b7, type: 3}
