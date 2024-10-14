@@ -1,10 +1,9 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
+
 using UnityEngine;
-using RL.CellularAutomata;
-using static RL.Generator.Generator.Map;
-using RL.UI;
+
 using RL.Classifiers;
 using RL.Player;
 using RL.Generator;
@@ -58,10 +57,10 @@ namespace RL.Levels
         {
             Game.Main.Player = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
             var roomCount = RoomsPerLevel[Game.Main.currentLevel];
-            GenerateLevel(roomCount);
+            StartCoroutine(GenerateLevelCoroutine(roomCount));
         }
 
-        public void GenerateLevel(int roomCount)
+        public IEnumerator GenerateLevelCoroutine(int roomCount)
         {
             var generatedRooms = Game.CA.GenerateRoomShaped(roomCount);
             
@@ -72,6 +71,7 @@ namespace RL.Levels
                 if (gr == null) continue;
 
                 var newRoom = Game.Generator.InstantiateRoom(gr.x, gr.y);
+                newRoom.transform.SetParent(transform);
                 
                 if (gr.IsStartRoom)
                 {
@@ -101,6 +101,10 @@ namespace RL.Levels
                 previousRoom = newRoom;
                 
                 newRoom.Initialize();
+                if (gr.IsEndRoom)
+                {
+                    newRoom.AddExitStairs();
+                }
 
                 /// Special rooms (start, end) don't have features
                 if (newRoom.IsStartRoom || newRoom.IsEndRoom) continue;
@@ -127,19 +131,32 @@ namespace RL.Levels
             
             OnDoneGenerate?.Invoke();
             StartLevel();
+
+            yield return null;
         }
 
         void StartLevel()
         {
+            Debug.Log("Starting level...");
             Game.Main.Player.transform.position = StartRoom.Center.position;
             Game.Main.CurrentRoom = StartRoom;
             
             Game.Main.UnloadScene("LOADING");
         }
 
-        void FinishLevel()
+        public void FinishLevel()
         {
             Game.Main.currentLevel++;
+            foreach (var r in Rooms)
+            {
+                Destroy(r.gameObject);
+            }
+            Rooms.Clear();
+        }
+
+        void OnApplicationQuit()
+        {
+            Game.Telemetry.SaveEntriesToJson();
         }
     }
 }

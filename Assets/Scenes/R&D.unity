@@ -32808,7 +32808,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &872172701
 Transform:
   m_ObjectHideFlags: 0
@@ -33677,8 +33677,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbd7741b6d5f9734390d2b37cac06b1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ArrowPointer: {fileID: 0}
+  TransitionOptions:
+    Tween: 10
+    AnimationSpeed: 1.5
+    Delay: 0.25
+    Multiplier: 1.2
   vignette: {fileID: 0}
+  transitionCanvas: {fileID: 0}
 --- !u!1 &926839512
 GameObject:
   m_ObjectHideFlags: 0

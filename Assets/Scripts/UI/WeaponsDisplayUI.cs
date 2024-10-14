@@ -2,18 +2,34 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using RL;
 using TMPro;
+using UnityEngine.UI;
 
 namespace RL.UI
 {
-    public class WeaponsDisplayUI : MonoBehaviour
+    public class WeaponsDisplayUI : Window
     {
+        public bool EnableSwapping;
         public float SelectorSpeed = 0.3f;
         public LeanTweenType SelectorEase;
         InputAction swapInput;
         
-        [SerializeField] Transform selector;
-        [SerializeField] WeaponIconUI weapon1;
-        [SerializeField] WeaponIconUI weapon2;
+        [SerializeField] GameObject selector;
+        [SerializeField] GameObject Selector
+        {
+            get
+            {
+                if (selector == null)
+                {
+                    selector = Instantiate(Resources.Load<GameObject>("Prefabs/UI/Selector"), transform);
+                    var le = selector.AddComponent<LayoutElement>();
+                    le.ignoreLayout = true;
+                    selector.transform.SetAsLastSibling();
+                }
+                return selector;
+            }
+        }
+        public WeaponIconUI weapon1;
+        public WeaponIconUI weapon2;
         [SerializeField] TextMeshProUGUI numberTmp;
 
         void Start()
@@ -26,11 +42,10 @@ namespace RL.UI
 
         void OnInputSwap(InputAction.CallbackContext context)
         {
+            if (!EnableSwapping) return;
             if (!int.TryParse(context.control.displayName, out int index)) return;
 
-            Transform target = null;
-            LeanTween.cancel(selector.gameObject);
-
+            Transform target;
             if (index == 1)
             {
                 target = weapon1.transform;
@@ -44,9 +59,9 @@ namespace RL.UI
                 return;
             }
 
-            LeanTween.move(selector.gameObject, target.position, SelectorSpeed)
+            LeanTween.move(Selector, target.position, SelectorSpeed)
                 .setEase(SelectorEase);
-            LeanTween.scale(selector.gameObject, target.localScale, SelectorSpeed)
+            LeanTween.scale(Selector, target.localScale, SelectorSpeed)
                 .setEase(SelectorEase);
         }
     }

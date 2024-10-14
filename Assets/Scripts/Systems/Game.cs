@@ -68,23 +68,33 @@ namespace RL
         void Awake()
         {
             DontDestroyOnLoad(gameObject);
-            if (Main != null && Main != this) Destroy(gameObject);
-            else Main = this;
-            
-            audioManager = GetComponentInChildren<AudioManager>();
-            files = GetComponentInChildren<FilesManager>();
-            telemetry = GetComponentInChildren<Telemetry.Telemetry>();
-            UIManager = GetComponentInChildren<UIManager>();
-            tilesManager = GetComponentInChildren<TilesManager>();
-            entityManager = GetComponentInChildren<EntityManager>();
-            playerInput = GetComponent<PlayerInput>();
-            ca = GetComponentInChildren<CellularAutomataHelper>();
-            generator = GetComponentInChildren<Generator.Generator>();
-            particlesManager = GetComponentInChildren<ParticleManager>();
+
+            if (Main != null && Main != this)
+            {
+                Destroy(gameObject);
+            }
+            else
+            {
+                Main = this;
+
+                audioManager = GetComponentInChildren<AudioManager>();
+                files = GetComponentInChildren<FilesManager>();
+                telemetry = GetComponentInChildren<Telemetry.Telemetry>();
+                UIManager = GetComponentInChildren<UIManager>();
+                tilesManager = GetComponentInChildren<TilesManager>();
+                entityManager = GetComponentInChildren<EntityManager>();
+                playerInput = GetComponent<PlayerInput>();
+                ca = GetComponentInChildren<CellularAutomataHelper>();
+                generator = GetComponentInChildren<Generator.Generator>();
+                particlesManager = GetComponentInChildren<ParticleManager>();
+
+                playerInput = GetComponent<PlayerInput>();
+            }
         }
 
         void Start()
         {
+            UIManager.Initialize();
             audioManager.Initialize();
             telemetry.Initialize();
             tilesManager.Initialize();
@@ -110,7 +120,7 @@ namespace RL
             public LoadSceneMode Mode { get; set; }
             public bool ActivateOnLoad { get; set; } = true;
             public float DelaySeconds { get; set; }
-            public bool PlayTransition { get; set; }
+            public bool PlayTransition { get; set; } = true;
         }
 
         event Action onLoadSceneCompleted;
@@ -172,15 +182,35 @@ namespace RL
                     {
                         sceneOperations[options.SceneToLoad] = asyncOp;
                     }
-
-                    asyncOp.allowSceneActivation = options.ActivateOnLoad;
-
-                    Game.UI.PlayTransitionEnd(() =>
+                    else
                     {
-                        this.onLoadSceneCompleted?.Invoke();
-                        this.onLoadSceneCompleted = null;
-                    });
+                        asyncOp.allowSceneActivation = options.ActivateOnLoad;
+
+                        Game.UI.PlayTransitionEnd(() =>
+                        {
+                            this.onLoadSceneCompleted?.Invoke();
+                            this.onLoadSceneCompleted = null;
+                        });
+                    }
+
                 });
+            }
+            else
+            {
+                if (!options.ActivateOnLoad)
+                {
+                    sceneOperations[options.SceneToLoad] = asyncOp;
+                }
+
+                asyncOp.allowSceneActivation = options.ActivateOnLoad;
+                
+                while (!asyncOp.isDone)
+                {
+                    yield return null;
+                }
+
+                this.onLoadSceneCompleted?.Invoke();
+                this.onLoadSceneCompleted = null;
             }
         }
 
@@ -210,10 +240,14 @@ namespace RL
                     yield return null;
                 }
                 sceneOperations.Remove(name);
+        
             }
 
-            this.onActivateSceneCompleted?.Invoke();
-            this.onActivateSceneCompleted = null;
+            Game.UI.PlayTransitionEnd(() =>
+            {
+                this.onActivateSceneCompleted?.Invoke();
+                this.onActivateSceneCompleted = null;
+            });
         }
 
         #endregion

@@ -27,6 +27,11 @@ namespace RL.Classifiers
         public readonly bool IsAccepted => Status == Status.Accepted;
         public readonly bool IsRejected => Status == Status.Rejected;
     }
+    
+    public struct GNBTestResult
+    {
+        
+    }
 
     public class GaussianNaiveBayes : MonoBehaviour
     {
@@ -101,6 +106,11 @@ namespace RL.Classifiers
             rejectedVariance = Math.Variance(rejectedCosines.ToArray());
 
             Debug.Log("Model trained");
+        }
+
+        public void Test(GNBData data)
+        {
+
         }
 
         double CalculateCosine(PlayerStatCollection playerStats, RoomStatCollection roomStats)

@@ -33,6 +33,20 @@ namespace RL.Projectiles
             }
         }
 
+        // void Reflect(Vector3 surfaceNormal)
+        // {
+        //     if (_reflected) return; // Only reflect once if needed
+        //     _reflected = true;
+
+        //     // Reflect the velocity based on the surface normal
+        //     Vector3 newDirection = Vector3.Reflect(_rb.velocity.normalized, surfaceNormal);
+        //     _rb.velocity = newDirection * speed;
+            
+        //     // Optional: Rotate the projectile to match the new direction
+        //     float angle = Mathf.Atan2(newDirection.y, newDirection.x) * Mathf.Rad2Deg;
+        //     transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+        // }
+
         protected override void OnHitEnemy(IDamageable hit)
         {
             hit.TakeDamage(Data.Damage);

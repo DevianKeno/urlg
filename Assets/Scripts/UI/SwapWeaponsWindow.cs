@@ -20,6 +20,9 @@ namespace RL.UI
         void Start()
         {
             this.player = Game.Main.Player;
+
+            weaponIcon1.ProjectileData = player.Weapon1.ProjectileData;
+            weaponIcon2.ProjectileData = player.Weapon2.ProjectileData;
             
             weaponBtn1.onClick.AddListener(() =>
             {
@@ -31,7 +34,32 @@ namespace RL.UI
                 SelectIndex(1);
                 SwapSelected();
             });
-            doneBtn.onClick.AddListener(Done);
+        }
+
+        void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.Alpha1))
+            {
+                SelectIndex(0);
+                SwapSelected();
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha2))
+            {
+                SelectIndex(1);
+                SwapSelected();
+            }
+            
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                Submit();
+            }
+        }
+
+        void Submit()
+        {
+            player.UpdateDisplayedWeapons();
+            IsVisible = true;
+            Hide(destroy: true);
         }
 
         public void SelectIndex(int index)
@@ -49,11 +77,6 @@ namespace RL.UI
         {
             weaponIcon1.ProjectileData = player.Weapon1.ProjectileData;
             weaponIcon2.ProjectileData = player.Weapon2.ProjectileData;
-        }
-
-        public void Done()
-        {
-            Hide(true);
         }
     }
 }

@@ -8,7 +8,6 @@ namespace RL.Levels
 {
     public class LevelSceneHandler : MonoBehaviour
     {
-        public static LevelSceneHandler Instance { get; private set;}
         public Level Level;
         public List<GameObject> SceneObjects = new();
 
@@ -16,11 +15,20 @@ namespace RL.Levels
         
         void Awake()
         {
-            DontDestroyOnLoad(this);
-            if (Instance != null && Instance != this) Destroy(gameObject);
-            else Instance = this;
-            
             Level = GetComponent<Level>();
+        }
+
+        void Start()
+        {
+            Game.Main.LoadScene(
+                new(){
+                    SceneToLoad = "LOADING",
+                    Mode = LoadSceneMode.Additive ,
+                    PlayTransition = false, },
+                onLoadSceneCompleted: () =>
+                {
+                    Initialize();
+                });
         }
 
         public void Initialize()

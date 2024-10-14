@@ -8,8 +8,6 @@ namespace RL.Telemetry
     {
         public DateTime CreatedDate;
         public DateTime LastModifiedDate;
-        public List<StatSaveData> PlayerStats;
-        public List<StatSaveData> GameStats;
-        public List<StatSaveData> RoomStats;
+        public List<DataEntry> Entries;
     }
 }

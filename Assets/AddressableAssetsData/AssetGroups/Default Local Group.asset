@@ -57,6 +57,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0850b5d0ea512b44a8bc517093dcdba3
+    m_Address: Assets/AddressableAssets/Obstacles/STAIRS.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 34f34a0ee7e518d45a6067d2e2caab96, type: 2}
   m_SchemaSet:

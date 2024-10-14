@@ -9,6 +9,8 @@ namespace RL.UI
 {
     public class LikertScaleUI : Window
     {
+        int selected;
+        bool _hasSelected = false;
         Room targetRoom;
         public Room TargetRoom => targetRoom;
 
@@ -24,6 +26,7 @@ namespace RL.UI
         MouseEvents yesBtnMouseEvents;
         MouseEvents noBtnMouseEvents;
 
+        
         void Awake()
         {
             yesBtn.onClick.AddListener(TagTargetLiked);
@@ -35,17 +38,49 @@ namespace RL.UI
             noBtnMouseEvents.OnMouseEnter += Select;
         }
 
+        void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.A))
+            {
+                selected = 1;
+                Select(yesBtnMouseEvents, null);
+            }
+            else if (Input.GetKeyDown(KeyCode.D))
+            {
+                selected = 0;
+                Select(noBtnMouseEvents, null);
+            }
+            
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                Submit();
+            }
+        }
+
         void Select(object sender, PointerEventData e)
         {
             var btn = ((MouseEvents) sender).Button;
             if (selector == null)
             {
                 selector = Instantiate(Resources.Load<GameObject>("Prefabs/UI/Selector"), transform);
-                selector.transform.SetSiblingIndex(1);
+                selector.transform.SetAsLastSibling();
             }
+            
+            _hasSelected = true;
+
             LeanTween.cancel(selector);
             LeanTween.move(selector, btn.transform.position, 0.0f);
-            LeanTween.size(selector.transform as RectTransform, (btn.transform as RectTransform).sizeDelta, 0.1f).setEaseOutSine();
+            LeanTween.size(selector.transform as RectTransform, (btn.transform as RectTransform).sizeDelta, 0.1f)
+                .setEaseOutSine();
+        }
+
+        void Submit()
+        {
+            if (!_hasSelected) return;
+
+            Game.Telemetry.SaveRoomStats(selected, targetRoom.Stats);
+
+            Hide(destroy: true);
         }
 
 

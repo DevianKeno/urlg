@@ -19,7 +19,6 @@ namespace RL.RD
         void ToTitle()
         {
             Game.Main.SetAlgorithmAR();
-            Game.Main.UnloadSceneObjects();
             Game.Main.LoadScene(
                 new(){
                     SceneToLoad = "TITLE",

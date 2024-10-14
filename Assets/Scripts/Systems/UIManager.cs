@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using RL.UI;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,7 +9,11 @@ namespace RL
     public class UIManager : MonoBehaviour
     {
         // public ArrowPointer ArrowPointer;
+        [SerializeField] Canvas canvas;
+        public Canvas Canvas => canvas;
         public TransitionOptions TransitionOptions = new();
+
+        Dictionary<string, GameObject> _prefabsDict = new();
 
         [SerializeField] Image vignette;
         [SerializeField] Canvas transitionCanvas;
@@ -27,8 +32,17 @@ namespace RL
         // {
         //     ArrowPointer.gameObject.SetActive(true);
         // }
+
+        internal void Initialize()
+        {
+            foreach (GameObject element in Resources.LoadAll<GameObject>("Prefabs/UI"))
+            {
+               _prefabsDict[element.name] = element;
+            }
+        }
         
         TransitionEffect transitionEffect;
+        bool _hasPendingTransition;
 
         public void PlayTransitionHalf(Action callback = null)
         {
@@ -38,21 +52,38 @@ namespace RL
             transitionEffect.transform.SetParent(transitionCanvas.transform);
             transitionEffect.SetOptions(TransitionOptions);
             transitionEffect.PlayToHalf(callback);
+            _hasPendingTransition = true;
         }
 
         public void PlayTransitionEnd(Action callback = null)
         {
-            transitionEffect.PlayToEnd(callback);
-        }
+            if (!_hasPendingTransition) return;
 
-        public void VignetteDamageFlash()
-        {
-            LeanTween.value(gameObject, 0.5f, 0, 1f)
-            .setOnUpdate((float i) =>
+            transitionEffect?.PlayToEnd(callback);
+            _hasPendingTransition = false;
+        }
+        
+        /// Taken from UZSG
+        /// <summary>
+        /// Create an instance of a UI prefab.
+        /// </summary>
+        /// <typeparam name="T">Window script attach to the root.</typeparam>
+        public T Create<T>(string prefabName, bool show = true) where T : Window
+        {            
+            if (_prefabsDict.ContainsKey(prefabName))
             {
-                vignette.color = new(0.5f, 0f, 0f, i); /// red
-            })
-            .setEase(LeanTweenType.easeOutSine);
+                var go = Instantiate(_prefabsDict[prefabName], Canvas.transform);
+                go.name = prefabName;
+
+                if (go.TryGetComponent(out T element))
+                {
+                    if (!show) element.Hide();
+                    return element;
+                }
+                return default;
+            }
+
+            return default;
         }
     }
 }

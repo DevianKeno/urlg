@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e92b6cc2a1a5f6041a7b1b8a77f81130, type: 3}
+  m_Name: stairs
+  m_EditorClassIdentifier: 
+  Id: bars_vertical
+  Name: Bars Vertical
+  Sprite: {fileID: 21300000, guid: 06435394a18b08942b8c6b6f15949055, type: 3}
+  AssetReference:
+    m_AssetGUID: 
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
+  IsSolid: 0
+  IsIlluminable: 0
+  CastShadow: 0
+  CanShootThrough: 0

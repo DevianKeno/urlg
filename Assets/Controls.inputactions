@@ -312,10 +312,19 @@
             "id": "ec5dfc3e-397b-4016-b446-483a3f40cecb",
             "actions": [
                 {
-                    "name": "New action",
-                    "type": "Value",
+                    "name": "Select",
+                    "type": "Button",
                     "id": "6f1ca362-e527-4d9c-807d-409a6dca9e89",
-                    "expectedControlType": "Axis",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Submit",
+                    "type": "Button",
+                    "id": "09b6d19a-0753-4ef6-af6e-9fcc0372926a",
+                    "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
@@ -324,102 +333,80 @@
             "bindings": [
                 {
                     "name": "1D Axis",
-                    "id": "770f2b5b-e8d5-46a7-863f-f672b817557b",
+                    "id": "93034591-0416-43c8-bd4f-fcf9e4dd5eda",
                     "path": "1DAxis",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "New action",
+                    "action": "Select",
                     "isComposite": true,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "negative",
-                    "id": "74cb840d-0454-4101-910b-76bead3ec9bf",
+                    "id": "e8e9f321-5dfe-4102-a68e-ea94c01d2fd1",
                     "path": "<Keyboard>/a",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "New action",
+                    "action": "Select",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "negative",
+                    "id": "f7e9111e-09cc-4dde-94b1-3931e667c05b",
+                    "path": "<Keyboard>/leftArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Select",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
                 {
                     "name": "positive",
-                    "id": "8cecd578-5f17-4795-b8c4-2fa40b1b71f6",
+                    "id": "d9424059-0946-4db1-ae37-e3f3f1d00d9e",
                     "path": "<Keyboard>/d",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "New action",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "1D Axis",
-                    "id": "2fe06421-a6da-403c-a09d-35ac2b425599",
-                    "path": "1DAxis",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "New action",
-                    "isComposite": true,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "negative",
-                    "id": "38f7d444-6b23-4ba9-abc8-12bbcede26f0",
-                    "path": "<Gamepad>/leftStick/left",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "New action",
+                    "action": "Select",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
                 {
                     "name": "positive",
-                    "id": "23e99251-8fff-4671-9b62-98659f6d5c22",
-                    "path": "<Gamepad>/leftStick/right",
+                    "id": "6542c9c3-6bd9-4c87-bb0c-5dbb7317177c",
+                    "path": "<Keyboard>/rightArrow",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "New action",
+                    "action": "Select",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "1D Axis",
-                    "id": "292b7ce4-9c29-465e-8235-acd84b607591",
-                    "path": "1DAxis",
+                    "name": "",
+                    "id": "38a89f63-64ce-4407-b5b3-9c6450ed27df",
+                    "path": "<Keyboard>/space",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "New action",
-                    "isComposite": true,
+                    "action": "Submit",
+                    "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "negative",
-                    "id": "27110fec-f406-45ef-b596-02d94bd20608",
-                    "path": "<XInputController>/leftStick/left",
+                    "name": "",
+                    "id": "479a735f-a93f-4289-835b-81c3838d039f",
+                    "path": "<Keyboard>/enter",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "New action",
+                    "action": "Submit",
                     "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "positive",
-                    "id": "e263920f-9741-4a51-ac92-304d029454f3",
-                    "path": "<XInputController>/leftStick/right",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "New action",
-                    "isComposite": false,
-                    "isPartOfComposite": true
+                    "isPartOfComposite": false
                 }
             ]
         },

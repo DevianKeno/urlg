@@ -645,6 +645,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9381dd489b02834bad14efc1f97a155, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <Coordinates>k__BackingField: {x: 0, y: 0}
+  ClassificationStatus: 0
   IsActive: 0
   IsCleared: 0
   IsStartRoom: 0

@@ -132,10 +132,21 @@ namespace RL.Telemetry
             this._currentRoomStats = new(RoomStatsKeys);
         }
 
-        public void SaveCurrentRoomStats()
+        public void SaveRoomStats(int groundTruth, RoomStatCollection roomStats, bool createNewAfter = true)
         {
             var playerStats = PlayerStats;
-            var roomStats = Game.Main.CurrentRoom.Stats;
+            var entry = new DataEntry(
+                Game.Main.currentLevel,
+                groundTruth,
+                playerStats,
+                roomStats);
+            
+            dataEntries.Add(entry);
+
+            if (createNewAfter)
+            {
+               NewRoomStatInstance();
+            }
         }
 
         public void SaveEntriesToJson()
@@ -146,9 +157,7 @@ namespace RL.Telemetry
             {
                 CreatedDate = DateTime.Now,
                 LastModifiedDate = DateTime.Now,
-                PlayerStats = PlayerStats.SaveToJson(),
-                RoomStats = RoomStats.SaveToJson(),
-                GameStats = GameStats.SaveToJson(),
+                Entries = dataEntries,
             };
 
             Game.Files.SaveDataJson(sd);

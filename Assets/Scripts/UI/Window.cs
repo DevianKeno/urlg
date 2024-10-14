@@ -46,6 +46,11 @@ namespace RL.UI
             rect = GetComponent<RectTransform>();
         }
 
+        void Start()
+        {
+            Show();
+        }
+
         void OnValidate()
         {
             if (gameObject.activeInHierarchy)
@@ -88,8 +93,8 @@ namespace RL.UI
         {
             if (IsVisible)
             {
-                OnHide();
                 OnClose?.Invoke();
+                OnHide();
             }
 
             gameObject.SetActive(false);

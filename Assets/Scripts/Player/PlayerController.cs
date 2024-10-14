@@ -11,6 +11,7 @@ using RL.Weapons;
 using RL.Projectiles;
 using RL.Systems;
 using RL.Telemetry;
+using RL.UI;
 
 namespace RL.Player
 {
@@ -39,10 +40,13 @@ namespace RL.Player
         [SerializeField] Rigidbody2D rb;
         public Rigidbody2D Rigidbody2D => rb;
         [SerializeField] SpriteRenderer spriteRenderer;
+        DamageVignette damageVignette;
+        WeaponsDisplayUI weaponsDisplayUI;
 
         PlayerInput input;
         Dictionary<string, InputAction> inputs = new();
 
+        int selectedWeapon = 0;
         public Weapon Equipped;
         public Weapon Weapon1;
         public Weapon Weapon2;
@@ -70,6 +74,10 @@ namespace RL.Player
             Weapon2 = Laser;
             unequippedWeapon = Wave;
 
+            damageVignette = Game.UI.Create<DamageVignette>("Damage Vignette");
+            weaponsDisplayUI = Game.UI.Create<WeaponsDisplayUI>("Weapons Display UI");
+            weaponsDisplayUI.EnableSwapping = true;
+            
             StateMachine.OnStateChanged += animator.StateChangedCallback;
             StateMachine.ToState(PlayerStates.Idle);
         }
@@ -122,12 +130,14 @@ namespace RL.Player
                 inputs["Move"].Enable();
                 inputs["Shoot"].Enable();
                 inputs["Swap Weapons"].Enable();
+                weaponsDisplayUI.EnableSwapping = true;
             }
             else
             {
                 inputs["Move"].Disable();
                 inputs["Shoot"].Disable();
                 inputs["Swap Weapons"].Disable();
+                weaponsDisplayUI.EnableSwapping = false;
             }
         }
 
@@ -204,7 +214,7 @@ namespace RL.Player
 
             Health -= damage;
             Game.Telemetry.PlayerStats[StatKey.HitsTaken].Increment();
-            Game.UI.VignetteDamageFlash();
+            damageVignette.DamageFlash();
             
             if (CheckIfDead())
             {
@@ -227,6 +237,20 @@ namespace RL.Player
         void Die()
         {
             
+        }
+
+        public void UpdateDisplayedWeapons()
+        {
+            if (selectedWeapon == 1)
+            {
+                Equipped = Weapon1;
+            }
+            else if (selectedWeapon == 2)
+            {
+                Equipped = Weapon2;
+            }
+            weaponsDisplayUI.weapon1.ProjectileData = Weapon1.ProjectileData;
+            weaponsDisplayUI.weapon2.ProjectileData = Weapon2.ProjectileData;
         }
 
         IEnumerator InvincibilityFrameCoroutine()
@@ -274,10 +298,12 @@ namespace RL.Player
                 index = System.Math.Clamp(index, 1, 2);
                 if (index == 1)
                 {
+                    selectedWeapon = 1;
                     Equipped = Weapon1;
                 }
                 else if (index == 2)
                 {
+                    selectedWeapon = 2;
                     Equipped = Weapon2;
                 }
             }

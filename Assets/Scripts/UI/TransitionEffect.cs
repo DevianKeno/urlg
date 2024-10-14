@@ -72,6 +72,9 @@ namespace RL.UI
 
         public void Reset()
         {
+            var rect = (RectTransform) transform;
+            rect.offsetMin = Vector2.zero;
+            rect.offsetMax = Vector2.zero;
             color1.anchoredPosition = Source;
             color2.anchoredPosition = Source;
         }

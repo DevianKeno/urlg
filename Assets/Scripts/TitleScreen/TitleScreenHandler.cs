@@ -30,48 +30,37 @@ namespace RL.TitleScreen
             exitBtn.onClick.AddListener(OpenExitDialog);
         }
 
+        void Start()
+        {
+            pcpcgBtn.interactable = true;
+            pcpcgGnbBtn.interactable = true;
+        }
+
         void PlayPCPCG()
         {
+            pcpcgBtn.interactable = false;
+            
             Game.Main.SetAlgorithmAR();
             Game.Main.LoadScene(
                 new(){
-                    SceneToLoad = "LEVEL",
-                    PlayTransition = true, },
-                onLoadSceneCompleted: () =>
-                {
-                    Game.Main.LoadScene(
-                        new(){
-                            SceneToLoad = "LOADING",
-                            Mode = LoadSceneMode.Additive },
-                            onLoadSceneCompleted: () =>
-                            {
-                                Game.Main.ActivateScene(
-                                    "LEVEL",
-                                    onActivateSceneCompleted: () =>
-                                    {
-                                        LevelSceneHandler.Instance.Initialize();
-                                    });
-                            });
-                });
-            
+                    SceneToLoad = "LEVEL"});
         }
 
         void PlayPCPCG_GNB()
         {
+            pcpcgGnbBtn.interactable = false;
+
             Game.Main.SetAlgorithmGNB();
             Game.Main.LoadScene(
                 new(){
                     SceneToLoad = "LEVEL",
                 });
-            // Game.Main.LoadScene(
-            //     new(){
-            //         SceneToLoad = "LOADING",
-            //         Mode = LoadSceneMode.Additive
-            //     });
         }
 
         void ResearchDevelopment()
         {
+            rdBtn.interactable = false;
+
             Game.Main.LoadScene(
                 new(){
                     SceneToLoad = "R&D",

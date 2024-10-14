@@ -234,6 +234,18 @@ namespace RL.Levels
             StartCoroutine(nameof(ShutDoorsCoroutine));
         }
 
+        public void AddExitStairs()
+        {
+            foreach (var coord in GetRandomCoordinatesObstacle(1))
+            {
+                Game.Tiles.PlaceObstacle("stairs", coord, onPlace: (tile) =>
+                {
+                    tile.transform.SetParent(obstaclesLayer.transform);
+                    tile.CoordinateToLocalPosition(coord);
+                });
+            }
+        }
+
         public void Load()
         {
             Content.SetActive(true);
@@ -246,6 +258,8 @@ namespace RL.Levels
 
         #endregion
 
+        LikertScaleUI likertScaleUI;
+        SwapWeaponsWindow swapWeaponsWindow;
 
         IEnumerator FinishRoom()
         {
@@ -256,21 +270,21 @@ namespace RL.Levels
             yield return new WaitForSeconds(0.5f);
 
             Game.Main.Player.SetControlsEnabled(false);
-            Game.Telemetry.SaveCurrentRoomStats();
+            // Game.Telemetry.SaveCurrentRoomStats();
 
-            var go = Resources.Load<GameObject>("Prefabs/UI/Likert Scale UI");
-            var likertUi = Instantiate(go, Game.UI.transform).GetComponent<LikertScaleUI>();
-            likertUi.SetTargetRoom(this);
-            likertUi.OnClose += () =>
+            likertScaleUI ??= Game.UI.Create<LikertScaleUI>("Likert Scale UI");
+            likertScaleUI.SetTargetRoom(this);
+            likertScaleUI.OnClose += OpenSwapWeapon;
+
+            void OpenSwapWeapon()
             {
-                var go = Resources.Load<GameObject>("Prefabs/UI/SwapWeaponsWindow");
-                var sww = Instantiate(go, Game.UI.transform).GetComponent<SwapWeaponsWindow>();
-
-                sww.OnClose += () =>
+                likertScaleUI.OnClose -= OpenSwapWeapon ;
+                swapWeaponsWindow ??= Game.UI.Create<SwapWeaponsWindow>("Swap Weapons Window");
+                swapWeaponsWindow.OnClose += () =>
                 {
                     Game.Main.Player.SetControlsEnabled(true);
                 };
-            };
+            }
         }
 
         IEnumerator ShutDoorsCoroutine()
@@ -369,7 +383,7 @@ namespace RL.Levels
             if (IsStartRoom || IsEndRoom || IsCleared) yield break;
 
             Game.Main.CurrentRoom = this;
-            Game.Telemetry.NewRoomStatInstance();
+            // Game.Telemetry.NewRoomStatInstance();
             // Game.UI.HideArrowPointer();
             IsActive = true;
             ShutDoors();
@@ -459,6 +473,7 @@ namespace RL.Levels
                     salaman.transform.SetParent(enemiesContainer.transform);
                     salaman.LocalPosition = new Vector3(coord.x, coord.y);
                     enemies.Add(salaman);
+                    SubscribeEnemyEvents(salaman as Enemy);
                 });
                 // Game.Entity.Spawn("deer", onSpawn: (entity) =>
                 // {
@@ -475,6 +490,7 @@ namespace RL.Levels
                     salaman.transform.SetParent(enemiesContainer.transform);
                     salaman.LocalPosition = new Vector3(coord.x, coord.y);
                     enemies.Add(salaman);
+                    SubscribeEnemyEvents(salaman as Enemy);
                 });
                 // Game.Entity.Spawn("armadillo", onSpawn: (entity) =>
                 // {
@@ -491,10 +507,16 @@ namespace RL.Levels
                     salaman.transform.SetParent(enemiesContainer.transform);
                     salaman.LocalPosition = new Vector3(coord.x, coord.y);
                     enemies.Add(salaman);
+                    SubscribeEnemyEvents(salaman as Enemy);
                 });
             }
             
             remainingEnemies = countFire + countBeam + countWave;
+        }
+
+        void SubscribeEnemyEvents(Enemy enemy)
+        {
+            enemy.OnDeath += OnEnemyKilled;
         }
 
 
