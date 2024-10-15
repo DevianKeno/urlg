@@ -5,21 +5,28 @@ using Newtonsoft.Json;
 
 using RL.Telemetry;
 using UnityEditor;
+using System;
 
 namespace RL.Systems
 {
     public class FilesManager : MonoBehaviour
     {
-        public void SaveDataJson(URLGSaveData data)
+        public void SaveDataJson(ResultsJsonData data)
         {
-            var filename = "playerdata.json";
-            var json = JsonConvert.SerializeObject(data);
+            var date = $"{DateTime.Now:yyyyMMdd_HHmmss}";
+            
+            string subfolder = "";
+            if (Game.Main.AlgorithmUsed == PCGAlgorithm.AcceptReject)
+                subfolder = "ar";
+            else if (Game.Main.AlgorithmUsed == PCGAlgorithm.GaussianNaiveBayes)
+                subfolder = "gnb";
 
-            var savepath = Path.Combine(Application.persistentDataPath, "saves");
-            if (!Directory.Exists(savepath))
-            {
-                Directory.CreateDirectory(savepath);
-            }
+            var filename = subfolder + "_results_" + date + ".dat";
+            
+            var savepath = Path.Combine(Application.persistentDataPath, "results", subfolder);
+            if (!Directory.Exists(savepath)) Directory.CreateDirectory(savepath);
+            
+            var json = JsonConvert.SerializeObject(data);
 
             var filepath = Path.Combine(savepath, filename);
             File.WriteAllText(filepath, json);

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace RL.Telemetry
 {
@@ -8,7 +9,7 @@ namespace RL.Telemetry
         public int LevelNumber { get; set; }
         public int Classification { get; set; }
         public int GroundTruth { get; set; }
-        public PlayerStatCollection PlayerStats { get; set; }
-        public RoomStatCollection RoomStats { get; set; }
+        public List<StatSaveData> PlayerStats { get; set; }
+        public List<StatSaveData> RoomStats { get; set; }
     }
 }

@@ -16,7 +16,7 @@ namespace RL.Classifiers
     }
 
     public enum ConfusionMatrixStatus { 
-        TruePositive, TrueNegative, FalsePositive, FalseNegative,
+        TruePositive, TrueNegative, FalsePositive, FalseNegative, Invalid
     }
 
     public struct ARResult : IResult

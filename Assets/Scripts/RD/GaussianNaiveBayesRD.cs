@@ -289,7 +289,7 @@ therefore is <b>rejected</b>.";
             }
             else if (_previousResult.Status == Status.Rejected)
             {
-                confusionMatrixHandler.SetValue(ConfusionMatrixValue.FalsePositive);
+                confusionMatrixHandler.SetValue(ConfusionMatrixValue.FalseNegative);
             }
         }
 
@@ -297,7 +297,7 @@ therefore is <b>rejected</b>.";
         {
             if (_previousResult.Status == Status.Accepted)
             {
-                confusionMatrixHandler.SetValue(ConfusionMatrixValue.FalseNegative);
+                confusionMatrixHandler.SetValue(ConfusionMatrixValue.FalsePositive);
             }
             else if (_previousResult.Status == Status.Rejected)
             {

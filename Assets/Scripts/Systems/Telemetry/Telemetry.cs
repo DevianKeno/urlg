@@ -140,8 +140,8 @@ namespace RL.Telemetry
                 Classification = roomStats.Classification,
                 LevelNumber = Game.Main.currentLevel,
                 GroundTruth = groundTruth,
-                PlayerStats = playerStats,
-                RoomStats = roomStats
+                PlayerStats = playerStats.SaveToJson(),
+                RoomStats = roomStats.SaveToJson(),
             };
             
             dataEntries.Add(entry);
@@ -156,8 +156,9 @@ namespace RL.Telemetry
         {
             if (dataEntries.Count == 0) return;
             
-            var sd = new URLGSaveData()
+            var sd = new ResultsJsonData()
             {
+                Algorithm = Game.Main.AlgorithmUsed.ToString(),
                 CreatedDate = DateTime.Now,
                 LastModifiedDate = DateTime.Now,
                 Entries = dataEntries,

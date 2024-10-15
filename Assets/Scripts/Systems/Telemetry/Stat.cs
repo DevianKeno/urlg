@@ -25,6 +25,13 @@ namespace RL.Telemetry
             }
         }
 
+        public Stat(int key, int value)
+        {
+            this.key = (StatKey) key;
+            this.value = value;
+            this.OnValueChanged = null;
+        }
+
         public Stat(StatKey key, int value)
         {
             this.key = key;

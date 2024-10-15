@@ -5,12 +5,11 @@ using System.Linq;
 namespace RL.Telemetry
 {
     [Serializable]
-    public class StatCollection
+    public class StatCollectionJson
     {
-        protected Dictionary<StatKey, Stat> _statList = new();
-        public List<Stat> Stats => _statList.Values.ToList();
+        protected Dictionary<int, Stat> _statList = new();
 
-        public StatCollection(StatKey[] stats)
+        public StatCollectionJson(int[] stats)
         {
             foreach (var stat in stats)
             {
@@ -18,7 +17,7 @@ namespace RL.Telemetry
             }
         }
 
-        public Stat this[StatKey key]
+        public Stat this[int key]
         {
             get
             {
@@ -27,7 +26,7 @@ namespace RL.Telemetry
             }
         }
         
-        public Stat GetStat(StatKey key)
+        public Stat GetStat(int key)
         {
             if (_statList.TryGetValue(key, out var stat))
             {
@@ -36,7 +35,7 @@ namespace RL.Telemetry
             return new Stat(key, 0);
         }
 
-        public bool TryGetStat(StatKey key, out Stat stat)
+        public bool TryGetStat(int key, out Stat stat)
         {
             if (_statList.TryGetValue(key, out var gotStat))
             {
@@ -54,9 +53,9 @@ namespace RL.Telemetry
         {
             var list = new List<StatSaveData>();
 
-            foreach (var stat in Stats)
+            foreach (var stat in _statList)
             {
-                list.Add(stat.SaveToJson());
+                list.Add(stat.Value.SaveToJson());
             }
             
             return list;
@@ -66,7 +65,7 @@ namespace RL.Telemetry
         {
             foreach (var s in _statList.Values)
             {
-                var stat = _statList[s.key];
+                var stat = _statList[(int) s.key];
                 stat.Value = 0;
             }
         }
