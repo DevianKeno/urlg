@@ -98,7 +98,7 @@ SortingGroup:
   m_GameObject: {fileID: 3582685602455490771}
   m_Enabled: 1
   m_SortingLayerID: 383122337
-  m_SortingLayer: 3
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_SortAtRoot: 0
 --- !u!50 &6747399472909574934
@@ -177,6 +177,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Health: 100
   MoveSpeed: 2
+  WeakType: 0
+  DamageFlash: {r: 1, g: 0, b: 0, a: 1}
   searchRadius: 5
   rotationSpeed: 50
   followDistance: 5
