@@ -169,9 +169,9 @@ GameObject:
   - component: {fileID: 6907160735477576272}
   - component: {fileID: 1099662821696273097}
   - component: {fileID: 1577932439841733103}
-  - component: {fileID: 415242930654654973}
+  - component: {fileID: 9030668385206282864}
   m_Layer: 9
-  m_Name: SALAMAN
+  m_Name: ARMADILLO
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -292,7 +292,7 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
---- !u!114 &415242930654654973
+--- !u!114 &9030668385206282864
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -301,7 +301,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5932670617269340637}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 02a038fd68de8674d89a732708b0a0ea, type: 3}
+  m_Script: {fileID: 11500000, guid: 07a6155fcb35aa940b4e920738ed39e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 0}
@@ -312,32 +312,26 @@ MonoBehaviour:
   rotationSpeed: 50
   followDistance: 5
   followSpeed: 2
-  followDamping: 1
+  followDamping: 0.5
   strafeAngle: 30
   strafeSpeed: 1
   spriteRenderer: {fileID: 5066019566450128797}
   rb: {fileID: 6907160735477576272}
-  shield: {fileID: 15855883329815723}
   ContactDamage: 10
-  detectionRadius: 1.5
+  detectionRadius: 5
   detectionAngle: 45
   detectionMask:
     serializedVersion: 2
     m_Bits: 128
   lungeForce: 5
-  lungeDistance: 0.75
-  lungeCooldown: 0.5
-  chargeSpeed: 0.5
-  overshoot: 2
-  chargeCooldown: 2
-  minChargeInterval: 1
-  maxChargeInterval: 3
-  chargeWindup: 1
-  chargeDuration: 1
-  _canCharge: 1
-  _isCharging: 0
-  stateMachine: {fileID: 7403434548708683201}
-  animator: {fileID: 1632302033023339418}
+  lungeDistance: 2
+  lungeCooldown: 1
+  invincibilityDuration: 2
+  minLungeInterval: 2
+  maxLungeInterval: 5
+  lungeWindup: 0.5
+  stateMachine: {fileID: 545949254197776409}
+  animator: {fileID: 5536577506044487149}
 --- !u!1 &7746119413289433489
 GameObject:
   m_ObjectHideFlags: 0
@@ -350,7 +344,7 @@ GameObject:
   - component: {fileID: 5066019566450128797}
   - component: {fileID: 1295414657279403870}
   - component: {fileID: 7871302614488449603}
-  - component: {fileID: 1632302033023339418}
+  - component: {fileID: 5536577506044487149}
   m_Layer: 9
   m_Name: Sprite
   m_TagString: Untagged
@@ -369,7 +363,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 7667162434604837943}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -414,7 +408,7 @@ SpriteRenderer:
   m_SortingLayerID: 383122337
   m_SortingLayer: 5
   m_SortingOrder: 0
-  m_Sprite: {fileID: -755960288, guid: 09f68af23ac17e449a69fb04e6e38269, type: 3}
+  m_Sprite: {fileID: 1283955623, guid: cb5f4335f3b73bf439be41757aa7d243, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -447,7 +441,7 @@ Animator:
   m_GameObject: {fileID: 7746119413289433489}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 1bb109d4cda9a8e43a8a933b2f272ea5, type: 2}
+  m_Controller: {fileID: 9100000, guid: 46af8f465cdd29d40aef39bc52ad8a52, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -458,7 +452,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &1632302033023339418
+--- !u!114 &5536577506044487149
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -467,7 +461,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7746119413289433489}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eed45ce119434064b9b2296c045c2ed4, type: 3}
+  m_Script: {fileID: 11500000, guid: 30654f1a9b59fb24baff3deb7acda505, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &8238073555193012819
@@ -479,7 +473,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8973604224707439791}
-  - component: {fileID: 7403434548708683201}
+  - component: {fileID: 545949254197776409}
   m_Layer: 9
   m_Name: State Machine
   m_TagString: Untagged
@@ -502,7 +496,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 7667162434604837943}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7403434548708683201
+--- !u!114 &545949254197776409
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -511,7 +505,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8238073555193012819}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b87551e97217ddf4ab4da9120c08d4c3, type: 3}
+  m_Script: {fileID: 11500000, guid: 98aa7970a8754cd43bf06a6497187835, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   InState: 0

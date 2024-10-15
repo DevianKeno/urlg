@@ -126,8 +126,8 @@ namespace RL.Levels
                     }
                 );
                 
-                newRoom.Featurize(roomStats);
-                // newRoom.FeaturizeTest(); /// use for testing
+                // newRoom.Featurize(roomStats); /// original
+                 newRoom.FeaturizeTest(); /// use for testing
             }
             
             OnDoneGenerate?.Invoke();
