@@ -12,7 +12,7 @@ namespace RL.Classifiers
     }
     
     public enum Status {
-        None, Accepted, Rejected,
+        Rejected, Accepted, None, 
     }
 
     public enum ConfusionMatrixStatus { 

@@ -1,6 +1,6 @@
-using URLG.Systems;
+using RL.Systems;
 
-namespace URLG.Enemies
+namespace RL.Enemies
 {
     public enum LichLightStates
     {

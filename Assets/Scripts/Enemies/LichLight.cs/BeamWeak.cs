@@ -1,12 +1,14 @@
 using System;
 using System.Collections;
-using UnityEngine;
-using URLG.Systems;
-using URLG.Player;
-using URLG.Enemies;
-using Random = UnityEngine.Random;
 
-namespace URLG.Enemies
+using UnityEngine;
+
+using RL.Systems;
+using RL.Player;
+using RL.Entities;
+using RL.Telemetry;
+
+namespace RL.Enemies
 {
     /// LichLight
     public class BeamWeak : Enemy, IDamageable
@@ -150,7 +152,7 @@ namespace URLG.Enemies
             if (target != null)
             {
                 sm.ToState(LichLightStates.Tank);
-                Game.Telemetry.GameStats["enemyAttackCount"].Increment();
+                Game.Telemetry.GameStats[StatKey.EnemyAttackCount].Increment();
                 Vector2 direction = (target.transform.position - transform.position).normalized;
                 rb.velocity = direction * moveSpeed;
             }
@@ -165,7 +167,7 @@ namespace URLG.Enemies
 
         IEnumerator BarrierCoroutine()
         {
-            barrierInterval = Random.Range(minBarrierInterval, maxBarrierInterval);
+            barrierInterval = UnityEngine.Random.Range(minBarrierInterval, maxBarrierInterval);
             if (target == null) yield return null;
             {
             _isUsingBarrier = true;

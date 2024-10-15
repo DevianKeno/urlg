@@ -216,6 +216,38 @@ namespace RL.Levels
             Initialize(); /// Re-initialize
         }
 
+        /// <summary>
+        /// Featurizes a room with test configuration.
+        /// </summary>
+        public void FeaturizeTest()
+        {
+            var rand = GetRandomCoordinatesEnemy(3);
+
+            Game.Entity.Spawn("lich_light", onSpawn: (salaman) =>
+            {
+                salaman.transform.SetParent(enemiesContainer.transform);
+                salaman.LocalPosition = new Vector3(rand[0].x, rand[0].y);
+                enemies.Add((Enemy) salaman);
+                SubscribeEnemyEvents(salaman as Enemy);
+            });
+            
+            Game.Entity.Spawn("armadil", onSpawn: (salaman) =>
+            {
+                salaman.transform.SetParent(enemiesContainer.transform);
+                salaman.LocalPosition = new Vector3(rand[1].x, rand[1].y);
+                enemies.Add((Enemy) salaman);
+                SubscribeEnemyEvents(salaman as Enemy);
+            });
+
+            Game.Entity.Spawn("salaman", onSpawn: (salaman) =>
+            {
+                salaman.transform.SetParent(enemiesContainer.transform);
+                salaman.LocalPosition = new Vector3(rand[2].x, rand[2].y);
+                enemies.Add((Enemy) salaman);
+                SubscribeEnemyEvents(salaman as Enemy);
+            });
+        }
+
         public Tile GetTile()
         {
             return null;
@@ -473,10 +505,11 @@ namespace RL.Levels
 
         void GenerateEnemies(int countFire, int countBeam, int countWave)
         {
+            /// Fire weak
             var rand = GetRandomCoordinatesEnemy(countFire);
             foreach (var coord in rand)
             {
-                Game.Entity.Spawn("salaman", onSpawn: (salaman) =>
+                Game.Entity.Spawn("lich_light", onSpawn: (salaman) =>
                 {
                     salaman.transform.SetParent(enemiesContainer.transform);
                     salaman.LocalPosition = new Vector3(coord.x, coord.y);
@@ -490,10 +523,11 @@ namespace RL.Levels
                 // });
             }
             
+            /// Beam weak
             rand = GetRandomCoordinatesEnemy(countBeam);
             foreach (var coord in rand)
             {
-                Game.Entity.Spawn("salaman", onSpawn: (salaman) =>
+                Game.Entity.Spawn("armadil", onSpawn: (salaman) =>
                 {
                     salaman.transform.SetParent(enemiesContainer.transform);
                     salaman.LocalPosition = new Vector3(coord.x, coord.y);
@@ -507,6 +541,7 @@ namespace RL.Levels
                 // });
             }
             
+            /// Wave weak
             rand = GetRandomCoordinatesEnemy(countWave);
             foreach (var coord in rand)
             {

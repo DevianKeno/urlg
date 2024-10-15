@@ -1,12 +1,12 @@
 using System;
 using System.Collections;
-using UnityEngine;
-using URLG.Systems;
-using URLG.Player;
-using URLG.Enemies;
-using Random = UnityEngine.Random;
 
-namespace URLG.Enemies
+using UnityEngine;
+
+using RL.Systems;
+using RL.Entities;
+
+namespace RL.Enemies
 {
     /// Armadillo (FireWeak)
     public class FireWeak : Enemy, IDamageable
@@ -42,7 +42,7 @@ namespace URLG.Enemies
         protected override void Start()
         {
             base.Start();
-            lungeInterval = Random.Range(minLungeInterval, maxLungeInterval);
+            lungeInterval = UnityEngine.Random.Range(minLungeInterval, maxLungeInterval);
             lungeDelta = 0f;
             sm.OnStateChanged += animator.StateChangedCallback;
             sm.ToState(ArmadilloStates.Idle);
@@ -104,7 +104,7 @@ namespace URLG.Enemies
             Lunge(); // Perform the lunge attack
 
             yield return new WaitForSeconds(lungeCooldown);
-            lungeInterval = Random.Range(minLungeInterval, maxLungeInterval);
+            lungeInterval = UnityEngine.Random.Range(minLungeInterval, maxLungeInterval);
             lungeDelta = 0f;
             _canLunge = true;
             _isCharging = false;

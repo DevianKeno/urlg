@@ -62,6 +62,16 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 31608aee296682a469bb54cd8ae0dcbd
+    m_Address: Assets/AddressableAssets/Entities/ARMADIL.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 12290a68033ccdd44b0ddc3291eb699f
+    m_Address: Assets/AddressableAssets/Entities/LICH_LIGHT.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 34f34a0ee7e518d45a6067d2e2caab96, type: 2}
   m_SchemaSet:

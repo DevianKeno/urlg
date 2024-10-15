@@ -135,11 +135,14 @@ namespace RL.Telemetry
         public void SaveRoomStats(int groundTruth, RoomStatCollection roomStats, bool createNewAfter = true)
         {
             var playerStats = PlayerStats;
-            var entry = new DataEntry(
-                Game.Main.currentLevel,
-                groundTruth,
-                playerStats,
-                roomStats);
+            var entry = new DataEntry()
+            {
+                Classification = roomStats.Classification,
+                LevelNumber = Game.Main.currentLevel,
+                GroundTruth = groundTruth,
+                PlayerStats = playerStats,
+                RoomStats = roomStats
+            };
             
             dataEntries.Add(entry);
 

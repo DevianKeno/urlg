@@ -96,6 +96,14 @@ namespace RL.RD
             ResetFeatureDataText();
         }
 
+        void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                CenterCameraToLevel(rezoom: false);
+            }
+        }
+
 
         #region Public methods
 
@@ -141,6 +149,11 @@ namespace RL.RD
         public void HidePlayerGraphs()
         {
             playerGraphs.transform.localPosition = new(1920f, 0f, 0f);
+        }
+
+        public void CenterCamera()
+        {
+
         }
 
         #endregion
@@ -192,7 +205,7 @@ namespace RL.RD
             CenterCameraToLevel();
         }
 
-        void CenterCameraToLevel()
+        void CenterCameraToLevel(bool rezoom = true)
         {
             Vector2Int size = new(
                 System.Math.Abs(currentResult.Calculations.MaxBounds.x - currentResult.Calculations.MinBounds.x) + 1,
@@ -200,8 +213,12 @@ namespace RL.RD
             );
             var squ = size.x * size.y;
             print($"Mock Level size: ({size.x} x {size.y}), {squ} squ.");
-            var ppc = Camera.main.GetComponent<PixelPerfectCamera>();
-            ppc.assetsPPU = (int) (DefaultPixelsPerUnit / squ * 100 * CameraScaling);
+
+            if (rezoom)
+            {
+                var ppc = Camera.main.GetComponent<PixelPerfectCamera>();
+                ppc.assetsPPU = (int) (DefaultPixelsPerUnit / squ * 100 * CameraScaling);
+            }
             
             /// position camera on cells centroid
             Vector3 centroid = currentResult.Calculations.TotalPosition / mockRoomContainer.childCount;

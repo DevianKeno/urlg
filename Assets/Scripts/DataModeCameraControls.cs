@@ -3,6 +3,7 @@ using UnityEngine.Experimental.Rendering.Universal;
 using UnityEngine.InputSystem;
 using Cinemachine;
 using System;
+using UnityEngine.UI;
 
 namespace RL
 {
@@ -13,6 +14,10 @@ namespace RL
         public float PanSensitivity = 1f;
         public float PanSmoothing = 0.1f;
         public float PanArrowSpeed = 1f;
+
+        [Header("Camera Settings")]
+        public int MinPPU = 1;
+        public int MaxPPU = 300;
         
         bool _isHoldingShift;
         bool _isHoldingPan;
@@ -22,6 +27,7 @@ namespace RL
         Vector3 _targetPanPosition;
 
         [SerializeField] CinemachineVirtualCamera virtualCamera;
+        [SerializeField] Slider zoomSlider;
         
         Camera mainCamera;
         PixelPerfectCamera ppc;
@@ -35,6 +41,7 @@ namespace RL
         {
             mainCamera = Camera.main;
             ppc = mainCamera.GetComponent<PixelPerfectCamera>();
+            zoomSlider.onValueChanged.AddListener(UpdateZoomLevel);
         }
 
         void Start()
@@ -84,6 +91,7 @@ namespace RL
             {
                 ppc.assetsPPU -= _isHoldingShift ? PreciseZoomValue : ZoomValue;
             }
+            UpdateSlider();
         }
 
         void OnInputPan(InputAction.CallbackContext context)
@@ -134,6 +142,16 @@ namespace RL
                 inputVec3 *= _isHoldingShift ? 0.2f : 1f;
                 virtualCamera.transform.position += inputVec3;
             }
+        }
+
+        public void UpdateZoomLevel(float value)
+        {
+            ppc.assetsPPU = (int) Mathf.Lerp(MinPPU, MaxPPU, value);
+        }
+
+        public void UpdateSlider()
+        {
+            zoomSlider.value = (float) ppc.assetsPPU / MaxPPU;
         }
     }
 }

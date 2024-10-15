@@ -9,6 +9,7 @@ namespace RL.Telemetry
     public class RoomStatCollection : StatCollection
     {
         public int Seed;
+        public int Classification;
         public int TotalEnemyCount => this[StatKey.EnemyCountFire].Value + this[StatKey.EnemyCountBeam].Value + this[StatKey.EnemyCountWave].Value;
         public int TotalObstacleCount => this[StatKey.ObstacleCountFire].Value + this[StatKey.ObstacleCountBeam].Value + this[StatKey.ObstacleCountWave].Value;
         

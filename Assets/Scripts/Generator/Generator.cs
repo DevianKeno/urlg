@@ -82,6 +82,8 @@ namespace RL.Generator
             }
             while (attempts < MaxAttempts);
 
+            roomStats.Classification = (int) options.TargetStatus;
+
             return roomStats;
         }
 

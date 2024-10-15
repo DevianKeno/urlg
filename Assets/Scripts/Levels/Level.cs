@@ -30,7 +30,7 @@ namespace RL.Levels
         };
         public static Dictionary<int, RoomMaxParameters> MaxPerLevel = new()
         {
-            {1, new(1, 3)},
+            {1, new(3, 3)},
             {2, new(3, 6)},
             {3, new(4, 9)},
             {4, new(6, 12)},
@@ -127,6 +127,7 @@ namespace RL.Levels
                 );
                 
                 newRoom.Featurize(roomStats);
+                // newRoom.FeaturizeTest(); /// use for testing
             }
             
             OnDoneGenerate?.Invoke();

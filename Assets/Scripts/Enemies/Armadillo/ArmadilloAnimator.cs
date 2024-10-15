@@ -1,7 +1,7 @@
 using UnityEngine;
-using URLG.Systems;
+using RL.Systems;
 
-namespace URLG.Enemies
+namespace RL.Enemies
 {
     public class ArmadilloAnimator : StateAnimator<ArmadilloStates>
     {

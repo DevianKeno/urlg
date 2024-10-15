@@ -12,6 +12,7 @@ namespace RL.Entities
         public Color DamageFlash = Color.red;
 
         public bool IsAsleep { get; set; } = true; 
+        bool hasTarget; 
 
         [Header("Search Parameters")]
         public float searchRadius = 5f;
@@ -20,7 +21,7 @@ namespace RL.Entities
         [Header("Follow Parameters")]
         public float followDistance = 5f; // Desired distance from the player
         public float followSpeed = 2f; // Speed at which the enemy follows the player
-        public float followDamping = 0.5f; // Damping effect for smooth movement
+        public float followDamping = 0.5f; //o Damping effect for smooth movement
         public float strafeAngle = 30f; // Maximum cone angle for strafing
         public float strafeSpeed = 1f; // Speed at which the enemy strafes
         float strafeDirection;
@@ -59,7 +60,7 @@ namespace RL.Entities
 
         protected virtual void Search()
         {
-            if (target != null) return;
+            if (hasTarget) return;
 
             Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, searchRadius);
             foreach (Collider2D collider in colliders)
@@ -67,6 +68,7 @@ namespace RL.Entities
                 if (collider.CompareTag("Player"))
                 {
                     target = collider.gameObject;
+                    hasTarget = true;
                     break;
                 }
             }
@@ -74,7 +76,7 @@ namespace RL.Entities
 
         protected virtual void LookAtTarget()
         {
-            if (target == null) return;
+            if (!hasTarget) return;
             
             Vector3 direction = target.transform.position - transform.position;
             float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90;
@@ -84,7 +86,7 @@ namespace RL.Entities
 
         protected virtual void MaintainDistance()
         {
-            if (target == null) return;
+            if (!hasTarget) return;
 
             var t = target.transform;
             Vector2 directionToPlayer = (t.position - transform.position).normalized;

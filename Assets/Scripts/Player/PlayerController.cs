@@ -17,7 +17,6 @@ namespace RL.Player
 {
     public class PlayerController : MonoBehaviour
     {
-
         public const float InvincibilityTime = 5f;
         public HealthBar healthBar;
         public float MaximumHealth = 100f;
