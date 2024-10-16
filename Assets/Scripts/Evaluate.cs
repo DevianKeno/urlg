@@ -80,15 +80,15 @@ namespace RL
             /// A value between 0 and 1, representing the efficiency of a player given a weapon type.
             /// </summary>
             /// <returns></returns>
-            public static double DodgeRating(int hitsTaken, int enemyAttackCount)
+            public static float DodgeRating(int hitsTaken, int enemyAttackCount)
             {
                 try
                 {
-                    return hitsTaken / enemyAttackCount;
+                    return (float) hitsTaken / enemyAttackCount;
                 }
                 catch (Exception e)
                 {
-                    return 0d;
+                    return 0f;
                 }
             }
         }
@@ -121,18 +121,17 @@ namespace RL
             /// A value between 0 and 1, representing the efficiency of a player given a weapon type.
             /// </summary>
             /// <returns></returns>
-            public static double Difficulty(RoomStatCollection stats, int maxFeatureCount)
+            public static float Difficulty(RoomStatCollection stats, int maxFeatureCount)
             {
                 try
                 {
                     if (stats == null) throw new NullReferenceException("Stats cannot be null.");
 
-
-                    return maxFeatureCount;
+                    return (float) stats.TotalEnemyCount / maxFeatureCount;
                 }
                 catch (Exception e)
                 {
-                    return 0d;
+                    return 0f;
                 }
             }
         }

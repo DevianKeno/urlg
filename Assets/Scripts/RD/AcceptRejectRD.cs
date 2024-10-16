@@ -129,6 +129,7 @@ therefore is <b>rejected</b>.";
 
         public void BulkGenerateUntilStatus()
         {
+            ResetARStatus();
             _continueBulkGeneration = true;
             bulkGenBtn.onClick.RemoveAllListeners();
             bulkGenBtn.onClick.AddListener(StopBulkGenerate);
@@ -189,11 +190,10 @@ therefore is <b>rejected</b>.";
         public void SetPlayerValues()
         {
             playerStats = playerTelemetryUI.ConstructPlayerTelemetryStats();
-
+            
             var firePref = Evaluate.Player.WeaponPreference(StatKey.HitCountFire, StatKey.UseCountFire, playerStats);
             var beamPref = Evaluate.Player.WeaponPreference(StatKey.HitCountBeam, StatKey.UseCountBeam, playerStats);
             var wavePref = Evaluate.Player.WeaponPreference(StatKey.HitCountWave, StatKey.UseCountWave, playerStats);
-
             if (NormalizeValues)
             {
                 Math.NormalizeMaxed(ref firePref, ref beamPref, ref wavePref);
@@ -202,6 +202,32 @@ therefore is <b>rejected</b>.";
             fireGraph.SetBoundsY(0f, (float) firePref);
             beamGraph.SetBoundsY(0f, (float) beamPref);
             waveGraph.SetBoundsY(0f, (float) wavePref);
+            
+            if (roomStats != null)
+            {
+                var dodgeRating = Evaluate.Player.DodgeRating(
+                    playerStats[StatKey.HitsTaken].Value,
+                    roomStats[StatKey.EnemyAttackCount].Value);
+                skillGraph.SetBoundsY(0f, (float) dodgeRating);
+            }
+        }
+
+        public void RandomizeHitsTaken()
+        {
+            var attackCount = roomTelemetryUI.GetEntry(StatKey.EnemyAttackCount).Value;
+            var hitsTaken = UnityEngine.Random.Range(0, attackCount); /// UNSEEDED
+            
+            playerTelemetryUI.GetEntry(StatKey.HitsTaken).Value = hitsTaken;
+            playerStats.GetStat(StatKey.HitsTaken).Value = hitsTaken;
+        }
+
+        public void ClampHitsTaken()
+        {
+            var hitsTaken = playerTelemetryUI.GetEntry(StatKey.HitsTaken).Value;
+            hitsTaken = System.Math.Clamp(hitsTaken, 0, roomTelemetryUI.GetEntry(StatKey.EnemyAttackCount).Value);
+            
+            playerTelemetryUI.GetEntry(StatKey.HitsTaken).Value = hitsTaken;
+            playerStats.GetStat(StatKey.HitsTaken).Value = hitsTaken;
         }
 
         public void SetRoomValues()
@@ -211,16 +237,25 @@ therefore is <b>rejected</b>.";
             var firePref = Evaluate.Room.WeaponPreference(StatKey.EnemyCountFire, StatKey.ObstacleCountFire, roomStats);
             var beamPref = Evaluate.Room.WeaponPreference(StatKey.EnemyCountBeam, StatKey.ObstacleCountBeam, roomStats);
             var wavePref = Evaluate.Room.WeaponPreference(StatKey.EnemyCountWave, StatKey.ObstacleCountWave, roomStats);
-            
             if (NormalizeValues)
             {
                 Math.NormalizeMaxed(ref firePref, ref beamPref, ref wavePref);
             }
+            var difficultyPref = Evaluate.Room.Difficulty(roomStats, Game.MaxEnemiesPerRoom);
 
             ClearAllPoints();
             fireGraph.PlotPoint((float) firePref);
             beamGraph.PlotPoint((float) beamPref);
             waveGraph.PlotPoint((float) wavePref);
+            skillGraph.PlotPoint((float) difficultyPref);
+        }
+
+        public void SetSkillPref()
+        {
+            if (playerStats == null || roomStats == null) return;
+
+            var dodgeRating = Evaluate.Player.DodgeRating(playerStats[StatKey.HitsTaken].Value, roomStats[StatKey.EnemyAttackCount].Value);
+            skillGraph.SetBoundsY(0f, (float) dodgeRating);
         }
 
         public void PlotPoints()
@@ -263,6 +298,7 @@ therefore is <b>rejected</b>.";
             acceptedTmp.text = $"<color=#{hexGray}>Accepted";
             rejectedTmp.text = $"<color=#{hexGray}>Rejected";
             messageTmp.text = "";
+            confusionMatrixHandler.Reset();
         }
 
         public void LikeFeatureSet()

@@ -25,6 +25,9 @@ namespace RL.RD
         public PCGAlgorithm SelectedAlgorithm = PCGAlgorithm.AcceptReject;
         public RecolorType RecolorType = RecolorType.BOTH;
 
+        int fireAlignedRoomCount;
+        int beamAlignedRoomCount;
+        int waveAlignedRoomCount;
         [SerializeField] bool _hasDataset = false;
         public bool NormalizeValues => normalizeToggle != null ? normalizeToggle.isOn : false;
         [Range(0, 100)] public float RejectedRoomsThreshold = 25f;
@@ -385,7 +388,8 @@ Total: {room.Stats.TotalEnemyCount}
 Fire obstacles: {room.Stats.GetStat(StatKey.ObstacleCountFire).Value}
 Beam obstacles: {room.Stats.GetStat(StatKey.ObstacleCountBeam).Value}
 Wave obstacles: {room.Stats.GetStat(StatKey.ObstacleCountWave).Value}
-Total: {room.Stats.TotalObstacleCount}";
+Total: {room.Stats.TotalObstacleCount}
+";
         }
 
         void ResetFeatureDataText()
@@ -403,7 +407,8 @@ Total: -
 Fire obstacles: -
 Beam obstacles: -
 Wave obstacles: -
-Total: -";
+Total: -
+";
         }
     }
 }

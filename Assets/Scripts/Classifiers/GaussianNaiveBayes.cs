@@ -37,8 +37,11 @@ namespace RL.Classifiers
     {
         public static GaussianNaiveBayes Instance { get; private set;}
 
-        GNBData data;
-        public GNBData Data => data;
+        GNBData testingSet;
+        public GNBData TestingSet => testingSet;
+        GNBData validationSet;
+        public GNBData ValidationSet => validationSet;
+
         float acceptedProbability;
         float rejectedProbability;
         List<double> acceptedCosines = new();
@@ -88,16 +91,18 @@ namespace RL.Classifiers
             return featureProbability * prior;
         }
 
-        public void Train(GNBData data)
+        public void Train(GNBData testingSet, GNBData validationSet = null)
         {
-            this.data = data; 
-            acceptedProbability = (float) Data.AcceptedEntries.Count / Data.TotalEntryCount;
-            rejectedProbability = (float) Data.RejectedEntries.Count / Data.TotalEntryCount;
+            this.testingSet = testingSet;
+            this.validationSet = validationSet;
 
-            foreach (var entry in data.AcceptedEntries)
+            acceptedProbability = (float) ValidationSet.AcceptedEntries.Count / ValidationSet.TotalEntryCount;
+            rejectedProbability = (float) ValidationSet.RejectedEntries.Count / ValidationSet.TotalEntryCount;
+
+            foreach (var entry in testingSet.AcceptedEntries)
                 acceptedCosines.Add(CalculateCosine(entry));
             
-            foreach (var entry in data.RejectedEntries)
+            foreach (var entry in testingSet.RejectedEntries)
                 rejectedCosines.Add(CalculateCosine(entry));
             
             acceptedMean = Math.Mean(acceptedCosines.ToArray());

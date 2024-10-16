@@ -29,6 +29,15 @@ namespace RL.RD.UI
             }
         }
 
+        public void Reset()
+        {
+            CurrentValue = ConfusionMatrixValue.None;
+            tpTmp.color = InactiveColor;
+            tnTmp.color = InactiveColor;
+            fpTmp.color = InactiveColor;
+            fnTmp.color = InactiveColor;
+        }
+
         public void SetValue(ConfusionMatrixValue value)
         {
             CurrentValue = value;

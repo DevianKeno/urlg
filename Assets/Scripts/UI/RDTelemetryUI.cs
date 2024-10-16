@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Collections.Generic;
 
 using UnityEngine;
@@ -6,7 +7,6 @@ using TMPro;
 
 using RL.CellularAutomata;
 using RL.Telemetry;
-using System.IO;
 
 namespace RL.UI
 {
@@ -68,29 +68,33 @@ namespace RL.UI
 
         public void OnRoomClick(MockRoom room)
         {
-            if (room == null) return;
-            if (room.Stats == null) return;
+//             if (room == null) return;
+//             if (room.Stats == null) return;
 
-            var stats = room.Stats;
-            int enemyTotal = stats.TotalEnemyCount;
-            int obsTotal = stats.TotalObstacleCount;
+//             var stats = room.Stats;
+//             int enemyTotal = stats.TotalEnemyCount;
+//             int obsTotal = stats.TotalObstacleCount;
             
-            featureDataTmp.text =  $@"<b>Enemies</b>
-Fire weak: {stats.GetStat(StatKey.EnemyCountFire).Value}
-Beam weak: {stats.GetStat(StatKey.EnemyCountBeam).Value}
-Wave weak: {stats.GetStat(StatKey.EnemyCountWave).Value}
-Total: {enemyTotal}
+//             featureDataTmp.text =  $@"<b>Enemies</b>
+// Fire weak: {stats.GetStat(StatKey.EnemyCountFire).Value}
+// Beam weak: {stats.GetStat(StatKey.EnemyCountBeam).Value}
+// Wave weak: {stats.GetStat(StatKey.EnemyCountWave).Value}
+// Total: {enemyTotal}
 
-<b>Obstacles</b>
-Fire obstacles: {stats.GetStat(StatKey.ObstacleCountFire).Value}
-Beam obstacles: {stats.GetStat(StatKey.ObstacleCountBeam).Value}
-Wave obstacles: {stats.GetStat(StatKey.ObstacleCountWave).Value}
-Total: {obsTotal}
-";
+// <b>Obstacles</b>
+// Fire obstacles: {stats.GetStat(StatKey.ObstacleCountFire).Value}
+// Beam obstacles: {stats.GetStat(StatKey.ObstacleCountBeam).Value}
+// Wave obstacles: {stats.GetStat(StatKey.ObstacleCountWave).Value}
+// Total: {obsTotal}
+// ";
         }
 
 
         #region Player telemetry randomizer
+        
+        /// <summary>
+        /// Randomizes the values of the PlayerStatCollection Telemetry UI.
+        /// </summary>
         public void RandomizeUseCount()
         {
             Seed = GetNewSeed();
@@ -104,8 +108,13 @@ Total: {obsTotal}
             GetEntry(StatKey.HitCountFire).Value = Rand(0, GetEntry(StatKey.UseCountFire).Value + 1, Seed);
             GetEntry(StatKey.HitCountBeam).Value = Rand(0, GetEntry(StatKey.UseCountBeam).Value + 1, Seed);
             GetEntry(StatKey.HitCountWave).Value = Rand(0, GetEntry(StatKey.UseCountWave).Value + 1, Seed);
+
+            GetEntry(StatKey.HitsTaken).Value = Rand(0, 1001, Seed);
         }
 
+        /// <summary>
+        /// Constructs a PlayerStatCollection from the Telemetry UI.
+        /// </summary>
         public PlayerStatCollection ConstructPlayerTelemetryStats()
         {
             var stats = new PlayerStatCollection(Telemetry.Telemetry.PlayerStatsKeys);
@@ -124,6 +133,9 @@ Total: {obsTotal}
             return stats;
         }
         
+        /// <summary>
+        /// Creates a randomized PlayerStatCollection.
+        /// </summary>
         public static PlayerStatCollection ConstructPlayerRandom(int maxUseCount)
         {
             var stats = new PlayerStatCollection(Telemetry.Telemetry.PlayerStatsKeys);
@@ -138,7 +150,7 @@ Total: {obsTotal}
             stats[StatKey.HitCountBeam].Value = Rand(0, stats[StatKey.UseCountBeam].Value + 1, seed);
             stats[StatKey.HitCountWave].Value = Rand(0, stats[StatKey.UseCountWave].Value + 1, seed);
 
-            stats[StatKey.HitsTaken].Value = Rand(0, 100, seed);
+            stats[StatKey.HitsTaken].Value = Rand(0, 500, seed);
             stats.Seed = seed;
 
             return stats;
@@ -148,6 +160,10 @@ Total: {obsTotal}
 
 
         #region Room telemetry randomizer
+        
+        /// <summary>
+        /// Randomizes the values of the RoomStatCollection Telemetry UI.
+        /// </summary>
         public void RandomizeRoomFeatures()
         {
             Seed = GetNewSeed();
@@ -161,8 +177,13 @@ Total: {obsTotal}
             GetEntry(StatKey.ObstacleCountFire).Value = randObsCounts.Item1;
             GetEntry(StatKey.ObstacleCountBeam).Value = randObsCounts.Item2;
             GetEntry(StatKey.ObstacleCountWave).Value = randObsCounts.Item3;
+
+            GetEntry(StatKey.EnemyAttackCount).Value = Rand(0, 1001, Seed);
         }
 
+        /// <summary>
+        /// Constructs a RoomStatCollection from the Telemetry UI.
+        /// </summary>
         public RoomStatCollection ConstructRoomTelemetryStats()
         {
             var stats = new RoomStatCollection(Telemetry.Telemetry.RoomStatsKeys);
@@ -176,10 +197,19 @@ Total: {obsTotal}
             return stats;
         }
 
-        public static RoomStatCollection ConstructRoomRandom(int maxEnemyCount, int maxObstacleCount)
+        /// <summary>
+        /// Creates a randomized RoomStatCollection.
+        /// </summary>
+        public static RoomStatCollection ConstructRoomRandom(int maxEnemyCount, int maxObstacleCount, bool randomizeMax = false)
         {
             var stats = new RoomStatCollection(Telemetry.Telemetry.RoomStatsKeys);
             int seed = NewSeed();
+
+            if (randomizeMax)
+            {
+                maxEnemyCount = Rand(1, maxEnemyCount, seed);
+                maxObstacleCount = Rand(1, maxObstacleCount, seed);
+            }
 
             (int, int, int) randEnemyCounts = GenerateRandomTotaled(maxEnemyCount, seed);
             stats[StatKey.EnemyCountFire].Value = randEnemyCounts.Item1;
@@ -190,12 +220,15 @@ Total: {obsTotal}
             stats[StatKey.ObstacleCountFire].Value = randObsCounts.Item1;
             stats[StatKey.ObstacleCountBeam].Value = randObsCounts.Item2;
             stats[StatKey.ObstacleCountWave].Value = randObsCounts.Item3;
+            
+            // stats[StatKey.EnemyAttackCount].Value = Rand(0, 500, seed);
             stats.Seed = seed;
             
             return stats;
         }
 
         #endregion
+
 
         public void ResetSeed()
         {
