@@ -60,6 +60,10 @@ namespace RL.Projectiles
         {
             hit.TakeDamage(Data.Damage);
             
+            if (hit is IBurnable burnable)
+            {
+                burnable.Burn();
+            }
             Game.Telemetry.PlayerStats[StatKey.HitCountFire].Increment();
             Destroy(gameObject);
         }

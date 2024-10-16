@@ -10,10 +10,11 @@ using RL.Telemetry;
 namespace RL.Enemies
 {
     /// Armadillo (FireWeak)
-    public class FireWeak : Enemy, IDamageable
+    public class FireWeak : Enemy, IDamageable, IBurnable
     {
         [Header("Enemy Parameters")]
         public float ContactDamage = 10f;
+        public float BurnTime = 3f;
 
         [Header("Detection Parameters")]
         public float detectionRadius = 5f;
@@ -35,6 +36,8 @@ namespace RL.Enemies
         bool _isCharging = false;
         float lungeInterval;
         float lungeDelta;
+
+        bool isBurning = false;
 
         [SerializeField] ArmadilloStateMachine stateMachine;
         public StateMachine<ArmadilloStates> sm => stateMachine;
@@ -60,6 +63,28 @@ namespace RL.Enemies
             }
 
             UpdateStates();
+        }
+
+        public void Burn()
+        {
+            StartBurning();
+        }
+
+        public void StartBurning()
+        {
+            if (isBurning) return;
+            isBurning = true;
+
+            var flamePrefab = Resources.Load<GameObject>("Prefabs/Flame");
+            Instantiate(flamePrefab, transform);
+            
+            StartCoroutine(BurnCoroutine());
+        }
+
+        IEnumerator BurnCoroutine()
+        {
+            yield return new WaitForSeconds(BurnTime);
+            Die();
         }
 
         void UpdateStates()
