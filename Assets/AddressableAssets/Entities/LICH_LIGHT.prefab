@@ -482,7 +482,7 @@ GameObject:
   - component: {fileID: 2152628137061515329}
   - component: {fileID: 2111597332465022692}
   m_Layer: 9
-  m_Name: Wave (1)
+  m_Name: Anti Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

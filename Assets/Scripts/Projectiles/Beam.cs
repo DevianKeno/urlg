@@ -5,6 +5,7 @@ using RL.Telemetry;
 using Unity.VisualScripting;
 using UnityEngine.Assertions.Must;
 using UnityEditor.Experimental.GraphView;
+using RL.Enemies;
 
 namespace RL.Projectiles
 {
@@ -88,11 +89,24 @@ namespace RL.Projectiles
             hadReflected = true;
         }
 
-        protected override void OnHitEnemy(IDamageable hit)
+        protected override void OnHitEnemy(IDamageable hit, Collision2D collision)
         {
-            rb.bodyType = RigidbodyType2D.Dynamic;
-            hit.TakeDamage(Data.Damage);
             Game.Telemetry.PlayerStats[StatKey.HitCountBeam].Increment();
+            rb.bodyType = RigidbodyType2D.Dynamic;
+
+            if (hit is FireWeak) /// armadil
+            {
+                if (collision.contacts.Length > 0)
+                {
+                    Reflect(collision.contacts[0].normal);
+                    CreatePuffParticle(collision.contacts[0].point);
+                    return;
+                }
+            }
+            else
+            {
+                hit.TakeDamage(Data.Damage);
+            }
             Destroy(gameObject);
         }
 

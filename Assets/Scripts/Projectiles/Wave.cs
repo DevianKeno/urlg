@@ -32,7 +32,7 @@ namespace RL.Projectiles
 
         public void Dissipate()
         {
-            rb.velocity *= 0.05f;
+            rb.velocity *= 0.02f;
             GetComponent<Collider2D>().enabled = false;
             var sr = GetComponent<SpriteRenderer>();
             LeanTween.value(gameObject, 1f , 0f, DissipateTime)

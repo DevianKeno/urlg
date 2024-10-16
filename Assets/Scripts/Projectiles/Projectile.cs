@@ -41,7 +41,7 @@ namespace RL.Projectiles
         {
         }
 
-        protected virtual void OnHitEnemy(IDamageable hit)
+        protected virtual void OnHitEnemy(IDamageable hit, Collision2D collision)
         {
         }
 
@@ -74,7 +74,7 @@ namespace RL.Projectiles
                 {
                     if (go.TryGetComponent(out IDamageable hit))
                     {
-                        OnHitEnemy(hit);
+                        OnHitEnemy(hit, collision);
                         break;
                     }
 

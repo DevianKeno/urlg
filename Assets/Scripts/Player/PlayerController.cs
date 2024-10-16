@@ -261,6 +261,9 @@ namespace RL.Player
             }
             weaponsDisplayUI.weapon1.ProjectileData = Weapon1.ProjectileData;
             weaponsDisplayUI.weapon2.ProjectileData = Weapon2.ProjectileData;
+
+            Game.Main.PlayerEquippedWeapon1 = Weapon1;
+            Game.Main.PlayerEquippedWeapon2 = Weapon2;
         }
 
         IEnumerator InvincibilityFrameCoroutine()
