@@ -20,7 +20,7 @@ namespace RL.Projectiles
             _initialVelocity = rb.velocity;
 
             Game.Telemetry.PlayerStats[StatKey.UseCountBeam].Increment();
-            Game.Audio.PlaySound("beam_shoot");
+            Game.Audio.PlaySound("beam");
         }
 
         bool hasParticle;
@@ -70,10 +70,11 @@ namespace RL.Projectiles
 
         void Reflect(Vector3 surfaceNormal)
         {
+            Game.Audio.PlaySound("beam_reflect");
             // if (hadReflected) return;
 
-            var duplicateBeam = Instantiate(gameObject);
-            duplicateBeam.transform.position = transform.position + new Vector3(_initialVelocity.x, _initialVelocity.y);
+            // var duplicateBeam = Instantiate(gameObject);
+            // duplicateBeam.transform.position = transform.position + new Vector3(_initialVelocity.x, _initialVelocity.y);
 
             /// Reflect the velocity based on the surface normal
             Vector3 newDirection = Vector3.Reflect(_initialVelocity, surfaceNormal);

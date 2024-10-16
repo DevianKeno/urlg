@@ -27,8 +27,9 @@ namespace RL.Systems
         {
             if (_audioClipsDict.ContainsKey(name))
             {
-                AudioSource.clip = _audioClipsDict[name];
-                AudioSource.Play();
+                Play(name);
+                // AudioSource.clip = _audioClipsDict[name];
+                // AudioSource.Play();
             }
         }
 

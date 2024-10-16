@@ -62,6 +62,12 @@ namespace RL.Projectiles
             {
                 if (go.TryGetComponent(out IDamageable hit))
                 {
+                    if (hit is WaveWeak) /// salaman
+                    {
+                        /// take double damage
+                        hit.TakeDamage(Data.Damage);
+                    }
+
                     if (hit is FireWeak) /// armadill
                     {
                         Dissipate();

@@ -53,6 +53,7 @@ namespace RL
         public event Action OnLateInit;
 
         public int currentLevel = 1;
+        public bool UseTestLevel = false;
         public Room CurrentRoom;
         public PlayerController Player = null;
         public Weapon PlayerEquippedWeapon1 = null;

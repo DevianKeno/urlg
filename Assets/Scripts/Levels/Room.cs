@@ -303,6 +303,9 @@ namespace RL.Levels
             IsCleared = true;
             // Game.UI.ShowArrowPointer();
             OpenDoors();
+
+            Game.Audio.PlaySound("done_level");
+
             yield return new WaitForSeconds(0.5f);
 
             Game.Main.Player.SetControlsEnabled(false);
@@ -457,13 +460,13 @@ namespace RL.Levels
             var rand = GetRandomCoordinatesEnemy(countFire);
             foreach (var coord in rand)
             {
-                string crateId;
-                if (UnityEngine.Random.Range(0, 100) <= DoubleCrateChance)
-                    crateId = "crate";
-                else
-                    crateId = "crate_double";
+                // string crateId;
+                // if (UnityEngine.Random.Range(0, 100) <= DoubleCrateChance)
+                //     crateId = "crate";
+                // else
+                //     crateId = "crate_double";
                 
-                Game.Tiles.PlaceObstacle(crateId, coord, onPlace: (tile) =>
+                Game.Tiles.PlaceObstacle("crate", coord, onPlace: (tile) =>
                 {
                     tile.transform.SetParent(obstaclesLayer.transform);
                     tile.CoordinateToLocalPosition(coord);

@@ -132,8 +132,10 @@ namespace RL.Levels
                     }
                 );
                 
-                // newRoom.Featurize(roomStats); /// original
-                 newRoom.FeaturizeTest(includeObstacles: true); /// use for testing
+                if (Game.Main.UseTestLevel)
+                    newRoom.FeaturizeTest(includeObstacles: true); /// use for testing
+                else
+                    newRoom.Featurize(roomStats); /// original
             }
             
             OnDoneGenerate?.Invoke();
