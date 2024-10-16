@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e92b6cc2a1a5f6041a7b1b8a77f81130, type: 3}
+  m_Name: bedrock_top
+  m_EditorClassIdentifier: 
+  Id: rock
+  Name: Rock
+  Sprite: {fileID: 1393836865, guid: b89d30507266f8841b801001fd07abd1, type: 3}
+  AssetReference:
+    m_AssetGUID: 
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
+  IsSolid: 0
+  IsIlluminable: 0
+  CastShadow: 0
+  CanShootThrough: 0

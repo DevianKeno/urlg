@@ -68,25 +68,25 @@ namespace RL.UI
 
         public void OnRoomClick(MockRoom room)
         {
-            if (room == null) return;
-            if (room.Stats == null) return;
+//             if (room == null) return;
+//             if (room.Stats == null) return;
 
-            var stats = room.Stats;
-            int enemyTotal = stats.TotalEnemyCount;
-            int obsTotal = stats.TotalObstacleCount;
+//             var stats = room.Stats;
+//             int enemyTotal = stats.TotalEnemyCount;
+//             int obsTotal = stats.TotalObstacleCount;
             
-            featureDataTmp.text =  $@"<b>Enemies</b>
-Fire weak: {stats.GetStat(StatKey.EnemyCountFire).Value}
-Beam weak: {stats.GetStat(StatKey.EnemyCountBeam).Value}
-Wave weak: {stats.GetStat(StatKey.EnemyCountWave).Value}
-Total: {enemyTotal}
+//             featureDataTmp.text =  $@"<b>Enemies</b>
+// Fire weak: {stats.GetStat(StatKey.EnemyCountFire).Value}
+// Beam weak: {stats.GetStat(StatKey.EnemyCountBeam).Value}
+// Wave weak: {stats.GetStat(StatKey.EnemyCountWave).Value}
+// Total: {enemyTotal}
 
-<b>Obstacles</b>
-Fire obstacles: {stats.GetStat(StatKey.ObstacleCountFire).Value}
-Beam obstacles: {stats.GetStat(StatKey.ObstacleCountBeam).Value}
-Wave obstacles: {stats.GetStat(StatKey.ObstacleCountWave).Value}
-Total: {obsTotal}
-";
+// <b>Obstacles</b>
+// Fire obstacles: {stats.GetStat(StatKey.ObstacleCountFire).Value}
+// Beam obstacles: {stats.GetStat(StatKey.ObstacleCountBeam).Value}
+// Wave obstacles: {stats.GetStat(StatKey.ObstacleCountWave).Value}
+// Total: {obsTotal}
+// ";
         }
 
 

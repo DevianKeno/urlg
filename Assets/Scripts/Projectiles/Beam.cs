@@ -4,6 +4,7 @@ using RL.Levels;
 using RL.Telemetry;
 using Unity.VisualScripting;
 using UnityEngine.Assertions.Must;
+using UnityEditor.Experimental.GraphView;
 
 namespace RL.Projectiles
 {
@@ -68,12 +69,18 @@ namespace RL.Projectiles
 
         void Reflect(Vector3 surfaceNormal)
         {
-            if (hadReflected) return;
+            // if (hadReflected) return;
+
+            var duplicateBeam = Instantiate(gameObject);
+            duplicateBeam.transform.position = transform.position + new Vector3(_initialVelocity.x, _initialVelocity.y);
 
             /// Reflect the velocity based on the surface normal
             Vector3 newDirection = Vector3.Reflect(_initialVelocity, surfaceNormal);
             rb.velocity = newDirection;
-            
+            _initialVelocity = newDirection;
+
+            /// Split beam
+
             /// Rotate the projectile to match the new direction
             float angle = Mathf.Atan2(newDirection.y, newDirection.x) * Mathf.Rad2Deg;
             transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);

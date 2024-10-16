@@ -16,6 +16,7 @@ namespace RL.Levels
 {
     public class Room : MonoBehaviour, ILoadable
     {
+        public const int DoubleCrateChance = 66;
         [field: SerializeField] public Vector2Int Coordinates { get; set; }
         public int x => Coordinates.x;
         public int y => Coordinates.y;
@@ -51,7 +52,6 @@ namespace RL.Levels
         public Vector2Int Size => size;
         
         List<Enemy> enemies = new();
-        [SerializeField] int remainingEnemies;
         [SerializeField] int remainingObstacles;
         
         [SerializeField] List<GameObject> tileLayers = new();
@@ -197,7 +197,6 @@ namespace RL.Levels
         public void Featurize(RoomStatCollection roomStats)
         {
             this.roomStats = roomStats;
-            this.remainingEnemies = roomStats.TotalEnemyCount;
             this.remainingObstacles = roomStats.TotalObstacleCount;
             
             // GenerateObstaclesCorners();
@@ -219,7 +218,7 @@ namespace RL.Levels
         /// <summary>
         /// Featurizes a room with test configuration.
         /// </summary>
-        public void FeaturizeTest()
+        public void FeaturizeTest(bool includeObstacles)
         {
             var rand = GetRandomCoordinatesEnemy(3);
 
@@ -246,6 +245,11 @@ namespace RL.Levels
                 enemies.Add((Enemy) salaman);
                 SubscribeEnemyEvents(salaman as Enemy);
             });
+
+            if (includeObstacles)
+            {
+                GenerateObstacles(2, 2, 2);
+            }
         }
 
         public Tile GetTile()
@@ -402,9 +406,8 @@ namespace RL.Levels
             {
                 enemies.Remove(enemy);
             }
-            remainingEnemies--;
 
-            if (enemies.Count <= 0 || remainingEnemies <= 0)
+            if (enemies.Count <= 0)
             {
                 StartCoroutine(FinishRoom());
             }
@@ -454,13 +457,13 @@ namespace RL.Levels
             var rand = GetRandomCoordinatesEnemy(countFire);
             foreach (var coord in rand)
             {
-                string id;
-                if (UnityEngine.Random.Range(0, 100) <= 66)
-                    id = "crate";
+                string crateId;
+                if (UnityEngine.Random.Range(0, 100) <= DoubleCrateChance)
+                    crateId = "crate";
                 else
-                    id = "crate_double";
+                    crateId = "crate_double";
                 
-                Game.Tiles.PlaceObstacle(id, coord, onPlace: (tile) =>
+                Game.Tiles.PlaceObstacle(crateId, coord, onPlace: (tile) =>
                 {
                     tile.transform.SetParent(obstaclesLayer.transform);
                     tile.CoordinateToLocalPosition(coord);
@@ -470,13 +473,17 @@ namespace RL.Levels
             rand = GetRandomCoordinatesEnemy(countBeam);
             foreach (var coord in rand)
             {
-
+                Game.Tiles.PlaceObstacle("glass", coord, onPlace: (tile) =>
+                {
+                    tile.transform.SetParent(obstaclesLayer.transform);
+                    tile.CoordinateToLocalPosition(coord);
+                });
             }
             
             rand = GetRandomCoordinatesEnemy(countWave);
             foreach (var coord in rand)
             {
-                Game.Tiles.PlaceObstacle("glass", coord, onPlace: (tile) =>
+                Game.Tiles.PlaceObstacle("bedrock", coord, onPlace: (tile) =>
                 {
                     tile.transform.SetParent(obstaclesLayer.transform);
                     tile.CoordinateToLocalPosition(coord);
@@ -505,8 +512,6 @@ namespace RL.Levels
 
         void GenerateEnemies(int countFire, int countBeam, int countWave)
         {
-            remainingEnemies = 0;
-
             /// Fire weak
             var rand = GetRandomCoordinatesEnemy(countFire);
             foreach (var coord in rand)
@@ -555,14 +560,11 @@ namespace RL.Levels
                     SubscribeEnemyEvents(enemy as Enemy);
                 });
             }
-            
-            remainingEnemies = countFire + countBeam + countWave;
         }
 
         void SubscribeEnemyEvents(Enemy enemy)
         {
             enemy.OnDeath += OnEnemyKilled;
-            remainingEnemies++;
         }
 
 

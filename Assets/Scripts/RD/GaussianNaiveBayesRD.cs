@@ -138,6 +138,7 @@ therefore is <b>rejected</b>.";
 
         public void BulkGenerateUntilStatus()
         {
+            ResetARStatus();
             _continueBulkGeneration = true;
             bulkGenBtn.onClick.RemoveAllListeners();
             bulkGenBtn.onClick.AddListener(StopBulkGenerate);
@@ -213,7 +214,7 @@ therefore is <b>rejected</b>.";
             fireGraph.SetBoundsY(0f, (float) firePref);
             beamGraph.SetBoundsY(0f, (float) beamPref);
             waveGraph.SetBoundsY(0f, (float) wavePref);
-            
+
             if (roomStats != null)
             {
                 var dodgeRating = Evaluate.Player.DodgeRating(
@@ -316,6 +317,7 @@ therefore is <b>rejected</b>.";
             acceptedTmp.text = $"<color=#{hexGray}>Accepted";
             rejectedTmp.text = $"<color=#{hexGray}>Rejected";
             messageTmp.text = "";
+            confusionMatrixHandler.Reset();
         }
         
         public void LikeFeatureSet()

@@ -129,6 +129,7 @@ therefore is <b>rejected</b>.";
 
         public void BulkGenerateUntilStatus()
         {
+            ResetARStatus();
             _continueBulkGeneration = true;
             bulkGenBtn.onClick.RemoveAllListeners();
             bulkGenBtn.onClick.AddListener(StopBulkGenerate);
@@ -297,6 +298,7 @@ therefore is <b>rejected</b>.";
             acceptedTmp.text = $"<color=#{hexGray}>Accepted";
             rejectedTmp.text = $"<color=#{hexGray}>Rejected";
             messageTmp.text = "";
+            confusionMatrixHandler.Reset();
         }
 
         public void LikeFeatureSet()

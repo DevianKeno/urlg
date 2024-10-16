@@ -4905,11 +4905,11 @@ RectTransform:
   - {fileID: 1738168357}
   - {fileID: 1208769331}
   - {fileID: 855542620}
-  - {fileID: 1747726301}
   - {fileID: 1177221744}
   - {fileID: 186946469}
   - {fileID: 41881337}
   - {fileID: 1021905209}
+  - {fileID: 1747726301}
   - {fileID: 295406341}
   m_Father: {fileID: 788659735}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5412,10 +5412,10 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1024128199}
-  - {fileID: 1757424226}
-  - {fileID: 1780620707}
-  - {fileID: 570711573}
   - {fileID: 2003076283}
+  - {fileID: 1780620707}
+  - {fileID: 1757424226}
+  - {fileID: 570711573}
   m_Father: {fileID: 1692754853}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -5439,14 +5439,14 @@ MonoBehaviour:
   InactiveFramePosition: {x: 1920, y: 0}
   AnimationFactor: 0
   Ease: 18
-  currentFrame: {fileID: 2003076285}
+  currentFrame: {fileID: 570711574}
   frames:
   - {fileID: 570711574}
   - {fileID: 1780620708}
   - {fileID: 1757424224}
   - {fileID: 2003076285}
   - {fileID: 1024128200}
-  switchTo: 3
+  switchTo: 0
 --- !u!1 &183527473
 GameObject:
   m_ObjectHideFlags: 0
@@ -12036,140 +12036,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 355387033}
   m_CullTransparentMesh: 1
---- !u!1 &356866513
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 356866514}
-  - component: {fileID: 356866516}
-  - component: {fileID: 356866515}
-  m_Layer: 5
-  m_Name: Empty (2)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &356866514
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 356866513}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1258259543}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 200, y: 20}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &356866515
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 356866513}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_text: 
-  m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_fontSharedMaterials: []
-  m_fontMaterial: {fileID: 0}
-  m_fontMaterials: []
-  m_fontColor32:
-    serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
-  m_enableVertexGradient: 0
-  m_colorMode: 3
-  m_fontColorGradient:
-    topLeft: {r: 1, g: 1, b: 1, a: 1}
-    topRight: {r: 1, g: 1, b: 1, a: 1}
-    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
-    bottomRight: {r: 1, g: 1, b: 1, a: 1}
-  m_fontColorGradientPreset: {fileID: 0}
-  m_spriteAsset: {fileID: 0}
-  m_tintAllSprites: 0
-  m_StyleSheet: {fileID: 0}
-  m_TextStyleHashCode: -1183493901
-  m_overrideHtmlColors: 0
-  m_faceColor:
-    serializedVersion: 2
-    rgba: 4294967295
-  m_fontSize: 32
-  m_fontSizeBase: 32
-  m_fontWeight: 400
-  m_enableAutoSizing: 0
-  m_fontSizeMin: 18
-  m_fontSizeMax: 72
-  m_fontStyle: 1
-  m_HorizontalAlignment: 1
-  m_VerticalAlignment: 512
-  m_textAlignment: 65535
-  m_characterSpacing: 0
-  m_wordSpacing: 0
-  m_lineSpacing: 0
-  m_lineSpacingMax: 0
-  m_paragraphSpacing: 0
-  m_charWidthMaxAdj: 0
-  m_enableWordWrapping: 0
-  m_wordWrappingRatios: 0.4
-  m_overflowMode: 0
-  m_linkedTextComponent: {fileID: 0}
-  parentLinkedComponent: {fileID: 0}
-  m_enableKerning: 1
-  m_enableExtraPadding: 0
-  checkPaddingRequired: 0
-  m_isRichText: 1
-  m_parseCtrlCharacters: 1
-  m_isOrthographic: 1
-  m_isCullingEnabled: 0
-  m_horizontalMapping: 0
-  m_verticalMapping: 0
-  m_uvLineOffset: 0
-  m_geometrySortingOrder: 0
-  m_IsTextObjectScaleStatic: 0
-  m_VertexBufferAutoSizeReduction: 0
-  m_useMaxVisibleDescender: 1
-  m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
-  m_isUsingLegacyAnimationComponent: 0
-  m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
-  m_baseMaterial: {fileID: 0}
-  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!222 &356866516
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 356866513}
-  m_CullTransparentMesh: 1
 --- !u!1 &366794085
 GameObject:
   m_ObjectHideFlags: 0
@@ -14342,8 +14208,8 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 573855015}
   - {fileID: 1898547484}
+  - {fileID: 573855015}
   m_Father: {fileID: 1780620707}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -14367,11 +14233,11 @@ MonoBehaviour:
   InactiveFramePosition: {x: 1920, y: 0}
   AnimationFactor: 0
   Ease: 18
-  currentFrame: {fileID: 1898547485}
+  currentFrame: {fileID: 573855016}
   frames:
   - {fileID: 573855016}
   - {fileID: 1898547485}
-  switchTo: 1
+  switchTo: 0
 --- !u!1 &447953214
 GameObject:
   m_ObjectHideFlags: 0
@@ -15007,6 +14873,30 @@ MonoBehaviour:
       - m_Target: {fileID: 1757424227}
         m_TargetAssemblyTypeName: RL.RD.GaussianNaiveBayesRD, Assembly-CSharp
         m_MethodName: SetPlayerValues
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1757424227}
+        m_TargetAssemblyTypeName: RL.RD.GaussianNaiveBayesRD, Assembly-CSharp
+        m_MethodName: ClampHitsTaken
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1757424227}
+        m_TargetAssemblyTypeName: RL.RD.GaussianNaiveBayesRD, Assembly-CSharp
+        m_MethodName: SetSkillPref
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -16721,6 +16611,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 1
+      - m_Target: {fileID: 1780620709}
+        m_TargetAssemblyTypeName: RL.RD.AcceptRejectRD, Assembly-CSharp
+        m_MethodName: RandomizeHitsTaken
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 51435830}
         m_TargetAssemblyTypeName: RL.UI.RDTelemetryUI, Assembly-CSharp
         m_MethodName: ResetSeed
@@ -19679,7 +19581,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 1920, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &570711574
@@ -19771,7 +19673,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 1920, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 547.77026, y: 601.92}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &573855016
@@ -24789,6 +24691,18 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1757424227}
         m_TargetAssemblyTypeName: RL.RD.GaussianNaiveBayesRD, Assembly-CSharp
+        m_MethodName: SetSkillPref
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1757424227}
+        m_TargetAssemblyTypeName: RL.RD.GaussianNaiveBayesRD, Assembly-CSharp
         m_MethodName: ClassifyGNB
         m_Mode: 1
         m_Arguments:
@@ -28868,6 +28782,30 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1757424227}
         m_TargetAssemblyTypeName: RL.RD.GaussianNaiveBayesRD, Assembly-CSharp
+        m_MethodName: ClampHitsTaken
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1757424227}
+        m_TargetAssemblyTypeName: RL.RD.GaussianNaiveBayesRD, Assembly-CSharp
+        m_MethodName: SetSkillPref
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1757424227}
+        m_TargetAssemblyTypeName: RL.RD.GaussianNaiveBayesRD, Assembly-CSharp
         m_MethodName: ResetARStatus
         m_Mode: 1
         m_Arguments:
@@ -32889,6 +32827,30 @@ MonoBehaviour:
       - m_Target: {fileID: 1780620709}
         m_TargetAssemblyTypeName: RL.RD.AcceptRejectRD, Assembly-CSharp
         m_MethodName: SetPlayerValues
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1780620709}
+        m_TargetAssemblyTypeName: RL.RD.AcceptRejectRD, Assembly-CSharp
+        m_MethodName: ClampHitsTaken
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1780620709}
+        m_TargetAssemblyTypeName: RL.RD.AcceptRejectRD, Assembly-CSharp
+        m_MethodName: SetSkillPref
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -42035,8 +41997,8 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1294424389}
   - {fileID: 1943992640}
+  - {fileID: 1294424389}
   m_Father: {fileID: 1757424226}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -42060,11 +42022,11 @@ MonoBehaviour:
   InactiveFramePosition: {x: 1920, y: 0}
   AnimationFactor: 0
   Ease: 18
-  currentFrame: {fileID: 1943992641}
+  currentFrame: {fileID: 1294424390}
   frames:
   - {fileID: 1294424390}
   - {fileID: 1943992641}
-  switchTo: 1
+  switchTo: 0
 --- !u!1 &1083055277
 GameObject:
   m_ObjectHideFlags: 0
@@ -49492,6 +49454,18 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1757424227}
         m_TargetAssemblyTypeName: RL.RD.GaussianNaiveBayesRD, Assembly-CSharp
+        m_MethodName: SetSkillPref
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1757424227}
+        m_TargetAssemblyTypeName: RL.RD.GaussianNaiveBayesRD, Assembly-CSharp
         m_MethodName: ResetARStatus
         m_Mode: 1
         m_Arguments:
@@ -50273,12 +50247,11 @@ RectTransform:
   - {fileID: 740081522}
   - {fileID: 626039344}
   - {fileID: 838393304}
-  - {fileID: 709493464}
   - {fileID: 585458705}
   - {fileID: 500252075}
   - {fileID: 976495547}
   - {fileID: 1091118543}
-  - {fileID: 356866514}
+  - {fileID: 709493464}
   m_Father: {fileID: 1301242197}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -51163,7 +51136,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 1920, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 547.77026, y: 601.92}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1294424390
@@ -54343,8 +54316,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1686183268}
   m_HandleRect: {fileID: 1686183266}
   m_Direction: 2
-  m_Value: 0.99999934
-  m_Size: 0.92952
+  m_Value: 0.99999845
+  m_Size: 0.96782595
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -65396,6 +65369,30 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1780620709}
         m_TargetAssemblyTypeName: RL.RD.AcceptRejectRD, Assembly-CSharp
+        m_MethodName: ClampHitsTaken
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1780620709}
+        m_TargetAssemblyTypeName: RL.RD.AcceptRejectRD, Assembly-CSharp
+        m_MethodName: SetSkillPref
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1780620709}
+        m_TargetAssemblyTypeName: RL.RD.AcceptRejectRD, Assembly-CSharp
         m_MethodName: ClassifyAR
         m_Mode: 1
         m_Arguments:
@@ -67118,6 +67115,18 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1780620709}
         m_TargetAssemblyTypeName: RL.RD.AcceptRejectRD, Assembly-CSharp
+        m_MethodName: SetSkillPref
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1780620709}
+        m_TargetAssemblyTypeName: RL.RD.AcceptRejectRD, Assembly-CSharp
         m_MethodName: ClassifyAR
         m_Mode: 1
         m_Arguments:
@@ -67386,6 +67395,18 @@ MonoBehaviour:
       - m_Target: {fileID: 1780620709}
         m_TargetAssemblyTypeName: RL.RD.AcceptRejectRD, Assembly-CSharp
         m_MethodName: SetRoomValues
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1780620709}
+        m_TargetAssemblyTypeName: RL.RD.AcceptRejectRD, Assembly-CSharp
+        m_MethodName: SetSkillPref
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -70076,11 +70097,11 @@ RectTransform:
   - {fileID: 1093510494}
   - {fileID: 1496517324}
   - {fileID: 1039241422}
-  - {fileID: 1480675304}
   - {fileID: 631669552}
   - {fileID: 247838577}
   - {fileID: 1963060139}
   - {fileID: 765682531}
+  - {fileID: 1480675304}
   m_Father: {fileID: 788659735}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
@@ -80184,11 +80205,11 @@ RectTransform:
   - {fileID: 337800864}
   - {fileID: 315724732}
   - {fileID: 824363993}
-  - {fileID: 1027378253}
   - {fileID: 263175305}
   - {fileID: 834482305}
   - {fileID: 1149965801}
   - {fileID: 1008960299}
+  - {fileID: 1027378253}
   m_Father: {fileID: 1301242197}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
@@ -81609,6 +81630,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 1
+      - m_Target: {fileID: 1757424227}
+        m_TargetAssemblyTypeName: RL.RD.GaussianNaiveBayesRD, Assembly-CSharp
+        m_MethodName: RandomizeHitsTaken
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 1023328463}
         m_TargetAssemblyTypeName: RL.UI.RDTelemetryUI, Assembly-CSharp
         m_MethodName: ResetSeed
@@ -82194,7 +82227,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 1920, y: 0}
   m_SizeDelta: {x: 547.77026, y: 601.92}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1898547485
@@ -83356,7 +83389,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 1920, y: 0}
   m_SizeDelta: {x: 547.77026, y: 601.92}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1943992641
@@ -85841,7 +85874,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 1920, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2003076285
