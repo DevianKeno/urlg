@@ -618,81 +618,6 @@ Mesh:
     offset: 0
     size: 0
     path: 
---- !u!1 &56125600
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 56125601}
-  - component: {fileID: 56125603}
-  - component: {fileID: 56125602}
-  m_Layer: 5
-  m_Name: Damage Vignette
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &56125601
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 56125600}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1692754853}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 40, y: 80}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &56125602
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 56125600}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 0.49056602, g: 0, b: 0, a: 0}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 2bf2cd3d2172545499fa25a449d796ae, type: 3}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
---- !u!222 &56125603
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 56125600}
-  m_CullTransparentMesh: 1
 --- !u!43 &71146418
 Mesh:
   m_ObjectHideFlags: 0
@@ -3237,12 +3162,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f22ce80af7ef604a87b70e1713af289, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rect: {fileID: 345997818}
+  FadeDuration: 0.3
+  EnableSwapping: 0
   SelectorSpeed: 0.3
   SelectorEase: 18
   selector: {fileID: 159852414}
-  fireballIcon: {fileID: 829472967}
-  beamIcon: {fileID: 1467330421}
-  waveIcon: {fileID: 160890869}
+  weapon1: {fileID: 0}
+  weapon2: {fileID: 0}
+  numberTmp: {fileID: 0}
 --- !u!1001 &389152560
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6076,7 +6004,6 @@ MonoBehaviour:
   Display: 1
   telemetryContainer: {fileID: 1834604934}
   playerStatsContainer: {fileID: 675867648}
-  gameStatsContainer: {fileID: 791280249}
   roomStatsContainer: {fileID: 108568114}
 --- !u!43 &563866519
 Mesh:
@@ -9028,6 +8955,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentLevel: 1
+  CurrentRoom: {fileID: 0}
+  Player: {fileID: 0}
+  algorithmUsed: 0
   playerInput: {fileID: 0}
   salamanPrefab: {fileID: 0}
   deerPrefab: {fileID: 0}
@@ -9107,7 +9037,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbd7741b6d5f9734390d2b37cac06b1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canvas: {fileID: 0}
+  TransitionOptions:
+    Tween: 10
+    AnimationSpeed: 1.5
+    Delay: 0.25
+    Multiplier: 1.2
   vignette: {fileID: 0}
+  transitionCanvas: {fileID: 0}
 --- !u!43 &932910226
 Mesh:
   m_ObjectHideFlags: 0
@@ -18102,16 +18039,14 @@ MonoBehaviour:
   IncludeEndRoom: 1
   CustomStartRoomCoordinates: 0
   StartRoomCoordinates: {x: 21, y: 19}
-  Scaling: 1
   mockRoomPrefab: {fileID: 4026839169192576902, guid: eb5617016b4c0754794a06fa1a041ec6, type: 3}
   mockRoomContainer: {fileID: 0}
-  virtualCamera: {fileID: 0}
   RecolorType: 2
   StartRoomColor: {r: 0, g: 1, b: 0, a: 1}
   NormalRoomColor: {r: 0, g: 1, b: 1, a: 1}
   NormalRoomColor2: {r: 0.0504183, g: 0.8779624, b: 0.9716981, a: 1}
   EndRoomColor: {r: 1, g: 0, b: 0, a: 1}
-  telemetryUI: {fileID: 0}
+  playerTelemetryUI: {fileID: 0}
   selector: {fileID: 0}
 --- !u!1 &1588751815
 GameObject:
@@ -19239,7 +19174,6 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 56125601}
   - {fileID: 390026836}
   - {fileID: 84867969}
   - {fileID: 1834604935}
@@ -20919,7 +20853,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e68ae7ac118f654590b1c46164d71a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  LevelNumber: 1
   RoomCount: 5
+  RejectedRoomsThreshold: 25
+  StartRoom: {fileID: 0}
+  EndRoom: {fileID: 0}
   Rooms: []
 --- !u!4 &1821899614
 Transform:
@@ -21349,18 +21287,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TileId: stone_wall
   Cell: {x: 0, y: 0}
-  minDeer: 0
-  maxDeer: 7
-  minBeamWeak: 0
-  maxBeamWeak: 7
-  minSalaman: 1
-  maxSalaman: 6
-  minWaveObs: 0
-  maxWaveObs: 7
-  minCrate: 0
-  maxCrate: 7
-  minBeamObs: 0
-  maxBeamObs: 7
   enemiesContainer: {fileID: 4091316254070250912}
   tilePrefab: {fileID: 1619263277022951004, guid: 0b4e7f077ca0ce54c9ac1c00bd43db66, type: 3}
   roomPrefab: {fileID: 6845071295310421403, guid: 20c3274789126f44890a58a61f62f83c, type: 3}

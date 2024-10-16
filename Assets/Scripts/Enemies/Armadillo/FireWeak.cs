@@ -91,13 +91,13 @@ namespace RL.Enemies
             _canLunge = false;
             _isCharging = true;
 
-            sm.ToState(ArmadilloStates.Ball); // State where the enemy turns into a ball
+            sm.ToState(ArmadilloStates.Windup); // State where the enemy turns into a ball
             _isInvincible = true;
 
             // Invincibility phase before lunging
             yield return new WaitForSeconds(invincibilityDuration);
 
-            sm.ToState(ArmadilloStates.Windup);
+            sm.ToState(ArmadilloStates.Ball);
             yield return new WaitForSeconds(lungeWindup);
 
             _isInvincible = false; // End invincibility

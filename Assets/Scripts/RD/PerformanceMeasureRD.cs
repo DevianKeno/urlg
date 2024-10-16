@@ -21,18 +21,21 @@ namespace RL.RD
         [SerializeField] TextMeshProUGUI arInfoTmp;
         [SerializeField] TextMeshProUGUI gnbFilenameTmp;
         [SerializeField] TextMeshProUGUI gnbInfoTmp;
+        [SerializeField] TextMeshProUGUI arMetricsTmp;
         [SerializeField] TextMeshProUGUI gnbMetricsTmp;
 
         [Header("Buttons")]
         [SerializeField] Button arResultsBtn;
         [SerializeField] Button gnbResultsBtn;
-        [SerializeField] Button calculateBtn;
+        [SerializeField] Button calculateARBtn;
+        [SerializeField] Button calculateGNBBtn;
 
         void Awake()
         {
             arResultsBtn.onClick.AddListener(OpenARResults);
             gnbResultsBtn.onClick.AddListener(OpenGNBResults);
-            calculateBtn.onClick.AddListener(Calculate);
+            calculateARBtn.onClick.AddListener(CalculateAR);
+            calculateGNBBtn.onClick.AddListener(CalculateGNB);
         }
 
         void Start()
@@ -70,6 +73,17 @@ namespace RL.RD
             UpdateARInfoText();
         }
 
+        void CalculateAR()
+        {
+            float precision = arResults.CalculatePrecision();
+            float recall = arResults.CalculateRecall();
+            float fScore = arResults.CalculateFScore();
+
+            arMetricsTmp.text += @$"Precision: {precision}
+Recall: {recall}
+F-Score: {fScore}";
+        }
+
         #endregion
         
 
@@ -101,6 +115,17 @@ namespace RL.RD
             }
             gnbResults.TotalEntryCount = a.Entries.Count;
             UpdateGNBInfoText();
+        }
+
+        void CalculateGNB()
+        {
+            float precision = gnbResults.CalculatePrecision();
+            float recall = gnbResults.CalculateRecall();
+            float fScore = gnbResults.CalculateFScore();
+
+            gnbMetricsTmp.text += @$"Precision: {precision}
+Recall: {recall}
+F-Score: {fScore}";
         }
 
         #endregion
