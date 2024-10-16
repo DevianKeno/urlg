@@ -4,7 +4,7 @@ namespace RL.Enemies
 {
     public enum LichLightStates
     {
-        Idle, Move, Barrier, Tank
+        Idle, Move
     }
     public class LichLightStateMachine : StateMachine<LichLightStates>
     {

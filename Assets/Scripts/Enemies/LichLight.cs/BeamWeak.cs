@@ -1,11 +1,10 @@
 using System;
 using System.Collections;
-
 using UnityEngine;
-
 using RL.Systems;
 using RL.Player;
 using RL.Entities;
+using Random = UnityEngine.Random;
 using RL.Telemetry;
 
 namespace RL.Enemies
@@ -16,26 +15,30 @@ namespace RL.Enemies
         [SerializeField] GameObject barrier;
 
         [Header("Enemy Parameters")]
-        public float barrierDamage = 20f; // Damage dealt on contact
-        public float moveSpeed = 3f; // Movement speed
+        public float ContactDamage = 10f;
 
         [Header("Detection Parameters")]
         public float detectionRadius = 5f;
         public float detectionAngle = 45f;
         public LayerMask detectionMask;
+        public float lungeForce = 5f;
+        public float lungeDistance = 2f;
+        public float lungeCooldown = 1f;
+        bool _canLunge = true;
+        bool _isLunging;
 
-        [Header("Barrier Parameters")]
-        public float barrierCooldown = 3f; // Cooldown time for the barrier
-        public float barrierDuration = 8f; // Duration for which the barrier remains active
-         public float barrierChargeTime = 1f;  // Time spent idling before barrier activates
-
-        float barrierInterval;
-        public float minBarrierInterval = 0f; // Minimum time for additional charging
-        public float maxBarrierInterval = 2f; // Maximum time for additional charging
-        [SerializeField] bool _canChargeBarrier = true;
-        [SerializeField] bool _isChargingBarrier = false;
-        [SerializeField] bool _isUsingBarrier = false;
-
+        [Header("Charge Parameters")]
+        public float chargeSpeed = 10f; // Speed of the charge
+        public float overshoot = 2f; // Force applied to overshoot the player
+        public float chargeCooldown = 5f; // Cooldown between charge attacks
+        public float minChargeInterval = 2f; // Minimum time between charge attacks
+        public float maxChargeInterval = 2f; // Maximum time between charge attacks
+        public float chargeWindup = 1f; // Duration of the windup before charging
+        public float chargeDuration = 2f; // Force applied to overshoot the player
+        float chargeInterval;
+        float chargeDelta;
+        [SerializeField] bool _canCharge = true;
+        [SerializeField] bool _isCharging = false;
 
         [SerializeField] LichLightStateMachine stateMachine;
         public StateMachine<LichLightStates> sm => stateMachine;
@@ -44,20 +47,23 @@ namespace RL.Enemies
         protected override void Start()
         {
             base.Start();
+            chargeInterval = UnityEngine.Random.Range(minChargeInterval, maxChargeInterval);
+            chargeDelta = 0f;
             barrier.SetActive(false);
             sm.OnStateChanged += animator.StateChangedCallback;
+
             sm.ToState(LichLightStates.Idle);
         }
 
         protected override void FixedUpdate()
         {
             Search();
-            LookAtTarget();           
-            if (!_isChargingBarrier)
+            LookAtTarget();            
+            if (!_isLunging && !_isCharging)
             {
                 MaintainDistance();
             }
-            if (!_isUsingBarrier)
+            if (!_isCharging)
             {
                 DetectProjectiles();
             }
@@ -68,7 +74,7 @@ namespace RL.Enemies
         {
             if (target != null)
             {
-                if (!_isChargingBarrier)
+                if (!_isCharging)
                 {
                     sm.ToState(LichLightStates.Move);
                 }
@@ -89,13 +95,29 @@ namespace RL.Enemies
                 if (go.TryGetComponent(out PlayerController player))
                 {
                     // Debug.Log("player hit");
-                    player.TakeDamage(barrierDamage);
+                    player.TakeDamage(ContactDamage);
                 }
             }
         }
 
         void Update()
         {
+            chargeDelta += Time.deltaTime;
+            if (chargeDelta >= chargeInterval)
+            {
+                if (target == null)
+                {
+                    chargeInterval = maxChargeInterval;
+                    chargeDelta = 0f;
+                } else
+                {
+                    if (_canCharge && !_isCharging)
+                    {
+                        _canCharge = false;
+                        StartCoroutine(ChargeCoroutine());
+                    }
+                }
+            }
         }
 
         void LateUpdate()
@@ -115,6 +137,47 @@ namespace RL.Enemies
             }
         }
 
+        float EaseOutCubic(float x)
+        {
+            return 1 - Mathf.Pow(1 - x, 3);
+        }
+
+        IEnumerator ChargeCoroutine()
+        {
+            if (target == null) yield return null;
+
+            _isCharging = true;
+            sm.ToState(LichLightStates.Move);
+
+            /// Windup
+            rb.velocity = Vector2.zero;
+            barrier.SetActive(true);
+            yield return new WaitForSeconds(chargeWindup);
+
+            Vector2 targetPosition = target.transform.position;
+            Vector2 overshootDirection = (targetPosition - (Vector2) transform.position).normalized;
+            Vector2 overshootPosition = targetPosition + (overshootDirection * overshoot);
+            float startTime = Time.time;
+            float journeyLength = Vector2.Distance(transform.position, overshootPosition);
+
+            Game.Telemetry.RoomStats[StatKey.EnemyAttackCount].Increment();
+            sm.ToState(LichLightStates.Move);
+            while (Time.time - startTime < chargeDuration)
+            {
+                float distanceCovered = (Time.time - startTime) * chargeSpeed;
+                rb.MovePosition(Vector2.Lerp(transform.position, overshootPosition, EaseOutCubic(distanceCovered / journeyLength)));
+                yield return null;
+            }
+            
+            barrier.SetActive(false);
+            _isCharging = false;
+            yield return new WaitForSeconds(chargeCooldown);
+            chargeInterval = UnityEngine.Random.Range(minChargeInterval, maxChargeInterval);
+            chargeDelta = 0f;
+            _canCharge = true;
+        }
+
+
         void DetectProjectiles()
         {
             Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, detectionRadius, detectionMask);
@@ -126,20 +189,22 @@ namespace RL.Enemies
 
                 if (angle <= detectionAngle)
                 {
-                    if (_canChargeBarrier)
+                    if (_canLunge)
                     {
-                        ChargeBarrier();
+                        Lunge();
                         StartCoroutine(Cooldown());
                     }
                 }
             }
         }
 
+
         IEnumerator Cooldown()
         {
-            _canChargeBarrier = false;
-            yield return new WaitForSeconds((barrierCooldown + barrierInterval));
-            _canChargeBarrier = true;
+            _canLunge = false;
+            yield return new WaitForSeconds(lungeCooldown);
+            _isLunging = false;
+            _canLunge = true;
         }
 
         /// <summary>
@@ -147,41 +212,22 @@ namespace RL.Enemies
         /// 0 (random)
         /// 1 (right)
         /// </summary>
-        void MoveTowardsTarget()
+        void Lunge(int direction = 0)
         {
-            if (target != null)
-            {
-                sm.ToState(LichLightStates.Tank);
-                Game.Telemetry.GameStats[StatKey.EnemyAttackCount].Increment();
-                Vector2 direction = (target.transform.position - transform.position).normalized;
-                rb.velocity = direction * moveSpeed;
+            _isLunging = true;
+            direction = direction != 0 ? direction : UnityEngine.Random.Range(0, 2) * 2 - 1;
+
+            Vector2 lungeDirection = transform.right * direction;
+                
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, lungeDirection, lungeDistance);
+            if (hit.collider != null && hit.collider.CompareTag("Wall"))
+    {
+                direction *= -1;
+                lungeDirection = transform.right * direction;
             }
-        }
-
-        void ChargeBarrier()
-        {
-            sm.ToState(LichLightStates.Idle);
-            rb.velocity = Vector2.zero;
-            StartCoroutine(BarrierCoroutine());
-        }
-
-        IEnumerator BarrierCoroutine()
-        {
-            barrierInterval = UnityEngine.Random.Range(minBarrierInterval, maxBarrierInterval);
-            if (target == null) yield return null;
-            {
-            _isUsingBarrier = true;
-            barrier.SetActive(true);
-            sm.ToState(LichLightStates.Barrier);
-            
-            yield return new WaitForSeconds(barrierChargeTime);
-
-            MoveTowardsTarget();
-            yield return new WaitForSeconds(barrierDuration);
-
-            barrier.SetActive(false);
-            _isUsingBarrier = false;
-            }
+            rb.AddForce(lungeDirection * lungeForce, ForceMode2D.Impulse);
+            sm.ToState(LichLightStates.Move);
+            sm.LockFor(0.5f);
         }
 
         protected override void OnDrawGizmos()
