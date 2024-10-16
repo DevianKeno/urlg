@@ -80,15 +80,15 @@ namespace RL.Enemies
 
         void OnTriggerEnter2D(Collider2D collider)
         {
-            Debug.Log("trigger collision");
+            // Debug.Log("trigger collision");
             var go = collider.gameObject;
             
             if (go == null) return;
-            if (go.CompareTag("Hitbox"))
+            if (go.CompareTag("Player"))
             {
                 if (go.TryGetComponent(out PlayerController player))
                 {
-                    Debug.Log("player hit");
+                    // Debug.Log("player hit");
                     player.TakeDamage(barrierDamage);
                 }
             }

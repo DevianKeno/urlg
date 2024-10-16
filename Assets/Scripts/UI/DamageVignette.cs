@@ -9,7 +9,7 @@ namespace RL.UI
         
         public void DamageFlash()
         {
-            LeanTween.value(gameObject, 0.5f, 0, 1f)
+            LeanTween.value(gameObject, 1f, 0, 1f)
             .setOnUpdate((float i) =>
             {
                 image.color = new(0.5f, 0f, 0f, i); /// red

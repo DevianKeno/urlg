@@ -77,6 +77,11 @@ namespace RL.Player
             Weapon2 = Laser;
             unequippedWeapon = Wave;
 
+            if (healthBar == null)
+            {
+                healthBar = FindObjectOfType<HealthBar>();
+            }
+
             if (Game.Main.currentLevel == 1)
             {
                 Weapon1 = Fireball;
@@ -180,7 +185,7 @@ namespace RL.Player
                 Shoot();
             }
 
-            if(Input.GetKeyDown(KeyCode.E))
+            if (Input.GetKeyDown(KeyCode.Keypad6))
             {
                 //Test damage
                 TakeDamage(20);
@@ -197,13 +202,16 @@ namespace RL.Player
 
         void OnTriggerEnter2D(Collider2D collider)
         {
-            var other = collider.gameObject;
+            // var other = collider.gameObject;
             
-            if (other.CompareTag("Enemy"))
-            {
-                TakeDamage(salaman.ContactDamage);
-                return;
-            }
+            // if (other.CompareTag("Enemy"))
+            // {
+            //     if (other.TryGetComponent(out Enemy enemy))
+            //     {
+            //         TakeDamage(enemy.ContactDamage);
+            //     }
+            //     return;
+            // }
         }
 
         void FlipSprite()

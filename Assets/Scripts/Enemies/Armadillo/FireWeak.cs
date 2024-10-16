@@ -6,6 +6,7 @@ using UnityEngine;
 using RL.Systems;
 using RL.Entities;
 using RL.Telemetry;
+using RL.Player;
 
 namespace RL.Enemies
 {
@@ -175,6 +176,23 @@ namespace RL.Enemies
                 float angle = startAngle + step * i;
                 Vector3 rayDirection = Quaternion.Euler(0, 0, angle) * transform.up;
                 Gizmos.DrawRay(transform.position, rayDirection * detectionRadius);
+            }
+        }
+        
+
+        void OnTriggerEnter2D(Collider2D collider)
+        {
+            // Debug.Log("trigger collision");
+            var go = collider.gameObject;
+            
+            if (go == null) return;
+            if (go.CompareTag("Player"))
+            {
+                if (go.TryGetComponent(out PlayerController player))
+                {
+                    // Debug.Log("player hit");
+                    player.TakeDamage(ContactDamage);
+                }
             }
         }
     }

@@ -8286,6 +8286,7 @@ MonoBehaviour:
   Player: {fileID: 0}
   PlayerEquippedWeapon1: {fileID: 0}
   PlayerEquippedWeapon2: {fileID: 0}
+  PlayerUnequippedWeapon: {fileID: 0}
   algorithmUsed: 0
   playerInput: {fileID: 0}
   salamanPrefab: {fileID: 0}
@@ -27408,11 +27409,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 80862604969020456, guid: dd1dd6a8f081d9f4a990b972dedb89b5, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 40
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 80862604969020456, guid: dd1dd6a8f081d9f4a990b972dedb89b5, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 80
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 80862604969020456, guid: dd1dd6a8f081d9f4a990b972dedb89b5, type: 3}
       propertyPath: m_LocalPosition.x
@@ -27460,6 +27461,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 80862604969020456, guid: dd1dd6a8f081d9f4a990b972dedb89b5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 746575754736642078, guid: dd1dd6a8f081d9f4a990b972dedb89b5, type: 3}
+      propertyPath: m_Color.a
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3559356774278567754, guid: dd1dd6a8f081d9f4a990b972dedb89b5, type: 3}
