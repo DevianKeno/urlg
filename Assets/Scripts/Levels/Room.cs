@@ -505,16 +505,18 @@ namespace RL.Levels
 
         void GenerateEnemies(int countFire, int countBeam, int countWave)
         {
+            remainingEnemies = 0;
+
             /// Fire weak
             var rand = GetRandomCoordinatesEnemy(countFire);
             foreach (var coord in rand)
             {
-                Game.Entity.Spawn("lich_light", onSpawn: (salaman) =>
+                Game.Entity.Spawn("lich_light", onSpawn: (enemy) =>
                 {
-                    salaman.transform.SetParent(enemiesContainer.transform);
-                    salaman.LocalPosition = new Vector3(coord.x, coord.y);
-                    enemies.Add((Enemy) salaman);
-                    SubscribeEnemyEvents(salaman as Enemy);
+                    enemy.transform.SetParent(enemiesContainer.transform);
+                    enemy.LocalPosition = new Vector3(coord.x, coord.y);
+                    enemies.Add((Enemy) enemy);
+                    SubscribeEnemyEvents(enemy as Enemy);
                 });
                 // Game.Entity.Spawn("deer", onSpawn: (entity) =>
                 // {
@@ -527,12 +529,12 @@ namespace RL.Levels
             rand = GetRandomCoordinatesEnemy(countBeam);
             foreach (var coord in rand)
             {
-                Game.Entity.Spawn("armadil", onSpawn: (salaman) =>
+                Game.Entity.Spawn("armadil", onSpawn: (enemy) =>
                 {
-                    salaman.transform.SetParent(enemiesContainer.transform);
-                    salaman.LocalPosition = new Vector3(coord.x, coord.y);
-                    enemies.Add((Enemy) salaman);
-                    SubscribeEnemyEvents(salaman as Enemy);
+                    enemy.transform.SetParent(enemiesContainer.transform);
+                    enemy.LocalPosition = new Vector3(coord.x, coord.y);
+                    enemies.Add((Enemy) enemy);
+                    SubscribeEnemyEvents(enemy as Enemy);
                 });
                 // Game.Entity.Spawn("armadillo", onSpawn: (entity) =>
                 // {
@@ -545,12 +547,12 @@ namespace RL.Levels
             rand = GetRandomCoordinatesEnemy(countWave);
             foreach (var coord in rand)
             {
-                Game.Entity.Spawn("salaman", onSpawn: (salaman) =>
+                Game.Entity.Spawn("salaman", onSpawn: (enemy) =>
                 {
-                    salaman.transform.SetParent(enemiesContainer.transform);
-                    salaman.LocalPosition = new Vector3(coord.x, coord.y);
-                    enemies.Add((Enemy) salaman);
-                    SubscribeEnemyEvents(salaman as Enemy);
+                    enemy.transform.SetParent(enemiesContainer.transform);
+                    enemy.LocalPosition = new Vector3(coord.x, coord.y);
+                    enemies.Add((Enemy) enemy);
+                    SubscribeEnemyEvents(enemy as Enemy);
                 });
             }
             
@@ -560,6 +562,7 @@ namespace RL.Levels
         void SubscribeEnemyEvents(Enemy enemy)
         {
             enemy.OnDeath += OnEnemyKilled;
+            remainingEnemies++;
         }
 
 

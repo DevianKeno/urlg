@@ -11,6 +11,7 @@ using TMPro;
 using RL.Telemetry;
 using RL.UI;
 using RL.Classifiers;
+using SFB;
 
 namespace RL.RD
 {
@@ -212,6 +213,49 @@ namespace RL.RD
             }
 
             Debug.Log($"Dataset generated at '{filepath}'");
+        }
+
+        public void ConvertDatasetToResult(string filepath)
+        {
+            
+        }
+        
+        public void SelectDataset()
+        {
+            string datasetsDirectory = Path.Combine(Application.persistentDataPath, "datasets");
+            string[] paths = StandaloneFileBrowser.OpenFilePanel("Select dataset (.csv)", datasetsDirectory, "csv", false);
+
+            if (paths.Length > 0 && !string.IsNullOrEmpty(paths[0]))
+            {
+                List<string[]> content = CSVHelper.ReadCSV(paths[0]);
+                ParseDatasetContent(content);
+            }
+        }
+
+        void ParseDatasetContent(List<string[]> content)
+        {
+            var data = new GNBData();
+            string[] headers = content[0];
+            
+            for (int i = 1; i < content.Count; i++)
+            {
+                string[] row = content[i];
+                var entry = new ARDataEntry
+                {
+                    SeedPlayer = int.Parse(row[0]),
+                    SeedRoom = int.Parse(row[1]),
+                    Values = new Dictionary<StatKey, int>()
+                };
+
+                for (int j = 2; j < row.Length; j++)
+                    if (Enum.TryParse(headers[j], out StatKey statKey))
+                        entry.Values[statKey] = int.Parse(row[j]);
+
+                if (int.Parse(row[^1]) == 1)
+                    data.AcceptedEntries.Add(entry);
+                else
+                    data.RejectedEntries.Add(entry);
+            }
         }
     }
 }

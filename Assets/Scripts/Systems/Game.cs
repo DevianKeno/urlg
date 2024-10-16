@@ -17,6 +17,8 @@ namespace RL
     
     public class Game : MonoBehaviour
     {
+        public const int MaxEnemiesPerRoom = 12;
+        
         public static Game Main { get; private set; }
 
         static UIManager UIManager;

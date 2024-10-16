@@ -27,9 +27,10 @@ therefore is <b>rejected</b>.";
 
         public MockRoom Room = null;
         public bool NormalizeValues => normalizeToggle != null ? normalizeToggle.isOn : false;
-
+        public float ValidateRatio = 0.2f;
         [SerializeField] bool _hasDataset = false;
-        GNBData data = null;
+        GNBData testingSet = null;
+        GNBData validationSet = null;
         
         /// <summary>
         /// The current state of Player Stats.
@@ -79,7 +80,7 @@ therefore is <b>rejected</b>.";
 
         void Awake()
         {
-            datasetBtn.onClick.AddListener(SelectDataset);
+            datasetBtn.onClick.AddListener(OpenSelectDatasetDialog);
 
             likedBtn.onClick.AddListener(LikeFeatureSet);
             dislikedBtn.onClick.AddListener(DislikeFeatureSet);
@@ -212,6 +213,32 @@ therefore is <b>rejected</b>.";
             fireGraph.SetBoundsY(0f, (float) firePref);
             beamGraph.SetBoundsY(0f, (float) beamPref);
             waveGraph.SetBoundsY(0f, (float) wavePref);
+            
+            if (roomStats != null)
+            {
+                var dodgeRating = Evaluate.Player.DodgeRating(
+                    playerStats[StatKey.HitsTaken].Value,
+                    roomStats[StatKey.EnemyAttackCount].Value);
+                skillGraph.SetBoundsY(0f, (float) dodgeRating);
+            }
+        }
+
+        public void RandomizeHitsTaken()
+        {
+            var attackCount = roomTelemetryUI.GetEntry(StatKey.EnemyAttackCount).Value;
+            var hitsTaken = UnityEngine.Random.Range(0, attackCount); /// UNSEEDED
+            
+            playerTelemetryUI.GetEntry(StatKey.HitsTaken).Value = hitsTaken;
+            playerStats.GetStat(StatKey.HitsTaken).Value = hitsTaken;
+        }
+
+        public void ClampHitsTaken()
+        {
+            var hitsTaken = playerTelemetryUI.GetEntry(StatKey.HitsTaken).Value;
+            hitsTaken = System.Math.Clamp(hitsTaken, 0, roomTelemetryUI.GetEntry(StatKey.EnemyAttackCount).Value);
+
+            playerTelemetryUI.GetEntry(StatKey.HitsTaken).Value = hitsTaken;
+            playerStats.GetStat(StatKey.HitsTaken).Value = hitsTaken;
         }
 
         public void SetRoomValues()
@@ -226,11 +253,21 @@ therefore is <b>rejected</b>.";
             {
                 Math.NormalizeMaxed(ref firePref, ref beamPref, ref wavePref);
             }
+            var difficultyPref = Evaluate.Room.Difficulty(roomStats, Game.MaxEnemiesPerRoom);
 
             ClearAllPoints();
             fireGraph.PlotPoint((float) firePref);
             beamGraph.PlotPoint((float) beamPref);
             waveGraph.PlotPoint((float) wavePref);
+            skillGraph.PlotPoint((float) difficultyPref);
+        }
+
+        public void SetSkillPref()
+        {
+            if (playerStats == null || roomStats == null) return;
+
+            var dodgeRating = Evaluate.Player.DodgeRating(playerStats[StatKey.HitsTaken].Value, roomStats[StatKey.EnemyAttackCount].Value);
+            skillGraph.SetBoundsY(0f, (float) dodgeRating);
         }
 
         public void PlotPoints()
@@ -305,7 +342,7 @@ therefore is <b>rejected</b>.";
             }
         }
 
-        public void SelectDataset()
+        public void OpenSelectDatasetDialog()
         {
             string datasetsDirectory = Path.Combine(Application.persistentDataPath, "datasets");
             string[] paths = StandaloneFileBrowser.OpenFilePanel("Select dataset (.csv)", datasetsDirectory, "csv", false);
@@ -321,7 +358,8 @@ therefore is <b>rejected</b>.";
 
         void ParseDatasetContent(List<string[]> content)
         {
-            data = new();
+            testingSet = new();
+            validationSet = new();
             string[] headers = content[0];
             
             for (int i = 1; i < content.Count; i++)
@@ -338,14 +376,26 @@ therefore is <b>rejected</b>.";
                     if (Enum.TryParse(headers[j], out StatKey statKey))
                         entry.Values[statKey] = int.Parse(row[j]);
 
-                if (int.Parse(row[^1]) == 1)
-                    data.AcceptedEntries.Add(entry);
+                if (UnityEngine.Random.Range(0, 101) <= ValidateRatio)
+                {
+                    if (int.Parse(row[^1]) == 1)
+                        validationSet.AcceptedEntries.Add(entry);
+                    else
+                        validationSet.RejectedEntries.Add(entry);
+                }
                 else
-                    data.RejectedEntries.Add(entry);
+                {
+                    if (int.Parse(row[^1]) == 1)
+                        testingSet.AcceptedEntries.Add(entry);
+                    else
+                        testingSet.RejectedEntries.Add(entry);
+                }
             }
 
             _hasDataset = true;
-            GaussianNaiveBayes.Instance.Train(data);
+            GaussianNaiveBayes.Instance.Train(testingSet, validationSet);
+            datasetMessageTmp.text = $"<color=#{hexGreen}>Model trained";
+            datasetMessageTmp.gameObject.SetActive(true);
         }
     }
 }

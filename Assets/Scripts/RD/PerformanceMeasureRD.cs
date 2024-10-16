@@ -21,15 +21,18 @@ namespace RL.RD
         [SerializeField] TextMeshProUGUI arInfoTmp;
         [SerializeField] TextMeshProUGUI gnbFilenameTmp;
         [SerializeField] TextMeshProUGUI gnbInfoTmp;
+        [SerializeField] TextMeshProUGUI gnbMetricsTmp;
 
         [Header("Buttons")]
         [SerializeField] Button arResultsBtn;
         [SerializeField] Button gnbResultsBtn;
+        [SerializeField] Button calculateBtn;
 
         void Awake()
         {
             arResultsBtn.onClick.AddListener(OpenARResults);
             gnbResultsBtn.onClick.AddListener(OpenGNBResults);
+            calculateBtn.onClick.AddListener(Calculate);
         }
 
         void Start()
@@ -142,6 +145,13 @@ TN: {gnbResults.TNCount}
 FP: {gnbResults.FPCount}
 FN: {gnbResults.FNCount}
             ";
+        }
+
+        public void Calculate()
+        {
+            gnbMetricsTmp.text = @$"Precision: {5}
+Recall:
+F-score:";
         }
     }
 }
