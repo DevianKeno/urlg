@@ -5560,8 +5560,8 @@ RectTransform:
   - {fileID: 1024128199}
   - {fileID: 1780620707}
   - {fileID: 1757424226}
-  - {fileID: 570711573}
   - {fileID: 2003076283}
+  - {fileID: 570711573}
   m_Father: {fileID: 1692754853}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -5585,14 +5585,14 @@ MonoBehaviour:
   InactiveFramePosition: {x: 1920, y: 0}
   AnimationFactor: 0
   Ease: 18
-  currentFrame: {fileID: 2003076285}
+  currentFrame: {fileID: 570711574}
   frames:
   - {fileID: 570711574}
   - {fileID: 1780620708}
   - {fileID: 1757424224}
   - {fileID: 2003076285}
   - {fileID: 2003076285}
-  switchTo: 3
+  switchTo: 0
 --- !u!1 &183527473
 GameObject:
   m_ObjectHideFlags: 0
@@ -20176,7 +20176,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 1920, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &570711574
@@ -34677,8 +34677,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentLevel: 1
+  UseTestLevel: 0
   CurrentRoom: {fileID: 0}
   Player: {fileID: 0}
+  PlayerEquippedWeapon1: {fileID: 0}
+  PlayerEquippedWeapon2: {fileID: 0}
+  PlayerUnequippedWeapon: {fileID: 0}
   algorithmUsed: 0
   playerInput: {fileID: 0}
   salamanPrefab: {fileID: 0}
@@ -88285,7 +88289,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 1920, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2003076285

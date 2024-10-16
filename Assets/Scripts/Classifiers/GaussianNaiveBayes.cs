@@ -96,8 +96,8 @@ namespace RL.Classifiers
             this.testingSet = testingSet;
             this.validationSet = validationSet;
 
-            acceptedProbability = (float) ValidationSet.AcceptedEntries.Count / ValidationSet.TotalEntryCount;
-            rejectedProbability = (float) ValidationSet.RejectedEntries.Count / ValidationSet.TotalEntryCount;
+            acceptedProbability = (float) testingSet.AcceptedEntries.Count / testingSet.TotalEntryCount;
+            rejectedProbability = (float) testingSet.RejectedEntries.Count / testingSet.TotalEntryCount;
 
             foreach (var entry in testingSet.AcceptedEntries)
                 acceptedCosines.Add(CalculateCosine(entry));

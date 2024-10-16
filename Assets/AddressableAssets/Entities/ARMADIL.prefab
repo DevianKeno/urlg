@@ -318,13 +318,14 @@ MonoBehaviour:
   spriteRenderer: {fileID: 5066019566450128797}
   rb: {fileID: 6907160735477576272}
   ContactDamage: 10
+  BurnTime: 3
   detectionRadius: 5
   detectionAngle: 45
   detectionMask:
     serializedVersion: 2
     m_Bits: 0
-  lungeForce: 5
-  lungeDistance: 2
+  lungeForce: 16
+  lungeDistance: 5
   lungeCooldown: 1
   invincibilityDuration: 2
   minLungeInterval: 2
