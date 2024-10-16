@@ -5,6 +5,7 @@ using UnityEngine;
 
 using RL.Systems;
 using RL.Entities;
+using RL.Telemetry;
 
 namespace RL.Enemies
 {
@@ -18,16 +19,16 @@ namespace RL.Enemies
         public float detectionRadius = 5f;
         public float detectionAngle = 45f;
         public LayerMask detectionMask;
-        public float lungeForce = 5f;
-        public float lungeDistance = 2f;
+        public float lungeForce = 500f;
+        public float lungeDistance = 200f;
         public float lungeCooldown = 1f;
         bool _canLunge = true;
         bool _isLunging;
 
         [Header("Invincibility Parameters")]
-        public float invincibilityDuration = 2f; // Time spent in the "ball" invincible form before lunging
-        public float minLungeInterval = 2f;
-        public float maxLungeInterval = 5f;
+        public float invincibilityDuration = 1f; // Time spent in the "ball" invincible form before lunging
+        public float minLungeInterval = 1f;
+        public float maxLungeInterval = 3f;
         public float lungeWindup = 0.5f; // Short delay before lunging
 
         bool _isInvincible = false;
@@ -95,13 +96,13 @@ namespace RL.Enemies
             _isInvincible = true;
 
             // Invincibility phase before lunging
-            yield return new WaitForSeconds(invincibilityDuration);
-
-            sm.ToState(ArmadilloStates.Ball);
             yield return new WaitForSeconds(lungeWindup);
 
-            _isInvincible = false; // End invincibility
+            sm.ToState(ArmadilloStates.Ball);
+            yield return new WaitForSeconds(invincibilityDuration);
+
             Lunge(); // Perform the lunge attack
+            Game.Telemetry.RoomStats[StatKey.EnemyAttackCount].Increment();
 
             yield return new WaitForSeconds(lungeCooldown);
             lungeInterval = UnityEngine.Random.Range(minLungeInterval, maxLungeInterval);
@@ -117,7 +118,9 @@ namespace RL.Enemies
             Vector2 lungeDirection = (target.transform.position - transform.position).normalized;
             rb.AddForce(lungeDirection * lungeForce, ForceMode2D.Impulse);
 
+
             sm.ToState(ArmadilloStates.Lunge);
+            _isInvincible = false; // End invincibility
             sm.LockFor(0.5f);
 
             StartCoroutine(ResetLunge());

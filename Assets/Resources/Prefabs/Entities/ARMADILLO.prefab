@@ -169,7 +169,7 @@ GameObject:
   - component: {fileID: 6907160735477576272}
   - component: {fileID: 1099662821696273097}
   - component: {fileID: 1577932439841733103}
-  - component: {fileID: 9030668385206282864}
+  - component: {fileID: -943892593015723993}
   m_Layer: 9
   m_Name: ARMADILLO
   m_TagString: Enemy
@@ -292,7 +292,7 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
---- !u!114 &9030668385206282864
+--- !u!114 &-943892593015723993
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -322,13 +322,12 @@ MonoBehaviour:
   detectionAngle: 45
   detectionMask:
     serializedVersion: 2
-    m_Bits: 128
-  lungeForce: 5
-  lungeDistance: 2
+    m_Bits: 0
+  lungeForce: 500
   lungeCooldown: 1
-  invincibilityDuration: 2
-  minLungeInterval: 2
-  maxLungeInterval: 5
+  invincibilityDuration: 1
+  minLungeInterval: 1
+  maxLungeInterval: 3
   lungeWindup: 0.5
   stateMachine: {fileID: 545949254197776409}
   animator: {fileID: 5536577506044487149}
