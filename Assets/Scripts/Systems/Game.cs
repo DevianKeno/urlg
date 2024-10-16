@@ -58,6 +58,7 @@ namespace RL
         public PlayerController Player = null;
         public Weapon PlayerEquippedWeapon1 = null;
         public Weapon PlayerEquippedWeapon2 = null;
+        public Weapon PlayerUnequippedWeapon = null;
 
         List<GameObject> currentSceneObjects = new();
         
