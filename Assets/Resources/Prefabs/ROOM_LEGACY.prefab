@@ -657,7 +657,6 @@ MonoBehaviour:
   minBounds: {x: 0, y: 0}
   maxBounds: {x: 0, y: 0}
   size: {x: 0, y: 0}
-  remainingEnemies: 0
   remainingObstacles: 0
   tileLayers: []
   tiles: []

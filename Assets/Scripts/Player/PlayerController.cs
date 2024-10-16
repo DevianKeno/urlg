@@ -12,6 +12,7 @@ using RL.Projectiles;
 using RL.Systems;
 using RL.Telemetry;
 using RL.UI;
+using RL.Entities;
 
 namespace RL.Player
 {
@@ -19,6 +20,7 @@ namespace RL.Player
     {
         public const float InvincibilityTime = 5f;
         public HealthBar healthBar;
+        public WaveWeak salaman;
         public float MaximumHealth = 100f;
         public float Health;
         public float MoveSpeed = 7f;
@@ -82,6 +84,7 @@ namespace RL.Player
             StateMachine.OnStateChanged += animator.StateChangedCallback;
             StateMachine.ToState(PlayerStates.Idle);
             healthBar.InitializeMaxHealth(MaximumHealth);
+            _isInvincible = false;
         }
 
         void InitializeInputs()
@@ -183,7 +186,7 @@ namespace RL.Player
             
             if (other.CompareTag("Enemy"))
             {
-                TakeDamage(1);
+                TakeDamage(salaman.ContactDamage);
                 return;
             }
         }
