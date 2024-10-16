@@ -5,6 +5,7 @@ using RL.Telemetry;
 using Unity.VisualScripting;
 using UnityEngine.Assertions.Must;
 using UnityEditor.Experimental.GraphView;
+using RL.Enemies;
 
 namespace RL.Projectiles
 {
@@ -19,7 +20,7 @@ namespace RL.Projectiles
             _initialVelocity = rb.velocity;
 
             Game.Telemetry.PlayerStats[StatKey.UseCountBeam].Increment();
-            Game.Audio.PlaySound("beam_shoot");
+            Game.Audio.PlaySound("beam");
         }
 
         bool hasParticle;
@@ -69,10 +70,11 @@ namespace RL.Projectiles
 
         void Reflect(Vector3 surfaceNormal)
         {
+            Game.Audio.PlaySound("beam_reflect");
             // if (hadReflected) return;
 
-            var duplicateBeam = Instantiate(gameObject);
-            duplicateBeam.transform.position = transform.position + new Vector3(_initialVelocity.x, _initialVelocity.y);
+            // var duplicateBeam = Instantiate(gameObject);
+            // duplicateBeam.transform.position = transform.position + new Vector3(_initialVelocity.x, _initialVelocity.y);
 
             /// Reflect the velocity based on the surface normal
             Vector3 newDirection = Vector3.Reflect(_initialVelocity, surfaceNormal);
@@ -88,11 +90,24 @@ namespace RL.Projectiles
             hadReflected = true;
         }
 
-        protected override void OnHitEnemy(IDamageable hit)
+        protected override void OnHitEnemy(IDamageable hit, Collision2D collision)
         {
-            rb.bodyType = RigidbodyType2D.Dynamic;
-            hit.TakeDamage(Data.Damage);
             Game.Telemetry.PlayerStats[StatKey.HitCountBeam].Increment();
+            rb.bodyType = RigidbodyType2D.Dynamic;
+
+            if (hit is FireWeak) /// armadil
+            {
+                if (collision.contacts.Length > 0)
+                {
+                    Reflect(collision.contacts[0].normal);
+                    CreatePuffParticle(collision.contacts[0].point);
+                    return;
+                }
+            }
+            else
+            {
+                hit.TakeDamage(Data.Damage);
+            }
             Destroy(gameObject);
         }
 

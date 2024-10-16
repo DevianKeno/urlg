@@ -2,6 +2,7 @@ using UnityEngine;
 using RL.Entities;
 using RL.Levels;
 using RL.Telemetry;
+using RL.Enemies;
 
 namespace RL.Projectiles
 {
@@ -30,10 +31,15 @@ namespace RL.Projectiles
             }
         }
 
+        protected override void OnHitEnemy(IDamageable hit, Collision2D collision)
+        {
+            
+        }
+
         public void Dissipate()
         {
-            rb.velocity *= 0.05f;
             GetComponent<Collider2D>().enabled = false;
+            rb.velocity *= 0.02f;
             var sr = GetComponent<SpriteRenderer>();
             LeanTween.value(gameObject, 1f , 0f, DissipateTime)
                 .setOnUpdate((float i) =>
@@ -55,8 +61,20 @@ namespace RL.Projectiles
             if (go.CompareTag("Enemy"))
             {
                 if (go.TryGetComponent(out IDamageable hit))
-                {                    
+                {
+                    if (hit is WaveWeak) /// salaman
+                    {
+                        /// take double damage
+                        hit.TakeDamage(Data.Damage);
+                    }
+
+                    if (hit is FireWeak) /// armadill
+                    {
+                        Dissipate();
+                    }
+
                     hit.TakeDamage(Data.Damage);
+                    
                     if (!_hasHit)
                     {
                         _hasHit = true;

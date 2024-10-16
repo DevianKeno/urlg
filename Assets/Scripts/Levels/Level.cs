@@ -132,8 +132,10 @@ namespace RL.Levels
                     }
                 );
                 
-                // newRoom.Featurize(roomStats); /// original
-                 newRoom.FeaturizeTest(includeObstacles: true); /// use for testing
+                if (Game.Main.UseTestLevel)
+                    newRoom.FeaturizeTest(includeObstacles: true); /// use for testing
+                else
+                    newRoom.Featurize(roomStats); /// original
             }
             
             OnDoneGenerate?.Invoke();
@@ -148,6 +150,15 @@ namespace RL.Levels
             Game.Main.Player.transform.position = StartRoom.Center.position;
             Game.Main.CurrentRoom = StartRoom;
             
+            if (Game.Main.PlayerEquippedWeapon1 != null)
+            {
+                Game.Main.Player.SetEquippedWeapon1(Game.Main.PlayerEquippedWeapon1);
+            }
+            if (Game.Main.PlayerEquippedWeapon2 != null)
+            {
+                Game.Main.Player.SetEquippedWeapon2(Game.Main.PlayerEquippedWeapon2);
+            }
+
             Game.Main.UnloadScene("LOADING");
         }
 

@@ -8,6 +8,8 @@ namespace RL.Projectiles
 {
     public class Fireball : Projectile
     {
+        public float DissipateTime = 0.25f;
+
         protected override void Start()
         {
             base.Start();
@@ -33,10 +35,35 @@ namespace RL.Projectiles
             }
         }
 
-        protected override void OnHitEnemy(IDamageable hit)
+        public void Dissipate()
+        {
+            rb.velocity *= 0.05f;
+            GetComponent<Collider2D>().enabled = false;
+            var flamePrefab = Resources.Load<GameObject>("Prefabs/Flame");
+            Instantiate(flamePrefab, transform);
+            var sr = GetComponent<SpriteRenderer>();
+            LeanTween.value(gameObject, 1f , 0f, DissipateTime)
+                .setOnUpdate((float i) =>
+                {
+                    var color = sr.color;
+                    color.a = i;
+                    sr.color = color;
+                })
+                .setEase(LeanTweenType.easeOutSine)
+                .setOnComplete(() =>
+                {
+                    Destroy(gameObject);
+                });
+        }
+
+        protected override void OnHitEnemy(IDamageable hit, Collision2D collision)
         {
             hit.TakeDamage(Data.Damage);
             
+            if (hit is IBurnable burnable)
+            {
+                burnable.Burn();
+            }
             Game.Telemetry.PlayerStats[StatKey.HitCountFire].Increment();
             Destroy(gameObject);
         }

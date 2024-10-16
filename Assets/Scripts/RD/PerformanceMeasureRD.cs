@@ -47,6 +47,7 @@ namespace RL.RD
         #region AR
         void OpenARResults()
         {
+            arResults = new();
             var directory = Path.Combine(Application.persistentDataPath, "results", "ar");
             if (!Directory.Exists(directory)) Directory.CreateDirectory(directory);
             
@@ -91,6 +92,7 @@ F-Score: {fScore}";
 
         void OpenGNBResults()
         {
+            gnbResults = new();
             var directory = Path.Combine(Application.persistentDataPath, "results", "gnb");
             if (!Directory.Exists(directory)) Directory.CreateDirectory(directory);
             

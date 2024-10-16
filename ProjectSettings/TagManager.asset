@@ -12,6 +12,7 @@ TagManager:
   - Tile
   - Wave
   - Room
+  - Fireball
   layers:
   - Default
   - TransparentFX

@@ -51,7 +51,7 @@ namespace RL.Systems
 
         public void OpenSavesFolder()
         {
-            var path = Path.Combine(Application.persistentDataPath, "saves");
+            var path = Path.Combine(Application.persistentDataPath, "results");
             
             if (!Directory.Exists(path))
             {

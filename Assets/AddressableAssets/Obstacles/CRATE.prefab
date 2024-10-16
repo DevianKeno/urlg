@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 5396579000879825869}
   - component: {fileID: 2778017329121839432}
   - component: {fileID: 2232779807248089875}
+  - component: {fileID: 5449627322257161088}
   m_Layer: 0
   m_Name: Tile (0, 0) (crate_single_bottom)
   m_TagString: Tile
@@ -192,10 +193,31 @@ MonoBehaviour:
   - {x: 0.5, y: -0.5, z: 0}
   m_ShapePathHash: -510266091
   m_Mesh: {fileID: 0}
-  m_InstanceId: 357026
+  m_InstanceId: 542930
   m_LocalBounds:
     m_Center: {x: 0, y: -0.25, z: 0}
     m_Extent: {x: 0.5, y: 0.25, z: 0}
+--- !u!95 &5449627322257161088
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1380225744002857047}
+  m_Enabled: 0
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: d7c1532b43027cd458b947982f367ab2, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &4585036145759563235
 GameObject:
   m_ObjectHideFlags: 0

@@ -77,9 +77,24 @@ namespace RL.Player
             Weapon2 = Laser;
             unequippedWeapon = Wave;
 
-            damageVignette = Game.UI.Create<DamageVignette>("Damage Vignette");
-            weaponsDisplayUI = Game.UI.Create<WeaponsDisplayUI>("Weapons Display UI");
-            weaponsDisplayUI.EnableSwapping = true;
+            if (Game.Main.currentLevel == 1)
+            {
+                Weapon1 = Fireball;
+                Weapon2 = Laser;
+                unequippedWeapon = Wave;
+                
+                damageVignette = Game.UI.Create<DamageVignette>("Damage Vignette");
+                weaponsDisplayUI = Game.UI.Create<WeaponsDisplayUI>("Weapons Display UI");
+                weaponsDisplayUI.EnableSwapping = true;
+            }
+            else
+            {
+                Weapon1 = Game.Main.PlayerEquippedWeapon1;
+                Weapon2 = Game.Main.PlayerEquippedWeapon2;
+                unequippedWeapon = Game.Main.PlayerUnequippedWeapon;
+
+                UpdateDisplayedWeapons();
+            }
             
             StateMachine.OnStateChanged += animator.StateChangedCallback;
             StateMachine.ToState(PlayerStates.Idle);
@@ -254,6 +269,11 @@ namespace RL.Player
 
         public void UpdateDisplayedWeapons()
         {
+            if (weaponsDisplayUI == null)
+            {
+                weaponsDisplayUI = GameObject.FindAnyObjectByType<WeaponsDisplayUI>();
+            }
+            
             if (selectedWeapon == 1)
             {
                 Equipped = Weapon1;
@@ -264,6 +284,10 @@ namespace RL.Player
             }
             weaponsDisplayUI.weapon1.ProjectileData = Weapon1.ProjectileData;
             weaponsDisplayUI.weapon2.ProjectileData = Weapon2.ProjectileData;
+
+            Game.Main.PlayerEquippedWeapon1 = Weapon1;
+            Game.Main.PlayerEquippedWeapon2 = Weapon2;
+            Game.Main.PlayerUnequippedWeapon = unequippedWeapon;
         }
 
         IEnumerator InvincibilityFrameCoroutine()

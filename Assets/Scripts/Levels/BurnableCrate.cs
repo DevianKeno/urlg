@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 
@@ -6,7 +7,7 @@ namespace RL.Levels
 {
     public class BurnableCrate : Tile
     {
-        public float Health = 100f;
+        public float Health = 200f;
         public float BurnTime = 3f;
 
         [SerializeField] SpriteRenderer spriteRendererChild;
@@ -16,11 +17,12 @@ namespace RL.Levels
             var flamePrefab = Resources.Load<GameObject>("Prefabs/Flame");
             Instantiate(flamePrefab, transform);
             DamageFlash();
-            Destroy(gameObject, BurnTime);
+            Break(BurnTime);
         }
 
         public void TakeDamage(float amount)
         {
+            Game.Audio.PlaySound("crate_hit");
             Health -= amount;
             DamageFlash();
             if (Health <= 0)
@@ -40,8 +42,24 @@ namespace RL.Levels
                 });
         }
 
-        public void Break()
+        public void Break(float delaySeconds = 0f)
         {
+            StartCoroutine(BreakCoroutine(delaySeconds));
+        }
+
+        IEnumerator BreakCoroutine(float delaySeconds)
+        {
+            yield return new WaitForSeconds(delaySeconds);
+
+            Game.Audio.PlaySound("crate_break");
+
+            coll.enabled = false; 
+            spriteRendererChild.enabled = false;
+            var animator = GetComponent<Animator>();
+            animator.enabled = true;
+
+            yield return new WaitForSeconds(2f);
+            
             Destroy(gameObject);
         }
     }

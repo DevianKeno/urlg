@@ -10,6 +10,7 @@ using RL.Systems;
 using RL.Levels;
 using RL.Player;
 using System.Collections.Generic;
+using RL.Weapons;
 
 namespace RL
 {
@@ -52,8 +53,12 @@ namespace RL
         public event Action OnLateInit;
 
         public int currentLevel = 1;
+        public bool UseTestLevel = false;
         public Room CurrentRoom;
         public PlayerController Player = null;
+        public Weapon PlayerEquippedWeapon1 = null;
+        public Weapon PlayerEquippedWeapon2 = null;
+        public Weapon PlayerUnequippedWeapon = null;
 
         List<GameObject> currentSceneObjects = new();
         

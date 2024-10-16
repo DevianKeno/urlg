@@ -318,7 +318,7 @@ MonoBehaviour:
   strafeSpeed: 1
   spriteRenderer: {fileID: 5066019566450128797}
   rb: {fileID: 6907160735477576272}
-  barrier: {fileID: 0}
+  barrier: {fileID: 7820053608966494762}
   barrierDamage: 20
   moveSpeed: 3
   detectionRadius: 5
@@ -327,10 +327,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   barrierCooldown: 3
-  barrierDuration: 8
+  barrierDuration: 3
   barrierChargeTime: 1
-  minBarrierInterval: 0
-  maxBarrierInterval: 2
+  minBarrierInterval: 2
+  maxBarrierInterval: 5
   _canChargeBarrier: 1
   _isChargingBarrier: 0
   _isUsingBarrier: 0
@@ -481,8 +481,9 @@ GameObject:
   - component: {fileID: 6588400899257968683}
   - component: {fileID: 2152628137061515329}
   - component: {fileID: 2111597332465022692}
+  - component: {fileID: 4809935452416399304}
   m_Layer: 9
-  m_Name: Wave (1)
+  m_Name: Barrier
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -614,6 +615,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebc53a612b3fcc445bfa9577865781ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!95 &4809935452416399304
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7820053608966494762}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 349be963ff75bf84181b798c3b3cbc85, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &8238073555193012819
 GameObject:
   m_ObjectHideFlags: 0

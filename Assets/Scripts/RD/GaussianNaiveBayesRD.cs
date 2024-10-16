@@ -346,7 +346,7 @@ therefore is <b>rejected</b>.";
 
         public void OpenSelectDatasetDialog()
         {
-            string datasetsDirectory = Path.Combine(Application.persistentDataPath, "datasets");
+            string datasetsDirectory = Path.Combine(Application.persistentDataPath, "dataset");
             string[] paths = StandaloneFileBrowser.OpenFilePanel("Select dataset (.csv)", datasetsDirectory, "csv", false);
 
             if (paths.Length > 0 && !string.IsNullOrEmpty(paths[0]))
@@ -378,7 +378,7 @@ therefore is <b>rejected</b>.";
                     if (Enum.TryParse(headers[j], out StatKey statKey))
                         entry.Values[statKey] = int.Parse(row[j]);
 
-                if (UnityEngine.Random.Range(0, 101) <= ValidateRatio)
+                if (UnityEngine.Random.Range(0, 101) <= (ValidateRatio * 100))
                 {
                     if (int.Parse(row[^1]) == 1)
                         validationSet.AcceptedEntries.Add(entry);

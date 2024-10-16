@@ -222,7 +222,7 @@ namespace RL.RD
         
         public void SelectDataset()
         {
-            string datasetsDirectory = Path.Combine(Application.persistentDataPath, "datasets");
+            string datasetsDirectory = Path.Combine(Application.persistentDataPath, "dataset");
             string[] paths = StandaloneFileBrowser.OpenFilePanel("Select dataset (.csv)", datasetsDirectory, "csv", false);
 
             if (paths.Length > 0 && !string.IsNullOrEmpty(paths[0]))
