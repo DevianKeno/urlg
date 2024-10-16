@@ -3644,7 +3644,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.00030518, y: -0}
+  m_AnchoredPosition: {x: -0.00030517578, y: 0}
   m_SizeDelta: {x: 0.00057983, y: 0.0006}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &101750907
@@ -21823,7 +21823,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.0000076294, y: -0.000090122}
+  m_AnchoredPosition: {x: 0.000015258789, y: -0.000091552734}
   m_SizeDelta: {x: 0, y: 0.000061035}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &611207097
@@ -74300,6 +74300,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Room: {fileID: 0}
+  ValidateRatio: 0.2
   _hasDataset: 0
   playerTelemetryUI: {fileID: 1023328463}
   roomTelemetryUI: {fileID: 765498905}
@@ -81808,6 +81809,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 6666646382189216996, guid: fbb6eb59c9e71404491d8d67b1e33146, type: 3}
   m_PrefabInstance: {fileID: 1889918570}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1889918572 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2679207203773820796, guid: fbb6eb59c9e71404491d8d67b1e33146, type: 3}
+  m_PrefabInstance: {fileID: 1889918570}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1890724944
 GameObject:
   m_ObjectHideFlags: 0
@@ -84684,6 +84696,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 6666646382189216996, guid: fbb6eb59c9e71404491d8d67b1e33146, type: 3}
   m_PrefabInstance: {fileID: 1984501565}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1984501567 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2679207203773820796, guid: fbb6eb59c9e71404491d8d67b1e33146, type: 3}
+  m_PrefabInstance: {fileID: 1984501565}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1985632659
 GameObject:
   m_ObjectHideFlags: 0
@@ -85852,8 +85875,12 @@ MonoBehaviour:
   arInfoTmp: {fileID: 902109016}
   gnbFilenameTmp: {fileID: 1814565246}
   gnbInfoTmp: {fileID: 2145675612}
+  arMetricsTmp: {fileID: 1477988449}
+  gnbMetricsTmp: {fileID: 1316829436}
   arResultsBtn: {fileID: 1702770885}
   gnbResultsBtn: {fileID: 1995297309}
+  calculateARBtn: {fileID: 1984501567}
+  calculateGNBBtn: {fileID: 1889918572}
 --- !u!1 &2009931782
 GameObject:
   m_ObjectHideFlags: 0

@@ -79,7 +79,7 @@ namespace RL.RD
             float recall = arResults.CalculateRecall();
             float fScore = arResults.CalculateFScore();
 
-            arMetricsTmp.text += @$"Precision: {precision}
+            arMetricsTmp.text = @$"Precision: {precision}
 Recall: {recall}
 F-Score: {fScore}";
         }
@@ -123,7 +123,7 @@ F-Score: {fScore}";
             float recall = gnbResults.CalculateRecall();
             float fScore = gnbResults.CalculateFScore();
 
-            gnbMetricsTmp.text += @$"Precision: {precision}
+            gnbMetricsTmp.text = @$"Precision: {precision}
 Recall: {recall}
 F-Score: {fScore}";
         }
