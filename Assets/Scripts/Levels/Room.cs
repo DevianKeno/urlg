@@ -302,6 +302,7 @@ namespace RL.Levels
             IsActive = false;
             IsCleared = true;
             // Game.UI.ShowArrowPointer();
+            Game.Main.Player.Heal();
             OpenDoors();
 
             Game.Audio.PlaySound("done_level");

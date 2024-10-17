@@ -77,6 +77,10 @@ namespace RL.Player
             Weapon2 = Laser;
             unequippedWeapon = Wave;
 
+            if (damageVignette == null)
+            {
+                damageVignette = FindObjectOfType<DamageVignette>();
+            }
             if (healthBar == null)
             {
                 healthBar = FindObjectOfType<HealthBar>();
@@ -273,6 +277,11 @@ namespace RL.Player
             StateMachine.ToState(PlayerStates.Death);
             var puffParticle = Game.Particles.Create("puff");
             puffParticle.transform.position = transform.position;
+        }
+
+        public void Heal()
+        {
+            healthBar.UpdateHealthPoints(MaximumHealth);
         }
 
         public void UpdateDisplayedWeapons()

@@ -319,21 +319,24 @@ MonoBehaviour:
   spriteRenderer: {fileID: 5066019566450128797}
   rb: {fileID: 6907160735477576272}
   barrier: {fileID: 7820053608966494762}
-  barrierDamage: 20
-  moveSpeed: 3
+  ContactDamage: 10
   detectionRadius: 5
   detectionAngle: 45
   detectionMask:
     serializedVersion: 2
     m_Bits: 0
-  barrierCooldown: 3
-  barrierDuration: 3
-  barrierChargeTime: 1
-  minBarrierInterval: 2
-  maxBarrierInterval: 5
-  _canChargeBarrier: 1
-  _isChargingBarrier: 0
-  _isUsingBarrier: 0
+  lungeForce: 5
+  lungeDistance: 2
+  lungeCooldown: 1
+  chargeSpeed: 0.05
+  overshoot: 2
+  chargeCooldown: 5
+  minChargeInterval: 2
+  maxChargeInterval: 2
+  chargeWindup: 1
+  chargeDuration: 2
+  _canCharge: 1
+  _isCharging: 0
   stateMachine: {fileID: 8942868409043164732}
   animator: {fileID: 2779687100459706352}
 --- !u!1 &7746119413289433489
