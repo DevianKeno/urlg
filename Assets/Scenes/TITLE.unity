@@ -398,6 +398,7 @@ MonoBehaviour:
   Player: {fileID: 0}
   PlayerEquippedWeapon1: {fileID: 0}
   PlayerEquippedWeapon2: {fileID: 0}
+  PlayerUnequippedWeapon: {fileID: 0}
   algorithmUsed: 0
   playerInput: {fileID: 0}
   salamanPrefab: {fileID: 0}

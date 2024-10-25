@@ -104,7 +104,6 @@ namespace RL.Levels
                 }
             }
 
-            InitializeStats();
             InitializeDoors();
             CalculateBounds(minX, maxX, minY, maxY);
             CalculateSize();

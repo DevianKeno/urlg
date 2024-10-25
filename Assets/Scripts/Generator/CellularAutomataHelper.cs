@@ -494,7 +494,11 @@ namespace RL.CellularAutomata
 
         MockRoom InstantiateRoom(int x, int y, Color color)
         {
+#if UNITY_EDITOR
             var room = (GameObject) PrefabUtility.InstantiatePrefab(mockRoomPrefab, mockRoomContainer);
+#else
+            var room = Instantiate(mockRoomPrefab, mockRoomContainer);
+#endif
             var spriteRenderer = room.GetComponent<SpriteRenderer>();
             
             spriteRenderer.color = color;
@@ -516,7 +520,11 @@ namespace RL.CellularAutomata
             for (int x = 0; x < Width; x++)
             for (int y = 0; y < Height; y++)
             {
-                var tile = (GameObject) PrefabUtility.InstantiatePrefab(tilePrefab, transform);
+#if UNITY_EDITOR
+            var tile = (GameObject) PrefabUtility.InstantiatePrefab(tilePrefab, transform);
+#else
+            var tile = Instantiate(tilePrefab, transform);
+#endif
                 var spriteRenderer = tile.GetComponent<SpriteRenderer>();
 
                 if (noiseGrid[x, y] == WallTile)
@@ -544,7 +552,11 @@ namespace RL.CellularAutomata
             for (int x = 0; x < Width; x++)
             for (int y = 0; y < Height; y++)
             {
-                var tile = (GameObject)PrefabUtility.InstantiatePrefab(tilePrefab, transform);
+#if UNITY_EDITOR
+                var tile = (GameObject) PrefabUtility.InstantiatePrefab(tilePrefab, transform);
+#else
+                var tile = Instantiate(tilePrefab, transform);
+#endif
                 var spriteRenderer = tile.GetComponent<SpriteRenderer>();
 
                 if (grid[x, y] == WallTile)

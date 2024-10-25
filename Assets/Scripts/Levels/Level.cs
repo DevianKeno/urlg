@@ -29,19 +29,23 @@ namespace RL.Levels
         /// </summary>
         public static Dictionary<int, int> RoomsPerLevel = new()
         {
-            {1, 3}, {2, 3}, {3, 4}, {4, 4}, {5, 5}, {6, 5}, {7, 6}, {8, 6}, 
+            {1, 2}, {2, 2}, {3, 3}, {4, 3}, {5, 4}, {6, 4}, {7, 5}, {8, 5}, {9, 6}, {10, 6}, 
         };
         /// <summary>
         /// Key is level number, Value is RoomMaxParameters.
         /// </summary>
         public static Dictionary<int, RoomMaxParameters> MaxPerLevel = new()
         {
-            {1, new(3, 5)},
-            {2, new(4, 7)},
-            {3, new(5, 9)},
-            {4, new(6, 11)},
-            {5, new(8, 13)},
-            {6, new(9, 15)}, 
+            {1, new(1, 3)},
+            {2, new(2, 4)},
+            {3, new(2, 4)},
+            {4, new(2, 5)},
+            {5, new(3, 6)},
+            {6, new(3, 6)}, 
+            {7, new(4, 8)}, 
+            {8, new(4, 8)}, 
+            {9, new(5, 10)}, 
+            {10, new(5, 10)}, 
         };
         public const int MaxSearches = 512;
 

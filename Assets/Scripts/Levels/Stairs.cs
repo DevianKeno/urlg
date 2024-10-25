@@ -14,23 +14,48 @@ namespace RL.Levels
 
                 Game.Main.currentLevel++;
 
-                Game.Main.LoadScene(
-                    new(){
-                        SceneToLoad = "LOADING",
-                        Mode = LoadSceneMode.Additive,
-                        PlayTransition = true, },
-                    onLoadSceneCompleted: () =>
-                    {
-                        Game.Main.UnloadScene(
-                            "LEVEL",
-                            onUnloadSceneCompleted: () =>
-                            {
-                                Game.Main.LoadScene(
-                                    new(){
-                                        SceneToLoad = "LEVEL",
-                                    });
-                            });
-                    });
+                if (Game.Main.currentLevel > 10) /// level 10 is max
+                {
+                    Game.Telemetry.SaveEntriesToJson();
+
+                    Game.Main.LoadScene(
+                        new(){
+                            SceneToLoad = "COMPLETE",
+                            Mode = LoadSceneMode.Additive,
+                            PlayTransition = true, },
+                        onLoadSceneCompleted: () =>
+                        {
+                            Game.Main.UnloadScene(
+                                "LEVEL",
+                                onUnloadSceneCompleted: () =>
+                                {
+                                    Game.Main.LoadScene(
+                                        new(){
+                                            SceneToLoad = "TITLE",
+                                        });
+                                });
+                        });
+                }
+                else
+                {
+                    Game.Main.LoadScene(
+                        new(){
+                            SceneToLoad = "LOADING",
+                            Mode = LoadSceneMode.Additive,
+                            PlayTransition = true, },
+                        onLoadSceneCompleted: () =>
+                        {
+                            Game.Main.UnloadScene(
+                                "LEVEL",
+                                onUnloadSceneCompleted: () =>
+                                {
+                                    Game.Main.LoadScene(
+                                        new(){
+                                            SceneToLoad = "LEVEL",
+                                        });
+                                });
+                        });
+                }
             }
         }
     }
