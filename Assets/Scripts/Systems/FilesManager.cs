@@ -11,6 +11,8 @@ namespace RL.Systems
 {
     public class FilesManager : MonoBehaviour
     {
+        const string SAVE_DATA_EXTENSION = "json";
+
         public void SaveDataJson(ResultsJsonData data)
         {
             var date = $"{DateTime.Now:yyyyMMdd_HHmmss}";
@@ -21,7 +23,7 @@ namespace RL.Systems
             else if (Game.Main.AlgorithmUsed == PCGAlgorithm.GaussianNaiveBayes)
                 subfolder = "gnb";
 
-            var filename = subfolder + "_results_" + date + ".dat";
+            var filename = subfolder + "_results_" + date + $".{SAVE_DATA_EXTENSION}";
             
             var savepath = Path.Combine(Application.persistentDataPath, "results", subfolder);
             if (!Directory.Exists(savepath)) Directory.CreateDirectory(savepath);

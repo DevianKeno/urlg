@@ -8,6 +8,8 @@ using SFB;
 using RL.Telemetry;
 using Newtonsoft.Json;
 using RL.Classifiers;
+using System;
+using System.Linq;
 
 namespace RL.RD
 {
@@ -26,14 +28,20 @@ namespace RL.RD
 
         [Header("Buttons")]
         [SerializeField] Button arResultsBtn;
+        [SerializeField] Button arFolderBtn;
         [SerializeField] Button gnbResultsBtn;
+        [SerializeField] Button gnbFolderBtn;
         [SerializeField] Button calculateARBtn;
         [SerializeField] Button calculateGNBBtn;
 
         void Awake()
         {
             arResultsBtn.onClick.AddListener(OpenARResults);
+            arFolderBtn.onClick.AddListener(OpenARFolder);
+
             gnbResultsBtn.onClick.AddListener(OpenGNBResults);
+            gnbFolderBtn.onClick.AddListener(OpenGNBFolder);
+
             calculateARBtn.onClick.AddListener(CalculateAR);
             calculateGNBBtn.onClick.AddListener(CalculateGNB);
         }
@@ -47,6 +55,7 @@ namespace RL.RD
         #region AR
         void OpenARResults()
         {
+            arResults.TotalEntryCount = 0;
             arResults = new();
             var directory = Path.Combine(Application.persistentDataPath, "results", "ar");
             if (!Directory.Exists(directory)) Directory.CreateDirectory(directory);
@@ -61,6 +70,29 @@ namespace RL.RD
             }
         }
 
+        void OpenARFolder()
+        {
+            arResults.TotalEntryCount = 0;
+            arResults = new();
+            var directory = Path.Combine(Application.persistentDataPath, "results", "ar");
+            if (!Directory.Exists(directory)) Directory.CreateDirectory(directory);
+            
+            var filePaths = Directory.EnumerateFiles(directory)
+                                .Where(file => file.EndsWith(".json") || file.EndsWith(".dat"));
+            foreach (var filePath in filePaths)
+            {
+                try
+                {
+                    var content = File.ReadAllText(filePath);
+                    ParseARResults(content);
+                }
+                catch
+                {
+                    continue;
+                }
+            }
+        }
+
         void ParseARResults(string content)
         {
             var a = JsonConvert.DeserializeObject<ResultsJsonData>(content);
@@ -70,7 +102,7 @@ namespace RL.RD
                 var status = ConfMatxAnswer(entry.GroundTruth, entry.Classification);
                 arResults.IncrementCount(status);
             }
-            arResults.TotalEntryCount = a.Entries.Count;
+            arResults.TotalEntryCount += a.Entries.Count;
             UpdateARInfoText();
         }
 
@@ -92,7 +124,9 @@ F-Score: {fScore}";
 
         void OpenGNBResults()
         {
+            gnbResults.TotalEntryCount = 0;
             gnbResults = new();
+
             var directory = Path.Combine(Application.persistentDataPath, "results", "gnb");
             if (!Directory.Exists(directory)) Directory.CreateDirectory(directory);
             
@@ -101,8 +135,32 @@ F-Score: {fScore}";
             if (paths.Length > 0 && !string.IsNullOrEmpty(paths[0]))
             {
                 var content = File.ReadAllText(paths[0]);
-                ParseGNBResults(content);
+                ParseARResults(content);
                 gnbFilenameTmp.text = $"{Path.GetFileName(paths[0])}";
+            }
+        }
+        
+        void OpenGNBFolder()
+        {
+            gnbResults.TotalEntryCount = 0;
+            gnbResults = new();
+
+            var directory = Path.Combine(Application.persistentDataPath, "results", "gnb");
+            if (!Directory.Exists(directory)) Directory.CreateDirectory(directory);
+            
+            var filePaths = Directory.EnumerateFiles(directory)
+                                .Where(file => file.EndsWith(".json") || file.EndsWith(".dat"));
+            foreach (var filePath in filePaths)
+            {
+                try
+                {
+                    var content = File.ReadAllText(filePath);
+                    ParseGNBResults(content);
+                }
+                catch
+                {
+                    continue;
+                }
             }
         }
         
