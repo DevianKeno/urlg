@@ -32,9 +32,16 @@ namespace RL.Levels
                                 "LEVEL",
                                 onUnloadSceneCompleted: () =>
                                 {
+                                    Game.Audio.StopMusic("level");
+                                    Game.Audio.Play("complete");
+                                    
                                     Game.Main.LoadScene(
                                         new(){
                                             SceneToLoad = "TITLE",
+                                        },
+                                        onLoadSceneCompleted: () =>
+                                        {
+                                            Game.Audio.PlayMusic("title");
                                         });
                                 });
                         });

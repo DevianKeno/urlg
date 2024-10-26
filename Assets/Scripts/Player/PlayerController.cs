@@ -173,6 +173,7 @@ namespace RL.Player
                 inputs["Shoot"].Enable();
                 inputs["Swap Weapons"].Enable();
                 weaponsDisplayUI.EnableSwapping = true;
+                _enablePauseControl = true;
             }
             else
             {
@@ -180,6 +181,7 @@ namespace RL.Player
                 inputs["Shoot"].Disable();
                 inputs["Swap Weapons"].Disable();
                 weaponsDisplayUI.EnableSwapping = false;
+                _enablePauseControl = false;
             }
         }
 
@@ -202,13 +204,13 @@ namespace RL.Player
                 Shoot();
             }
 
-            if (Input.GetKeyDown(KeyCode.Escape) && _enablePauseControl)
+            if (Input.GetKeyDown(KeyCode.Escape))
             {
                 if (_pauseScreenIsVisible)
                 {
                     HidePauseMenu();
                 }
-                else
+                else if (!_pauseScreenIsVisible && _enablePauseControl)
                 {
                     ShowPauseMenu();
                 }

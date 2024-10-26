@@ -1,0 +1,61 @@
+<linker>
+  <assembly fullname="Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+    <type fullname="RL.AntiFireArea" preserve="all" />
+    <type fullname="RL.AntiWaveArea" preserve="all" />
+    <type fullname="RL.Enemies.ArmadilloAnimator" preserve="all" />
+    <type fullname="RL.Enemies.ArmadilloStateMachine" preserve="all" />
+    <type fullname="RL.Enemies.BeamWeak" preserve="all" />
+    <type fullname="RL.Enemies.FireWeak" preserve="all" />
+    <type fullname="RL.Enemies.LichLightAnimator" preserve="all" />
+    <type fullname="RL.Enemies.LichLightStateMachine" preserve="all" />
+    <type fullname="RL.Entities.Enemy" preserve="all" />
+    <type fullname="RL.Entities.EnemyShield" preserve="all" />
+    <type fullname="RL.Entities.SalamanderAnimator" preserve="all" />
+    <type fullname="RL.Entities.SalamanderStateMachine" preserve="all" />
+    <type fullname="RL.Entities.WaveWeak" preserve="all" />
+    <type fullname="RL.EntityData" preserve="all" />
+    <type fullname="RL.Levels.BurnableCrate" preserve="all" />
+    <type fullname="RL.Levels.Glass" preserve="all" />
+    <type fullname="RL.Levels.Stairs" preserve="all" />
+    <type fullname="RL.Levels.Tile" preserve="all" />
+    <type fullname="RL.Levels.TileData" preserve="all" />
+    <type fullname="RL.Systems.State`1[RL.Enemies.ArmadilloStates]" preserve="nothing" serialized="true" />
+    <type fullname="RL.Systems.State`1[RL.Enemies.LichLightStates]" preserve="nothing" serialized="true" />
+    <type fullname="RL.Systems.State`1[RL.Entities.SalamanderStates]" preserve="nothing" serialized="true" />
+  </assembly>
+  <assembly fullname="Unity.Addressables, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null" preserve="all">
+    <type fullname="UnityEngine.AddressableAssets.Addressables" preserve="all" />
+    <type fullname="UnityEngine.AddressableAssets.AssetReference" preserve="nothing" serialized="true" />
+  </assembly>
+  <assembly fullname="Unity.RenderPipelines.Universal.Runtime, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+    <type fullname="UnityEngine.Rendering.Universal.ShadowCaster2D" preserve="all" />
+  </assembly>
+  <assembly fullname="Unity.ResourceManager, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null" preserve="all">
+    <type fullname="UnityEngine.ResourceManagement.ResourceProviders.AssetBundleProvider" preserve="all" />
+    <type fullname="UnityEngine.ResourceManagement.ResourceProviders.BundledAssetProvider" preserve="all" />
+    <type fullname="UnityEngine.ResourceManagement.ResourceProviders.InstanceProvider" preserve="all" />
+    <type fullname="UnityEngine.ResourceManagement.ResourceProviders.LegacyResourcesProvider" preserve="all" />
+    <type fullname="UnityEngine.ResourceManagement.ResourceProviders.SceneProvider" preserve="all" />
+  </assembly>
+  <assembly fullname="UnityEngine.AnimationModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+    <type fullname="UnityEngine.AnimationClip" preserve="all" />
+    <type fullname="UnityEngine.Animator" preserve="all" />
+    <type fullname="UnityEngine.RuntimeAnimatorController" preserve="all" />
+  </assembly>
+  <assembly fullname="UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+    <type fullname="UnityEngine.GameObject" preserve="all" />
+    <type fullname="UnityEngine.Material" preserve="all" />
+    <type fullname="UnityEngine.Object" preserve="all" />
+    <type fullname="UnityEngine.Rendering.SortingGroup" preserve="all" />
+    <type fullname="UnityEngine.Shader" preserve="all" />
+    <type fullname="UnityEngine.Sprite" preserve="all" />
+    <type fullname="UnityEngine.SpriteRenderer" preserve="all" />
+    <type fullname="UnityEngine.Texture2D" preserve="all" />
+    <type fullname="UnityEngine.Transform" preserve="all" />
+  </assembly>
+  <assembly fullname="UnityEngine.Physics2DModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+    <type fullname="UnityEngine.BoxCollider2D" preserve="all" />
+    <type fullname="UnityEngine.CircleCollider2D" preserve="all" />
+    <type fullname="UnityEngine.Rigidbody2D" preserve="all" />
+  </assembly>
+</linker>
