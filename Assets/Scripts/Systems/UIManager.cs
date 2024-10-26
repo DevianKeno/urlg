@@ -68,16 +68,26 @@ namespace RL
         /// Create an instance of a UI prefab.
         /// </summary>
         /// <typeparam name="T">Window script attach to the root.</typeparam>
-        public T Create<T>(string prefabName, bool show = true) where T : Window
+        public T Create<T>(string prefabName, bool show = true, Transform parent = null) where T : Window
         {            
             if (_prefabsDict.ContainsKey(prefabName))
             {
-                var go = Instantiate(_prefabsDict[prefabName], Canvas.transform);
+                Transform uiparent; 
+                if (parent == null)
+                {
+                    uiparent = Canvas.transform;
+                }
+                else
+                {
+                    uiparent = parent;
+                }
+                var go = Instantiate(_prefabsDict[prefabName], uiparent);
                 go.name = prefabName;
 
                 if (go.TryGetComponent(out T element))
                 {
                     if (!show) element.Hide();
+                    element.IsVisible = true;
                     return element;
                 }
                 return default;

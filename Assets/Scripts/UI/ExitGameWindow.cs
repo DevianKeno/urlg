@@ -16,7 +16,7 @@ namespace RL.UI
 
         public void Back()
         {
-            Destroy(gameObject);
+            Hide(destroy: true);
         }
 
         public void ExitGame()

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using RL.Player;
 using UnityEngine;
 
 namespace RL.Entities
@@ -71,6 +72,15 @@ namespace RL.Entities
                     hasTarget = true;
                     break;
                 }
+            }
+        }
+
+        public void SetTargetPlayer(PlayerController player)
+        {
+            if (player != null)
+            {
+                target = player.gameObject;
+                hasTarget = true;
             }
         }
 

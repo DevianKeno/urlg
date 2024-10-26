@@ -40,6 +40,11 @@ namespace RL.UI
             swapInput.started += OnInputSwap;
         }
 
+        void OnDestroy()
+        {
+            swapInput.started -= OnInputSwap;
+        }
+
         void OnInputSwap(InputAction.CallbackContext context)
         {
             if (!EnableSwapping) return;

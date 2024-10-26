@@ -1,5 +1,7 @@
 using System;
+using RL.Player;
 using UnityEngine;
+using UnityEngine.Diagnostics;
 
 namespace RL.Levels
 {
@@ -14,7 +16,7 @@ namespace RL.Levels
             if (other.gameObject.CompareTag("Player"))
             {
                 if (room.IsActive && !room.IsCleared) return;
-                StartCoroutine(room.OnPlayerEntry());
+                StartCoroutine(room.OnPlayerEntry(other.GetComponent<PlayerController>()));
                 enabled = false;
             }
         }

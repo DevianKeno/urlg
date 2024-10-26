@@ -22084,6 +22084,10 @@ PrefabInstance:
       propertyPath: healthBar
       value: 
       objectReference: {fileID: 1776552730}
+    - target: {fileID: 5172942946696782960, guid: a75f7f19d4a417b42b2f3cb4fb975633, type: 3}
+      propertyPath: levelCanvas
+      value: 
+      objectReference: {fileID: 1692754852}
     - target: {fileID: 8274043829290516424, guid: a75f7f19d4a417b42b2f3cb4fb975633, type: 3}
       propertyPath: m_LocalPosition.y
       value: 0.25

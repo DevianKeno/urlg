@@ -11,6 +11,7 @@ using static RL.Generator.Generator.Map;
 using RL.CellularAutomata;
 using RL.UI;
 using RL.Classifiers;
+using RL.Player;
 
 namespace RL.Levels
 {
@@ -416,7 +417,7 @@ namespace RL.Levels
             }
         }
         
-        internal IEnumerator OnPlayerEntry()
+        internal IEnumerator OnPlayerEntry(PlayerController player = null)
         {
             if (IsStartRoom || IsEndRoom || IsCleared) yield break;
 
@@ -425,14 +426,19 @@ namespace RL.Levels
             // Game.UI.HideArrowPointer();
             IsActive = true;
             ShutDoors();
+            ActivateEnemies(player);
             yield return null;
         }
 
-        void ActivateEnemies()
+        void ActivateEnemies(PlayerController target = null)
         {
-            foreach (var e in enemies)
+            foreach (var enemy in enemies)
             {
-                e.IsAsleep = false;
+                if (target != null)
+                {
+                    enemy.SetTargetPlayer(target);
+                }
+                enemy.IsAsleep = false;
             }
         }
 

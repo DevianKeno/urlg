@@ -102,6 +102,11 @@ namespace RL.Projectiles
                     return;
                 }
             }
+            else if (hit is BeamWeak)
+            {
+                CreatePuffParticle(collision.contacts[0].point);
+                hit.TakeDamage(Data.Damage * 3);
+            }
             else
             {
                 hit.TakeDamage(Data.Damage);

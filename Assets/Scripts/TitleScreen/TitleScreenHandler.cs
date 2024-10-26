@@ -10,12 +10,15 @@ using SFB;
 using RL.Classifiers;
 using RL.RD;
 using RL.Telemetry;
+using RL.UI;
 
 namespace RL.TitleScreen
 {
     public class TitleScreenHandler : MonoBehaviour
     {
         public float ValidateRatio = 0.2f;
+
+        bool exitWindowIsOpen = false;
         
         [Header("Texts")]
         [SerializeField] TextMeshProUGUI datasetFilenameTmp;
@@ -145,7 +148,14 @@ namespace RL.TitleScreen
 
         void OpenExitDialog()
         {
-            
+            if (exitWindowIsOpen) return;
+            exitWindowIsOpen = true;
+
+            var exitWindow = Game.UI.Create<ExitGameWindow>("Exit Game Window");
+            exitWindow.OnClose += () =>
+            {
+                exitWindowIsOpen = false;
+            };
         }
     }
 }

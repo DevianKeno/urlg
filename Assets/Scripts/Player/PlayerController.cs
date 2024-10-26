@@ -13,6 +13,7 @@ using RL.Systems;
 using RL.Telemetry;
 using RL.UI;
 using RL.Entities;
+using UnityEngine.SceneManagement;
 
 namespace RL.Player
 {
@@ -26,22 +27,25 @@ namespace RL.Player
         public float MoveSpeed = 7f;
         public float Acceleration = 0.3f;
 
-
+        public bool IsAlive { get; private set; }
         bool _isHoldingFire;
         bool _isInvincible;
+        bool _pauseScreenIsVisible;
+        bool _enablePauseControl = false;
         float _fireRateDelta;
         Vector2 _frameMovement;
         Vector2 _currentVelocity;
+
+        MainMenuWindow mainMenuWindow;
+        [SerializeField] Canvas levelCanvas;
 
         [Header("Components")]
         [SerializeField] PlayerStateMachine stateMachine;
         public PlayerStateMachine StateMachine => stateMachine;
         [SerializeField] PlayerAnimator animator;
-        // [SerializeField] PlayerStatsManager stats;
-        // public PlayerStatsManager Stats => stats;
-
         [SerializeField] Rigidbody2D rb;
         public Rigidbody2D Rigidbody2D => rb;
+
         [SerializeField] SpriteRenderer spriteRenderer;
         DamageVignette damageVignette;
         WeaponsDisplayUI weaponsDisplayUI;
@@ -92,8 +96,8 @@ namespace RL.Player
                 Weapon2 = Laser;
                 unequippedWeapon = Wave;
                 
-                damageVignette = Game.UI.Create<DamageVignette>("Damage Vignette");
-                weaponsDisplayUI = Game.UI.Create<WeaponsDisplayUI>("Weapons Display UI");
+                damageVignette = Game.UI.Create<DamageVignette>("Damage Vignette", parent: levelCanvas.transform);
+                weaponsDisplayUI = Game.UI.Create<WeaponsDisplayUI>("Weapons Display UI", parent: levelCanvas.transform);
                 weaponsDisplayUI.EnableSwapping = true;
             }
             else
@@ -109,8 +113,9 @@ namespace RL.Player
             StateMachine.ToState(PlayerStates.Idle);
             healthBar.InitializeMaxHealth(MaximumHealth);
             _isInvincible = false;
-        }
 
+            StartCoroutine(PauseControlTimerCoroutine());
+        }
         void InitializeInputs()
         {
             var map = input.actions.FindActionMap("Player");
@@ -189,11 +194,46 @@ namespace RL.Player
                 Shoot();
             }
 
-            if (Input.GetKeyDown(KeyCode.Keypad6))
+            if (Input.GetKeyDown(KeyCode.Escape) && _enablePauseControl)
             {
-                //Test damage
-                TakeDamage(20);
+                if (_pauseScreenIsVisible)
+                {
+                    HidePauseMenu();
+                }
+                else
+                {
+                    ShowPauseMenu();
+                }
             }
+
+            // if (Input.GetKeyDown(KeyCode.Keypad6))
+            // {
+            //     //Test damage
+            //     TakeDamage(20);
+            // }
+        }
+
+        void ShowPauseMenu()
+        {
+            _pauseScreenIsVisible = true;
+            
+            if (mainMenuWindow == null)
+            {
+                SetControlsEnabled(false);
+                mainMenuWindow = Game.UI.Create<MainMenuWindow>("Main Menu Window");
+                mainMenuWindow.OnClose += () =>
+                {
+                    _pauseScreenIsVisible = false;
+                    SetControlsEnabled(true);
+                };
+            }
+        }
+
+        void HidePauseMenu()
+        {
+            _pauseScreenIsVisible = false;
+            SetControlsEnabled(true);
+            mainMenuWindow?.Hide(destroy: true);
         }
 
         void FixedUpdate()
@@ -266,17 +306,44 @@ namespace RL.Player
         {
             if (Health <= 0)
             {
-                Die();
+                StartCoroutine(DieCoroutine());
                 return true;
             }
             return false;
         }
 
-        void Die()
+        IEnumerator DieCoroutine()
         {
+            IsAlive = false;
+            SetControlsEnabled(false);
             StateMachine.ToState(PlayerStates.Death);
             var puffParticle = Game.Particles.Create("puff");
             puffParticle.transform.position = transform.position;
+
+            yield return new WaitForSeconds(2);
+
+            ReloadLevel();
+        }
+
+        void ReloadLevel()
+        {
+            Game.Main.LoadScene(
+                new(){
+                    SceneToLoad = "LOADING",
+                    Mode = LoadSceneMode.Additive,
+                    PlayTransition = true, },
+                onLoadSceneCompleted: () =>
+                {
+                    Game.Main.UnloadScene(
+                        "LEVEL",
+                        onUnloadSceneCompleted: () =>
+                        {
+                            Game.Main.LoadScene(
+                                new(){
+                                    SceneToLoad = "LEVEL",
+                                });
+                        });
+                });
         }
 
         public void Heal()
@@ -427,5 +494,12 @@ namespace RL.Player
                 projectile.SetDirection(direction);
             }
         }
+
+        IEnumerator PauseControlTimerCoroutine()
+        {
+            yield return new WaitForSeconds(2);
+            _enablePauseControl = true;
+        }
+
     }
 }
