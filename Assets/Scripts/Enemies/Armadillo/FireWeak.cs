@@ -26,6 +26,7 @@ namespace RL.Enemies
         public float lungeCooldown = 1f;
         bool _canLunge = true;
         bool _isLunging;
+        bool _hasHitOnce = false;
 
         [Header("Invincibility Parameters")]
         public float invincibilityDuration = 1f; // Time spent in the "ball" invincible form before lunging
@@ -39,6 +40,8 @@ namespace RL.Enemies
         float lungeDelta;
 
         bool isBurning = false;
+
+        GameObject burnParticle;
 
         [SerializeField] ArmadilloStateMachine stateMachine;
         public StateMachine<ArmadilloStates> sm => stateMachine;
@@ -76,8 +79,9 @@ namespace RL.Enemies
             if (isBurning) return;
             isBurning = true;
 
+            Game.Audio.Play("fire_burst");
             var flamePrefab = Resources.Load<GameObject>("Prefabs/Flame");
-            Instantiate(flamePrefab, transform);
+            burnParticle = Instantiate(flamePrefab, transform);
             
             StartCoroutine(BurnCoroutine());
         }
@@ -85,7 +89,16 @@ namespace RL.Enemies
         IEnumerator BurnCoroutine()
         {
             yield return new WaitForSeconds(BurnTime);
-            Die();
+
+            if (Game.Main.Player != null)
+            if (Game.Main.Player.IsAlive)
+            {
+                Die();
+            }
+            else
+            {
+                Destroy(burnParticle);
+            }
         }
 
         void UpdateStates()
@@ -140,10 +153,10 @@ namespace RL.Enemies
         void Lunge()
         {
             _isLunging = true;
+            _hasHitOnce = false;
 
             Vector2 lungeDirection = (target.transform.position - transform.position).normalized;
             rb.AddForce(lungeDirection * lungeForce, ForceMode2D.Impulse);
-
 
             sm.ToState(ArmadilloStates.Lunge);
             _isInvincible = false; // End invincibility
@@ -191,7 +204,11 @@ namespace RL.Enemies
                 if (go.TryGetComponent(out PlayerController player))
                 {
                     // Debug.Log("player hit");
-                    player.TakeDamage(ContactDamage);
+                    if (!_hasHitOnce)
+                    {
+                        _hasHitOnce = true;
+                        player.TakeDamage(ContactDamage);
+                    }
                 }
             }
         }

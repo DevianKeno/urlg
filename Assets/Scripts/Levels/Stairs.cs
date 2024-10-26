@@ -9,6 +9,8 @@ namespace RL.Levels
         {
             if (other.CompareTag("Player"))
             {
+                Game.Main.Player?.SetControlsEnabled(false);
+                
                 this.coll.enabled = false;
                 Debug.Log("Next level");
 

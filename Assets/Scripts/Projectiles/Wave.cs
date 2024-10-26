@@ -9,6 +9,8 @@ namespace RL.Projectiles
     public class Wave : Projectile
     {
         public float DissipateTime = 0.25f;
+
+        bool hasParticle;
         bool _hasHit;
         
         protected override void Start()
@@ -55,17 +57,18 @@ namespace RL.Projectiles
                 });
         }
 
-        void OnTriggerEnter2D(Collider2D other)
+        protected override void OnTriggerEnter2D(Collider2D other)
         {
             var go = other.gameObject;
             if (go.CompareTag("Enemy"))
             {
                 if (go.TryGetComponent(out IDamageable hit))
                 {
-                    if (hit is WaveWeak) /// salaman
+                    if (hit is WaveWeak ww) /// salaman
                     {
                         /// take double damage
                         hit.TakeDamage(Data.Damage);
+                        CreatePuffParticle(ww.transform.position);
                     }
 
                     if (hit is FireWeak) /// armadill
@@ -82,6 +85,15 @@ namespace RL.Projectiles
                     }
                 }
             }
+        }
+        
+        void CreatePuffParticle(Vector3 position)
+        {
+            if (hasParticle) return;
+            hasParticle = true;
+
+            var puff = Game.Particles.Create("wave_puff");
+            puff.transform.position = position;
         }
     }
 }

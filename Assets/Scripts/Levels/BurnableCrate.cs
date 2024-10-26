@@ -10,12 +10,18 @@ namespace RL.Levels
         public float Health = 200f;
         public float BurnTime = 3f;
 
+        bool _isBurning = false;
+
         [SerializeField] SpriteRenderer spriteRendererChild;
 
         public void StartBurning()
         {
+            if (_isBurning) return;
+            _isBurning = true;
+            
             var flamePrefab = Resources.Load<GameObject>("Prefabs/Flame");
             Instantiate(flamePrefab, transform);
+            Game.Audio.Play("fire_burst");
             DamageFlash();
             Break(BurnTime);
         }

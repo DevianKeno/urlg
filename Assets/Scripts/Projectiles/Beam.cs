@@ -104,13 +104,16 @@ namespace RL.Projectiles
             }
             else if (hit is BeamWeak)
             {
+                Game.Audio.Play("hitmarker");
                 CreatePuffParticle(collision.contacts[0].point);
                 hit.TakeDamage(Data.Damage * 3);
             }
-            else
+            else if (hit is WaveWeak)
             {
+                CreatePuffParticle(collision.contacts[0].point);
                 hit.TakeDamage(Data.Damage);
             }
+            
             Destroy(gameObject);
         }
 

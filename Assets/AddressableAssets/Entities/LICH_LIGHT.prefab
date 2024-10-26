@@ -319,7 +319,7 @@ MonoBehaviour:
   spriteRenderer: {fileID: 5066019566450128797}
   rb: {fileID: 6907160735477576272}
   barrier: {fileID: 7820053608966494762}
-  ContactDamage: 10
+  ContactDamage: 30
   detectionRadius: 5
   detectionAngle: 45
   detectionMask:

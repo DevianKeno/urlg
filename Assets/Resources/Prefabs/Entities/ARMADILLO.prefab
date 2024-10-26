@@ -159,7 +159,7 @@ MonoBehaviour:
   strafeSpeed: 1
   spriteRenderer: {fileID: 5066019566450128797}
   rb: {fileID: 6907160735477576272}
-  ContactDamage: 10
+  ContactDamage: 40
   BurnTime: 3
   detectionRadius: 5
   detectionAngle: 45

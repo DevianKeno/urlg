@@ -88,7 +88,7 @@ namespace RL.RD
             var directory = Path.Combine(Application.persistentDataPath, "results", "ar");
             if (!Directory.Exists(directory)) Directory.CreateDirectory(directory);
             
-            string[] paths = StandaloneFileBrowser.OpenFilePanel("Select AR results file (.json)", directory, "dat", false);
+            string[] paths = StandaloneFileBrowser.OpenFilePanel("Select AR results file (.json)", directory, "json", false);
 
             if (paths.Length > 0 && !string.IsNullOrEmpty(paths[0]))
             {
@@ -178,7 +178,7 @@ F-Score: {fScore}";
             var directory = Path.Combine(Application.persistentDataPath, "results", "gnb");
             if (!Directory.Exists(directory)) Directory.CreateDirectory(directory);
             
-            string[] paths = StandaloneFileBrowser.OpenFilePanel("Select GNB results file (.json)", directory, "dat", false);
+            string[] paths = StandaloneFileBrowser.OpenFilePanel("Select GNB results file (.json)", directory, "json", false);
 
             if (paths.Length > 0 && !string.IsNullOrEmpty(paths[0]))
             {

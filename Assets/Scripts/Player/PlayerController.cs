@@ -19,7 +19,7 @@ namespace RL.Player
 {
     public class PlayerController : MonoBehaviour
     {
-        public const float InvincibilityTime = 5f;
+        public const float InvincibilityTime = 2f;
         public HealthBar healthBar;
         public WaveWeak salaman;
         public float MaximumHealth = 100f;
@@ -36,6 +36,8 @@ namespace RL.Player
         Vector2 _frameMovement;
         Vector2 _currentVelocity;
 
+        bool _invincibilityFrameActive;
+        float _invincibilityFramesTimer;
         MainMenuWindow mainMenuWindow;
         [SerializeField] Canvas levelCanvas;
 
@@ -76,10 +78,7 @@ namespace RL.Player
         void Start()
         {
             InitializeInputs();
-
-            Weapon1 = Fireball;
-            Weapon2 = Laser;
-            unequippedWeapon = Wave;
+            InitializeWeapons();
 
             if (damageVignette == null)
             {
@@ -89,33 +88,33 @@ namespace RL.Player
             {
                 healthBar = FindObjectOfType<HealthBar>();
             }
-
-            if (Game.Main.currentLevel == 1)
-            {
-                Weapon1 = Fireball;
-                Weapon2 = Laser;
-                unequippedWeapon = Wave;
-                
-                damageVignette = Game.UI.Create<DamageVignette>("Damage Vignette", parent: levelCanvas.transform);
-                weaponsDisplayUI = Game.UI.Create<WeaponsDisplayUI>("Weapons Display UI", parent: levelCanvas.transform);
-                weaponsDisplayUI.EnableSwapping = true;
-            }
-            else
-            {
-                Weapon1 = Game.Main.PlayerEquippedWeapon1;
-                Weapon2 = Game.Main.PlayerEquippedWeapon2;
-                unequippedWeapon = Game.Main.PlayerUnequippedWeapon;
-
-                UpdateDisplayedWeapons();
-            }
+            damageVignette = Game.UI.Create<DamageVignette>("Damage Vignette", parent: levelCanvas.transform);
+            weaponsDisplayUI = Game.UI.Create<WeaponsDisplayUI>("Weapons Display UI", parent: levelCanvas.transform);
+            weaponsDisplayUI.EnableSwapping = true;
+            UpdateDisplayedWeapons();
             
             StateMachine.OnStateChanged += animator.StateChangedCallback;
             StateMachine.ToState(PlayerStates.Idle);
             healthBar.InitializeMaxHealth(MaximumHealth);
             _isInvincible = false;
-
+            IsAlive = true;
             StartCoroutine(PauseControlTimerCoroutine());
         }
+
+        void InitializeWeapons()
+        {
+            if (Game.Main.currentLevel <= 1)
+            {
+                Game.Main.PlayerEquippedWeapon1 = Fireball;
+                Game.Main.PlayerEquippedWeapon2 = Laser;
+                Game.Main.PlayerUnequippedWeapon = Wave;
+            }
+            
+            Weapon1 = Game.Main.PlayerEquippedWeapon1;
+            Weapon2 = Game.Main.PlayerEquippedWeapon2;
+            unequippedWeapon = Game.Main.PlayerUnequippedWeapon;
+        }
+
         void InitializeInputs()
         {
             var map = input.actions.FindActionMap("Player");
@@ -206,11 +205,46 @@ namespace RL.Player
                 }
             }
 
-            // if (Input.GetKeyDown(KeyCode.Keypad6))
-            // {
-            //     //Test damage
-            //     TakeDamage(20);
-            // }
+            if (_isInvincible)
+            {
+                _invincibilityFramesTimer += Time.deltaTime;
+
+                if (_invincibilityFramesTimer > 0.3f && !_invincibilityFrameActive)
+                {
+                    _invincibilityFramesTimer = 0;
+                    _invincibilityFrameActive = true;
+
+                    spriteRenderer.color = new Color(
+                        spriteRenderer.color.r,
+                        spriteRenderer.color.g,
+                        spriteRenderer.color.b,
+                        0.5f);
+
+                    LeanTween.value(gameObject, 0.5f, 1f, 0.1f)
+                        .setLoopPingPong(1)
+                        .setOnUpdate((float alpha) =>
+                        {
+                            var color = spriteRenderer.color;
+                            color.a = alpha;
+                            spriteRenderer.color = color;
+                        })
+                        .setOnComplete(() => _invincibilityFrameActive = false);
+                }
+            }
+            else
+            {
+                spriteRenderer.color = new Color(
+                    spriteRenderer.color.r,
+                    spriteRenderer.color.g,
+                    spriteRenderer.color.b,
+                    1f);
+            }
+
+            /// Test damage
+            if (Input.GetKeyDown(KeyCode.Keypad6))
+            {
+                TakeDamage(20);
+            }
         }
 
         void ShowPauseMenu()
@@ -289,10 +323,13 @@ namespace RL.Player
         {
             if (_isInvincible == true) return;
 
+            _invincibilityFramesTimer = 0.3f;
             Health -= damage;
             healthBar.UpdateHealthPoints(Health);
             Game.Telemetry.PlayerStats[StatKey.HitsTaken].Increment();
             damageVignette.DamageFlash();
+
+            Game.Audio.Play("damaged");
             
             if (CheckIfDead())
             {
@@ -314,11 +351,17 @@ namespace RL.Player
 
         IEnumerator DieCoroutine()
         {
+            if (!IsAlive) yield break;
+            
             IsAlive = false;
             SetControlsEnabled(false);
             StateMachine.ToState(PlayerStates.Death);
             var puffParticle = Game.Particles.Create("puff");
             puffParticle.transform.position = transform.position;
+
+            Game.Audio.Play("meow");
+
+            spriteRenderer.enabled = false;
 
             yield return new WaitForSeconds(2);
 
@@ -349,6 +392,9 @@ namespace RL.Player
         public void Heal()
         {
             healthBar.UpdateHealthPoints(MaximumHealth);
+            
+            var healths = Resources.Load<GameObject>("Prefabs/Healths");
+            Instantiate(healths, transform);
         }
 
         public void UpdateDisplayedWeapons()
