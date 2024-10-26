@@ -1134,7 +1134,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: game_title
+  m_text: urlg
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 4001124851d804a42a2ac08b00447f56, type: 2}
   m_sharedMaterial: {fileID: -4323420896935553078, guid: 4001124851d804a42a2ac08b00447f56, type: 2}
@@ -3674,7 +3674,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 1
-  m_AdditionalShaderChannelsFlag: 1
+  m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 1
@@ -3991,6 +3991,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ed85e152eb10c84a84db869a10c15a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SoundVolume: 1
+  MusicVolume: 0.5
   AudioSource: {fileID: 0}
 --- !u!1 &1786516095
 GameObject:
@@ -4638,7 +4640,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8150409327563062754, guid: b0c13c4afb3a05b41a3cd67affcd9d84, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

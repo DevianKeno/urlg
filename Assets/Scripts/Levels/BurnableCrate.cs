@@ -28,7 +28,7 @@ namespace RL.Levels
 
         public void TakeDamage(float amount)
         {
-            Game.Audio.PlaySound("crate_hit");
+            Game.Audio.Play("crate_hit");
             Health -= amount;
             DamageFlash();
             if (Health <= 0)
@@ -57,7 +57,7 @@ namespace RL.Levels
         {
             yield return new WaitForSeconds(delaySeconds);
 
-            Game.Audio.PlaySound("crate_break");
+            Game.Audio.Play("crate_break");
 
             coll.enabled = false; 
             spriteRendererChild.enabled = false;

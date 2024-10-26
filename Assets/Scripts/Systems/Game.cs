@@ -103,7 +103,7 @@ namespace RL
         {
             UIManager.Initialize();
             audioManager.Initialize();
-            telemetry.Initialize();
+            // telemetry.Initialize();
             tilesManager.Initialize();
             entityManager.Initialize();
             particlesManager.Initialize();

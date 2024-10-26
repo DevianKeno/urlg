@@ -113,6 +113,15 @@ namespace RL.Player
             Weapon1 = Game.Main.PlayerEquippedWeapon1;
             Weapon2 = Game.Main.PlayerEquippedWeapon2;
             unequippedWeapon = Game.Main.PlayerUnequippedWeapon;
+                        
+            if (selectedWeapon <= 1)
+            {
+                Equipped = Weapon1;
+            }
+            else ///(selectedWeapon == 2)
+            {
+                Equipped = Weapon2;
+            }
         }
 
         void InitializeInputs()
@@ -321,7 +330,7 @@ namespace RL.Player
 
         public void TakeDamage(float damage)
         {
-            if (_isInvincible == true) return;
+            if (_isInvincible || !IsAlive) return;
 
             _invincibilityFramesTimer = 0.3f;
             Health -= damage;
@@ -358,7 +367,9 @@ namespace RL.Player
             StateMachine.ToState(PlayerStates.Death);
             var puffParticle = Game.Particles.Create("puff");
             puffParticle.transform.position = transform.position;
+            Game.Main.CurrentRoom?.SleepAllEnemies();
 
+            Game.Audio.StopMusic("level");
             Game.Audio.Play("meow");
 
             spriteRenderer.enabled = false;
@@ -399,22 +410,15 @@ namespace RL.Player
 
         public void UpdateDisplayedWeapons()
         {
-            if (weaponsDisplayUI == null)
-            {
-                weaponsDisplayUI = GameObject.FindAnyObjectByType<WeaponsDisplayUI>();
-            }
-            
-            if (selectedWeapon == 1)
-            {
-                Equipped = Weapon1;
-            }
-            else if (selectedWeapon == 2)
-            {
-                Equipped = Weapon2;
-            }
+            weaponsDisplayUI ??= GameObject.FindAnyObjectByType<WeaponsDisplayUI>();
+            if (weaponsDisplayUI == null) return;
+
             weaponsDisplayUI.weapon1.ProjectileData = Weapon1.ProjectileData;
             weaponsDisplayUI.weapon2.ProjectileData = Weapon2.ProjectileData;
-
+        }
+        
+        public void SaveWeapons()
+        {
             Game.Main.PlayerEquippedWeapon1 = Weapon1;
             Game.Main.PlayerEquippedWeapon2 = Weapon2;
             Game.Main.PlayerUnequippedWeapon = unequippedWeapon;
@@ -546,6 +550,5 @@ namespace RL.Player
             yield return new WaitForSeconds(2);
             _enablePauseControl = true;
         }
-
     }
 }

@@ -332,7 +332,7 @@ MonoBehaviour:
   overshoot: 2
   chargeCooldown: 5
   minChargeInterval: 2
-  maxChargeInterval: 2
+  maxChargeInterval: 4
   chargeWindup: 1
   chargeDuration: 2
   _canCharge: 1
@@ -483,8 +483,9 @@ GameObject:
   - component: {fileID: 6253711976995701201}
   - component: {fileID: 6588400899257968683}
   - component: {fileID: 2152628137061515329}
-  - component: {fileID: 2111597332465022692}
   - component: {fileID: 4809935452416399304}
+  - component: {fileID: 2111597332465022692}
+  - component: {fileID: 615068029482583669}
   m_Layer: 9
   m_Name: Barrier
   m_TagString: Untagged
@@ -549,7 +550,7 @@ SpriteRenderer:
   m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: -223938361, guid: dc6b180caa48c3447a5801b387b93e2b, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.050980393}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.2}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -567,9 +568,9 @@ SortingGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7820053608966494762}
   m_Enabled: 1
-  m_SortingLayerID: -1406808719
-  m_SortingLayer: 3
-  m_SortingOrder: -1
+  m_SortingLayerID: 97747843
+  m_SortingLayer: 7
+  m_SortingOrder: 1
   m_SortAtRoot: 0
 --- !u!58 &2152628137061515329
 CircleCollider2D:
@@ -606,18 +607,6 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
---- !u!114 &2111597332465022692
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7820053608966494762}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ebc53a612b3fcc445bfa9577865781ba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!95 &4809935452416399304
 Animator:
   serializedVersion: 5
@@ -639,6 +628,30 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &2111597332465022692
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7820053608966494762}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebc53a612b3fcc445bfa9577865781ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &615068029482583669
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7820053608966494762}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be4ac49e241ead34b9aea5607e1e4b36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8238073555193012819
 GameObject:
   m_ObjectHideFlags: 0

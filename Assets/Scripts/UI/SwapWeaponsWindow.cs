@@ -58,6 +58,7 @@ namespace RL.UI
         void Submit()
         {
             player.UpdateDisplayedWeapons();
+            player.SaveWeapons();
             IsVisible = true;
             Hide(destroy: true);
         }

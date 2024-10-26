@@ -18,7 +18,7 @@ namespace RL.Projectiles
             _initialVelocity = rb.velocity;
 
             Game.Telemetry.PlayerStats[StatKey.UseCountBeam].Increment();
-            Game.Audio.PlaySound("beam");
+            Game.Audio.Play("beam");
         }
 
         bool hasParticle;
@@ -31,7 +31,7 @@ namespace RL.Projectiles
                 {
                     if (collision.contacts.Length > 0)
                     {
-                        crate.TakeDamage(25);
+                        crate.TakeDamage(10);
                         CreatePuffParticle(collision.contacts[0].point);
                         Destroy(gameObject);
                         return;
@@ -51,6 +51,7 @@ namespace RL.Projectiles
                 {
                     CreatePuffParticle(collision.contacts[0].point);
                 }
+                Game.Audio.Play("beam_hit");
                 Destroy(gameObject);
             }
         }
@@ -68,7 +69,7 @@ namespace RL.Projectiles
 
         void Reflect(Vector3 surfaceNormal)
         {
-            Game.Audio.PlaySound("beam_reflect");
+            Game.Audio.Play("beam_reflect");
             // if (hadReflected) return;
 
             // var duplicateBeam = Instantiate(gameObject);
@@ -90,8 +91,17 @@ namespace RL.Projectiles
 
         protected override void OnHitEnemy(IDamageable hit, Collision2D collision)
         {
-            Game.Telemetry.PlayerStats[StatKey.HitCountBeam].Increment();
             rb.bodyType = RigidbodyType2D.Dynamic;
+
+            bool registerHit = true;
+            if (hit is Enemy enemy)
+            {
+                if (enemy.IsAsleep)
+                {
+                    Game.Audio.Play("bump");
+                    registerHit = false;
+                }
+            }
 
             if (hit is FireWeak) /// armadil
             {
@@ -112,6 +122,11 @@ namespace RL.Projectiles
             {
                 CreatePuffParticle(collision.contacts[0].point);
                 hit.TakeDamage(Data.Damage);
+            }
+            
+            if (registerHit)
+            {
+                Game.Telemetry.PlayerStats[StatKey.HitCountBeam].Increment();
             }
             
             Destroy(gameObject);

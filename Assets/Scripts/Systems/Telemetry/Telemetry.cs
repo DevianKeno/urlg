@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using TMPro;
 
 using RL.Classifiers;
+using UnityEngine.SceneManagement;
 
 namespace RL.Telemetry
 {
@@ -30,7 +31,9 @@ namespace RL.Telemetry
             StatKey.EnemyAttackCount,
         };
         
+        public bool IsInitialized { get; private set; }
         public bool Display = true;
+        public bool IsVisible { get; private set; }
 
         PlayerStatCollection _playerStats;
         public PlayerStatCollection PlayerStats => _playerStats;
@@ -58,14 +61,33 @@ namespace RL.Telemetry
             }
         }
 
+        void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.Backspace))
+            {
+                if (IsVisible)
+                {
+                    HideTelemetry();
+                }
+                else
+                {
+                    ShowTelemetry();
+                }
+            }
+        }
+
         internal void Initialize()
         {
+            if (IsInitialized) return;
+            IsInitialized = true;
+            
             Debug.Log("Initializing telemetry...");
 
             InitializePlayerStats();
             InitializeRoomStats();
 
             Debug.Log("Done initialize telemetry");
+            HideTelemetry();
         }
 
         void InitializePlayerStats()
@@ -127,6 +149,34 @@ namespace RL.Telemetry
         
         #region Public methods
 
+        public void ShowTelemetry()
+        {
+            if (SceneManager.GetActiveScene().name != "LEVEL") return;
+
+            telemetryContainer.gameObject.SetActive(true);
+            IsVisible = true;
+            LayoutRebuilder.ForceRebuildLayoutImmediate(playerStatsContainer.transform as RectTransform);
+        }
+
+        public void HideTelemetry()
+        {
+            telemetryContainer.gameObject.SetActive(false);
+            IsVisible = false;
+        }
+
+        public void SetRoomValues(RoomStatCollection stats)
+        {
+            if (stats == null) return;
+
+            foreach (var stat in stats.Stats)
+            {
+                if (statTexts.TryGetValue(stat.key, out var tmp))
+                {
+                    tmp.text = $"{stat.key}: {stat.Value}";
+                }
+            }
+        }
+
         public void NewRoomStatInstance()
         {
             this._currentRoomStats = new(RoomStatsKeys);
@@ -137,7 +187,7 @@ namespace RL.Telemetry
             var playerStats = PlayerStats;
             var entry = new DataEntry()
             {
-                Classification = roomStats.Classification,
+                Classification = 1, /// ONLY ACCEPTED
                 LevelNumber = Game.Main.currentLevel,
                 GroundTruth = groundTruth,
                 PlayerStats = playerStats.SaveToJson(),

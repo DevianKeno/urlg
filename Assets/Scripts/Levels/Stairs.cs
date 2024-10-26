@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -9,7 +10,7 @@ namespace RL.Levels
         {
             if (other.CompareTag("Player"))
             {
-                Game.Main.Player?.SetControlsEnabled(false);
+                StartCoroutine(StopControlsCoroutine());
                 
                 this.coll.enabled = false;
                 Debug.Log("Next level");
@@ -59,6 +60,13 @@ namespace RL.Levels
                         });
                 }
             }
+        }
+
+        IEnumerator StopControlsCoroutine()
+        {
+            yield return new WaitForSeconds(0.25f);
+
+            Game.Main.Player?.SetControlsEnabled(false);
         }
     }
 }

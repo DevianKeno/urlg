@@ -26,6 +26,7 @@ namespace RL.Enemies
         public float lungeCooldown = 1f;
         bool _canLunge = true;
         bool _isLunging;
+        public bool IsLunging => _isLunging;
         bool _hasHitOnce = false;
 
         [Header("Invincibility Parameters")]
@@ -58,6 +59,8 @@ namespace RL.Enemies
 
         protected override void FixedUpdate()
         {
+            if (IsAsleep) return;
+            
             Search();
             LookAtTarget();
 

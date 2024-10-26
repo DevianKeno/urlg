@@ -18,7 +18,7 @@ namespace RL.Projectiles
             base.Start();
             
             Game.Telemetry.PlayerStats[StatKey.UseCountWave].Increment();
-            Game.Audio.PlaySound("wave_shoot");
+            Game.Audio.Play("wave_shoot");
         }
 
         protected override void OnHitTile(GameObject obj, Collision2D collision)
@@ -40,6 +40,7 @@ namespace RL.Projectiles
 
         public void Dissipate()
         {
+            Game.Audio.Play("wave_down");
             GetComponent<Collider2D>().enabled = false;
             rb.velocity *= 0.02f;
             var sr = GetComponent<SpriteRenderer>();
@@ -64,6 +65,16 @@ namespace RL.Projectiles
             {
                 if (go.TryGetComponent(out IDamageable hit))
                 {
+                    bool registerHit = true;
+                    if (hit is Enemy enemy)
+                    {
+                        if (enemy.IsAsleep)
+                        {
+                            Game.Audio.Play("bump");
+                            registerHit = false;
+                        }
+                    }
+
                     if (hit is WaveWeak ww) /// salaman
                     {
                         /// take double damage
@@ -78,7 +89,7 @@ namespace RL.Projectiles
 
                     hit.TakeDamage(Data.Damage);
                     
-                    if (!_hasHit)
+                    if (!_hasHit && registerHit)
                     {
                         _hasHit = true;
                         Game.Telemetry.PlayerStats[StatKey.HitCountWave].Increment();

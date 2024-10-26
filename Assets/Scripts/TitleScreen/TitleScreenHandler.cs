@@ -42,6 +42,8 @@ namespace RL.TitleScreen
             savesBtn.onClick.AddListener(OpenSaves);
             settingsBtn.onClick.AddListener(OpenSettings);
             exitBtn.onClick.AddListener(OpenExitDialog);
+
+            Game.Main.OnLateInit += LateInit;
         }
 
         void Start()
@@ -50,14 +52,25 @@ namespace RL.TitleScreen
             pcpcgGnbBtn.interactable = false;
         }
 
+        void LateInit()
+        {
+            Game.Main.OnLateInit -= LateInit;
+            Game.Audio.PlayMusic("title");
+        }
+
         void PlayPCPCG()
         {
             pcpcgBtn.interactable = false;
-            
+
             Game.Main.SetAlgorithmAR();
             Game.Main.LoadScene(
                 new(){
-                    SceneToLoad = "LEVEL"});
+                    SceneToLoad = "LEVEL"
+                },
+                onLoadSceneCompleted: () =>
+                {
+                    Game.Audio.StopMusic("title");
+                });
         }
 
         void PlayPCPCG_GNB()
@@ -68,6 +81,10 @@ namespace RL.TitleScreen
             Game.Main.LoadScene(
                 new(){
                     SceneToLoad = "LEVEL",
+                },
+                onLoadSceneCompleted: () =>
+                {
+                    Game.Audio.StopMusic("title");
                 });
         }
 
@@ -77,7 +94,11 @@ namespace RL.TitleScreen
 
             Game.Main.LoadScene(
                 new(){
-                    SceneToLoad = "R&D",
+                    SceneToLoad = "R&D"
+                },
+                onLoadSceneCompleted: () =>
+                {
+                    Game.Audio.StopMusic("title");
                 });
         }
 

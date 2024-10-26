@@ -102,7 +102,7 @@ namespace RL.Levels
             }
             this.IsOpen = false;
 
-            Game.Audio.PlaySound("door_close");
+            Game.Audio.Play("door_close");
         }
     }
 }

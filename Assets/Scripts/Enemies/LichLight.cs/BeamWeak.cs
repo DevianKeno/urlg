@@ -57,6 +57,8 @@ namespace RL.Enemies
 
         protected override void FixedUpdate()
         {
+            if (IsAsleep) return;
+            
             Search();
             LookAtTarget();            
             if (!_isLunging && !_isCharging)

@@ -3,6 +3,7 @@ using RL.Entities;
 using RL.Systems;
 using RL.Levels;
 using RL.Telemetry;
+using RL.Enemies;
 
 namespace RL.Projectiles
 {
@@ -15,7 +16,7 @@ namespace RL.Projectiles
             base.Start();
             
             Game.Telemetry.PlayerStats[StatKey.UseCountFire].Increment();
-            Game.Audio.PlaySound("fire_shoot");
+            Game.Audio.Play("fire_shoot");
         }
 
         void LateUpdate()
@@ -37,17 +38,17 @@ namespace RL.Projectiles
 
         public void Dissipate()
         {
-            rb.velocity *= 0.05f;
+            // rb.velocity *= 0.05f;
             GetComponent<Collider2D>().enabled = false;
-            var flamePrefab = Resources.Load<GameObject>("Prefabs/Flame");
+            var flamePrefab = Resources.Load<GameObject>("Prefabs/Embers");
             Instantiate(flamePrefab, transform);
-            var sr = GetComponent<SpriteRenderer>();
             LeanTween.value(gameObject, 1f , 0f, DissipateTime)
                 .setOnUpdate((float i) =>
                 {
-                    var color = sr.color;
+                    var color = spriteRenderer.color;
                     color.a = i;
-                    sr.color = color;
+                    spriteRenderer.color = color;
+                    transform.localScale = new(i, i, 1f);
                 })
                 .setEase(LeanTweenType.easeOutSine)
                 .setOnComplete(() =>
@@ -60,11 +61,40 @@ namespace RL.Projectiles
         {
             hit.TakeDamage(Data.Damage);
             
+            bool registerHit = true;
+            if (hit is Enemy enemy)
+            {
+                if (enemy.IsAsleep)
+                {
+                    Game.Audio.Play("bump");
+                    registerHit = false;
+                }
+            }
+            
             if (hit is IBurnable burnable)
             {
-                burnable.Burn();
+                if (hit is FireWeak armadil)
+                {
+                    if (armadil.IsLunging)
+                    {
+                        Dissipate();
+                    }
+                    else
+                    {
+                        burnable.Burn();
+                    }
+                }
+                else
+                {
+                    burnable.Burn();
+                }
             }
-            Game.Telemetry.PlayerStats[StatKey.HitCountFire].Increment();
+
+            if (registerHit)
+            {
+                Game.Telemetry.PlayerStats[StatKey.HitCountFire].Increment();
+            }
+            
             Destroy(gameObject);
         }
         

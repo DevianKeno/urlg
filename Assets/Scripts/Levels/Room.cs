@@ -305,7 +305,7 @@ namespace RL.Levels
             Game.Main.Player.Heal();
             OpenDoors();
 
-            Game.Audio.PlaySound("done_level");
+            Game.Audio.Play("done_level");
 
             yield return new WaitForSeconds(0.5f);
 
@@ -422,6 +422,7 @@ namespace RL.Levels
             if (IsStartRoom || IsEndRoom || IsCleared) yield break;
 
             Game.Main.CurrentRoom = this;
+            Game.Telemetry.SetRoomValues(Stats);
             // Game.Telemetry.NewRoomStatInstance();
             // Game.UI.HideArrowPointer();
             IsActive = true;
@@ -438,6 +439,22 @@ namespace RL.Levels
                 {
                     enemy.SetTargetPlayer(target);
                 }
+                enemy.IsAsleep = false;
+            }
+        }
+
+        public void SleepAllEnemies()
+        {
+            foreach (var enemy in enemies)
+            {
+                enemy.IsAsleep = true;
+            }
+        }
+
+        public void WakeAllEnemies()
+        {
+            foreach (var enemy in enemies)
+            {
                 enemy.IsAsleep = false;
             }
         }

@@ -119,6 +119,8 @@ namespace RL.Entities
 
         public virtual void TakeDamage(float damage)
         {
+            if (IsAsleep) return;
+            
             Flash();
             Health -= damage;
             if (Health <= 0)
@@ -132,7 +134,7 @@ namespace RL.Entities
             OnDeath?.Invoke(this);
             var puffParticle = Game.Particles.Create("puff");
             puffParticle.transform.position = transform.position;
-            Game.Audio.PlaySound("puff");
+            Game.Audio.Play("puff");
             Destroy(gameObject);
         }
 

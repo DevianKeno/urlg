@@ -39,7 +39,7 @@ namespace RL.Levels
             {1, new(1, 3)},
             {2, new(2, 4)},
             {3, new(2, 4)},
-            {4, new(2, 5)},
+            {4, new(3, 5)},
             {5, new(3, 6)},
             {6, new(3, 6)}, 
             {7, new(4, 8)}, 
@@ -53,8 +53,8 @@ namespace RL.Levels
         public int RoomCount = 2;
         [Range(0, 100)] public int RejectedRoomsThreshold = 25;
 
-        public int MaxEnemyCount => MaxPerLevel[LevelNumber].MaxEnemyCount;
-        public int MaxObstacleCount => MaxPerLevel[LevelNumber].MaxObstacleCount;
+        public int MaxEnemyCount => MaxPerLevel[Game.Main.currentLevel].MaxEnemyCount;
+        public int MaxObstacleCount => MaxPerLevel[Game.Main.currentLevel].MaxObstacleCount;
 
         public Room StartRoom = null;
         public Room EndRoom = null;
@@ -68,6 +68,8 @@ namespace RL.Levels
             Game.Main.Player = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
             var roomCount = RoomsPerLevel[Game.Main.currentLevel];
             StartCoroutine(GenerateLevelCoroutine(roomCount));
+            
+            Game.Telemetry.Initialize();
         }
 
         public IEnumerator GenerateLevelCoroutine(int roomCount)
@@ -119,11 +121,11 @@ namespace RL.Levels
                 /// Special rooms (start, end) don't have features
                 if (newRoom.IsStartRoom || newRoom.IsEndRoom) continue;
                 
-                Status targetStatus;
-                if (UnityEngine.Random.Range(0, 100) > RejectedRoomsThreshold)
-                    targetStatus = Status.Accepted;
-                else
-                    targetStatus = Status.Rejected;
+                // Status targetStatus;
+                // if (UnityEngine.Random.Range(0, 100) > RejectedRoomsThreshold)
+                //     targetStatus = Status.Accepted;
+                // else
+                //     targetStatus = Status.Rejected;
 
                 var roomStats = Game.Generator.GenerateRoomStats(
                     new FeaturizeOptions(){
@@ -132,7 +134,7 @@ namespace RL.Levels
                         PlayerStats = Game.Telemetry.PlayerStats,
                         MaxEnemyCount = MaxEnemyCount,
                         MaxObstacleCount = MaxObstacleCount,
-                        TargetStatus = targetStatus,
+                        TargetStatus = Status.Accepted, /// only accepted rooms are included in level
                     }
                 );
                 
@@ -164,6 +166,7 @@ namespace RL.Levels
             }
 
             Game.Main.UnloadScene("LOADING");
+            Game.Audio.PlayMusic("level");
         }
 
         public void FinishLevel()
