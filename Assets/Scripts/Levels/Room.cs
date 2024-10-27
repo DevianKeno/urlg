@@ -75,6 +75,7 @@ namespace RL.Levels
         [SerializeField] GameObject enemiesContainer;
         [SerializeField] GameObject obstaclesLayer;
         [SerializeField] GameObject triggers;
+        [SerializeField] protected GameObject outsideTriggers;
 
         [Header("Doorways")]
         public bool HasNorthDoor = true;
@@ -304,6 +305,7 @@ namespace RL.Levels
             // Game.UI.ShowArrowPointer();
             Game.Main.Player.Heal();
             OpenDoors();
+            outsideTriggers.gameObject.SetActive(false);
 
             Game.Audio.Play("done_level");
 
@@ -428,6 +430,7 @@ namespace RL.Levels
             IsActive = true;
             ShutDoors();
             ActivateEnemies(player);
+            outsideTriggers.gameObject.SetActive(true);
             yield return null;
         }
 

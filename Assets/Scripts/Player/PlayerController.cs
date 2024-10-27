@@ -91,7 +91,7 @@ namespace RL.Player
             damageVignette = Game.UI.Create<DamageVignette>("Damage Vignette", parent: levelCanvas.transform);
             weaponsDisplayUI = Game.UI.Create<WeaponsDisplayUI>("Weapons Display UI", parent: levelCanvas.transform);
             weaponsDisplayUI.EnableSwapping = true;
-            UpdateDisplayedWeapons();
+            UpdateWeapons();
             
             StateMachine.OnStateChanged += animator.StateChangedCallback;
             StateMachine.ToState(PlayerStates.Idle);
@@ -114,6 +114,11 @@ namespace RL.Player
             Weapon2 = Game.Main.PlayerEquippedWeapon2;
             unequippedWeapon = Game.Main.PlayerUnequippedWeapon;
                         
+            RefreshEquipped();
+        }
+
+        void RefreshEquipped()
+        {                        
             if (selectedWeapon <= 1)
             {
                 Equipped = Weapon1;
@@ -410,13 +415,15 @@ namespace RL.Player
             Instantiate(healths, transform);
         }
 
-        public void UpdateDisplayedWeapons()
+        public void UpdateWeapons()
         {
             weaponsDisplayUI ??= GameObject.FindAnyObjectByType<WeaponsDisplayUI>();
             if (weaponsDisplayUI == null) return;
 
             weaponsDisplayUI.weapon1.ProjectileData = Weapon1.ProjectileData;
             weaponsDisplayUI.weapon2.ProjectileData = Weapon2.ProjectileData;
+            
+            RefreshEquipped();
         }
         
         public void SaveWeapons()
