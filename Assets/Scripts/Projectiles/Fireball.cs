@@ -39,6 +39,7 @@ namespace RL.Projectiles
         public void Dissipate()
         {
             // rb.velocity *= 0.05f;
+            Game.Audio.Play("fizz");
             GetComponent<Collider2D>().enabled = false;
             var flamePrefab = Resources.Load<GameObject>("Prefabs/Embers");
             Instantiate(flamePrefab, transform);
@@ -69,6 +70,10 @@ namespace RL.Projectiles
                     Game.Audio.Play("bump");
                     registerHit = false;
                 }
+                else
+                {
+                    Game.Audio.Play("fire_burst");
+                }
             }
             
             if (hit is IBurnable burnable)
@@ -83,6 +88,11 @@ namespace RL.Projectiles
                     {
                         burnable.Burn();
                     }
+                }
+                else if (hit is BurnableCrate)
+                {
+                    Game.Audio.Play("fire_burst");
+                    burnable.Burn();
                 }
                 else
                 {

@@ -21,7 +21,6 @@ namespace RL.Levels
             
             var flamePrefab = Resources.Load<GameObject>("Prefabs/Flame");
             Instantiate(flamePrefab, transform);
-            Game.Audio.Play("fire_burst");
             DamageFlash();
             Break(BurnTime);
         }

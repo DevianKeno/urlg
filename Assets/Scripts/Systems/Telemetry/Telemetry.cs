@@ -112,6 +112,8 @@ namespace RL.Telemetry
             _currentRoomStats = new(RoomStatsKeys);
             foreach (var stat in _currentRoomStats.Stats)
             {
+                if (stat.key == StatKey.EnemyAttackCount) continue;
+
                 var go = new GameObject("Room Stat");
                 go.transform.SetParent(roomStatsContainer.transform);
                 var tmp = go.AddComponent<TextMeshProUGUI>();
@@ -121,6 +123,7 @@ namespace RL.Telemetry
 
                 statTexts[stat.key] = tmp;
             }
+            
             LayoutRebuilder.ForceRebuildLayoutImmediate(roomStatsContainer.transform as RectTransform);
         }
 
