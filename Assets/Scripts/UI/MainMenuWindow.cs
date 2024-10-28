@@ -24,6 +24,7 @@ namespace RL.UI
         public void MainMenu()
         {
             exitBtn.interactable = false;
+            Game.Main.Player?.SetControlsEnabled(false);
             Game.Audio.StopMusic("level");
             Game.Telemetry.SaveEntriesToJson();
 

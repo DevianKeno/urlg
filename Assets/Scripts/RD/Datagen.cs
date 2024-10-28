@@ -12,6 +12,7 @@ using RL.Telemetry;
 using RL.UI;
 using RL.Classifiers;
 using SFB;
+using Newtonsoft.Json;
 
 namespace RL.RD
 {
@@ -180,7 +181,8 @@ namespace RL.RD
                 var headers = new[] { "SeedPlayer", "SeedRoom" }
                     .Concat(playerStatKeys)
                     .Concat(roomStatKeys)
-                    .Append("GroundTruth");
+                    .Append("GroundTruth")
+                    .Append("Classification");
 
                 writer.WriteLine(string.Join(",", headers));
 
@@ -219,7 +221,87 @@ namespace RL.RD
         {
             
         }
-        
+
+        public void ConvertArResultsToGnbDataset()
+        {
+            ParseARResults();
+            WriteResultsToCSV();
+        }
+
+        List<ResultsJsonData> jsonDatas;
+        public void ParseARResults()
+        {
+            jsonDatas = new();
+            var directory = Path.Combine(Application.persistentDataPath, "results", "ar");
+            if (!Directory.Exists(directory)) Directory.CreateDirectory(directory);
+            
+            var filePaths = Directory.EnumerateFiles(directory)
+                                .Where(file => file.EndsWith(".json") || file.EndsWith(".dat"));
+            foreach (var filePath in filePaths)
+            {
+                try
+                {
+                    var content = File.ReadAllText(filePath);
+                    var result = JsonConvert.DeserializeObject<ResultsJsonData>(content);
+                    jsonDatas.Add(result);
+                }
+                catch
+                {
+                    continue;
+                }
+            }
+        }
+
+        public void WriteResultsToCSV()
+        {
+            if (jsonDatas == null || jsonDatas.Count <= 0) return;
+
+            string directory = Path.Combine(Application.persistentDataPath, "dataset");
+            if (!Directory.Exists(directory)) Directory.CreateDirectory(directory);
+            string filepath = Path.Combine(directory, $"ar_dataset-{DateTime.Now:yyyyMMdd_HHmmss}.csv");
+            
+            using StreamWriter writer = new(filepath);
+            
+            var playerStatKeys = Telemetry.Telemetry.PlayerStatsKeys.Select(key => key.ToString()).ToArray();
+            var roomStatKeys = Telemetry.Telemetry.RoomStatsKeys.Select(key => key.ToString()).ToArray();
+            var headers = new[] { "SeedPlayer", "SeedRoom" }
+                .Concat(playerStatKeys)
+                .Concat(roomStatKeys)
+                .Append("GroundTruth")    
+                .Append("Classification");
+
+            writer.WriteLine(string.Join(",", headers));
+
+            foreach (ResultsJsonData data in jsonDatas)
+            {
+                foreach (DataEntry entry in data.Entries)
+                {
+                    var row = new List<string>
+                    {
+                        "0",
+                        "0"
+                    };
+
+                    foreach (var statSave in entry.PlayerStats)
+                    {
+                        row.Add(statSave.Value.ToString());
+                    }
+
+                    foreach (var statSave in entry.RoomStats)
+                    {
+                        row.Add(statSave.Value.ToString());
+                    }
+
+                    row.Add(entry.GroundTruth.ToString());
+                    row.Add("1");
+
+                    writer.WriteLine(string.Join(",", row));
+                }
+            }
+            
+            Debug.Log($"Finished converting AR results into GNB dataset at '{filepath}'");
+        }
+
         public void SelectDataset()
         {
             string datasetsDirectory = Path.Combine(Application.persistentDataPath, "dataset");

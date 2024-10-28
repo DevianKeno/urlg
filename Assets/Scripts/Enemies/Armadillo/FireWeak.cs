@@ -144,7 +144,7 @@ namespace RL.Enemies
             yield return new WaitForSeconds(invincibilityDuration);
 
             Lunge(); // Perform the lunge attack
-            Game.Telemetry.RoomStats[StatKey.EnemyAttackCount].Increment();
+            Game.Telemetry.IncrementEnemyAttackCount();
 
             yield return new WaitForSeconds(lungeCooldown);
             lungeInterval = UnityEngine.Random.Range(minLungeInterval, maxLungeInterval);

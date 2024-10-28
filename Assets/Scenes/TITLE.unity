@@ -138,7 +138,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &33320479
 RectTransform:
   m_ObjectHideFlags: 0
@@ -395,6 +395,7 @@ MonoBehaviour:
   currentLevel: 1
   UseTestLevel: 0
   CurrentRoom: {fileID: 0}
+  TrainGnbModelOnStart: 1
   Player: {fileID: 0}
   PlayerEquippedWeapon1: {fileID: 0}
   PlayerEquippedWeapon2: {fileID: 0}
@@ -684,6 +685,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f77ef2f1a05c324fb340d257d80c281, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  EnablePCPCG: 0
+  EnablePCPCGGNB: 1
   ValidateRatio: 0.2
   datasetFilenameTmp: {fileID: 440914730}
   pcpcgBtn: {fileID: 965039410}
@@ -2549,6 +2552,10 @@ PrefabInstance:
       propertyPath: m_text
       value: pcpcg
       objectReference: {fileID: 0}
+    - target: {fileID: 7139245094284965081, guid: b0c13c4afb3a05b41a3cd67affcd9d84, type: 3}
+      propertyPath: m_Interactable
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8150409327563062754, guid: b0c13c4afb3a05b41a3cd67affcd9d84, type: 3}
       propertyPath: m_Name
       value: PCPCG (Button)
@@ -3845,7 +3852,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 0
+  m_Interactable: 1
   m_TargetGraphic: {fileID: 1672795612}
   m_OnClick:
     m_PersistentCalls:

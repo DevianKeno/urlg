@@ -42,6 +42,9 @@ namespace RL.Telemetry
         RoomStatCollection _currentRoomStats;
         public RoomStatCollection RoomStats => _currentRoomStats;
 
+        int totalHitsTaken;
+        int totalEnemyAttackCount;
+
         List<DataEntry> dataEntries = new();
 
         [Header("Elements")]
@@ -104,6 +107,8 @@ namespace RL.Telemetry
 
                 statTexts[stat.key] = tmp;
             }
+            totalHitsTaken = 0;
+            totalEnemyAttackCount = 0;
             LayoutRebuilder.ForceRebuildLayoutImmediate(playerStatsContainer.transform as RectTransform);
         }
 
@@ -112,7 +117,7 @@ namespace RL.Telemetry
             _currentRoomStats = new(RoomStatsKeys);
             foreach (var stat in _currentRoomStats.Stats)
             {
-                if (stat.key == StatKey.EnemyAttackCount) continue;
+                // if (stat.key == StatKey.EnemyAttackCount) continue;
 
                 var go = new GameObject("Room Stat");
                 go.transform.SetParent(roomStatsContainer.transform);
@@ -178,6 +183,11 @@ namespace RL.Telemetry
                     tmp.text = $"{stat.key}: {stat.Value}";
                 }
             }
+
+            if (statTexts.TryGetValue(StatKey.HitsTaken, out var tmp1))
+            {
+                tmp1.text = $"{StatKey.HitsTaken}: {PlayerStats.GetStat(StatKey.HitsTaken).Value}";
+            }
         }
 
         public void NewRoomStatInstance()
@@ -190,7 +200,7 @@ namespace RL.Telemetry
             var playerStats = PlayerStats;
             var entry = new DataEntry()
             {
-                Classification = 1, /// ONLY ACCEPTED
+                Classification = roomStats.Classification,
                 LevelNumber = Game.Main.currentLevel,
                 GroundTruth = groundTruth,
                 PlayerStats = playerStats.SaveToJson(),
@@ -198,6 +208,11 @@ namespace RL.Telemetry
             };
             
             dataEntries.Add(entry);
+
+            totalHitsTaken += PlayerStats.GetStat(StatKey.HitsTaken).Value;
+            PlayerStats.GetStat(StatKey.HitsTaken).Value = 0;
+            
+            totalEnemyAttackCount += _currentRoomStats.GetStat(StatKey.EnemyAttackCount).Value;
 
             if (createNewAfter)
             {
@@ -218,6 +233,19 @@ namespace RL.Telemetry
             };
 
             Game.Files.SaveDataJson(sd);
+        }
+
+        public void IncrementEnemyAttackCount()
+        {
+            var currentRoom = Game.Main.CurrentRoom;
+            if (currentRoom == null) return;
+
+            currentRoom.Stats[StatKey.EnemyAttackCount].Increment();
+            
+            if (statTexts.TryGetValue(StatKey.EnemyAttackCount, out var tmp))
+            {
+                tmp.text = $"{StatKey.EnemyAttackCount}: {currentRoom.Stats.GetStat(StatKey.EnemyAttackCount).Value}";
+            }
         }
 
         #endregion

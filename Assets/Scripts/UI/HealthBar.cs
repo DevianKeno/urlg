@@ -9,7 +9,7 @@ namespace RL.UI
         public Slider healthSlider;
         public float maximumHealth;
         public float actualHealth;
-        private float lerpSpeed = 0.5f;
+        float lerpSpeed = 0.25f;
 
         public void InitializeMaxHealth(float maximumHealth)
         {
@@ -21,14 +21,20 @@ namespace RL.UI
         {
             actualHealth = currentHealth;
 
-            if(healthSlider.value != actualHealth)
+            if (healthSlider.value != actualHealth)
             {
                 healthSlider.value = actualHealth;
             }
 
-            if(healthSlider.value != bufferSlider.value)
+            if (healthSlider.value != bufferSlider.value)
             {
-                bufferSlider.value = Mathf.Lerp(bufferSlider.value, healthSlider.value, lerpSpeed);
+                LeanTween.cancel(gameObject);
+                LeanTween.value(gameObject, bufferSlider.value, healthSlider.value, lerpSpeed)
+                    .setOnUpdate((float i) =>
+                    {
+                        bufferSlider.value = i;
+                    });
+                // bufferSlider.value = Mathf.Lerp(bufferSlider.value, healthSlider.value, lerpSpeed);
             }
         }
     }

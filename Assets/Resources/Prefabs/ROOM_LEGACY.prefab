@@ -666,6 +666,7 @@ MonoBehaviour:
   enemiesContainer: {fileID: 0}
   obstaclesLayer: {fileID: 0}
   triggers: {fileID: 0}
+  outsideTriggers: {fileID: 0}
   HasNorthDoor: 1
   northDoor: {fileID: 6099074450988462438}
   HasSouthDoor: 1

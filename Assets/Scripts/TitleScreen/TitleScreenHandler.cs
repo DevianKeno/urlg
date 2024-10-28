@@ -16,6 +16,8 @@ namespace RL.TitleScreen
 {
     public class TitleScreenHandler : MonoBehaviour
     {
+        public bool EnablePCPCG;
+        public bool EnablePCPCGGNB;
         public float ValidateRatio = 0.2f;
 
         bool exitWindowIsOpen = false;
@@ -48,8 +50,8 @@ namespace RL.TitleScreen
 
         void Start()
         {
-            pcpcgBtn.interactable = true;
-            pcpcgGnbBtn.interactable = false;
+            pcpcgBtn.interactable = EnablePCPCG;
+            pcpcgGnbBtn.interactable = EnablePCPCGGNB;
         }
 
         void LateInit()

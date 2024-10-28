@@ -11,6 +11,10 @@ using RL.Levels;
 using RL.Player;
 using System.Collections.Generic;
 using RL.Weapons;
+using System.IO;
+using RL.Classifiers;
+using RL.RD;
+using RL.Telemetry;
 
 namespace RL
 {
@@ -55,6 +59,7 @@ namespace RL
         public int currentLevel = 1;
         public bool UseTestLevel = false;
         public Room CurrentRoom;
+        public bool TrainGnbModelOnStart = false;
         public PlayerController Player = null;
         public Weapon PlayerEquippedWeapon1 = null;
         public Weapon PlayerEquippedWeapon2 = null;
@@ -109,6 +114,11 @@ namespace RL
             particlesManager.Initialize();
 
             OnLateInit?.Invoke();
+
+            if (TrainGnbModelOnStart)
+            {
+                StartTrain();
+            }
         }
 
         public void OpenSettingsMenu()
@@ -286,6 +296,56 @@ namespace RL
         public void SetAlgorithmGNB()
         {
             algorithmUsed = PCGAlgorithm.GaussianNaiveBayes;
+        }
+
+        
+        public void StartTrain()
+        {
+            Debug.Log("Start train of Model instance");
+
+            var datasetFilepath = Path.Combine(Application.dataPath, "Resources", "Dataset", "3.csv");
+            var content = CSVHelper.ReadCSV(datasetFilepath);
+            ParseDatasetContent(content);
+        }
+
+        void ParseDatasetContent(List<string[]> content)
+        {
+            var testingSet = new GNBData();
+            var validationSet = new GNBData();
+            string[] headers = content[0];
+            
+            for (int i = 1; i < content.Count; i++)
+            {
+                string[] row = content[i];
+                var entry = new ARDataEntry
+                {
+                    SeedPlayer = int.Parse(row[0]),
+                    SeedRoom = int.Parse(row[1]),
+                    Values = new Dictionary<StatKey, int>()
+                };
+
+                for (int j = 2; j < row.Length; j++)
+                    if (Enum.TryParse(headers[j], out StatKey statKey))
+                        entry.Values[statKey] = int.Parse(row[j]);
+
+                if (UnityEngine.Random.Range(0, 101) <= (20))
+                {
+                    if (int.Parse(row[^1]) == 1)
+                        validationSet.AcceptedEntries.Add(entry);
+                    else
+                        validationSet.RejectedEntries.Add(entry);
+                }
+                else
+                {
+                    if (int.Parse(row[^1]) == 1)
+                        testingSet.AcceptedEntries.Add(entry);
+                    else
+                        testingSet.RejectedEntries.Add(entry);
+                }
+            }
+
+            GaussianNaiveBayes.Instance.Train(testingSet, validationSet);
+            Debug.Log("Model instance trained");
         }
     }
 }

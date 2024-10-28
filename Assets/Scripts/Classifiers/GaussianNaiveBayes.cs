@@ -46,10 +46,10 @@ namespace RL.Classifiers
         float rejectedProbability;
         List<double> acceptedCosines = new();
         List<double> rejectedCosines = new();
-        double acceptedMean;
-        double rejectedMean;
-        double acceptedVariance;
-        double rejectedVariance;
+        double acceptedMean = 0;
+        double rejectedMean = 0;
+        double acceptedVariance = 0;
+        double rejectedVariance = 0;
 
         void Awake()
         {
@@ -96,19 +96,25 @@ namespace RL.Classifiers
             this.testingSet = testingSet;
             this.validationSet = validationSet;
 
+            acceptedCosines = new();
+            rejectedCosines = new();
+            acceptedMean = 0;
+            rejectedMean = 0; 
+            acceptedVariance = 0;
+            rejectedVariance = 0;
+
             acceptedProbability = (float) testingSet.AcceptedEntries.Count / testingSet.TotalEntryCount;
             rejectedProbability = (float) testingSet.RejectedEntries.Count / testingSet.TotalEntryCount;
 
             foreach (var entry in testingSet.AcceptedEntries)
                 acceptedCosines.Add(CalculateCosine(entry));
-            
             foreach (var entry in testingSet.RejectedEntries)
                 rejectedCosines.Add(CalculateCosine(entry));
             
-            acceptedMean = Math.Mean(acceptedCosines.ToArray());
-            rejectedMean = Math.Mean(rejectedCosines.ToArray());
-            acceptedVariance = Math.Variance(acceptedCosines.ToArray());
-            rejectedVariance = Math.Variance(rejectedCosines.ToArray());
+            if (acceptedCosines.Count > 1) acceptedMean = Math.Mean(acceptedCosines.ToArray());
+            if (rejectedCosines.Count > 1) rejectedMean = Math.Mean(rejectedCosines.ToArray());
+            if (acceptedCosines.Count > 1) acceptedVariance = Math.Variance(acceptedCosines.ToArray());
+            if (rejectedCosines.Count > 1) rejectedVariance = Math.Variance(rejectedCosines.ToArray());
 
             Debug.Log("Model trained");
         }
