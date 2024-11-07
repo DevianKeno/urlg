@@ -3,14 +3,24 @@ using UnityEngine.UI;
 
 namespace RL.UI
 {
-    public class HealthBar : MonoBehaviour
+    public class HealthBar : Window
     {
-        public Slider bufferSlider;
-        public Slider healthSlider;
-        public float maximumHealth;
-        public float actualHealth;
+        public float MaximumHealth;
+        float actualHealth;
+        public float ActualHealth
+        {
+            get { return actualHealth; }
+            set
+            {
+                actualHealth = value;
+                UpdateHealthPoints(value);
+            }
+        }
         float lerpSpeed = 0.25f;
 
+        [SerializeField] Slider bufferSlider;
+        [SerializeField] Slider healthSlider;
+        
         public void InitializeMaxHealth(float maximumHealth)
         {
             actualHealth = maximumHealth;

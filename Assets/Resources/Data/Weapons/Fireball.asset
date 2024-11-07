@@ -15,5 +15,5 @@ MonoBehaviour:
   Name: Fireball
   Sprite: {fileID: 0}
   Damage: 0
-  FireRate: 0.51
+  FireRate: 0.39
   ProjectileData: {fileID: 11400000, guid: 947291abd97c3da4b8197f1bb04065d6, type: 2}

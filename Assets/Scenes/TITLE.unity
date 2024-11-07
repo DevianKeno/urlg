@@ -395,7 +395,7 @@ MonoBehaviour:
   currentLevel: 1
   UseTestLevel: 0
   CurrentRoom: {fileID: 0}
-  TrainGnbModelOnStart: 1
+  TrainGnbModelOnStart: 0
   Player: {fileID: 0}
   PlayerEquippedWeapon1: {fileID: 0}
   PlayerEquippedWeapon2: {fileID: 0}
@@ -685,7 +685,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f77ef2f1a05c324fb340d257d80c281, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EnablePCPCG: 0
+  EnablePCPCG: 1
   EnablePCPCGGNB: 1
   ValidateRatio: 0.2
   datasetFilenameTmp: {fileID: 440914730}

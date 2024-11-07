@@ -2,16 +2,17 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using RL.Player;
+using RL.UI;
 using UnityEngine;
 
 namespace RL.Entities
 {    
-    public class Enemy : Entity, IDamageable
+    public class Enemy : Entity, IDamageable, IBurnable
     {
         public float Health = 100f;
         public float MoveSpeed = 2f;
         public Color DamageFlash = Color.red;
-
+        
         public bool IsAsleep { get; set; } = true; 
         bool hasTarget; 
 
@@ -35,6 +36,7 @@ namespace RL.Entities
         protected GameObject target;
         [SerializeField] protected SpriteRenderer spriteRenderer;
         [SerializeField] protected Rigidbody2D rb;
+        [SerializeField] protected HealthBar healthBar;
 
         protected Vector2 frameMovement;
 
@@ -42,6 +44,13 @@ namespace RL.Entities
         {
             prevColor = spriteRenderer.color;
             rb = GetComponent<Rigidbody2D>();
+            if (healthBar == null)
+            {
+                healthBar = Game.UI.Create<HealthBar>("Enemy HP Bar", parent: transform);
+                healthBar.transform.SetAsLastSibling();
+                healthBar.MaximumHealth = Health;
+                healthBar.ActualHealth = Health;
+            }
             ChooseNewStrafeDirection();
             InvokeRepeating(nameof(ChooseNewStrafeDirection), 2f, 2f); // Change strafe direction every 2 seconds
         }
@@ -57,6 +66,26 @@ namespace RL.Entities
 
         protected virtual void LateMovement()
         {
+        }
+
+        protected OnFire onFire;
+        public virtual void Burn(float duration)
+        {
+            if (onFire == null)
+            {
+                onFire = gameObject.AddComponent<OnFire>();
+                onFire.OnTick += OnFireTick;
+            }
+            
+            if (!onFire.IsBurning)
+            {
+                onFire.StartBurn(duration);
+            }
+        }
+
+        protected virtual void OnFireTick()
+        {
+            TakeDamage(Game.BurnDamage);
         }
 
         protected virtual void Search()
@@ -131,6 +160,9 @@ namespace RL.Entities
 
         public virtual void Die()
         {
+            /// Does not die if player is dead first
+            if (Game.Main.Player != null && !Game.Main.Player.IsAlive) return;
+
             OnDeath?.Invoke(this);
             var puffParticle = Game.Particles.Create("puff");
             puffParticle.transform.position = transform.position;

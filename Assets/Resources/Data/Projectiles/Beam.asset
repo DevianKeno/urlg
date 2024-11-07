@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Laser
   Sprite: {fileID: 3076173378739118342, guid: f05fb7b6a771398438f0377130b760fa, type: 3}
-  Speed: 20
+  Speed: 25
   Damage: 10
-  DespawnAfter: 6
+  DespawnAfter: 3
   Object: {fileID: 7821263938669969337, guid: 1c6882ce25720ce46b4915ddb6641e40, type: 3}

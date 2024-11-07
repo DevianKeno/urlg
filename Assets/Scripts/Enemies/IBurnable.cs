@@ -2,7 +2,7 @@ namespace RL.Entities
 {
     public interface IBurnable
     {
-        public void Burn();
+        public virtual void Burn(float duration){}
     }
 }
     

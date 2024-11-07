@@ -22,8 +22,7 @@ namespace RL.Telemetry
         {
             get
             {
-                TryGetStat(key, out var stat);
-                return stat;
+                return GetStat(key);
             }
         }
         
@@ -33,7 +32,11 @@ namespace RL.Telemetry
             {
                 return stat;
             }
-            return new Stat(key, 0);
+            else
+            {
+                _statList[key] = new Stat(key, 0);
+                return _statList[key];
+            }
         }
 
         public bool TryGetStat(StatKey key, out Stat stat)

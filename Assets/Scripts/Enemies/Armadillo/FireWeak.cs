@@ -72,36 +72,10 @@ namespace RL.Enemies
             UpdateStates();
         }
 
-        public void Burn()
+        protected override void OnFireTick()
         {
-            StartBurning();
-        }
-
-        public void StartBurning()
-        {
-            if (isBurning) return;
-            isBurning = true;
-
-            Game.Audio.Play("fire_burst");
-            var flamePrefab = Resources.Load<GameObject>("Prefabs/Flame");
-            burnParticle = Instantiate(flamePrefab, transform);
-            
-            StartCoroutine(BurnCoroutine());
-        }
-
-        IEnumerator BurnCoroutine()
-        {
-            yield return new WaitForSeconds(BurnTime);
-
-            if (Game.Main.Player != null)
-            if (Game.Main.Player.IsAlive)
-            {
-                Die();
-            }
-            else
-            {
-                Destroy(burnParticle);
-            }
+            /// Burn deals more damage on Armadil
+            TakeDamage(Game.BurnDamage * 3f);
         }
 
         void UpdateStates()
@@ -155,6 +129,7 @@ namespace RL.Enemies
 
         void Lunge()
         {
+            ExtinguishFire();
             _isLunging = true;
             _hasHitOnce = false;
 
@@ -166,6 +141,17 @@ namespace RL.Enemies
             sm.LockFor(0.5f);
 
             StartCoroutine(ResetLunge());
+        }
+
+        public void ExtinguishFire()
+        {
+            if (onFire != null && onFire.IsBurning)
+            {
+                onFire.StopBurn();
+                Game.Audio.Play("fizz");
+                var flamePrefab = Instantiate(Resources.Load<GameObject>("Prefabs/Embers"), transform);
+                Destroy(flamePrefab, 0.25f);
+            }
         }
 
         IEnumerator ResetLunge()

@@ -23,6 +23,8 @@ namespace RL
     public class Game : MonoBehaviour
     {
         public const int MaxEnemiesPerRoom = 12;
+        public const float FireTickSeconds = 1f;
+        public const int BurnDamage = 10;
         
         public static Game Main { get; private set; }
 
@@ -57,7 +59,7 @@ namespace RL
         public event Action OnLateInit;
 
         public int currentLevel = 1;
-        public bool UseTestLevel = false;
+        public bool UseTestLevel = false;//BROKEN
         public Room CurrentRoom;
         public bool TrainGnbModelOnStart = false;
         public PlayerController Player = null;

@@ -10,19 +10,29 @@ namespace RL.Levels
         public float Health = 200f;
         public float BurnTime = 3f;
 
+        OnFire onFire;
+
         bool _isBurning = false;
 
         [SerializeField] SpriteRenderer spriteRendererChild;
 
-        public void StartBurning()
+        public void StartBurning(float duration)
         {
             if (_isBurning) return;
             _isBurning = true;
             
-            var flamePrefab = Resources.Load<GameObject>("Prefabs/Flame");
-            Instantiate(flamePrefab, transform);
-            DamageFlash();
-            Break(BurnTime);
+            onFire = gameObject.AddComponent<OnFire>();
+            onFire.OnTick += OnFireTick;
+            onFire.StartBurn(duration);
+            // var flamePrefab = Resources.Load<GameObject>("Prefabs/Flame");
+            // Instantiate(flamePrefab, transform);
+            // DamageFlash();
+            // Break(BurnTime);
+        }
+
+        void OnFireTick()
+        {
+            TakeDamage(Game.BurnDamage);
         }
 
         public void TakeDamage(float amount)
@@ -57,6 +67,8 @@ namespace RL.Levels
             yield return new WaitForSeconds(delaySeconds);
 
             Game.Audio.Play("crate_break");
+
+            if (_isBurning) onFire?.StopBurn();
 
             coll.enabled = false; 
             spriteRendererChild.enabled = false;
