@@ -38,8 +38,18 @@ namespace RL.Levels
         public void TakeDamage(float amount)
         {
             Game.Audio.Play("crate_hit");
-            Health -= amount;
             DamageFlash();
+
+            Health -= amount;
+            if (Health <= 0)
+            {
+                Break();
+            }
+        }
+
+        public void TakeDamageSilent(float amount)
+        {
+            Health -= amount;
             if (Health <= 0)
             {
                 Break();

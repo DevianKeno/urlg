@@ -96,6 +96,7 @@ GameObject:
   - component: {fileID: 2264598391690711136}
   - component: {fileID: 7559667328489616014}
   - component: {fileID: 3944968001617071781}
+  - component: {fileID: 5490535460236370059}
   m_Layer: 7
   m_Name: Wave
   m_TagString: Wave
@@ -161,7 +162,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 1667766840, guid: d0e34aa9ce3d81f408166876b9d2dfea, type: 3}
+  m_Sprite: {fileID: -1350562787, guid: 4b4915b63079d5d4bb5f6f924b3ba400, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -247,7 +248,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.875, y: 1.375}
+    oldSize: {x: 2, y: 2}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -273,6 +274,27 @@ MonoBehaviour:
   rb: {fileID: 0}
   spriteRenderer: {fileID: 0}
   DissipateTime: 0.25
+--- !u!95 &5490535460236370059
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2947179042123142427}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 7b5ef46a803d609418c5e67ea21659c7, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &3892711264520612765
 GameObject:
   m_ObjectHideFlags: 0
