@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dad6146c6003dd74e870da4361dadedf, type: 3}
   m_Name: Wave
   m_EditorClassIdentifier: 
+  Type: 2
   Name: Wave
   Sprite: {fileID: 1667766840, guid: d0e34aa9ce3d81f408166876b9d2dfea, type: 3}
   Speed: 40

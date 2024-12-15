@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dad6146c6003dd74e870da4361dadedf, type: 3}
   m_Name: Beam
   m_EditorClassIdentifier: 
-  Name: Laser
+  Type: 1
+  Name: Beam
   Sprite: {fileID: 3076173378739118342, guid: f05fb7b6a771398438f0377130b760fa, type: 3}
   Speed: 25
   Damage: 10

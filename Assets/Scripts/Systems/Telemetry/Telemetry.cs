@@ -200,7 +200,8 @@ namespace RL.Telemetry
             var playerStats = PlayerStats;
             var entry = new DataEntry()
             {
-                Classification = roomStats.Classification,
+                // Classification = roomStats.Classification,
+                Classification = 1,
                 LevelNumber = Game.Main.currentLevel,
                 GroundTruth = groundTruth,
                 PlayerStats = playerStats.SaveToJson(),

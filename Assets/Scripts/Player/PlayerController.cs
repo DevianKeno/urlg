@@ -552,6 +552,15 @@ namespace RL.Player
                 projectile.SetOwner(this);
                 projectile.SetDirection(direction);
             }
+
+            var wakeId = Equipped.ProjectileData.Type switch
+            {
+                WeaponType.Fireball => "wake_fireball",
+                WeaponType.Beam => "wake_beam",
+                WeaponType.Wave => "wake_wave",
+            };
+
+            Game.Particles.Create(wakeId).transform.position = transform.position;
         }
 
         IEnumerator PauseControlTimerCoroutine()

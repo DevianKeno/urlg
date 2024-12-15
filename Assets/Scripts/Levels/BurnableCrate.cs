@@ -10,10 +10,10 @@ namespace RL.Levels
         public float Health = 200f;
         public float BurnTime = 3f;
 
-        OnFire onFire;
-
+        public bool IsBurning => _isBurning;
         bool _isBurning = false;
 
+        OnFire onFire;
         [SerializeField] SpriteRenderer spriteRendererChild;
 
         public void StartBurning(float duration)
@@ -24,15 +24,11 @@ namespace RL.Levels
             onFire = gameObject.AddComponent<OnFire>();
             onFire.OnTick += OnFireTick;
             onFire.StartBurn(duration);
-            // var flamePrefab = Resources.Load<GameObject>("Prefabs/Flame");
-            // Instantiate(flamePrefab, transform);
-            // DamageFlash();
-            // Break(BurnTime);
         }
 
         void OnFireTick()
         {
-            TakeDamage(Game.BurnDamage);
+            TakeDamageSilent(Game.BurnDamage);
         }
 
         public void TakeDamage(float amount)

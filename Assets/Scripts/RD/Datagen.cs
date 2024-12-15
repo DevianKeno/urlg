@@ -258,28 +258,30 @@ namespace RL.RD
 
             string directory = Path.Combine(Application.persistentDataPath, "dataset");
             if (!Directory.Exists(directory)) Directory.CreateDirectory(directory);
-            string filepath = Path.Combine(directory, $"ar_dataset-{DateTime.Now:yyyyMMdd_HHmmss}.csv");
-            
-            using StreamWriter writer = new(filepath);
-            
-            var playerStatKeys = Telemetry.Telemetry.PlayerStatsKeys.Select(key => key.ToString()).ToArray();
-            var roomStatKeys = Telemetry.Telemetry.RoomStatsKeys.Select(key => key.ToString()).ToArray();
-            var headers = new[] { "SeedPlayer", "SeedRoom" }
-                .Concat(playerStatKeys)
-                .Concat(roomStatKeys)
-                .Append("GroundTruth")    
-                .Append("Classification");
 
-            writer.WriteLine(string.Join(",", headers));
-
+            int index = 0;
             foreach (ResultsJsonData data in jsonDatas)
             {
+                string filepath = Path.Combine(directory, $"gnb_result_data_{index}-{DateTime.Now:yyyyMMdd_HHmmss}.csv");
+                
+                using StreamWriter writer = new(filepath);
+                
+                var playerStatKeys = Telemetry.Telemetry.PlayerStatsKeys.Select(key => key.ToString()).ToArray();
+                var roomStatKeys = Telemetry.Telemetry.RoomStatsKeys.Select(key => key.ToString()).ToArray();
+                var headers = new[] { "SeedPlayer", "SeedRoom" }
+                    .Concat(playerStatKeys)
+                    .Concat(roomStatKeys)
+                    .Append("GroundTruth")    
+                    .Append("Classification");
+
+                writer.WriteLine(string.Join(",", headers));
+
                 foreach (DataEntry entry in data.Entries)
                 {
                     var row = new List<string>
                     {
-                        "0",
-                        "0"
+                        "-",    /// seed unwritten
+                        "-"     /// seed unwritten
                     };
 
                     foreach (var statSave in entry.PlayerStats)
@@ -297,9 +299,12 @@ namespace RL.RD
 
                     writer.WriteLine(string.Join(",", row));
                 }
+
+                index++;
+                Debug.Log($"Wrote results into excel file at '{filepath}'");
             }
             
-            Debug.Log($"Finished converting AR results into GNB dataset at '{filepath}'");
+            Debug.Log($"Finished converting AR results excel file");
         }
 
         public void SelectDataset()

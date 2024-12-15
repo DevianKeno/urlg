@@ -49,9 +49,12 @@ namespace RL.Projectiles
         {
             if (obj.TryGetComponent<Tile>(out var tile))
             {
-                if (tile is BurnableCrate crate)
+                if (tile is BurnableCrate burnable)
                 {
-                    crate.StartBurning(99f);
+                    burnable.TakeDamage(Data.Damage);
+                    burnable.StartBurning(99f);
+                    CreateEmbers();
+                    Game.Audio.Play("fire_burst");
                     Destroy(gameObject);
                 }
             }
@@ -62,8 +65,8 @@ namespace RL.Projectiles
             // rb.velocity *= 0.05f;
             Game.Audio.Play("fizz");
             GetComponent<Collider2D>().enabled = false;
-            var flamePrefab = Instantiate(Resources.Load<GameObject>("Prefabs/Embers"), transform);
-            flamePrefab.transform.SetParent(null, worldPositionStays: true);
+            CreateEmbers();
+
             LeanTween.value(gameObject, 1f , 0f, DissipateTime)
                 .setOnUpdate((float i) =>
                 {
@@ -77,6 +80,12 @@ namespace RL.Projectiles
                 {
                     Destroy(gameObject);
                 });
+        }
+
+        void CreateEmbers()
+        {
+            var flamePrefab = Instantiate(Resources.Load<GameObject>("Prefabs/Embers"), transform);
+            flamePrefab.transform.SetParent(null, worldPositionStays: true);
         }
 
         protected override void OnHitEnemy(IDamageable hit, Collision2D collision)
@@ -114,16 +123,21 @@ namespace RL.Projectiles
                     lich.TakeDamage(Data.Damage);
                     /// Lich does not burn
                 }
-                else if (hit is BurnableCrate)
+                else if (burnable is BurnableCrate crate)
                 {
+                    crate.TakeDamage(Data.Damage);
+                    if (!crate.IsBurning)
+                    {
+                        burnable.Burn(99f);
+                    }
+                    CreateEmbers();
                     Game.Audio.Play("fire_burst");
-                    hit.TakeDamage(Data.Damage);
-                    burnable.Burn(99f);
                 }
                 else
                 {
                     hit.TakeDamage(Data.Damage);
                     burnable.Burn(3f);
+                    CreateEmbers();
                 }
             }
 

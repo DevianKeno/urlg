@@ -305,7 +305,7 @@ namespace RL
         {
             Debug.Log("Start train of Model instance");
 
-            var datasetFilepath = Path.Combine(Application.dataPath, "Resources", "Dataset", "3.csv");
+            var datasetFilepath = Path.Combine(Application.dataPath, "Resources", "Dataset", "1.csv");
             var content = CSVHelper.ReadCSV(datasetFilepath);
             ParseDatasetContent(content);
         }

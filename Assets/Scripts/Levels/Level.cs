@@ -51,7 +51,6 @@ namespace RL.Levels
 
         public int LevelNumber = 1;
         public int RoomCount = 2;
-        [Range(0, 100)] public int RejectedRoomsThreshold = 33;
 
         public int MaxEnemyCount => MaxPerLevel[Game.Main.currentLevel].MaxEnemyCount;
         public int MaxObstacleCount => MaxPerLevel[Game.Main.currentLevel].MaxObstacleCount;
@@ -122,12 +121,6 @@ namespace RL.Levels
                 /// Special rooms (start, end) don't have features
                 if (newRoom.IsStartRoom || newRoom.IsEndRoom) continue;
                 
-                Status targetStatus;
-                if (UnityEngine.Random.Range(0, 100) > RejectedRoomsThreshold)
-                    targetStatus = Status.Accepted;
-                else
-                    targetStatus = Status.Rejected;
-
                 var roomStats = Game.Generator.GenerateRoomStats(
                     new FeaturizeOptions(){
                         Algorithm = Game.Main.AlgorithmUsed,
@@ -135,8 +128,7 @@ namespace RL.Levels
                         PlayerStats = Game.Telemetry.PlayerStats,
                         MaxEnemyCount = MaxEnemyCount,
                         MaxObstacleCount = MaxObstacleCount,
-                        // TargetStatus = Status.Accepted, /// only accepted rooms are included in level
-                        TargetStatus = targetStatus, /// only accepted rooms are included in level
+                        TargetStatus = Status.Accepted, /// only accepted rooms are included in level
                     }
                 );
                 
