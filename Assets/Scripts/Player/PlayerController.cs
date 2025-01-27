@@ -380,6 +380,7 @@ namespace RL.Player
             Game.Audio.Play("meow");
 
             spriteRenderer.enabled = false;
+            Game.Telemetry.IncrementDeathCount();
 
             yield return new WaitForSeconds(2);
 

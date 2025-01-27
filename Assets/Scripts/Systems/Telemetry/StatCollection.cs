@@ -1,3 +1,19 @@
+/*
+*   Program Title: Stat Collection (Data Structure)
+*   Last updated: November 8, 2024
+*   
+*   Programmers:
+*       Gian Paolo Buenconsejo
+*   
+*   Purpose:
+*       To store a collection of gameplay statistics, enclosed in the 'Stat' class.
+*
+*   Data Structures:
+*       Dictionary: to store a StatKey and the actual represented Stat in a key-value pair in a collection.
+*       List: used for viewing a read-only list of the Stats within the collection.
+*/
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;

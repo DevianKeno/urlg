@@ -1,3 +1,22 @@
+/*
+Program Title: Cellular Automata Helper
+Date written: September 21, 2024
+Data revised: December 17, 2024
+
+Programmer/s:
+    Gian Paolo Buenconsejo
+
+Purpose:
+    This component generates a noise grid to guide the shape of the level. 
+Control:
+    
+
+Data Structures:
+    NoiseGridSettings: used to store settings for generating an instance of a noise grid.
+    GenerateRoomShapeCalculations:
+    GenerateRoomShapeResult: used to store the result of a generated room shape
+*/
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +33,9 @@ using static RL.Generator.Generator.Map;
 
 namespace RL.CellularAutomata
 {
+    /// <summary>
+    /// Data structure to store settings for generating an instance of a noise grid.
+    /// </summary>
     public struct NoiseGridSettings
     {
         public int[,] Grid { get; set; }
@@ -22,6 +44,9 @@ namespace RL.CellularAutomata
         public float Density { get; set; }
     }
 
+    /// <summary>
+    /// Data structure to store parameters for calculating a room's shape when being generated.
+    /// </summary>
     public struct GenerateRoomShapeCalculations
     {
         public Vector2Int MinBounds { get; set; }
@@ -38,6 +63,9 @@ namespace RL.CellularAutomata
         public Vector3 TotalPosition { get; set; }
     }
 
+    /// <summary>
+    /// Data structure to store the result of generated rooms.
+    /// </summary>
     public struct GenerateRoomShapeResult
     {
         public List<MockRoom> Rooms { get; set; }
@@ -83,11 +111,14 @@ namespace RL.CellularAutomata
         /// <summary>
         /// Whether to included the "Start" room in the generation.
         /// </summary>
-        public bool IncludeStartRoom = true; /// unhandled
+        public bool IncludeStartRoom = true;
         /// <summary>
         /// Whether to included the "End" room in the generation.
         /// </summary>
         public bool IncludeEndRoom = true;
+        /// <summary>
+        /// Override start room coordinates. [Use for testing]
+        /// </summary>
         public bool CustomStartRoomCoordinates;
         public Vector2Int StartRoomCoordinates;
 
@@ -106,7 +137,7 @@ namespace RL.CellularAutomata
         public RecolorType RecolorType = RecolorType.BOTH;
         public Color StartRoomColor = Color.green;
         public Color NormalRoomColor = Color.cyan;
-        public Color NormalRoomColor2 = new(0.0504183f, 0.8779624f, 0.9716981f);
+        public Color NormalRoomColor2 = new(0.0504183f, 0.8779624f, 0.9716981f); /// lighter cyan for checkerboard pattern
         public Color EndRoomColor = Color.red;
 
         [Header("UIs")]
@@ -389,7 +420,7 @@ namespace RL.CellularAutomata
         }
         
         /// <summary>
-        /// Adds generated features to target room.
+        /// Adds randomly generated features to the target room.
         /// </summary>
         void FeaturizeRandom(MockRoom room)
         {
@@ -406,7 +437,7 @@ namespace RL.CellularAutomata
         }
 
         /// <summary>
-        /// Adds generated features to target room.
+        /// Adds empty features to the target room.
         /// </summary>
         void FeaturizeEmpty(MockRoom room)
         {
@@ -421,9 +452,12 @@ namespace RL.CellularAutomata
         }
 
         /// <summary>
-        ///
+        /// Generates a random neightboring room from the target rooom.
         /// </summary>
-        /// <returns>Whether a room is generated successfully.</returns>
+        /// <param name="currentRoom">Target room</param>
+        /// <param name="roomColor">Defined color for visualization</param>
+        /// <param name="result">The new neighboring room</param>
+        /// <returns>Whether a room is generated successfully</returns>
         bool CreateRoomAtNeighbor(MockRoom currentRoom, Color roomColor, out MockRoom result)
         {
             var neighbors = GetFloorNeighbors(currentRoom.x, currentRoom.y);
@@ -492,6 +526,13 @@ namespace RL.CellularAutomata
             return neighbors;
         }
 
+        /// <summary>
+        /// Helper function to instantiate a room at the given coordinates.
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <param name="color"></param>
+        /// <returns>The instantiated room</returns>
         MockRoom InstantiateRoom(int x, int y, Color color)
         {
 #if UNITY_EDITOR

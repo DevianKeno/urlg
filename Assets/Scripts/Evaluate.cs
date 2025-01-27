@@ -1,11 +1,28 @@
+/*
+
+Program Title: Evaluate
+Date written: September 28, 2024
+Date revised: October 16, 2024
+
+Programmer/s:
+    Gian Paolo Buenconsejo
+
+Purpose:
+    A static class that contains helper methods for evaluating and performing mathematical calculations
+    on the various custom-implemented data structures created for the system.
+
+Data Structures/Key Variables:
+    N/A
+*/
+
 using System;
-using RL.Projectiles;
+
 using RL.Telemetry;
 
 namespace RL
 {
     /// <summary>
-    /// Evaluation function helpers.
+    /// Evaluation function helper methods.
     /// </summary>
     public static class Evaluate
     {
@@ -34,7 +51,7 @@ namespace RL
                 {
                     return (double) hit / (double) UnityEngine.Mathf.Clamp(use, 1, use);
                 }
-                catch (Exception e)
+                catch (Exception ex)
                 {
                     return 0d;
                 }
@@ -52,7 +69,7 @@ namespace RL
 
                     return weaponEfficiency * ((double) stats[hitCountKey].Value / (double) stats.TotalHitCount);
                 }
-                catch (Exception e)
+                catch (Exception ex)
                 {
                     return 0d;
                 }
@@ -70,7 +87,7 @@ namespace RL
 
                     return WeaponEfficiency(stats[hitCountKey].Value, stats[useCountKey].Value) * ((double) stats[hitCountKey].Value / (double) stats.TotalHitCount);
                 }
-                catch (Exception e)
+                catch (Exception ex)
                 {
                     return 0d;
                 }
@@ -86,7 +103,7 @@ namespace RL
                 {
                     return (float) hitsTaken / enemyAttackCount;
                 }
-                catch (Exception e)
+                catch (Exception ex)
                 {
                     return 0f;
                 }
@@ -111,7 +128,7 @@ namespace RL
                     double numerator = (double) stats[enemyCountKey].Value +  (double) stats[obstacleCountKey].Value;
                     return numerator / ((double) stats.TotalEnemyCount + (double) stats.TotalObstacleCount);
                 }
-                catch (Exception e)
+                catch (Exception ex)
                 {
                     return 0d;
                 }
@@ -129,7 +146,7 @@ namespace RL
 
                     return (float) stats.TotalEnemyCount / maxFeatureCount;
                 }
-                catch (Exception e)
+                catch (Exception ex)
                 {
                     return 0f;
                 }

@@ -1,16 +1,32 @@
-using RL.CellularAutomata;
+/*
+
+Program Title: Accept-Reject Classifier (Algorithm)
+Date written: October 3, 2024
+Date revised: October 29, 2024
+
+Programmer/s:
+    Gian Paolo Buenconsejo, John Franky Nathaniel V. Batisla-Ong, Edrick L. De Villa, John Paulo A. Dela Cruz
+
+Purpose:
+    This is the main algorithm implemention for the classification model
+    utilizing Accept-Reject sampling algorithm for the system.
+    The model evaluates similarity between feature sets (player preferences and room characteristics),
+    or data entries, then classifies it to two categories: "Accepted" or "Rejected."
+
+Control:
+
+
+Data Structures/Key Variables:
+    - Status (Enum): represents the classification status
+    - ConfusionMatrixStatus (Enum): used for evaluating classification performance
+    - ARResult: stores the result of an AR classification, including the predicted status and
+        helper properties to check if the result is accepted or rejected
+*/
+
 using RL.Telemetry;
 
 namespace RL.Classifiers
 {
-    public enum Result { Accepted, Rejected }
-
-    public struct AREntry
-    {
-        public int x { get; set; }
-        public int y { get; set; }
-    }
-    
     public enum Status {
         Rejected, Accepted, None, 
     }
@@ -19,6 +35,9 @@ namespace RL.Classifiers
         TruePositive, TrueNegative, FalsePositive, FalseNegative, Invalid
     }
 
+    /// <summary>
+    /// Data structure to store the result of an AR classification.
+    /// </summary>
     public struct ARResult : IResult
     {
         public Status Status { get; set; }
@@ -31,6 +50,10 @@ namespace RL.Classifiers
     /// </summary>
     public class ARClassifier
     {
+        /// <summary>
+        /// Perform a classification for given a feature set (PlayerStatCollection + RoomStatCollection).
+        /// </summary>
+        /// <returns>The result</returns>
         public static ARResult Classify(PlayerStatCollection playerStats, RoomStatCollection roomStats, float acceptanceThreshold = 0f, bool normalized = false)
         {
             var result = new ARResult();
@@ -52,22 +75,22 @@ namespace RL.Classifiers
             
             Math.NormalizeMaxed(ref roomFirePref, ref roomBeamPref, ref roomWavePref);
 
-            /// Normalize the values between 0 and 1 (you can adjust normalization logic as per the actual data ranges)
-            double playerFireNorm = Normalize(playerFirePref);
-            double playerBeamNorm = Normalize(playerBeamPref);
-            double playerWaveNorm = Normalize(playerWavePref);
+            /// Normalize the values between 0 and 1
+            double playerFireNorm = Math.Normalize(playerFirePref);
+            double playerBeamNorm = Math.Normalize(playerBeamPref);
+            double playerWaveNorm = Math.Normalize(playerWavePref);
             
-            double roomFireNorm = Normalize(roomFirePref);
-            double roomBeamNorm = Normalize(roomBeamPref);
-            double roomWaveNorm = Normalize(roomWavePref);
+            double roomFireNorm = Math.Normalize(roomFirePref);
+            double roomBeamNorm = Math.Normalize(roomBeamPref);
+            double roomWaveNorm = Math.Normalize(roomWavePref);
 
             double fireDeviation = System.Math.Abs(playerFireNorm - roomFireNorm);
             double beamDeviation = System.Math.Abs(playerBeamNorm - roomBeamNorm);
             double waveDeviation = System.Math.Abs(playerWaveNorm - roomWaveNorm);
 
-            if (fireDeviation > acceptanceThreshold
-             || beamDeviation > acceptanceThreshold
-             || waveDeviation > acceptanceThreshold)
+            if (fireDeviation > acceptanceThreshold ||
+                beamDeviation > acceptanceThreshold ||
+                waveDeviation > acceptanceThreshold)
             {
                 result.Status = Status.Rejected;
             }
@@ -77,14 +100,6 @@ namespace RL.Classifiers
             }
 
             return result;
-        }
-
-        /// <summary>
-        /// Normalization function that maps values to a [0, 1] scale based on some known max range
-        /// </summary>
-        public static double Normalize(double value, double minValue = 0, double maxValue = 1)
-        {
-            return (value - minValue) / (maxValue - minValue);
         }
     }
 }

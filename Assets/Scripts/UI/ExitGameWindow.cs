@@ -1,3 +1,19 @@
+/*
+
+Component Title: Exit Game Window
+Data written: October 5, 2024
+Date revised: October 26, 2024
+
+Programmer/s:
+    Gian Paolo Buenconsejo
+
+Purpose:
+    Implementation of the exit game window.
+
+Data Structures:
+    N/A
+*/
+
 using UnityEngine;
 using UnityEngine.UI;
 

@@ -1,5 +1,19 @@
-using System.Collections;
-using System.Collections.Generic;
+/*
+
+Component Title: Box Plot Fill
+Data written: September 30, 2024
+Date revised: October 4, 2024
+
+Programmer/s:
+    Gian Paolo Buenconsejo
+
+Purpose:
+    A UI element representing the box fill of a graph.
+
+Data Structures:
+    Color: the color of the fill
+*/
+
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -19,6 +33,9 @@ namespace RL.Graphs
         public RectTransform parentRect;
         public RectTransform fillRect;
 
+        /// <summary>
+        /// Sets new values for the box fill and updates it visually.
+        /// </summary>
         public void Refit(float xMin, float xMax, float yMin, float yMax)
         {
             fillRect.anchorMin = new Vector2(xMin, yMin);

@@ -1,12 +1,15 @@
+
+
 using System;
 using System.Collections.Generic;
+
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace RL.Graphs
 {
     /// <summary>
-    /// Accept/Reject visualization box graph.
+    /// For visualizing box graphs of AR entries.
     /// </summary>
     public class ARGraph : MonoBehaviour
     {

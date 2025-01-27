@@ -1,3 +1,24 @@
+/*
+
+Component Title: Tiles Manager
+Data written: June 22, 2024
+Date revised: October 11, 2024
+
+Programmer/s:
+    Gian Paolo Buenconsejo
+
+Purpose:
+    
+
+Control:
+
+
+Data Structures:
+    Dictionary: used to store all tile and obstacle data
+        Key is the Id of the tile/obstacle; Value is the tile/obstacle data itself
+    List: used to store the tile and obstacle data(s) as a read-only list
+*/
+
 using System;
 using System.Collections.Generic;
 

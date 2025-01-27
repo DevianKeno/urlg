@@ -1,10 +1,9 @@
 using UnityEngine;
+
 using RL.Entities;
-using RL.Systems;
 using RL.Levels;
 using RL.Telemetry;
 using RL.Enemies;
-using System.Collections;
 
 namespace RL.Projectiles
 {

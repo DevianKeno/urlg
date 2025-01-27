@@ -1,6 +1,20 @@
+/*
+
+Component Title: Enemy (Base)
+Last updated: November 8, 2024
+
+Programmer/s:
+    Gian Paolo Buenconsejo
+
+Purpose:
+    This component is the base class for all 'Enemy' entities in the game.
+
+Data Structures:
+    [Definitions are found at their respective declarations]
+*/
+
 using System;
-using System.Collections;
-using System.Collections.Generic;
+
 using RL.Player;
 using RL.UI;
 using UnityEngine;
@@ -9,10 +23,16 @@ namespace RL.Entities
 {    
     public class Enemy : Entity, IDamageable, IBurnable
     {
+        /// <summary>
+        /// The current health of this entity.
+        /// </summary>
         public float Health = 100f;
         public float MoveSpeed = 2f;
         public Color DamageFlash = Color.red;
         
+        /// <summary>
+        /// A 'sleeping' entity will not be able to interact with anything.
+        /// </summary>
         public bool IsAsleep { get; set; } = true; 
         bool hasTarget; 
 
@@ -21,14 +41,35 @@ namespace RL.Entities
         public float rotationSpeed = 50f;
         
         [Header("Follow Parameters")]
-        public float followDistance = 5f; // Desired distance from the player
-        public float followSpeed = 2f; // Speed at which the enemy follows the player
-        public float followDamping = 0.5f; //o Damping effect for smooth movement
-        public float strafeAngle = 30f; // Maximum cone angle for strafing
-        public float strafeSpeed = 1f; // Speed at which the enemy strafes
+        /// <summary>
+        /// Desired distance from the player.
+        /// </summary>
+        public float followDistance = 5f;
+        /// <summary>
+        /// Speed at which the enemy follows the player.
+        /// </summary>
+        public float followSpeed = 2f;
+        /// <summary>
+        /// Amount of damping effect for smoothed movement.
+        /// </summary>
+        public float followDamping = 0.5f;
+        /// <summary>
+        /// Maximum cone angle amount for strafing left/right.
+        /// </summary>
+        public float strafeAngle = 30f;
+        /// <summary>
+        /// Speed at which to strafe.
+        /// </summary>
+        public float strafeSpeed = 1f;
+        /// <summary>
+        /// Must be ideally only be -1 or 1, representing the direction at which to strafe.
+        /// </summary>
         float strafeDirection;
 
         #region 
+        /// <summary>
+        /// Called when this entity dies.
+        /// </summary>
         public event Action<Enemy> OnDeath;
         #endregion
 
@@ -37,8 +78,6 @@ namespace RL.Entities
         [SerializeField] protected SpriteRenderer spriteRenderer;
         [SerializeField] protected Rigidbody2D rb;
         [SerializeField] protected HealthBar healthBar;
-
-        protected Vector2 frameMovement;
 
         protected virtual void Start()
         {
@@ -68,7 +107,14 @@ namespace RL.Entities
         {
         }
 
+        /// <summary>
+        /// OnFire component.
+        /// </summary>
         protected OnFire onFire;
+
+        /// <summary>
+        /// Burns this enemy for a specified duration.
+        /// </summary>
         public virtual void Burn(float duration)
         {
             if (onFire == null)
@@ -88,6 +134,9 @@ namespace RL.Entities
             TakeDamage(Game.BurnDamage);
         }
 
+        /// <summary>
+        /// Searches for player targers within a predefined radius.
+        /// </summary>
         protected virtual void Search()
         {
             if (hasTarget) return;
@@ -104,6 +153,9 @@ namespace RL.Entities
             }
         }
 
+        /// <summary>
+        /// Set a target player setting the stage for further actions.
+        /// </summary>
         public void SetTargetPlayer(PlayerController player)
         {
             if (player != null)
@@ -113,6 +165,9 @@ namespace RL.Entities
             }
         }
 
+        /// <summary>
+        /// Looks at the current target (if any).
+        /// </summary>
         protected virtual void LookAtTarget()
         {
             if (!hasTarget) return;
@@ -123,6 +178,9 @@ namespace RL.Entities
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
         }
 
+        /// <summary>
+        /// Maintains its preferred distance from the current target (if any).
+        /// </summary>
         protected virtual void MaintainDistance()
         {
             if (!hasTarget) return;
@@ -140,24 +198,33 @@ namespace RL.Entities
             rb.MovePosition(smoothedPosition);
         }
 
+        /// <summary>
+        /// Randomly chooses a direction on which to strafe at.
+        /// </summary>
         protected virtual void ChooseNewStrafeDirection()
         {
             float randomAngle = UnityEngine.Random.Range(-strafeAngle, strafeAngle);
             strafeDirection = Mathf.Deg2Rad * randomAngle; // Convert angle to radians for trigonometric functions
         }
 
-        public virtual void TakeDamage(float damage)
+        /// <summary>
+        /// Take damage reducing this entity's health.
+        /// </summary>
+        public virtual void TakeDamage(float amount)
         {
             if (IsAsleep) return;
             
             Flash();
-            Health -= damage;
+            Health -= amount;
             if (Health <= 0)
             {
                 Die();
             }
         }
 
+        /// <summary>
+        /// Kill this entity.
+        /// </summary>
         public virtual void Die()
         {
             /// Does not die if player is dead first
@@ -170,6 +237,9 @@ namespace RL.Entities
             Destroy(gameObject);
         }
 
+        /// <summary>
+        /// Simulates a damage flash effect.
+        /// </summary>
         public virtual void Flash()
         {
             spriteRenderer.color = prevColor;

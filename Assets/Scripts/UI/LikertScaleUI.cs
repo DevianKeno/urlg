@@ -1,14 +1,34 @@
+/*
+
+Component Title: Liker Scale User Interface
+Data written: October 4, 2024
+Date revised: October 27, 2024
+
+Programmer/s:
+    Gian Paolo Buenconsejo
+
+Purpose:
+    UI handler for displaying a specific frame from a subset of frames.
+
+Data Structures/Key Variables:
+    [Defined below]
+*/
+
 using System;
+
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using RL.CellularAutomata;
+
 using RL.Levels;
 
 namespace RL.UI
 {
     public class LikertScaleUI : Window
     {
+        /// <summary>
+        /// How long the user has to press the button.
+        /// </summary>
         public float PressTime = 0.5f;
         int selected;
         bool _hasSelected = false;
@@ -17,6 +37,9 @@ namespace RL.UI
         float _pressTimer;
 
         Room targetRoom;
+        /// <summary>
+        /// The room this likert scale is reading.
+        /// </summary>
         public Room TargetRoom => targetRoom;
 
         public event Action OnLiked;

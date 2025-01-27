@@ -1,3 +1,19 @@
+/*
+Component Title: Audio Manager
+Data written: October 5, 2024
+Date revised: October 11, 2024
+
+Programmer/s:
+    Gian Paolo Buenconsejo
+
+Purpose:
+    This is a helper program to help write CSV files to a target path
+    given an input of a List of strings.
+
+Data Structures:
+    N/A
+*/
+
 using System.Collections.Generic;
 using System.IO;
 
@@ -26,6 +42,7 @@ namespace RL
             return data;
         }
 
+        /// UNUSED
         public static void WriteCSV()
         {
 

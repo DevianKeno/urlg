@@ -59,16 +59,19 @@ namespace RL.Classifiers
                     break;
             }
         }
+        
         public float CalculatePrecision()
         {
             // Precision = TP / (TP + FP)
             return (TPCount + FPCount) == 0 ? 0 : (float)TPCount / (TPCount + FPCount);
         }
-         public float CalculateRecall()
+
+        public float CalculateRecall()
         {
             // Recall = TP / (TP + FN)
             return (TPCount + FNCount) == 0 ? 0 : (float)TPCount / (TPCount + FNCount);
         }
+
         public float CalculateFScore()
         {
             float precision = CalculatePrecision();

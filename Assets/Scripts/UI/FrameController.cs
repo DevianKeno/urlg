@@ -1,3 +1,21 @@
+/*
+
+Component Title: Frame Controller
+Data written: September 30, 2024
+Date revised: October 4, 2024
+
+Programmer/s:
+    Gian Paolo Buenconsejo
+
+Purpose:
+    UI handler for displaying a specific frame from a subset of frames.
+
+Data Structures/Key Variables:
+    - SwitchStatus
+    - FrameController.SwitchFrameContext
+    [Definitions are found at their respective declarations]
+*/
+
 using System;
 using System.Collections.Generic;
 
@@ -12,24 +30,54 @@ namespace RL.UI
             Started, Finished
         }
 
+        /// <summary>
+        /// Data structure to store information for the <c>OnSwitchFrame</c> event.
+        /// </summary>
         public struct SwitchFrameContext
         {
+            /// <summary>
+            /// The point in time the <c>OnSwitchFrame</c> event is at.
+            /// </summary>
             public SwitchStatus Status { get; set; }
+            /// <summary>
+            /// The previous frame, or the frame that was transitioned from.
+            /// </summary>
             public string Previous { get; set; }
+            /// <summary>
+            /// The next frame, or the frame that is being transitioned to.
+            /// </summary>
             public string Next { get; set; }
         }
 
+        /// <summary>
+        /// The size of the frame. [Set in Inspector]
+        /// </summary>
         public Vector2 FrameSize;
+        /// <summary>
+        /// The position of the frame when it is in inactive state. [Set in Inspector]
+        /// </summary>
         public Vector2 InactiveFramePosition;
+        /// <summary>
+        /// Lerp duration. [Set in Inspector]
+        /// </summary>
         public float AnimationFactor = 0.5f;
+        /// <summary>
+        /// Tween animation type. [Set in Inspector]
+        /// </summary>
         public LeanTweenType Ease = LeanTweenType.easeOutExpo;
         public bool IsTransitioning { get; private set; }
         [SerializeField] Frame currentFrame;
+        /// <summary>
+        /// The currently displayed frame.
+        /// </summary>
         public Frame CurrentFrame => currentFrame;
-
+    
         string _previousFrame;
         [SerializeField] List<Frame> frames = new();
 
+        /// <summary>
+        /// Called everytime this controller switches frames.
+        /// </summary>
         public event Action<SwitchFrameContext> OnSwitchFrame;
 
 
@@ -46,21 +94,36 @@ namespace RL.UI
             }
         }
 
+        /// <summary>
+        /// Switch to frame given its index.
+        /// </summary>
         public void SwitchToFrame(int index)
         {
             SwitchToFrame(frames[index].Name, instant: false, force: false);
         }
 
+        /// <summary>
+        /// Switch to frame given the name.
+        /// </summary>
         public void SwitchToFrame(string name)
         {
             SwitchToFrame(name, instant: false, force: false);
         }
 
+        /// <summary>
+        /// Switch to frame given the name.
+        /// </summary>
         public void SwitchToFrame(string name, bool instant = false)
         {
             SwitchToFrame(name, instant, force: false);
         }
 
+        /// <summary>
+        /// Switch to frame given the name.
+        /// </summary>
+        /// <param name="name">Name of the frame to switch to</param>
+        /// <param name="instant">If <c>false</c>, plays a tween animation</param>
+        /// <param name="force">By default, this cannot transition if there is an animation playing</param>
         public void SwitchToFrame(string name, bool instant = false, bool force = false)
         {
             Frame frame = GetFrame(name);
@@ -125,6 +188,9 @@ namespace RL.UI
             }
         }
 
+        /// <summary>
+        /// Appends an external frame to this controller.
+        /// </summary>
         public void AppendFrame(Frame frame, bool display = true)
         {
             frame.transform.SetParent(transform);
@@ -140,6 +206,9 @@ namespace RL.UI
             }
         }
 
+        /// <summary>
+        /// Removes a frame from this controller.
+        /// </summary>
         public void RemoveFrame(Frame frame)
         {
             if (frames.Contains(frame))
@@ -149,6 +218,9 @@ namespace RL.UI
             SwitchToFrame(_previousFrame, instant: true);
         }
 
+        /// <summary>
+        /// Retrieves a frame from this controller given its name.
+        /// </summary>
         public Frame GetFrame(string name)
         {
             foreach (Frame f in frames)

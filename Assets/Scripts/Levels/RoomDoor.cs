@@ -1,3 +1,19 @@
+/*
+
+Component Title: Room Door
+Data written: June 18, 2024
+Date revised: October 27, 2024
+
+Programmer/s:
+    Gian Paolo Buenconsejo
+
+Purpose:
+
+
+Data Structures/Key Variables:
+    [Definitions are found at their respective declarations]
+*/
+
 using UnityEngine;
 using static RL.Generator.Generator.Map;
 

@@ -1,7 +1,32 @@
-using System;
-using System.IO;
+/*
+
+Program Title: Gaussian Naive Bayes [Classifier] (Algorithm)
+Date written: October 4, 2024
+Date revised: October 29, 2024
+
+Programmer/s:
+    Gian Paolo Buenconsejo, John Franky Nathaniel V. Batisla-Ong, Edrick L. De Villa, John Paulo A. Dela Cruz
+
+Purpose:
+    This is the main algorithm implementation for the Gaussian Naive Bayes model of the system.
+    A GNB classifier is a probabilistic machine learning model used for classification tasks.
+    This GNB classifier models the likelihood of features using a Gaussian distribution.
+    This implementation is designed to classify data entries into two categories: "Accepted" or "Rejected,"
+    based on a dataset with a specific format of headers.
+    This program is a singleton.
+
+Control:
+    If enabled (which is by default), the model is trained upon
+    the start of the application using the dataset gathered by the researchers. 
+    The dataset is loaded into the model and is trained. On which after,
+    generated feature sets can now be classified which yields a result.
+
+Data Structures/Key Variables:
+    GNBData: used to represent a data entry from a dataset for GNB.
+    GNBResult: used to store the result of a GNB classification.
+*/
+
 using System.Collections.Generic;
-using System.Linq;
 using static System.Math;
 
 using UnityEngine;
@@ -12,6 +37,9 @@ using RL.RD;
 
 namespace RL.Classifiers
 {
+    /// <summary>
+    /// Data structure representing a data entry from a dataset for GNB.
+    /// </summary>
     public class GNBData
     {
         public List<ARDataEntry> AcceptedEntries = new();
@@ -19,6 +47,9 @@ namespace RL.Classifiers
         public int TotalEntryCount => AcceptedEntries.Count + RejectedEntries.Count;
     }
 
+    /// <summary>
+    /// Data structure to store the result of a GNB classification.
+    /// </summary>
     public struct GNBResult : IResult
     {
         public double PosteriorAccepted { get; set; }
@@ -28,11 +59,6 @@ namespace RL.Classifiers
         public readonly bool IsRejected => Status == Status.Rejected;
     }
     
-    public struct GNBTestResult
-    {
-        
-    }
-
     public class GaussianNaiveBayes : MonoBehaviour
     {
         public static GaussianNaiveBayes Instance { get; private set;}
@@ -65,6 +91,10 @@ namespace RL.Classifiers
             }
         }
 
+        /// <summary>
+        /// Perform a classification for given a feature set (PlayerStatCollection + RoomStatCollection).
+        /// </summary>
+        /// <returns>The result</returns>
         public GNBResult ClassifyRoom(PlayerStatCollection playerStats, RoomStatCollection roomStats)
         {
             var result = new GNBResult();
@@ -91,6 +121,10 @@ namespace RL.Classifiers
             return featureProbability * prior;
         }
 
+        /// <summary>
+        /// Train the current model given a testing set and a validation set.
+        /// </summary>
+        /// <param name="testingSet"></param>
         public void Train(GNBData testingSet, GNBData validationSet = null)
         {
             this.testingSet = testingSet;
@@ -119,11 +153,10 @@ namespace RL.Classifiers
             Debug.Log("Model trained");
         }
 
-        public void Test(GNBData data)
-        {
-
-        }
-
+        /// <summary>
+        /// Calculates the cosine similarity between a PlayerStatCollection and RoomStatCollection.
+        /// </summary>
+        /// <returns>A value between 0-1, representing the similarity of the feature set</returns>
         double CalculateCosine(PlayerStatCollection playerStats, RoomStatCollection roomStats)
         {
             var playerPrefs = new double[]{
@@ -140,6 +173,10 @@ namespace RL.Classifiers
             return Math.CosineSimilarity(playerPrefs, roomPrefs);
         }
 
+        /// <summary>
+        /// Calculates the cosine similarity given a Accept-Reject data entry.
+        /// </summary>
+        /// <returns>A value between 0-1, representing the similarity of the feature set</returns>
         double CalculateCosine(ARDataEntry entry)
         {
             var playerStats = PlayerStatCollection.FromAREntry(entry);
@@ -176,6 +213,9 @@ namespace RL.Classifiers
             return features;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public static double ProbabilityDistributionFunction(double x, double mean, double variance)
         {
             if (variance == 0) variance = 1e-8; /// Small constant to prevent division by zero

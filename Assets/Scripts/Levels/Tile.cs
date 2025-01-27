@@ -1,11 +1,33 @@
+/*
+
+Component Title: Tile (Base)
+Data written: July 6, 2024
+Date revised: October 26, 2024
+
+Programmer/s:
+    Gian Paolo Buenconsejo
+
+Purpose:
+    Base class to represent tiles in the game.
+
+Data Structures:
+    [Definitions are found at their respective declarations]
+*/
+
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
 namespace RL.Levels
 {
+    /// <summary>
+    /// Base class to represent tiles in the game.
+    /// </summary>
     public class Tile : MonoBehaviour
     {
         [SerializeField] TileData tileData;
+        /// <summary>
+        /// The data representing this tile.
+        /// </summary>
         public TileData TileData
         {
             get
@@ -18,6 +40,9 @@ namespace RL.Levels
             }
         }
         Vector2Int coordinates;
+        /// <summary>
+        /// The position of this tile in cell grid coordinates, relative to world space.
+        /// </summary>
         public Vector2Int Coordinates
         {
             get
@@ -30,6 +55,9 @@ namespace RL.Levels
             }
         }
         Vector2Int localCoordinates;
+        /// <summary>
+        /// The position of this tile in cell grid coordinates, relative to the room its in.
+        /// </summary>
         public Vector2Int LocalCoordinates
         {
             get
@@ -125,6 +153,9 @@ namespace RL.Levels
 
         #region Public methods
 
+        /// <summary>
+        /// Updates its coordinate position from its transform position.
+        /// </summary>
         public void PositionToCoordinate()
         {
             var pos = new Vector3(
@@ -140,6 +171,9 @@ namespace RL.Levels
             localCoordinates = new Vector2Int((int) transform.localPosition.x, (int) transform.localPosition.y);
         }
 
+        /// <summary>
+        /// Updates its transform position from its coordinate position.
+        /// </summary>
         public void CoordinateToPosition(Vector2Int coords)
         {
             transform.position = new()
@@ -150,6 +184,9 @@ namespace RL.Levels
             Coordinates = coords;
         }
 
+        /// <summary>
+        /// Updates its transform local position from its coordinate position.
+        /// </summary>
         public void CoordinateToLocalPosition(Vector2Int coords)
         {
             transform.localPosition = new()
@@ -160,6 +197,9 @@ namespace RL.Levels
             localCoordinates = coords;
         }
 
+        /// <summary>
+        /// Changes the data associated with this tile given a valid id.
+        /// </summary>
         public void SetTileDataFromId(string id)
         {
             var newData = Game.Tiles.GetTileDataFromId(id);

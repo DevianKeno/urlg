@@ -1,6 +1,19 @@
+/*
+*   Program Title: Level Generator (Research and Development)
+*   Last updated: December 17, 2024
+*   
+*   Programmers:
+*       Gian Paolo Buenconsejo
+*   
+*   Purpose:
+*       This component is responsible for generating the levels.
+*
+*   Data Structures:
+*       
+*/
+
 using System;
 using System.IO;
-using System.Collections;
 using System.Collections.Generic;
 
 using UnityEngine;
@@ -194,13 +207,13 @@ namespace RL.RD
 
                 if (room.IsStartRoom || room.IsEndRoom) continue;
 
-                Status targetStatus;
-                if (UnityEngine.Random.Range(0, 100) > RejectedRoomsThreshold)
-                    targetStatus = Status.Accepted;
-                else
-                    targetStatus = Status.Rejected;
+                // Status targetStatus;
+                // if (UnityEngine.Random.Range(0, 100) > RejectedRoomsThreshold)
+                //     targetStatus = Status.Accepted;
+                // else
+                //     targetStatus = Status.Rejected;
 
-                Featurize(SelectedAlgorithm, room, targetStatus);
+                Featurize(SelectedAlgorithm, room, Status.Accepted);
                 room.Recolor(RecolorType);
                 SubscribeRoomEvents(room);
             }

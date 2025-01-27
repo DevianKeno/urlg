@@ -1,3 +1,18 @@
+/*
+Program Title: Accept and Reject [Sampling Algorithm] (Research and Development)
+Date written: October 4, 2024
+Date revised: October 16, 2024
+
+Programmer/s:
+    Gian Paolo Buenconsejo
+
+Purpose:
+    This component aims to gather the gameplay characteristics of the player as statistics.
+
+Data Structures:
+    List: 
+*/
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -105,6 +120,9 @@ therefore is <b>rejected</b>.";
 
         #region Public methods
 
+        /// <summary>
+        /// Checks the current player state and room stat states and classifies it using Accept-Reject algorithm.
+        /// </summary>
         public void ClassifyAR()
         {
             if (playerStats == null || roomStats == null)
@@ -221,6 +239,9 @@ therefore is <b>rejected</b>.";
             playerStats.GetStat(StatKey.HitsTaken).Value = hitsTaken;
         }
 
+        /// <summary>
+        /// Clamps the stat HitsTaken between its minimum and maximum possible values.
+        /// </summary>
         public void ClampHitsTaken()
         {
             var hitsTaken = playerTelemetryUI.GetEntry(StatKey.HitsTaken).Value;

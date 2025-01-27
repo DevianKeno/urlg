@@ -1,8 +1,7 @@
-using System;
 using UnityEngine;
+
 using RL.Player;
 using RL.Entities;
-using RL.Levels;
 
 namespace RL.Projectiles
 {

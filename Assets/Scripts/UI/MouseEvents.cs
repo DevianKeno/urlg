@@ -1,4 +1,22 @@
+/*
+
+Component Title: Mouse Events
+Data written: September 28, 2024
+Date revised: October 4, 2024
+
+Programmer/s:
+    Gian Paolo Buenconsejo
+
+Purpose:
+    This component is attached to UI elements that has is associated with mouse events (e.g., Hover, Click, etc.).
+    Other scripts can listen to the provided events, which are fired when the user interacts with the UI element.
+
+Data Structures:
+    N/A
+*/
+
 using System;
+
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;

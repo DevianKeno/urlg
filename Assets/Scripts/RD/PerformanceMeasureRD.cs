@@ -1,16 +1,36 @@
+/*
+
+Program Title: Performance Measure (Research and Development)
+Data written: October 15, 2024
+Date revised: October 26, 2024
+
+Programmer/s:
+    Gian Paolo Buenconsejo
+
+Purpose:
+    
+
+Control:
+
+
+Data Structures:
+    
+*/
+
+using System;
 using System.IO;
 using System.Collections.Generic;
+using System.Text;
+using System.Linq;
 
 using UnityEngine;
 using UnityEngine.UI;
+using Newtonsoft.Json;
 using TMPro;
 using SFB;
+
 using RL.Telemetry;
-using Newtonsoft.Json;
 using RL.Classifiers;
-using System;
-using System.Linq;
-using System.Text;
 
 namespace RL.RD
 {

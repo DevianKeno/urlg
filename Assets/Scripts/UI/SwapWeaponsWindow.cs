@@ -1,8 +1,24 @@
-using System.Collections;
-using System.Collections.Generic;
-using RL.Player;
+/*
+
+Component Title: Swap Weapons Window
+Data written: September 28, 2024
+Date revised: October 4, 2024
+
+Programmer/s:
+    Gian Paolo Buenconsejo
+
+Purpose:
+    Implementation of the window that appears when the user is prompted
+    if they want to swap their currently equipped weapons.
+
+Data Structures:
+    N/A
+*/
+
 using UnityEngine;
 using UnityEngine.UI;
+
+using RL.Player;
 
 namespace RL.UI
 {

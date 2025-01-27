@@ -1,3 +1,20 @@
+/*
+
+Component Title: State (Base)
+Data written: June 12, 2024
+Date revised: October 4, 2024
+
+Programmer/s:
+    Gian Paolo Buenconsejo
+
+Purpose:
+    Base state representation for state machines.
+
+Data Structures:
+    State.ChangedContext: used to store information upon transition to/from states
+
+*/
+
 using System;
 using UnityEngine;
 
@@ -9,6 +26,9 @@ namespace RL.Systems
     [Serializable]
     public class State<EState> where EState : Enum
     {
+        /// <summary>
+        /// Data structure to store information upon transition to/from states.
+        /// </summary>
         public struct ChangedContext
         {
             public EState PreviousState;
@@ -16,8 +36,14 @@ namespace RL.Systems
         }
         
         EState _key;
+        /// <summary>
+        /// The representation of this state in Enum type
+        /// </summary>
         public EState Key => _key;
         bool _isLocked;
+        /// <summary>
+        /// Whether to allow transitioning to other states if in this state.
+        /// </summary>
         public bool IsLocked => _isLocked;
 
         [field: Header("Events")]       

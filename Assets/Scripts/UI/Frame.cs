@@ -1,3 +1,21 @@
+/*
+
+Component Title: Frame
+Data written: September 30, 2024
+Date revised: October 4, 2024
+
+Programmer/s:
+    Gian Paolo Buenconsejo
+
+Purpose:
+    This component is attached to ui
+
+Data Structures/Key Variables:
+    Id (string): the unique id representing this frame
+    Name (string): the display name of this frame
+*/
+
+
 using UnityEngine;
 using UnityEngine.UI;
 

@@ -1,17 +1,42 @@
+/*
+Program Title: Game (URLG)
+Data written: June 18, 2024
+Date revised: December 17, 2024
+
+Programmer/s:
+    Gian Paolo Buenconsejo
+
+Purpose:
+    This is the main singleton class that manages the entire Game application.
+    Houses all the game managers to control and manage the different parts of the game.
+    Contains helper functions for scene management.
+
+Control:
+    Awake()
+        -> <manager>.Initialize()
+        -> StartTrain()
+
+    The program is initialized at the start of the application.
+    If enabled (true by default), this is also the time where the GNB model is trained using the provided dataset.
+
+Data Structures:
+
+*/
+
 using System;
+using System.IO;
 using System.Collections;
+using System.Collections.Generic;
 
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
-using RL.CellularAutomata;
 using RL.Systems;
+using RL.CellularAutomata;
 using RL.Levels;
 using RL.Player;
-using System.Collections.Generic;
 using RL.Weapons;
-using System.IO;
 using RL.Classifiers;
 using RL.RD;
 using RL.Telemetry;
@@ -22,9 +47,12 @@ namespace RL
     
     public class Game : MonoBehaviour
     {
+        #region Constants
         public const int MaxEnemiesPerRoom = 12;
         public const float FireTickSeconds = 1f;
         public const int BurnDamage = 10;
+        
+        #endregion
         
         public static Game Main { get; private set; }
 

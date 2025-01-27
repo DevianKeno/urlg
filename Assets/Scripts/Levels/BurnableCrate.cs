@@ -1,7 +1,28 @@
+/*
+
+Program Title: 
+Date written: June 22, 2024
+Date revised: November 8, 2024
+
+Programmer/s:
+    John Paulo A. Dela Cruz
+
+Purpose:
+
+
+
+Control:
+
+
+Data Structures/Key Variables:
+    
+*/
+
 using System;
 using System.Collections;
-using TMPro;
+
 using UnityEngine;
+using TMPro;
 
 namespace RL.Levels
 {

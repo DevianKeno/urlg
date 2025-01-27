@@ -395,7 +395,7 @@ MonoBehaviour:
   currentLevel: 1
   UseTestLevel: 0
   CurrentRoom: {fileID: 0}
-  TrainGnbModelOnStart: 1
+  TrainGnbModelOnStart: 0
   Player: {fileID: 0}
   PlayerEquippedWeapon1: {fileID: 0}
   PlayerEquippedWeapon2: {fileID: 0}
@@ -686,7 +686,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   EnablePCPCG: 1
-  EnablePCPCGGNB: 1
+  EnablePCPCGGNB: 0
   ValidateRatio: 0.2
   datasetFilenameTmp: {fileID: 440914730}
   pcpcgBtn: {fileID: 965039410}
@@ -4002,8 +4002,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ed85e152eb10c84a84db869a10c15a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SoundVolume: 0
-  MusicVolume: 0
+  SoundVolume: 0.66
+  MusicVolume: 0.33
   AudioSource: {fileID: 0}
 --- !u!1 &1786516095
 GameObject:
@@ -4545,7 +4545,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8150409327563062754, guid: b0c13c4afb3a05b41a3cd67affcd9d84, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

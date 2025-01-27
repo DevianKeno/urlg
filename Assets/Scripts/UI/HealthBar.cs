@@ -1,3 +1,19 @@
+/*
+
+Component Title: Frame Controller
+Data written: September 30, 2024
+Date revised: October 4, 2024
+
+Programmer/s:
+    Gian Paolo Buenconsejo
+
+Purpose:
+    UI handler for displaying a specific frame from a subset of frames.
+
+Data Structures/Key Variables:
+    [Defined below]
+*/
+
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -5,8 +21,14 @@ namespace RL.UI
 {
     public class HealthBar : Window
     {
+        /// <summary>
+        /// UNDEFINED
+        /// </summary>
         public float MaximumHealth;
         float actualHealth;
+        /// <summary>
+        /// UNDEFINED
+        /// </summary>
         public float ActualHealth
         {
             get { return actualHealth; }

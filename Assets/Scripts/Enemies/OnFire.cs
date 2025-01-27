@@ -1,10 +1,38 @@
+/*
+
+Program Title: 
+Date written: November 8, 2024
+Date revised: November 8, 2024
+
+Programmer/s:
+    John Paulo A. Dela Cruz
+
+Purpose:
+
+
+
+Control:
+
+
+Data Structures/Key Variables:
+    
+*/
+
 using System;
+
 using UnityEngine;
 
 namespace RL
 {
+    /// <summary>
+    /// This component is dynamically added to entities that are burned
+    /// for keeping track of its duration, status, along a callback that is fired every tick. 
+    /// </summary>
     public class OnFire : MonoBehaviour
     {
+        /// <summary>
+        /// Whether if this currently is burning.
+        /// </summary>
         public bool IsBurning;
 
         float _deltaTimer;

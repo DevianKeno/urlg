@@ -1,3 +1,29 @@
+/*
+
+Component Title: State Machine
+Data written: June 12, 2024
+Date revised: October 4, 2024
+
+Programmer/s:
+    Gian Paolo Buenconsejo
+
+Purpose:
+    Finite-automata state machine (FSM) implementation, supplied by an Enum
+    representing all possible states the machine can transition to.
+    This component is attached to all objects that can have 'states' and transition to them.
+    For example, an Enemy might have a 'Walk', 'Run', or 'Dead' state, etc.
+    Contains methods for switching to a different state, events for assigning callbacks,
+    and virtual functions for creating subclasses.
+
+Control:
+    The state machine is initialized by setting the states with an Enum that
+    contains all possible states this machine can transition to.
+
+Data Structures:
+    Dictionary: used to store all possible states this state machine can transition to
+        Key is the Enum value of the State; Value is the State data struct itself
+*/
+
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -49,7 +75,8 @@ namespace RL.Systems
         }
 
         /// <summary>
-        /// Transition to state.
+        /// Transition to target state.
+        /// Given state must only be of the allowed values set when this machine was initialized.
         /// </summary>
         public virtual void ToState(State<E> state)
         {
@@ -57,39 +84,54 @@ namespace RL.Systems
             TrySwitchState(state);
         }
 
+        /// <summary>
+        /// Transition to target state.
+        /// Given state must only be of the allowed values set when this machine was initialized.
+        /// </summary>
         public virtual void ToState(E state)
         {
             if (!_states.ContainsKey(state)) return;
             ToState(_states[state]);
         }
 
+        /// <summary>
+        /// Lock the current state indefinitely.
+        /// Warning: this will prevent all suceeding transitions unless Unlock() is called
+        /// </summary>
         public virtual void Lock()
         {
             LockedUntil = float.MaxValue;
         }
         
+        /// <summary>
+        /// Forcibly unlock the current state.
+        /// </summary>
         public virtual void Unlock()
         {
             LockedUntil = Time.time;
         }
 
+        /// <summary>
+        /// Lock the current state for a specified duration seconds.
+        /// </summary>
         public virtual void LockFor(float seconds)
         {
             LockedUntil = Time.time + seconds;
         }
 
-        protected virtual void OnEnterState(E state)
-        {
-
-        }
-
-        protected virtual void OnExitState(E state)
-        {
-            
-        }
+        /// <summary>
+        /// Called everytime the machine enters a state.
+        /// </summary>
+        protected virtual void OnEnterState(E state) { }
 
         /// <summary>
-        /// Transition to state and prevent from transitioning to other states for a certain amount of seconds.
+        /// Called everytime the machine exits a state.
+        /// </summary>
+        protected virtual void OnExitState(E state) { }
+
+        /// <summary>
+        /// Transition to the given state. Given state must only be of the allowed values set when this machine was initialized.
+        /// Locking this will prevent the machine from transitioning to other states for the given amount of seconds.
         /// </summary>
         public virtual void ToState(State<E> state, float lockForSeconds)
         {

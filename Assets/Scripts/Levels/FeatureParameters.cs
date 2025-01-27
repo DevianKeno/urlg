@@ -1,3 +1,16 @@
+/*
+Data Structure: Feature Parameters
+Last updated: October 4, 2024
+
+Programmer/s:
+    Gian Paolo Buenconsejo
+
+Purpose:
+
+Data Structures:
+    
+*/
+
 namespace RL.CellularAutomata
 {
     public struct FeatureParameters

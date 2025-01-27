@@ -1,3 +1,22 @@
+/*
+
+Component Title: UI (User Interface) Manager
+Data written: July 6, 2024
+Date revised: October 26, 2024
+
+Programmer/s:
+    Gian Paolo Buenconsejo
+
+Purpose:
+    
+
+Control:
+
+
+Data Structures:
+    
+*/
+
 using System;
 using System.Collections.Generic;
 using RL.UI;

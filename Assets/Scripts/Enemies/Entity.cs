@@ -1,3 +1,18 @@
+/*
+Component Title: Entity (Base)
+Last updated: October 11, 2024
+
+Programmer/s:
+    Gian Paolo Buenconsejo
+
+Purpose:
+    This component is the base class for all entities in the game.
+
+Data Structures:
+    Vector3: represents the position of the entity in space
+    Quaternion: represents the rotation of the entity
+*/
+
 using UnityEngine;
 
 namespace RL.Entities

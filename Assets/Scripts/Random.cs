@@ -1,3 +1,20 @@
+/*
+
+Program Title: Random
+Date written: September 28, 2024
+Date revised: October 4, 2024
+
+Programmer/s:
+    Gian Paolo Buenconsejo
+
+Purpose:
+    A static class that contains helper methods for generating randomness
+    primarily used for testing different aspects of the system.
+
+Data Structures/Key Variables:
+    N/A
+*/
+
 namespace RL.Random
 {
     public static class Random

@@ -1,4 +1,19 @@
-using Unity.VisualScripting;
+/*
+
+Component Title: Main Menu Window
+Data written: October 26, 2024
+Date revised: October 29, 2024
+
+Programmer/s:
+    Gian Paolo Buenconsejo
+
+Purpose:
+    Implementation of the main menu window.
+
+Data Structures:
+    N/A
+*/
+
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;

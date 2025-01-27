@@ -1,3 +1,21 @@
+/*
+Component Title: Audio Manager
+Data written: June 12, 2024
+Date revised: October 27, 2024
+
+Programmer/s:
+    Gian Paolo Buenconsejo
+
+Purpose:
+    This component manages the entire game's audio.
+    Contains methods necessary for handling in-game sound effects and music
+        e.g., Play(), PlayInWorld(), PlayMusic(), StopMusic()
+
+Data Structures:
+    Dictionary: used to store the loaded audio clips for the game
+        Key is the file name of the audio clip; Value is the Audio Clip data.
+*/
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;

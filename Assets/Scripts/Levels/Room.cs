@@ -1,3 +1,19 @@
+/*
+
+Component Title: Room
+Data written: June 18, 2024
+Date revised: December 17, 2024
+
+Programmer/s:
+    Gian Paolo Buenconsejo
+
+Purpose:
+    Represents instances of a room, a game space where enemies and obstacles are spawned.
+
+Data Structures/Key Variables:
+    [Definitions are found at their respective declarations]
+*/
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -6,18 +22,26 @@ using UnityEngine;
 
 using RL.Entities;
 using RL.Telemetry;
-
-using static RL.Generator.Generator.Map;
 using RL.CellularAutomata;
 using RL.UI;
 using RL.Classifiers;
 using RL.Player;
+using static RL.Generator.Generator.Map;
 
 namespace RL.Levels
 {
+    /// <summary>
+    /// Represents an instance of a room.
+    /// </summary>
     public class Room : MonoBehaviour, ILoadable
     {
+        /// <summary>
+        /// The chance when should double crates appear in the room.
+        /// </summary>
         public const int DoubleCrateChance = 66;
+        /// <summary>
+        /// The position of this room in cell grid coordinates.
+        /// </summary>
         [field: SerializeField] public Vector2Int Coordinates { get; set; }
         public int x => Coordinates.x;
         public int y => Coordinates.y;
@@ -30,11 +54,31 @@ namespace RL.Levels
 
         public bool IsActive;
         public bool IsCleared;
+        /// <summary>
+        /// Whether if this is a "Start" room.
+        /// </summary>
         public bool IsStartRoom;
+        /// <summary>
+        /// Whether if this is a "End" room.
+        /// </summary>
         public bool IsEndRoom;
+        /// <summary>
+        /// Whether if this room is followed by another room.
+        /// </summary>
         public bool HasNextRoom;
+        /// <summary>
+        /// Reference to the previous room.
+        /// Is <c>null</c> if nothing.
+        /// </summary>
         public Room PreviousRoom;
+        public bool HasStairs = false;
+        public Stairs Stairs => stairs;
+        [SerializeField] Stairs stairs;
         [SerializeField] Room nextRoom;
+        /// <summary>
+        /// Reference to the next room.
+        /// Is <c>null</c> if nothing.
+        /// </summary>
         public Room NextRoom
         {
             get { return nextRoom; }
@@ -59,7 +103,7 @@ namespace RL.Levels
         [SerializeField] List<Tile> tiles = new();
         [SerializeField] Dictionary<Vector2Int, Tile> tileCoords = new();
         /// <summary>
-        /// Tile coordinates already populated with an obstacle or enemy.
+        /// Tile coordinates that are already populated with an obstacle or enemy.
         /// </summary>
         List<Vector2Int> populatedTileCoordinates = new();
 
@@ -279,6 +323,11 @@ namespace RL.Levels
                 {
                     tile.transform.SetParent(obstaclesLayer.transform);
                     tile.CoordinateToLocalPosition(coord);
+                    if (tile is Stairs stairsTile)
+                    {
+                        this.stairs = stairsTile;
+                    }
+                    HasStairs = true;
                 });
             }
         }

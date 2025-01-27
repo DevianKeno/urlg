@@ -1,15 +1,36 @@
+/*
+
+Program Title: Gaussian Naive Bayes [Classifier] (Algorithm)
+Date written: October 4, 2024
+Date revised: October 29, 2024
+
+Programmer/s:
+    John Franky Nathaniel V. Batisla-Ong, Gian Paolo Buenconsejo
+
+Purpose:
+
+
+
+Control:
+
+
+Data Structures/Key Variables:
+    
+*/
+
 using System;
 using System.Collections;
+
 using UnityEngine;
+
 using RL.Systems;
 using RL.Player;
-using RL.Entities;
-using Random = UnityEngine.Random;
-using RL.Telemetry;
 
 namespace RL.Entities
 {
-    /// Salaman
+    /// <summary>
+    /// Salaman (WaveWeak)
+    /// </summary>
     public class WaveWeak : Enemy, IDamageable
     {
         [SerializeField] GameObject shield;

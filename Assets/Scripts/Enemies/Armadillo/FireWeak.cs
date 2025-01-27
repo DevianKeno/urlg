@@ -1,3 +1,23 @@
+/*
+
+Program Title: Gaussian Naive Bayes [Classifier] (Algorithm)
+Date written: October 4, 2024
+Date revised: October 29, 2024
+
+Programmer/s:
+    John Franky Nathaniel V. Batisla-Ong, Gian Paolo Buenconsejo
+
+Purpose:
+
+
+
+Control:
+
+
+Data Structures/Key Variables:
+    
+*/
+
 using System;
 using System.Collections;
 
@@ -5,12 +25,13 @@ using UnityEngine;
 
 using RL.Systems;
 using RL.Entities;
-using RL.Telemetry;
 using RL.Player;
 
 namespace RL.Enemies
 {
+    /// <summary>
     /// Armadillo (FireWeak)
+    /// </summary>
     public class FireWeak : Enemy, IDamageable, IBurnable
     {
         [Header("Enemy Parameters")]

@@ -1,7 +1,23 @@
-using System.Collections;
-using System.Collections.Generic;
+/*
+
+Component Title: Weapon Icon User Interface
+Data written: September 15, 2024
+Date revised: October 11, 2024
+
+Programmer/s:
+    Gian Paolo Buenconsejo
+
+Purpose:
+    Implementation of the visual display where
+    the two weapons currently equipped by the are displayed.
+
+Data Structures:
+    N/A
+*/
+
 using UnityEngine;
 using UnityEngine.UI;
+
 using RL.Projectiles;
 
 namespace RL.UI

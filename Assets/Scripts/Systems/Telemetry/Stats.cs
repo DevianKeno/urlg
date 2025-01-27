@@ -20,7 +20,8 @@ namespace RL.Telemetry
         ObstacleCountBeam,
         ObstacleCountWave,
         EnemyAttackCount,
-        TotalHitsTaken
+        TotalHitsTaken,
+        DeathCount
     }
    
 }

@@ -179,6 +179,8 @@ MonoBehaviour:
   IsEndRoom: 0
   HasNextRoom: 0
   PreviousRoom: {fileID: 0}
+  HasStairs: 0
+  stairs: {fileID: 0}
   nextRoom: {fileID: 0}
   minBounds: {x: 285, y: 303}
   maxBounds: {x: 304, y: 316}

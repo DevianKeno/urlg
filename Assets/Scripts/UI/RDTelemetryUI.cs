@@ -134,8 +134,10 @@ namespace RL.UI
         }
         
         /// <summary>
-        /// Creates a randomized PlayerStatCollection.
+        /// Constructs a PlayerStatCollection with randomized values.
         /// </summary>
+        /// <param name="maxUseCount">Specify a max value for the weapon use count stat</param>
+        /// <returns>the output</returns>
         public static PlayerStatCollection ConstructPlayerRandom(int maxUseCount)
         {
             var stats = new PlayerStatCollection(Telemetry.Telemetry.PlayerStatsKeys);

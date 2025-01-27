@@ -1,6 +1,22 @@
+/*
+
+Component Title: Stat Collection Json
+Data written: September 21, 2024
+Date revised: October 15, 2024
+
+Programmer/s:
+    Gian Paolo Buenconsejo
+
+Purpose:
+    
+
+Data Structures:
+    Dictionary: used to store the Stat list along with its index when saved to CSV format
+        Key is the index of the stat when saved to CSV,  Value is the Stat data itself
+*/
+
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace RL.Telemetry
 {

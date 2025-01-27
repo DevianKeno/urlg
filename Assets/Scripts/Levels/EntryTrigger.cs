@@ -1,10 +1,12 @@
-using System;
-using RL.Player;
 using UnityEngine;
-using UnityEngine.Diagnostics;
+
+using RL.Player;
 
 namespace RL.Levels
 {
+    /// <summary>
+    /// Event trigger whenever the player passes through.
+    /// </summary>
     public class EntryTrigger : MonoBehaviour
     {
         [SerializeField] Room room;

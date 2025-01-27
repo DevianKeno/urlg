@@ -1,12 +1,38 @@
+/*
+Program Title: Telemetry
+Data written: June 19, 2024
+Date revised: December 17, 2024
+
+Programmer/s:
+    Gian Paolo Buenconsejo
+
+Purpose:
+    This component aims to gather the gameplay characteristics of the player as statistics.
+
+Control:
+    1. Initialize()
+        -> InitializePlayerStats()
+        -> InitializeRoomStats
+
+    This component is initialized at the start of the application and continues to run in the game's entire lifecycle.
+    When in the level scene, every new room that the player enters resets the state of the current RoomStatCollection.
+
+Data Structures:
+    StatKey[]: array used to store a specific collection of stat keys
+    StatCollection: used to store statistics related to the entire game application
+    PlayerStatCollection: used to store statistics specifically for the player
+    RoomStatCollection: used to store statistics for the room the player is currently in
+*/
+
 using System;
 using System.Collections.Generic;
 
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using TMPro;
 
 using RL.Classifiers;
-using UnityEngine.SceneManagement;
 
 namespace RL.Telemetry
 {
@@ -32,7 +58,6 @@ namespace RL.Telemetry
         };
         
         public bool IsInitialized { get; private set; }
-        public bool Display = true;
         public bool IsVisible { get; private set; }
 
         PlayerStatCollection _playerStats;
@@ -44,8 +69,11 @@ namespace RL.Telemetry
 
         int totalHitsTaken;
         int totalEnemyAttackCount;
+        int _deathCount;
 
         List<DataEntry> dataEntries = new();
+
+        [SerializeField] bool display = true;
 
         [Header("Elements")]
         Dictionary<StatKey, TextMeshProUGUI> statTexts = new();
@@ -58,7 +86,7 @@ namespace RL.Telemetry
 
         void Start()
         {
-            if (Display)
+            if (display)
             {
                 telemetryContainer.gameObject.SetActive(false);
             }
@@ -95,6 +123,7 @@ namespace RL.Telemetry
 
         void InitializePlayerStats()
         {
+            _deathCount = 0;
             _playerStats = new(PlayerStatsKeys);
             foreach (var stat in _playerStats.Stats)
             {
@@ -139,7 +168,7 @@ namespace RL.Telemetry
         {
             if (gameObject.activeInHierarchy)
             {
-                telemetryContainer.gameObject.SetActive(Display);
+                telemetryContainer.gameObject.SetActive(display);
             }
         }
 
@@ -204,6 +233,7 @@ namespace RL.Telemetry
                 Classification = 1,
                 LevelNumber = Game.Main.currentLevel,
                 GroundTruth = groundTruth,
+                DeathCount = _deathCount,
                 PlayerStats = playerStats.SaveToJson(),
                 RoomStats = roomStats.SaveToJson(),
             };
@@ -247,6 +277,11 @@ namespace RL.Telemetry
             {
                 tmp.text = $"{StatKey.EnemyAttackCount}: {currentRoom.Stats.GetStat(StatKey.EnemyAttackCount).Value}";
             }
+        }
+
+        public void IncrementDeathCount()
+        {
+            _deathCount++;
         }
 
         #endregion

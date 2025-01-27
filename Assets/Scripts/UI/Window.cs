@@ -1,3 +1,19 @@
+/*
+
+Component Title: Window
+Data written: October 4, 2024
+Date revised: October 14, 2024
+
+Programmer/s:
+    Gian Paolo Buenconsejo
+
+Purpose:
+    General purpose window UI element.
+
+Data Structures:
+    Vector2: used to store the position of this UI element in the screen
+*/
+
 using System;
 
 using UnityEngine;

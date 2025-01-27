@@ -1,11 +1,29 @@
+/*
+
+Component Title: Files Manager
+Data written: September 11, 2024
+Date revised: October 26, 2024
+
+Programmer/s:
+    Gian Paolo Buenconsejo
+
+Purpose:
+    Helper class to handle and manage files that go in and out of the system.
+    Contains methods for writing serialized json data into files,
+    as well as and reading from files and deserializing it.
+    Also contains helper methods for opening the File Explorer at specific target paths.
+
+Data Structures:
+    N/A
+*/
+
+using System;
 using System.IO;
 
 using UnityEngine;
 using Newtonsoft.Json;
 
 using RL.Telemetry;
-using UnityEditor;
-using System;
 
 namespace RL.Systems
 {

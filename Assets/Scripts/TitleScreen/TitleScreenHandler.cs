@@ -1,3 +1,22 @@
+/*
+
+Component Title: Title Screen Handler
+Data written: October 11, 2024
+Date revised: October 29, 2024
+
+Programmer/s:
+    Gian Paolo Buenconsejo
+
+Purpose:
+    
+
+Control:
+
+
+Data Structures:
+    
+*/
+
 using System;
 using System.IO;
 using System.Collections.Generic;

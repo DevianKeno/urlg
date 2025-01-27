@@ -1,9 +1,13 @@
 using System.Collections;
+
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace RL.Levels
 {
+    /// <summary>
+    /// A stair tile to proceed to the next level.
+    /// </summary>
     public class Stairs : Tile
     {
         protected virtual void OnTriggerEnter2D(Collider2D other)
@@ -69,6 +73,9 @@ namespace RL.Levels
             }
         }
 
+        /// <summary>
+        /// Disables the controls of the player after some time.
+        /// </summary>
         IEnumerator StopControlsCoroutine()
         {
             yield return new WaitForSeconds(0.25f);
