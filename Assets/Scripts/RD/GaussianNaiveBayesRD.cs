@@ -1,3 +1,34 @@
+/*
+
+Program Title: Gaussian Naive Bayes (Research and Development)
+
+Date written: October 4, 2024
+Date revised: October 16, 2024
+
+Programmer/s:
+    Gian Paolo Buenconsejo, John Franky Nathaniel V. Batisla-Ong, Edrick L. De Villa, John Paulo A. Dela Cruz
+
+Where the program fits in the general system design:
+    Part of the Research & Development (RD) module, for testing, visualizing, and evaluating the algorithms' functionalities.
+
+Purpose:
+    Implement and test the Gaussian Naive Bayes (GNB) algorithm for classifying and
+    evaluating the procedural room generation. This component allows for real-time feedback\
+    and visualization on the evaluation of room acceptance or rejection based on a given feature set.
+    This component also has the capability for bulk generation and classification of rooms, primarily
+    to visualized metrics and telemetry data.
+
+Control:
+    This component is handled using user interactions through the Unity Inspector
+    Integrates with multiple subsystems for telemetry tracking, graph plotting, and dataset handling.
+
+Data Structures:
+    GNBData: represents datasets for testing and validation
+    PlayerStatCollection: encapsulates telemetry data for the player
+    RoomStatCollection: encapsulates telemetry data for the generated rooms
+    GNBResult: stores classification results, including posterior probabilities and acceptance status
+    MockRoom: represents a simulated room for testing
+*/
 
 using System;
 using System.Collections;

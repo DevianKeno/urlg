@@ -1,18 +1,30 @@
 /*
 
 Component Title: Mouse Events
+
 Data written: September 28, 2024
 Date revised: October 4, 2024
 
 Programmer/s:
-    Gian Paolo Buenconsejo
+    Edrick L. De Villa
+
+Where the program fits in the general system design:
+    This component is attached to UI elements that has is associated with mouse events (e.g., Hover, Click, etc.).
 
 Purpose:
-    This component is attached to UI elements that has is associated with mouse events (e.g., Hover, Click, etc.).
-    Other scripts can listen to the provided events, which are fired when the user interacts with the UI element.
+    To provide a handle for mouse interactions, allowing other scripts to listen to the provided events,
+    which are fired when the user interacts with the UI element.
+    It ensures that any UI element equipped with this component can trigger custom logic by 
+    centralizing event handling and making it easier for other scripts to respond to user interactions.
+    
+Control:
+    This component initializes automatically when attached to a GameObject with a UI Button component.
+    Other scripts can then register as listeners on its events (`OnMouseEnter`, `OnMouseExit`, 
+      `OnMouseDown`, `OnMouseUp`) to execute custom logic.
 
 Data Structures:
-    N/A
+    Button: reference to the Button component
+    event: callbacks for other methods to listen to
 */
 
 using System;

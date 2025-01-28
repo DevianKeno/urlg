@@ -1,11 +1,15 @@
 /*
 
 Program Title: Gaussian Naive Bayes [Classifier] (Algorithm)
+
 Date written: October 4, 2024
 Date revised: October 29, 2024
 
 Programmer/s:
     Gian Paolo Buenconsejo, John Franky Nathaniel V. Batisla-Ong, Edrick L. De Villa, John Paulo A. Dela Cruz
+
+Where the program fits in the general system design:
+    Serves as the main classification model for the GNB implementation of the system.
 
 Purpose:
     This is the main algorithm implementation for the Gaussian Naive Bayes model of the system.

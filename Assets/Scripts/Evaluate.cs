@@ -1,11 +1,15 @@
 /*
 
 Program Title: Evaluate
+
 Date written: September 28, 2024
 Date revised: October 16, 2024
 
 Programmer/s:
     Gian Paolo Buenconsejo
+
+Where the program fits in the general system design:
+    Various scripts use the static methods in this class as a helper for calculating.
 
 Purpose:
     A static class that contains helper methods for evaluating and performing mathematical calculations
@@ -26,16 +30,6 @@ namespace RL
     /// </summary>
     public static class Evaluate
     {
-        // public static double WeaponPreference(double )
-        // {
-        //     Math.CosineSimilarity();
-        // }
-        
-        // public static double SkillPreference(double )
-        // {
-        //     Math.CosineSimilarity();
-        // }
-
         /// <summary>
         /// Evaluation functions for Player preferences.
         /// </summary>

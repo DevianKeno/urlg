@@ -1,4 +1,5 @@
 /*
+
 Program Title: Telemetry
 Data written: June 19, 2024
 Date revised: December 17, 2024
@@ -6,8 +7,13 @@ Date revised: December 17, 2024
 Programmer/s:
     Gian Paolo Buenconsejo
 
+Where the program fits in the general system design:
+    Runs behind the scenes to measure the player's statistics.
+
 Purpose:
     This component aims to gather the gameplay characteristics of the player as statistics.
+    The recorded statistics are then used as data by the algorithms (AR and GNB), along with
+    the likert-scale result to perform classifications and generate adaptive levels.
 
 Control:
     1. Initialize()
@@ -16,6 +22,7 @@ Control:
 
     This component is initialized at the start of the application and continues to run in the game's entire lifecycle.
     When in the level scene, every new room that the player enters resets the state of the current RoomStatCollection.
+    The UI can be toggled with [Backspace].
 
 Data Structures:
     StatKey[]: array used to store a specific collection of stat keys
@@ -31,8 +38,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
-
-using RL.Classifiers;
 
 namespace RL.Telemetry
 {

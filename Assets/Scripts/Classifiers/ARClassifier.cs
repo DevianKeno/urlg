@@ -1,12 +1,16 @@
 /*
 
 Program Title: Accept-Reject Classifier (Algorithm)
+
 Date written: October 3, 2024
 Date revised: October 29, 2024
 
 Programmer/s:
     Gian Paolo Buenconsejo, John Franky Nathaniel V. Batisla-Ong, Edrick L. De Villa, John Paulo A. Dela Cruz
 
+Where the program fits in the general system design:
+    Serves as the main classification model for the accept-reject implementation of the system.
+    
 Purpose:
     This is the main algorithm implemention for the classification model
     utilizing Accept-Reject sampling algorithm for the system.
@@ -14,7 +18,8 @@ Purpose:
     or data entries, then classifies it to two categories: "Accepted" or "Rejected."
 
 Control:
-
+    The Classify() method is called whenever an AR classification is needed to be performed.
+    It is static and can be called anywhere, but correct arguments must also be observed.
 
 Data Structures/Key Variables:
     - Status (Enum): represents the classification status

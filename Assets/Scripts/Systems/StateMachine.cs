@@ -7,6 +7,9 @@ Date revised: October 4, 2024
 Programmer/s:
     Gian Paolo Buenconsejo
 
+Where the program fits in the general system design:
+    Used by gameplay entities to track their current state.
+
 Purpose:
     Finite-automata state machine (FSM) implementation, supplied by an Enum
     representing all possible states the machine can transition to.

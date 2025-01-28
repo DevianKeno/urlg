@@ -1,11 +1,15 @@
 /*
 
 Program Title: Math
+
 Date written: September 28, 2024
 Date revised: October 11, 2024
 
 Programmer/s:
     Gian Paolo Buenconsejo
+
+Where the program fits in the general system design:
+    Various scripts use the static methods in this class as a helper for calculating.
 
 Purpose:
     A static class that contains helper methods for performing various

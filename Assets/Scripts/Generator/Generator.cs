@@ -1,3 +1,23 @@
+/*
+Program Title: Cellular Automata Helper
+Date written: June 18, 2024
+Data revised: October 15, 2024
+
+Programmer/s:
+    Gian Paolo Buenconsejo
+
+Purpose:
+
+
+Control:
+    
+
+Data Structures:
+    NoiseGridSettings: used to store settings for generating an instance of a noise grid.
+    GenerateRoomShapeCalculations:
+    GenerateRoomShapeResult: used to store the result of a generated room shape
+*/
+
 using System;
 using System.Collections.Generic;
 

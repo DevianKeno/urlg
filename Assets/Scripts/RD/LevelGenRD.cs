@@ -1,15 +1,31 @@
 /*
-*   Program Title: Level Generator (Research and Development)
-*   Last updated: December 17, 2024
-*   
-*   Programmers:
-*       Gian Paolo Buenconsejo
-*   
-*   Purpose:
-*       This component is responsible for generating the levels.
-*
-*   Data Structures:
-*       
+
+Program Title: Level Generator (Research and Development)
+
+Date written: October 11, 2024
+Date revised: December 17, 2024
+
+Programmers:
+    Gian Paolo Buenconsejo
+
+Where the program fits in the general system design:
+    Part of the Research & Development (RD) module, for testing, visualizing, and evaluating the algorithms' functionalities.
+
+Purpose:
+    To generate levels with procedurally generated rooms based on selected PCG algorithms and visualize them.
+    This component also allows the researches to evaluate the effectiveness of the player telemetry and room classifications
+    using Accept-Reject and Gaussian Naive Bayes (GNB) approaches.  
+    Although this is primarily used for testing the level generation algorithm.  
+
+Control:
+    This component is handled using user interactions through the Unity Inspector.
+
+Data Structures:
+    GNBData: holds dataset-related information for GNB classification
+    PlayerStatCollection: encapsulates player telemetry data for PCG evaluations
+    GenerateRoomShapeResult: contains results of the room generation process, including bounds and generated rooms
+    MockRoom: represents individual rooms with attributes for features, classification status, and events. 
+    RoomStatCollection: used for statistical representation of room features
 */
 
 using System;
@@ -37,10 +53,9 @@ namespace RL.RD
 
         public PCGAlgorithm SelectedAlgorithm = PCGAlgorithm.AcceptReject;
         public RecolorType RecolorType = RecolorType.BOTH;
-
-        int fireAlignedRoomCount;
-        int beamAlignedRoomCount;
-        int waveAlignedRoomCount;
+        /// <summary>
+        /// Whether if the GNB model is currently trained on a dataset.
+        /// </summary>
         [SerializeField] bool _hasDataset = false;
         public bool NormalizeValues => normalizeToggle != null ? normalizeToggle.isOn : false;
         [Range(0, 100)] public float RejectedRoomsThreshold = 25f;

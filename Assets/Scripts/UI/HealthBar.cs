@@ -1,14 +1,14 @@
 /*
 
-Component Title: Frame Controller
-Data written: September 30, 2024
-Date revised: October 4, 2024
+Component Title: Health Bar
+Data written: October 7, 2024
+Date revised: November 8, 2024
 
 Programmer/s:
-    Gian Paolo Buenconsejo
+    John Franky Nathaniel V. Batisla-Ong
 
 Purpose:
-    UI handler for displaying a specific frame from a subset of frames.
+
 
 Data Structures/Key Variables:
     [Defined below]

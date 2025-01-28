@@ -1,24 +1,29 @@
 /*
 
-Program Title: Gaussian Naive Bayes [Classifier] (Algorithm)
-Date written: October 4, 2024
-Date revised: October 29, 2024
+Program Title: Fire Weak (Armadillo Enemy)
+
+Date written: October 12, 2024
+Date revised: November 8, 2024
 
 Programmer/s:
     John Franky Nathaniel V. Batisla-Ong, Gian Paolo Buenconsejo
 
+Where the program fits in the general system design:
+    Part of the testbed platform (or Game module), the enemies and its AI.
+
 Purpose:
-
-
+    This script defines the behavior and mechanics of the Armadillo enemy, it's AI basically.
+    It manages the enemy's attributes, states, interactions with the player, and its attack mechanics
+    like its invincibility lunge and burn vulnerability.
 
 Control:
-
+    N/A
 
 Data Structures/Key Variables:
-    
+    StateMachine: controls the state transitions of the Armadillo
+    [Definitions are found at their respective declarations]
 */
 
-using System;
 using System.Collections;
 
 using UnityEngine;
@@ -41,6 +46,9 @@ namespace RL.Enemies
         [Header("Detection Parameters")]
         public float detectionRadius = 5f;
         public float detectionAngle = 45f;
+        /// <summary>
+        /// Filter layers where it can only detect. Set to 'Player'.
+        /// </summary>
         public LayerMask detectionMask;
         public float lungeForce = 500f;
         public float lungeDistance = 200f;

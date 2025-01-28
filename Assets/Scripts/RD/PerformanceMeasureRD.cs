@@ -1,11 +1,12 @@
 /*
 
 Program Title: Performance Measure (Research and Development)
+
 Data written: October 15, 2024
 Date revised: October 26, 2024
 
 Programmer/s:
-    Gian Paolo Buenconsejo
+    Edrick L. De Villa
 
 Purpose:
     
@@ -17,7 +18,6 @@ Data Structures:
     
 */
 
-using System;
 using System.IO;
 using System.Collections.Generic;
 using System.Text;

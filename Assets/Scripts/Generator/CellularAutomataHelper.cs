@@ -1,4 +1,5 @@
 /*
+
 Program Title: Cellular Automata Helper
 Date written: September 21, 2024
 Data revised: December 17, 2024
@@ -6,14 +7,27 @@ Data revised: December 17, 2024
 Programmer/s:
     Gian Paolo Buenconsejo
 
+Where the program fits in the general system design:
+    This helper is used to create CA patterns for the levels. It also provides visualizations.
+
 Purpose:
-    This component generates a noise grid to guide the shape of the level. 
+    This component generates a noise grid to guide the shape of levels in the procedural map generation system. 
+    It includes utilities for creating noise grids, applying cellular automata (CA) smoothing, and generating 
+    room shapes with visualizations. Its settings are also configurable via codem but primariy in the Unity inspector.
+
 Control:
-    
+    This component is first configured in the Inspector, namely the noise grid and room generation parameters.
+    The flow is as follows:
+    GenerateNoiseGrid()
+        -> CreateNoiseGridRandom(width, height, density)
+        -> CreateGridVisualization()
+        GenerateRoomShaped()
+    The result should be a CA noise pattern alongside a generated room following a shaper respecting the boundaries.
 
 Data Structures:
+    List: used to store the generated rooms as an ordered list 
     NoiseGridSettings: used to store settings for generating an instance of a noise grid.
-    GenerateRoomShapeCalculations:
+    GenerateRoomShapeCalculations: used to store calculation parameters for shape generation
     GenerateRoomShapeResult: used to store the result of a generated room shape
 */
 
@@ -24,12 +38,10 @@ using System.Linq;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using Cinemachine;
 
 using RL.Classifiers;
 using RL.Telemetry;
 using RL.UI;
-using static RL.Generator.Generator.Map;
 
 namespace RL.CellularAutomata
 {

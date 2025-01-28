@@ -1,14 +1,27 @@
 /*
 
 Component Title: Liker Scale User Interface
+
 Data written: October 4, 2024
 Date revised: October 27, 2024
 
 Programmer/s:
-    Gian Paolo Buenconsejo
+    Edrick L. De Villa
+
+Where the program fits in the general system design:
+    This window is displayed at the end of every room to measure the player's feedback.
 
 Purpose:
-    UI handler for displaying a specific frame from a subset of frames.
+    This script implements a user interface for a Likert scale, to measure
+    the players preference (e.g., like or dislike) for specific game rooms.
+    It supports both mouse and keyboard inputs, having a press-and-hold mechanic
+    ensures users have ample time to confirm their preferences, reducing the likelihood
+    of accidental submissions and improving the accuracy of feedback.
+
+Control:
+    SetTargetRoom(room): assigns the target room for feedback
+    TagTargetLiked(): records a "liked" response
+    TagTargetDisliked(): records a "disliked" response
 
 Data Structures/Key Variables:
     [Defined below]

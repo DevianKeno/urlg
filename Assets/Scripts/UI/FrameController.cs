@@ -1,14 +1,24 @@
 /*
 
 Component Title: Frame Controller
+
 Data written: September 30, 2024
 Date revised: October 4, 2024
 
 Programmer/s:
     Gian Paolo Buenconsejo
 
+Where the program fits in the general system design:
+    The frame controller is attached to screens that shall display multiple frames. It is quite similar to a card view.
+
 Purpose:
     UI handler for displaying a specific frame from a subset of frames.
+    It enables switching between frames using smooth animations or instant transitions.
+    This component also provides mechanisms for dynamic frame addition and removal.
+
+Control:
+    First initialize included frames then transition using the SwitchToFrame(name) methods.
+    These method accepts the frame name, index, as well as additional arguments for animation behavior.
 
 Data Structures/Key Variables:
     - SwitchStatus

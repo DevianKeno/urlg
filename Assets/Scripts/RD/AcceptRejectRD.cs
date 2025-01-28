@@ -1,21 +1,36 @@
 /*
-Program Title: Accept and Reject [Sampling Algorithm] (Research and Development)
+
+Program Title: Accept and Reject (Research and Development)
+
 Date written: October 4, 2024
 Date revised: October 16, 2024
 
 Programmer/s:
-    Gian Paolo Buenconsejo
+    Gian Paolo Buenconsejo, John Franky Nathaniel V. Batisla-Ong, Edrick L. De Villa, John Paulo A. Dela Cruz
+
+Where the program fits in the general system design:
+    Part of the Research & Development (RD) module, for testing, visualizing, and evaluating the algorithms' functionalities.
 
 Purpose:
-    This component aims to gather the gameplay characteristics of the player as statistics.
+    This component implements the Accept-Reject algorithm to evaluate procedurally generated rooms
+    based on feature sets (player preference and room preference().
+    The system is primarily designed for testing, for visualization classification flow,
+    as well as bulk-generating rooms and visualizing their evaluation process.
+
+Control:
+    The player and room preference values can be defined using the provided UI buttons.
+    Usually they are randomized for simulating diverse ranges of feature sets.
+    A mock Likert-scale UI is provided for simulating a classification process, wherein
+    the process, data, and results of the evaluation are visualized.
 
 Data Structures:
-    List: 
+    ARGraphs: used for visualizing box graphs of AR entries
+    PlayerStatCollection: used to store statistics specifically for the player
+    RoomStatCollection: used to store statistics for the room the player is currently in
 */
 
 using System;
 using System.Collections;
-using System.Collections.Generic;
 
 using UnityEditor;
 using UnityEngine;

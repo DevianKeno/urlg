@@ -1,21 +1,29 @@
 /*
 
-Program Title: 
+Component Title: On Fire (Component)
+
 Date written: November 8, 2024
 Date revised: November 8, 2024
 
 Programmer/s:
     John Paulo A. Dela Cruz
 
+Where the program fits in the general system design:
+    Part of the testbed platform (or Game module), status effects.
+
 Purpose:
-
-
+    This script defines the OnFire component, which is dynamically added to entities
+    that are affected by a burning status. It manages the duration, visual effects, 
+    and periodic damage (or other effects) applied to the entity.
+    The component also provides methods to start and stop the burning effect, including triggering a 
+    callback function for custom tick-based behavior.
 
 Control:
-
+    This script is attached to the entities themselves as soon as they make contact with a burning projectile.
 
 Data Structures/Key Variables:
-    
+    IsBurning (bool): whether if the entity is currently burning
+    OnTick: an evet fired at regular intervals while burning is in effect
 */
 
 using System;

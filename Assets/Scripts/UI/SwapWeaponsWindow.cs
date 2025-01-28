@@ -1,11 +1,12 @@
 /*
 
 Component Title: Swap Weapons Window
+
 Data written: September 28, 2024
 Date revised: October 4, 2024
 
 Programmer/s:
-    Gian Paolo Buenconsejo
+    Edrick L. De Villa
 
 Purpose:
     Implementation of the window that appears when the user is prompted

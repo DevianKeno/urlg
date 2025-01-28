@@ -1,11 +1,12 @@
 /*
 
 Component Title: Weapons Display User Interface
+
 Data written: September 15, 2024
 Date revised: October 26, 2024
 
 Programmer/s:
-    Gian Paolo Buenconsejo
+    Edrick L. De Villa
 
 Purpose:
     Implementation of the visual display where
