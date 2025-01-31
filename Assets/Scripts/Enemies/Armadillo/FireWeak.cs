@@ -35,7 +35,7 @@ using RL.Player;
 namespace RL.Enemies
 {
     /// <summary>
-    /// Armadillo (FireWeak)
+    /// Represents the "Armadillo" enemy, which specializes in being invincible in its attacks.
     /// </summary>
     public class FireWeak : Enemy, IDamageable, IBurnable
     {

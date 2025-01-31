@@ -7,15 +7,26 @@ Date revised: October 29, 2024
 Programmer/s:
     John Franky Nathaniel V. Batisla-Ong, Gian Paolo Buenconsejo
 
+Where the program fits in the general system design:
+    Part of the testbed platform (or Game module), the enemies and its AI.
+
 Purpose:
-
-
+    This script defines the behavior and mechanics of the Lich Light enemy, it's AI basically.
+    It manages the enemy's attributes, states, interactions with the player, and its attack mechanics
+    like its supportive barrier lunge and beam vulnerability.
 
 Control:
-
+        If spawned, the enemy remains idle until the player has entered the room
+    in which it is located. If it does detect, it will indicate that it will
+    attack and then proceed to activate its barrier while moving towards the 
+    player's location, this lunge will shield itself and other enemies from most 
+    projectiles in a radius except the "Beam"-type. Afterwards, it will maintain 
+    a set distance from the player, while trying to avoid the projectiles up until 
+    sufficient time has passed and it can lunge once again.
 
 Data Structures/Key Variables:
-    
+    LichLightStateMachine: Handles the state transitions of the Lich Light
+    [Definitions are found at their respective declarations]
 */
 
 using System;
@@ -30,41 +41,43 @@ using RL.Entities;
 namespace RL.Enemies
 {
     /// <summary>
-    /// LichLight (BeamWeak)
+    /// Represents the "Lich Light" enemy, which specializes in barrier-assisted attacks.
     /// </summary>
     public class BeamWeak : Enemy, IDamageable
     {
-        [SerializeField] GameObject barrier;
+        [SerializeField] GameObject barrier; // Barrier that activates during the charge
 
         [Header("Enemy Parameters")]
-        public float ContactDamage = 10f;
+        public float ContactDamage = 10f; // Damage inflicted upon player contact
 
         [Header("Detection Parameters")]
-        public float detectionRadius = 5f;
-        public float detectionAngle = 45f;
-        public LayerMask detectionMask;
-        public float lungeForce = 5f;
-        public float lungeDistance = 2f;
-        public float lungeCooldown = 1f;
+        public float detectionRadius = 5f; // Radius for detecting player/projectiles
+        public float detectionAngle = 45f; // Angle range for detection
+        public LayerMask detectionMask; // Specifies layers that can be detected
+        
+        [Header("Lunge Parameters")]
+        public float lungeForce = 5f; // Force applied when lunging
+        public float lungeDistance = 2f; // Maximum distance covered in a lunge
+        public float lungeCooldown = 1f; // Cooldown between lunge attacks
         bool _canLunge = true;
         bool _isLunging;
 
         [Header("Charge Parameters")]
         public float chargeSpeed = 10f; // Speed of the charge
-        public float overshoot = 2f; // Force applied to overshoot the player
+        public float overshoot = 2f; // Extra distance beyond player's position
         public float chargeCooldown = 5f; // Cooldown between charge attacks
         public float minChargeInterval = 2f; // Minimum time between charge attacks
         public float maxChargeInterval = 2f; // Maximum time between charge attacks
         public float chargeWindup = 1f; // Duration of the windup before charging
-        public float chargeDuration = 2f; // Force applied to overshoot the player
+        public float chargeDuration = 2f; // Duration of the charge attack
         float chargeInterval;
         float chargeDelta;
         [SerializeField] bool _canCharge = true;
         [SerializeField] bool _isCharging = false;
 
-        [SerializeField] LichLightStateMachine stateMachine;
+        [SerializeField] LichLightStateMachine stateMachine; // Handles AI state transitions
         public StateMachine<LichLightStates> sm => stateMachine;
-        [SerializeField] LichLightAnimator animator;
+        [SerializeField] LichLightAnimator animator; // Controls enemy animations
 
         protected override void Start()
         {
@@ -79,21 +92,24 @@ namespace RL.Enemies
 
         protected override void FixedUpdate()
         {
-            if (IsAsleep) return;
+            if (IsAsleep) return; // If enemy is inactive, skip logic
             
-            Search();
-            LookAtTarget();            
+            Search(); // Searches for player
+            LookAtTarget(); // Adjusts orientation towards the player             
             if (!_isLunging && !_isCharging)
             {
-                MaintainDistance();
+                MaintainDistance(); // Keeps enemy at an optimal distance from player
             }
-            if (!_isCharging)
+            if (!_isCharging) 
             {
-                DetectProjectiles();
+                DetectProjectiles(); // Checks if enemy should react to projectiles
             }
-            UpdateStates();
+            UpdateStates(); // Updates AI state
         }
 
+    /// <summary>
+    /// Updates the enemy's AI state based on the presence of a target.
+    /// </summary>
         void UpdateStates()
         {
             if (target != null)
@@ -108,6 +124,9 @@ namespace RL.Enemies
             }
         }
 
+    /// <summary>
+    /// Handles damage dealing when the enemy collides with the player.
+    /// </summary>
         void OnTriggerEnter2D(Collider2D collider)
         {
             // Debug.Log("trigger collision");
@@ -150,6 +169,9 @@ namespace RL.Enemies
             FlipSprite();
         }
 
+    /// <summary>
+    /// Flips the sprite to better represent the enemy while switching directions
+    /// </summary>
         void FlipSprite()
         {
             if (rb.rotation > 90 || rb.rotation < -90)
@@ -166,6 +188,9 @@ namespace RL.Enemies
             return 1 - Mathf.Pow(1 - x, 3);
         }
 
+    /// <summary>
+    /// Controls the charge attack behavior using a coroutine.
+    /// </summary>
         IEnumerator ChargeCoroutine()
         {
             if (target == null) yield return null;
@@ -173,7 +198,9 @@ namespace RL.Enemies
             _isCharging = true;
             sm.ToState(LichLightStates.Move);
 
-            /// Windup
+    /// <summary>
+    /// Activating the barrier during the windup before charging
+    /// </summary>
             rb.velocity = Vector2.zero;
             barrier.SetActive(true);
             yield return new WaitForSeconds(chargeWindup);
@@ -192,7 +219,10 @@ namespace RL.Enemies
                 rb.MovePosition(Vector2.Lerp(transform.position, overshootPosition, EaseOutCubic(distanceCovered / journeyLength)));
                 yield return null;
             }
-            
+
+    /// <summary>
+    /// Disabling the barrier after charging
+    /// </summary>
             barrier.SetActive(false);
             _isCharging = false;
             yield return new WaitForSeconds(chargeCooldown);
@@ -201,7 +231,9 @@ namespace RL.Enemies
             _canCharge = true;
         }
 
-
+    /// <summary>
+    /// Allows the enemy to detect projectiles and lunge accordingly
+    /// </summary>
         void DetectProjectiles()
         {
             Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, detectionRadius, detectionMask);
@@ -222,7 +254,9 @@ namespace RL.Enemies
             }
         }
 
-
+    /// <summary>
+    /// Initiates a period where the enemy cannot lunge
+    /// </summary>
         IEnumerator Cooldown()
         {
             _canLunge = false;
@@ -231,11 +265,12 @@ namespace RL.Enemies
             _canLunge = true;
         }
 
-        /// <summary>
-        /// -1 (left)
-        /// 0 (random)
-        /// 1 (right)
-        /// </summary>
+    /// <summary>
+    /// -1 (left)
+    /// 0 (random)
+    /// 1 (right)
+    /// Allows the enemy to lunge
+    /// </summary>
         void Lunge(int direction = 0)
         {
             _isLunging = true;

@@ -7,15 +7,15 @@ Date revised: October 29, 2024
 Programmer/s:
     John Franky Nathaniel V. Batisla-Ong, Gian Paolo Buenconsejo
 
-Purpose:
-    This is the main script for the enemy named "Salamander" enemy.
-    The "Salamander" is an enemy that is weak to "Wave"-type of attacks.
-    This implementation is designed so that the enemy can: 
-    - Detect and attack the player via lunging.
-    - Maintain a set distance from the player after said lunge.
-    - Transition between different AI states using a state machine.
+Where the program fits in the general system design:
+    Part of the testbed platform (or Game module), the enemies and its AI.
 
-Control:
+Purpose:
+    This script defines the behavior and mechanics of the Salamander enemy, it's AI basically.
+    It manages the enemy's attributes, states, interactions with the player, and its attack mechanics
+    like its shielded lunge and wave vulnerability.
+
+Control: 
     If spawned, the enemy remains idle until the player has entered the room
     in which it is located. If it does detect, it will indicate that it will
     attack and then proceed to lunge at the player's location, this lunge will
@@ -24,8 +24,7 @@ Control:
     up until sufficient time has passed and it can lunge once again.
 
 Data Structures/Key Variables:
-    SalamanderStateMachine: Handles AI state transitions
-    SalamanderAnimator animator: Controls enemy animations
+    SalamanderStateMachine: Handles the state transitions of the Salamander
     [Definitions are found at their respective declarations]
 */
 
@@ -102,16 +101,16 @@ namespace RL.Entities
             {
                 MaintainDistance(); // Keeps enemy at an optimal distance from player
             }
-            if (!_isCharging) // Checks if enemy should react to projectiles
+            if (!_isCharging) 
             {
-                DetectProjectiles();  
+                DetectProjectiles(); // Checks if enemy should react to projectiles
             }
             UpdateStates(); // Updates AI state
         }
 
-        /// <summary>
-        /// Updates the enemy's AI state based on the presence of a target.
-        /// </summary>
+    /// <summary>
+    /// Updates the enemy's AI state based on the presence of a target.
+    /// </summary>
         void UpdateStates()
         {
             if (target != null) 
@@ -126,9 +125,9 @@ namespace RL.Entities
             }
         }
 
-        /// <summary>
-        /// Handles damage dealing when the enemy collides with the player.
-        /// </summary>
+    /// <summary>
+    /// Handles damage dealing when the enemy collides with the player.
+    /// </summary>
         void OnTriggerEnter2D(Collider2D collider)
         {
             // Debug.Log("trigger collision");
@@ -171,6 +170,9 @@ namespace RL.Entities
             FlipSprite();
         }
 
+    /// <summary>
+    /// Flips the sprite to better represent the enemy while switching directions
+    /// </summary>
         void FlipSprite()
         {
             if (rb.rotation > 90 || rb.rotation < -90)
@@ -187,17 +189,18 @@ namespace RL.Entities
             return 1 - Mathf.Pow(1 - x, 3);
         }
 
-        /// <summary>
-        /// Controls the charge attack behavior using a coroutine.
-        /// </summary>
+    /// <summary>
+    /// Controls the charge attack behavior using a coroutine.
+    /// </summary>
         IEnumerator ChargeCoroutine()
         {
             if (target == null) yield return null;
 
             _isCharging = true;
             sm.ToState(SalamanderStates.Charge);
-
-            /// Windup before charging
+    /// <summary>
+    /// Windup before charging
+    /// /// </summary>
             rb.velocity = Vector2.zero;
             yield return new WaitForSeconds(chargeWindup);
 
@@ -259,12 +262,12 @@ namespace RL.Entities
             _canLunge = true;
         }
 
-        /// <summary>
-        /// -1 (left)
-        /// 0 (random)
-        /// 1 (right)
-        /// Allows the enemy to lunge
-        /// </summary>
+    /// <summary>
+    /// -1 (left)
+    /// 0 (random)
+    /// 1 (right)
+    /// Allows the enemy to lunge
+    /// </summary>
         void Lunge(int direction = 0)
         {
             _isLunging = true;
