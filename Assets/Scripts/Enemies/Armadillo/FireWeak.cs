@@ -17,7 +17,12 @@ Purpose:
     like its invincibility lunge and burn vulnerability.
 
 Control:
-    N/A
+    If spawned, the enemy remains idle until the player has entered the room
+    in which it is located. If it does detect, it will indicate that it will
+    attack and then proceed to become invincible as it turns into a ball, it 
+    will then lunge at  the player's location. Afterwards, it will maintain 
+    a set distance from the player, while trying to avoid the projectiles up 
+    until sufficient time has passed and it can lunge once again.
 
 Data Structures/Key Variables:
     StateMachine: controls the state transitions of the Armadillo
@@ -40,19 +45,22 @@ namespace RL.Enemies
     public class FireWeak : Enemy, IDamageable, IBurnable
     {
         [Header("Enemy Parameters")]
-        public float ContactDamage = 10f;
-        public float BurnTime = 3f;
+        public float ContactDamage = 10f; // Damage inflicted upon player contact
+        public float BurnTime = 3f; // Duration of burn when hit by a "Fire"-type projectile
 
         [Header("Detection Parameters")]
-        public float detectionRadius = 5f;
-        public float detectionAngle = 45f;
+        public float detectionRadius = 5f; // Radius for detecting player/projectiles
+        public float detectionAngle = 45f; // Angle range for detection
+
         /// <summary>
         /// Filter layers where it can only detect. Set to 'Player'.
         /// </summary>
         public LayerMask detectionMask;
-        public float lungeForce = 500f;
-        public float lungeDistance = 200f;
-        public float lungeCooldown = 1f;
+
+        [Header("Lunge Parameters")]
+        public float lungeForce = 500f; // Force applied when lunging
+        public float lungeDistance = 200f; // Maximum distance covered in a lunge
+        public float lungeCooldown = 1f; // Cooldown between lunge attacks
         bool _canLunge = true;
         bool _isLunging;
         public bool IsLunging => _isLunging;
@@ -60,8 +68,8 @@ namespace RL.Enemies
 
         [Header("Invincibility Parameters")]
         public float invincibilityDuration = 1f; // Time spent in the "ball" invincible form before lunging
-        public float minLungeInterval = 1f;
-        public float maxLungeInterval = 3f;
+        public float minLungeInterval = 1f; // Minimum time between lunge attacks
+        public float maxLungeInterval = 3f; // Maximum time between lunge attacks
         public float lungeWindup = 0.5f; // Short delay before lunging
 
         bool _isInvincible = false;
@@ -73,10 +81,13 @@ namespace RL.Enemies
 
         GameObject burnParticle;
 
-        [SerializeField] ArmadilloStateMachine stateMachine;
+        [SerializeField] ArmadilloStateMachine stateMachine; // Handles AI state transitions
         public StateMachine<ArmadilloStates> sm => stateMachine;
-        [SerializeField] ArmadilloAnimator animator;
+        [SerializeField] ArmadilloAnimator animator; // Controls enemy animations
 
+    /// <summary>
+    /// Initializes the enemy
+    /// </summary>
         protected override void Start()
         {
             base.Start();
@@ -88,17 +99,17 @@ namespace RL.Enemies
 
         protected override void FixedUpdate()
         {
-            if (IsAsleep) return;
+            if (IsAsleep) return; // If enemy is inactive, skip logic
             
-            Search();
-            LookAtTarget();
+            Search(); // Searches for player
+            LookAtTarget(); // Adjusts orientation towards the player 
 
             if (!_isLunging && !_isCharging)
             {
-                MaintainDistance();
+                MaintainDistance(); // Keeps enemy at an optimal distance from player
             }
 
-            UpdateStates();
+            UpdateStates(); // Updates AI state
         }
 
         protected override void OnFireTick()
@@ -107,6 +118,9 @@ namespace RL.Enemies
             TakeDamage(Game.BurnDamage * 3f);
         }
 
+    /// <summary>
+    /// Updates the enemy's AI state based on the presence of a target.
+    /// </summary>
         void UpdateStates()
         {
             if (target != null)
@@ -156,6 +170,9 @@ namespace RL.Enemies
             _isCharging = false;
         }
 
+    /// <summary>
+    /// Handles process of it attacking
+    /// </summary>
         void Lunge()
         {
             ExtinguishFire();
@@ -172,6 +189,9 @@ namespace RL.Enemies
             StartCoroutine(ResetLunge());
         }
 
+    /// <summary>
+    /// Displays that the burning has stopped
+    /// </summary>
         public void ExtinguishFire()
         {
             if (onFire != null && onFire.IsBurning)
@@ -210,7 +230,9 @@ namespace RL.Enemies
             }
         }
         
-
+    /// <summary>
+    /// Handles damage dealing when the enemy collides with the player.
+    /// </summary>
         void OnTriggerEnter2D(Collider2D collider)
         {
             // Debug.Log("trigger collision");

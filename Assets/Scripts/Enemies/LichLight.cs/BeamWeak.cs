@@ -1,6 +1,7 @@
 /*
 
-Program Title: Beam Weak [Enemy AI] (Lich Light)
+Program Title: Beam Weak [Enemy AI] (Lich Light Enemy)
+
 Date written: October 4, 2024
 Date revised: October 29, 2024
 
@@ -16,7 +17,7 @@ Purpose:
     like its supportive barrier lunge and beam vulnerability.
 
 Control:
-        If spawned, the enemy remains idle until the player has entered the room
+    If spawned, the enemy remains idle until the player has entered the room
     in which it is located. If it does detect, it will indicate that it will
     attack and then proceed to activate its barrier while moving towards the 
     player's location, this lunge will shield itself and other enemies from most 
@@ -53,7 +54,11 @@ namespace RL.Enemies
         [Header("Detection Parameters")]
         public float detectionRadius = 5f; // Radius for detecting player/projectiles
         public float detectionAngle = 45f; // Angle range for detection
-        public LayerMask detectionMask; // Specifies layers that can be detected
+
+        /// <summary>
+        /// Filter layers where it can only detect. Set to 'Player'.
+        /// </summary>
+        public LayerMask detectionMask;
         
         [Header("Lunge Parameters")]
         public float lungeForce = 5f; // Force applied when lunging
@@ -79,6 +84,9 @@ namespace RL.Enemies
         public StateMachine<LichLightStates> sm => stateMachine;
         [SerializeField] LichLightAnimator animator; // Controls enemy animations
 
+    /// <summary>
+    /// Initializes the enemy
+    /// </summary>
         protected override void Start()
         {
             base.Start();

@@ -1,6 +1,7 @@
 /*
 
-Program Title: Wave Weak [Enemy AI] (Salamander)
+Program Title: Wave Weak [Enemy AI] (Salamander Enemy)
+
 Date written: October 4, 2024
 Date revised: October 29, 2024
 
@@ -51,7 +52,11 @@ namespace RL.Entities
         [Header("Detection Parameters")]
         public float detectionRadius = 5f; // Radius for detecting player/projectiles
         public float detectionAngle = 45f; // Angle range for detection
-        public LayerMask detectionMask; // Specifies layers that can be detected
+
+        /// <summary>
+        /// Filter layers where it can only detect. Set to 'Player'.
+        /// </summary>
+        public LayerMask detectionMask;
 
         [Header("Lunge Parameters")]
         public float lungeForce = 5f;  // Force applied when lunging
