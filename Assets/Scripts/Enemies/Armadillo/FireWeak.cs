@@ -1,6 +1,6 @@
 /*
 
-Program Title: Fire Weak (Armadillo Enemy)
+Program Title: Fire Weak [Enemy AI] (Armadillo Enemy)
 
 Date written: October 12, 2024
 Date revised: November 8, 2024
@@ -103,7 +103,7 @@ namespace RL.Enemies
 
         protected override void OnFireTick()
         {
-            /// Burn deals more damage on Armadil
+            /// Burn deals more damage on Armadillo
             TakeDamage(Game.BurnDamage * 3f);
         }
 

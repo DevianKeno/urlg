@@ -1,6 +1,6 @@
 /*
 
-Program Title: Gaussian Naive Bayes [Classifier] (Algorithm)
+Program Title: Beam Weak [Enemy AI] (Lich Light)
 Date written: October 4, 2024
 Date revised: October 29, 2024
 
