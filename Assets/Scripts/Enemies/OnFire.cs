@@ -48,19 +48,23 @@ namespace RL
         [SerializeField] GameObject fireParticle;
 
         public event Action OnTick;
-
+        /// <summary>
+        /// Starts the burning effect for a specified duration.
+        /// </summary>
         public void StartBurn(float duration)
         {
             IsBurning = true;
             _durationTimer = duration;
-
+        // Ensure the fire particle exists, instantiate if missing
             if (fireParticle == null)
             {
                 var flamePrefab = Resources.Load<GameObject>("Prefabs/Flame");
                 fireParticle = Instantiate(flamePrefab, transform);
             }
         }
-
+        /// <summary>
+        /// Stops the burning effect and optionally destroys the fire particle.
+        /// </summary>
         public void StopBurn(bool destroyParticle = true)
         {
             IsBurning = false;
@@ -71,7 +75,10 @@ namespace RL
             }
         }
         
-
+        /// <summary>
+        /// Updates timers while burning, it calls the OnTick event at set intervals,
+        /// and stops burning when duration expires.
+        /// </summary>
         void Update()
         {
             if (IsBurning)

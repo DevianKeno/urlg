@@ -8,14 +8,18 @@ Programmer/s:
     John Paulo A. Dela Cruz
 
 Purpose:
-
-
+    This script defines the Burnable Crates component,that can take damage and burn over time.
+    The crate interacts with fire mechanics and has visual and audio effects for damage and destruction.
 
 Control:
 
 
 Data Structures/Key Variables:
-    
+    Health (float) – Stores the crate’s current health, starting at 200f.
+    BurnTime (float) – Defines how long the crate will burn before the fire stops.
+    IsBurning (bool) – A flag that determines whether the crate is currently burning.
+    Coroutine (IEnumerator BreakCoroutine) – Handles delayed destruction of the crate when broken.
+
 */
 
 using System;
@@ -28,15 +32,18 @@ namespace RL.Levels
 {
     public class BurnableCrate : Tile
     {
-        public float Health = 200f;
-        public float BurnTime = 3f;
+        public float Health = 200f; // The total health of the crate
+        public float BurnTime = 3f; // The duration for which the crate burns
 
-        public bool IsBurning => _isBurning;
+        public bool IsBurning => _isBurning; // Read-only property to check if the crate is burning
         bool _isBurning = false;
 
         OnFire onFire;
         [SerializeField] SpriteRenderer spriteRendererChild;
 
+        /// <summary>
+        /// Starts burning the crate if it's not already burning.
+        /// </summary>
         public void StartBurning(float duration)
         {
             if (_isBurning) return;
@@ -46,12 +53,17 @@ namespace RL.Levels
             onFire.OnTick += OnFireTick;
             onFire.StartBurn(duration);
         }
-
+         /// <summary>
+        /// Called every fire tick to apply burn damage.
+        /// </summary>
         void OnFireTick()
         {
             TakeDamageSilent(Game.BurnDamage);
         }
-
+        /// <summary>
+        /// Reduces health and checks if the crate should break.
+        /// Plays a hit sound and damage effect.
+        /// </summary>
         public void TakeDamage(float amount)
         {
             Game.Audio.Play("crate_hit");
@@ -63,7 +75,9 @@ namespace RL.Levels
                 Break();
             }
         }
-
+        /// <summary>
+        /// Reduces health silently without sound or visual feedback.
+        /// </summary>
         public void TakeDamageSilent(float amount)
         {
             Health -= amount;
@@ -72,7 +86,9 @@ namespace RL.Levels
                 Break();
             }
         }
-
+        /// <summary>
+        /// Creates a red-to-white flash effect when damaged.
+        /// </summary>
         public void DamageFlash()
         {
             LeanTween.cancel(gameObject);
@@ -89,6 +105,9 @@ namespace RL.Levels
             StartCoroutine(BreakCoroutine(delaySeconds));
         }
 
+        /// <summary>
+        /// Coroutine that handles the crate destruction process.
+        /// </summary
         IEnumerator BreakCoroutine(float delaySeconds)
         {
             yield return new WaitForSeconds(delaySeconds);
