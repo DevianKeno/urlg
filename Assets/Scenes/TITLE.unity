@@ -4002,8 +4002,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ed85e152eb10c84a84db869a10c15a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SoundVolume: 0.66
-  MusicVolume: 0.33
+  SoundVolume: 0
+  MusicVolume: 0
   AudioSource: {fileID: 0}
 --- !u!1 &1786516095
 GameObject:

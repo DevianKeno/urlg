@@ -192,10 +192,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBar: {fileID: 0}
+  salaman: {fileID: 0}
   MaximumHealth: 100
   Health: 100
   MoveSpeed: 5
   Acceleration: 20
+  levelCanvas: {fileID: 0}
   stateMachine: {fileID: 4232033359086332286}
   animator: {fileID: 2842072108891751968}
   rb: {fileID: 146009425510347028}
@@ -203,7 +205,7 @@ MonoBehaviour:
   Equipped: {fileID: 11400000, guid: de4d7d6fc5f71c64c82000b4ebea3a73, type: 2}
   Weapon1: {fileID: 0}
   Weapon2: {fileID: 0}
-  EnableCheats: 0
+  EnableCheats: 1
   Fireball: {fileID: 11400000, guid: de4d7d6fc5f71c64c82000b4ebea3a73, type: 2}
   Laser: {fileID: 11400000, guid: 67a69ea5162fd7848866b59cb1f53ab6, type: 2}
   Wave: {fileID: 11400000, guid: 58710742a7a253646bcf56a38b4f55bc, type: 2}

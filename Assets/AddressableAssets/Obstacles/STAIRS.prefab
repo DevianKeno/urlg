@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 7406310220747434467}
   - component: {fileID: 2232779807248089875}
   m_Layer: 0
-  m_Name: Tile (0, 0) (Bars Vertical)
+  m_Name: STAIRS
   m_TagString: Tile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

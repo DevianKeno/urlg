@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 2232779807248089875}
   - component: {fileID: 5449627322257161088}
   m_Layer: 0
-  m_Name: Tile (0, 0) (crate_single_bottom)
+  m_Name: CRATE
   m_TagString: Tile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

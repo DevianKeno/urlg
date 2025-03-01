@@ -302,6 +302,68 @@ namespace RL.RD
             }
         }
 
+        // /// <summary>
+        // /// Writes the results to a structured CSV format.
+        // /// </summary>
+        // public void WriteResultsToCSV_OriginalMethod()
+        // {
+        //     if (jsonDatas == null || jsonDatas.Count <= 0) return;
+
+        //     string directory = Path.Combine(Application.persistentDataPath, "dataset");
+        //     if (!Directory.Exists(directory)) Directory.CreateDirectory(directory);
+
+        //     int index = 0;
+        //     foreach (ResultsJsonData data in jsonDatas)
+        //     {
+        //         string filepath = Path.Combine(directory, $"gnb_result_data_{index}-{DateTime.Now:yyyyMMdd_HHmmss}.csv");
+                
+        //         using StreamWriter writer = new(filepath);
+                
+        //         var playerStatKeys = Telemetry.Telemetry.PlayerStatsKeys.Select(key => key.ToString()).ToArray();
+        //         var roomStatKeys = Telemetry.Telemetry.RoomStatsKeys.Select(key => key.ToString()).ToArray();
+        //         var headers = new[] { "SeedPlayer", "SeedRoom" }
+        //             .Concat(playerStatKeys)
+        //             .Concat(roomStatKeys)
+        //             .Append("DeathCount")    
+        //             .Append("GroundTruth")    
+        //             .Append("Classification");
+
+        //         writer.WriteLine(string.Join(",", headers));
+
+        //         foreach (DataEntry entry in data.Entries)
+        //         {
+        //             var row = new List<string>
+        //             {
+        //                 "-",    /// seed unwritten
+        //                 "-"     /// seed unwritten
+        //             };
+
+        //             foreach (var statSave in entry.PlayerStats)
+        //             {
+        //                 row.Add(statSave.Value.ToString());
+        //             }
+
+        //             foreach (var statSave in entry.RoomStats)
+        //             {
+        //                 row.Add(statSave.Value.ToString());
+        //             }
+
+        //             row.Add(entry.DeathCount.ToString());
+        //             row.Add(entry.GroundTruth.ToString());
+        //             row.Add("1");
+
+        //             writer.WriteLine(string.Join(",", row));
+        //         }
+
+        //         index++;
+        //         Debug.Log($"Wrote results into excel file at '{filepath}'");
+        //     }
+            
+        //     Debug.Log($"Finished converting AR results excel file");
+        // }
+
+
+
         /// <summary>
         /// Writes the results to a structured CSV format.
         /// </summary>
@@ -315,44 +377,82 @@ namespace RL.RD
             int index = 0;
             foreach (ResultsJsonData data in jsonDatas)
             {
-                string filepath = Path.Combine(directory, $"gnb_result_data_{index}-{DateTime.Now:yyyyMMdd_HHmmss}.csv");
+                string filepath = Path.Combine(directory, $"gnb_appendix_A_Table_{index}.csv");
                 
                 using StreamWriter writer = new(filepath);
                 
                 var playerStatKeys = Telemetry.Telemetry.PlayerStatsKeys.Select(key => key.ToString()).ToArray();
                 var roomStatKeys = Telemetry.Telemetry.RoomStatsKeys.Select(key => key.ToString()).ToArray();
-                var headers = new[] { "SeedPlayer", "SeedRoom" }
-                    .Concat(playerStatKeys)
-                    .Concat(roomStatKeys)
-                    .Append("DeathCount")    
-                    .Append("GroundTruth")    
-                    .Append("Classification");
+                var headers1 = new List<string>()
+                {
+                    "UseCount/HitCount",
+                    "",
+                    "",
 
-                writer.WriteLine(string.Join(",", headers));
+                    "EnemyCount/ObstacleCount",
+                    "",
+                    "",
+
+                    "",
+                    "",
+                    "",
+                    "",
+                };
+                writer.WriteLine(string.Join(",", headers1));
+
+                var headers2 = new List<string>()
+                {
+                    "Fire",
+                    "Beam",
+                    "Wave",
+
+                    "Fire",
+                    "Beam",
+                    "Wave",
+
+                    "HitsTaken",   
+                    "EnemyAttackCount",  
+                    "GroundTruth",  
+                    "Classification",
+                };
+                writer.WriteLine(string.Join(",", headers2));
 
                 foreach (DataEntry entry in data.Entries)
                 {
-                    var row = new List<string>
+                    var row1 = new List<string>()
                     {
-                        "-",    /// seed unwritten
-                        "-"     /// seed unwritten
+                        entry.PlayerStats[0].Value.ToString(),    /// UseCountFire
+                        entry.PlayerStats[1].Value.ToString(),    /// UseCountBeam
+                        entry.PlayerStats[2].Value.ToString(),    /// UseCountWave
+
+                        entry.RoomStats[0].Value.ToString(),      /// EnemyCountFire
+                        entry.RoomStats[1].Value.ToString(),      /// EnemyCountBeam
+                        entry.RoomStats[2].Value.ToString(),      /// EnemyCountWave
+
+                        entry.PlayerStats[6].Value.ToString(),    /// HitsTaken
+                        entry.RoomStats[6].Value.ToString(),      /// EnemyAttackCount
+                        entry.GroundTruth.ToString(),
+                        "1"
                     };
 
-                    foreach (var statSave in entry.PlayerStats)
+                    var row2 = new List<string>()
                     {
-                        row.Add(statSave.Value.ToString());
-                    }
+                        entry.PlayerStats[3].Value.ToString(),    /// HitCountFire
+                        entry.PlayerStats[4].Value.ToString(),    /// HitCountBeam
+                        entry.PlayerStats[5].Value.ToString(),    /// HitCountWave
+                    
+                        entry.RoomStats[3].Value.ToString(),      /// ObstacleCountFire
+                        entry.RoomStats[4].Value.ToString(),      /// ObstacleCountBeam
+                        entry.RoomStats[5].Value.ToString(),      /// ObstacleCountWave
 
-                    foreach (var statSave in entry.RoomStats)
-                    {
-                        row.Add(statSave.Value.ToString());
-                    }
+                        "",
+                        "",
+                        "",
+                        "",
+                    };
 
-                    row.Add(entry.DeathCount.ToString());
-                    row.Add(entry.GroundTruth.ToString());
-                    row.Add("1");
-
-                    writer.WriteLine(string.Join(",", row));
+                    writer.WriteLine(string.Join(",", row1));
+                    writer.WriteLine(string.Join(",", row2));
                 }
 
                 index++;

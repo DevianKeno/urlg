@@ -220,7 +220,7 @@
                 {
                     "name": "",
                     "id": "8bb11765-443c-46c6-af1e-624585a8bd3e",
-                    "path": "<Keyboard>/1",
+                    "path": "<Keyboard>/z",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -231,7 +231,7 @@
                 {
                     "name": "",
                     "id": "d130377b-7845-4bd6-91b6-f6bb46b51ea2",
-                    "path": "<Keyboard>/2",
+                    "path": "<Keyboard>/x",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -242,7 +242,7 @@
                 {
                     "name": "",
                     "id": "ab7c0ea3-25ce-46b6-8c29-527e997780f1",
-                    "path": "<Keyboard>/3",
+                    "path": "<Keyboard>/c",
                     "interactions": "",
                     "processors": "",
                     "groups": "",

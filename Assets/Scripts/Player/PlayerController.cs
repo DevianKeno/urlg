@@ -492,13 +492,13 @@ namespace RL.Player
 
         void OnInputCheats(InputAction.CallbackContext context)
         {            
-            if (!int.TryParse(context.control.displayName, out int index)) return;
+            if (!char.TryParse(context.control.displayName, out char key)) return;
 
-            Equipped = index switch
+            Equipped = key switch
             {
-                1 => Fireball,
-                2 => Laser,
-                3 => Wave,
+                'Z' => Fireball,
+                'X' => Laser,
+                'C' => Wave,
                 _ => throw new ArgumentOutOfRangeException(),
             };
         }
